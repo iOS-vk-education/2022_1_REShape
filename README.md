@@ -11,7 +11,7 @@
 * **Фомин Иван** - [TritonVera](https://github.com/TritonVera)
 
 
-### 🧑‍🏫  Менторы
+### 🧑‍🏫 Менторы
 * **Шкарин Егор** - [Grandschtien](https://github.com/Grandschtien)
 
 ### Стек:
