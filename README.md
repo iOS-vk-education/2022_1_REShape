@@ -16,9 +16,9 @@
 * **Шкарин Егор** - [Grandschtien](https://github.com/Grandschtien)
 
 ### Стек:
-*Архитектура - VIPER
-*Верстка - PinLayout/Constraints 
-*FireBase
+* Архитектура - VIPER
+* Верстка - PinLayout/Constraints 
+* FireBase
 
 ### Макеты: 
     https://www.figma.com/file/br0KVS7w5Cd8OWtyk7Fioi/ReShape?node-id=0%3A1
