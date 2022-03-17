@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2EC90F5027E3B74200F2F5FC /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC90F4F27E3B74200F2F5FC /* PinLayout */; };
 		2EC90F5727E3C5E600F2F5FC /* images in Resources */ = {isa = PBXBuildFile; fileRef = 2EC90F5627E3C5E600F2F5FC /* images */; };
+		2EC90F5B27E3D29C00F2F5FC /* EnterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC90F5A27E3D29C00F2F5FC /* EnterScreen.swift */; };
 		36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */; };
 		36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */; };
 		36A9DB0527E2AC3400DB5082 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0427E2AC3400DB5082 /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		2EC90F5627E3C5E600F2F5FC /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		2EC90F5A27E3D29C00F2F5FC /* EnterScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterScreen.swift; sourceTree = "<group>"; };
 		36A9DAFD27E2AC3400DB5082 /* reshape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reshape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */,
 				36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */,
 				36A9DB0427E2AC3400DB5082 /* ViewController.swift */,
+				2EC90F5A27E3D29C00F2F5FC /* EnterScreen.swift */,
 				36A9DB0627E2AC3400DB5082 /* Main.storyboard */,
 				36A9DB0927E2AC3500DB5082 /* Assets.xcassets */,
 				36A9DB0B27E2AC3500DB5082 /* LaunchScreen.storyboard */,
@@ -272,6 +275,7 @@
 			files = (
 				36A9DB0527E2AC3400DB5082 /* ViewController.swift in Sources */,
 				36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */,
+				2EC90F5B27E3D29C00F2F5FC /* EnterScreen.swift in Sources */,
 				36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
