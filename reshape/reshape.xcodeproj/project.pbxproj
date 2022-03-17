@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2EC90F5027E3B74200F2F5FC /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC90F4F27E3B74200F2F5FC /* PinLayout */; };
+		2EC90F5727E3C5E600F2F5FC /* images in Resources */ = {isa = PBXBuildFile; fileRef = 2EC90F5627E3C5E600F2F5FC /* images */; };
 		36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */; };
 		36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */; };
 		36A9DB0527E2AC3400DB5082 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0427E2AC3400DB5082 /* ViewController.swift */; };
@@ -36,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2EC90F5627E3C5E600F2F5FC /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		36A9DAFD27E2AC3400DB5082 /* reshape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reshape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC90F5027E3B74200F2F5FC /* PinLayout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +83,7 @@
 		36A9DAF427E2AC3400DB5082 = {
 			isa = PBXGroup;
 			children = (
+				2EC90F5627E3C5E600F2F5FC /* images */,
 				36A9DAFF27E2AC3400DB5082 /* reshape */,
 				36A9DB1627E2AC3500DB5082 /* reshapeTests */,
 				36A9DB2027E2AC3500DB5082 /* reshapeUITests */,
@@ -143,6 +148,9 @@
 			dependencies = (
 			);
 			name = reshape;
+			packageProductDependencies = (
+				2EC90F4F27E3B74200F2F5FC /* PinLayout */,
+			);
 			productName = reshape;
 			productReference = 36A9DAFD27E2AC3400DB5082 /* reshape.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +223,9 @@
 				Base,
 			);
 			mainGroup = 36A9DAF427E2AC3400DB5082;
+			packageReferences = (
+				2EC90F4E27E3B74200F2F5FC /* XCRemoteSwiftPackageReference "PinLayout" */,
+			);
 			productRefGroup = 36A9DAFE27E2AC3400DB5082 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -231,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC90F5727E3C5E600F2F5FC /* images in Resources */,
 				36A9DB0D27E2AC3500DB5082 /* LaunchScreen.storyboard in Resources */,
 				36A9DB0A27E2AC3500DB5082 /* Assets.xcassets in Resources */,
 				36A9DB0827E2AC3400DB5082 /* Main.storyboard in Resources */,
@@ -445,6 +457,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -473,6 +486,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -624,6 +638,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2EC90F4E27E3B74200F2F5FC /* XCRemoteSwiftPackageReference "PinLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/PinLayout";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2EC90F4F27E3B74200F2F5FC /* PinLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EC90F4E27E3B74200F2F5FC /* XCRemoteSwiftPackageReference "PinLayout" */;
+			productName = PinLayout;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 36A9DAF527E2AC3400DB5082 /* Project object */;
 }
