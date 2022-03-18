@@ -105,8 +105,8 @@ final class EnterScreen: UIViewController {
         signUpLabel.pin
             .above(of: signUpButton)
             .marginBottom(0)
-            .left(65)
-            .right(65)
+            .left(20)
+            .right(20)
             .sizeToFit(.width)
             .height(17)
         

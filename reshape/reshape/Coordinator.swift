@@ -14,36 +14,45 @@ protocol CoordinatorProtocol {
 
 final class Coordinator: CoordinatorProtocol {
     private let window: UIWindow
-    private let EnterViewController =  EnterScreen()
-//    private lazy var navigationControllers = Coordinator.makeNavigationControllers()
+    private lazy var navigationControllers = Coordinator.makeNavigationControllers()
     init(window: UIWindow) {
         self.window = window
     }
         
     func start() {
-//        let navigationControllers = NavControllerType.allCases.compactMap {
-//            self.navigationControllers[$0]
-//        }
+        setupEnter()
         
-        window.rootViewController = EnterViewController
+        let navControllers = NavControllerType.allCases.compactMap {
+            self.navigationControllers[$0]
+        }
+        
+        window.rootViewController = navControllers[0]
         window.makeKeyAndVisible()
         }
 }
 
-//extension Coordinator {
-//    fileprivate static func makeNavigationControllers() -> [NavControllerType: UINavigationController] {
-//        var result: [NavControllerType: UINavigationController] = [:]
-//        NavControllerType.allCases.forEach { navControllerKey in
-//            let navigationController = UINavigationController()
-//            let navBarAppearance = UINavigationBarAppearance()
-//            navBarAppearance.configureWithDefaultBackground()
-//            navigationController.navigationBar.scrollEdgeAppearance = navBarAppearance
-//            let tabBarItem = UITabBarItem(title: navControllerKey.title,
-//                                            image: navControllerKey.image,
-//                                            tag: navControllerKey.rawValue)
-//            navigationController.tabBarItem = tabBarItem
-//            result[navControllerKey] = navigationController
-//        }
-//        return result
-//    }
-//}
+extension Coordinator {
+    private func setupEnter() {
+        guard let navController = navigationControllers[.enterScreen] else {
+            fatalError("No navController")
+        }
+        let EnterViewController =  EnterScreen()
+        navController.setViewControllers([EnterViewController], animated: true)
+    }
+    
+    fileprivate static func makeNavigationControllers() -> [NavControllerType: UINavigationController] {
+        var result: [NavControllerType: UINavigationController] = [:]
+        NavControllerType.allCases.forEach { navControllerKey in
+            let navigationController = UINavigationController()
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithDefaultBackground()
+            navigationController.navigationBar.scrollEdgeAppearance = navBarAppearance
+            result[navControllerKey] = navigationController
+        }
+        return result
+    }
+}
+
+fileprivate enum NavControllerType: Int, CaseIterable {
+    case enterScreen
+}
