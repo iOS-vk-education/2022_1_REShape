@@ -23,7 +23,7 @@ final class EnterScreen: UIViewController {
     let signUpLabel: UILabel = UILabel()
     
     // Sign up button (string)
-    let signUpButton: UIButton = UIButton()
+    let signUpButton: UILabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +36,8 @@ final class EnterScreen: UIViewController {
         
         // Configure additional text
         additionalText.text = "Добро пожаловать в приложение, помогающее прийти в форму 💪"
-        additionalText.font = UIFont(descriptor: UIFontDescriptor(), size: 22)
-        additionalText.numberOfLines = 3
+        additionalText.font = UIFont.systemFont(ofSize: 22)
+        additionalText.numberOfLines = 0
         
         // Configure enter button
         enterButton.setTitle("Войти", for: .normal)
@@ -47,12 +47,13 @@ final class EnterScreen: UIViewController {
                                               blue: 0.745,
                                               alpha: 1)
         enterButton.layer.cornerRadius = 16
-        enterButton.titleLabel?.font = UIFont(descriptor: UIFontDescriptor(), size: 24)
-        enterButton.addTarget(self, action: #selector(enterTap), for: .touchUpInside)
+        enterButton.titleLabel?.font = UIFont.systemFont(ofSize: 24)
+        enterButton.addTarget(self, action: #selector(enterTouchUp), for: .touchUpInside)
+        enterButton.addTarget(self, action: #selector(enterTouchDown), for: .touchDown)
         
         // Configure description text to sign up
         signUpLabel.text = "Если у вас нет аккаунта, то нажмите"
-        signUpLabel.font = UIFont(descriptor: UIFontDescriptor(), size: 14)
+        signUpLabel.font = UIFont.systemFont(ofSize: 14)
         signUpLabel.textColor = UIColor(red: 0.78,
                                         green: 0.78,
                                         blue: 0.8,
@@ -61,16 +62,16 @@ final class EnterScreen: UIViewController {
         signUpLabel.textAlignment = .center
         
         // Configure sign up button
-        signUpButton.setTitle("зарегистрироваться", for: .normal)
-        signUpButton.setTitleColor(UIColor(red: 0.365,
-                                           green: 0.302,
-                                           blue: 0.745,
-                                           alpha: 1), for: .normal)
-        signUpButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        signUpButton.titleLabel?.numberOfLines = 1
-        signUpButton.titleLabel?.textAlignment = .center
-        signUpButton.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        signUpButton.addTarget(self, action: #selector(signUpTap), for: .touchUpInside)
+        signUpButton.attributedText = NSAttributedString(string: "зарегистироваться", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        signUpButton.textColor = UIColor(red: 0.365,
+                                          green: 0.302,
+                                          blue: 0.745,
+                                          alpha: 1)
+        signUpButton.font = UIFont.systemFont(ofSize: 14)
+        signUpButton.numberOfLines = 1
+        signUpButton.textAlignment = .center
+        signUpButton.isUserInteractionEnabled = true
+        signUpButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(signUpTap)))
     }
     
     override func viewDidLayoutSubviews() {
@@ -83,20 +84,21 @@ final class EnterScreen: UIViewController {
             .width(231)
             .sizeToFit(.height)
         
-        // Addtional text PinLayout
-        additionalText.pin
-            .top(view.safeAreaInsets.top + 498)
-            .hCenter()
-            .width(281)
-            .height(78)
-        
         // Enter button PinLayout
         enterButton.pin
-            .below(of: additionalText)
-            .marginTop(30)
+            .top(view.safeAreaInsets.top + 606)
             .hCenter()
             .width(306)
             .height(55)
+        
+        // Additional text PinLayout
+        additionalText.pin
+            .above(of: enterButton)
+            .marginBottom(30)
+            .hCenter()
+            .width(281)
+            .minHeight(78)
+            .sizeToFit(.width)
         
         // Description text PinLayout
         signUpLabel.pin
@@ -105,7 +107,7 @@ final class EnterScreen: UIViewController {
             .left(65)
             .right(65)
             .sizeToFit(.width)
-            .height(14)
+            .height(17)
         
         // Sign up button PinLayout
         signUpButton.pin
@@ -114,16 +116,22 @@ final class EnterScreen: UIViewController {
             .left(65)
             .right(65)
             .sizeToFit(.width)
-            .height(14)
+            .height(17)
     }
     
     @objc
-    private func enterTap() {
-        
+    private func enterTouchUp() {
+        enterButton.alpha = 1
+        print("[DEBUG] Enter button")
+    }
+    
+    @objc
+    private func enterTouchDown() {
+        enterButton.alpha = 0.5
     }
     
     @objc
     private func signUpTap() {
-        
+        print("[DEBUG] Sign Up button")
     }
 }
