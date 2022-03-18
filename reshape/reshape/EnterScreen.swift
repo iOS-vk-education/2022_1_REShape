@@ -9,67 +9,76 @@ import Foundation
 import UIKit
 import PinLayout
 
+final class EnterButton: UIButton {
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
+        
+        self.setTitle("Войти", for: .normal)
+        self.setTitleColor(.white, for: .normal)
+        self.backgroundColor = UIColor(named: "Violet")
+        self.layer.cornerRadius = 16
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 24)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 final class EnterScreen: UIViewController {
     // REShape name on top screen
-    let reShapeImage: UIImageView = UIImageView(image: UIImage(named: "GreenVioletName"))
-    
-    // Welcome text above enter button
-    let additionalText: UILabel = UILabel()
+    private let reShapeImage: UIImageView = UIImageView(image: UIImage(named: "GreenVioletName"))
     
     // Enter button
-    let enterButton: UIButton = UIButton()
+    private let enterButton: EnterButton = EnterButton()
+    
+    // Welcome text above enter button
+    private let additionalText: UILabel = {
+        let label = UILabel()
+        label.text = "Добро пожаловать в приложение, помогающее прийти в форму 💪"
+        label.font = UIFont.systemFont(ofSize: 22)
+        label.numberOfLines = 0
+        return label
+    }()
     
     // Description text to sign up
-    let signUpLabel: UILabel = UILabel()
+    private let signUpLabel: UILabel = {
+        let label: UILabel = UILabel()
+        label.text = "Если у вас нет аккаунта, то нажмите"
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = UIColor(named: "Light Gray")
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }()
     
     // Sign up button (string)
-    let signUpButton: UILabel = UILabel()
+    let signUpButton: UILabel = {
+        let label: UILabel = UILabel()
+        label.attributedText = NSAttributedString(string: "зарегистироваться", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        label.textColor = UIColor(named: "Violet")
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewSubview()
+    }
+    
+    func viewSubview() {
+        view.backgroundColor = .white
         view.addSubview(reShapeImage)
         view.addSubview(additionalText)
         view.addSubview(enterButton)
         view.addSubview(signUpLabel)
         view.addSubview(signUpButton)
         
-        // Configure additional text
-        additionalText.text = "Добро пожаловать в приложение, помогающее прийти в форму 💪"
-        additionalText.font = UIFont.systemFont(ofSize: 22)
-        additionalText.numberOfLines = 0
-        
-        // Configure enter button
-        enterButton.setTitle("Войти", for: .normal)
-        enterButton.setTitleColor(.white, for: .normal)
-        enterButton.backgroundColor = UIColor(red: 0.365,
-                                              green: 0.302,
-                                              blue: 0.745,
-                                              alpha: 1)
-        enterButton.layer.cornerRadius = 16
-        enterButton.titleLabel?.font = UIFont.systemFont(ofSize: 24)
         enterButton.addTarget(self, action: #selector(enterTouchUp), for: .touchUpInside)
         enterButton.addTarget(self, action: #selector(enterTouchDown), for: .touchDown)
         
-        // Configure description text to sign up
-        signUpLabel.text = "Если у вас нет аккаунта, то нажмите"
-        signUpLabel.font = UIFont.systemFont(ofSize: 14)
-        signUpLabel.textColor = UIColor(red: 0.78,
-                                        green: 0.78,
-                                        blue: 0.8,
-                                        alpha: 1)
-        signUpLabel.numberOfLines = 1
-        signUpLabel.textAlignment = .center
-        
-        // Configure sign up button
-        signUpButton.attributedText = NSAttributedString(string: "зарегистироваться", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
-        signUpButton.textColor = UIColor(red: 0.365,
-                                          green: 0.302,
-                                          blue: 0.745,
-                                          alpha: 1)
-        signUpButton.font = UIFont.systemFont(ofSize: 14)
-        signUpButton.numberOfLines = 1
-        signUpButton.textAlignment = .center
         signUpButton.isUserInteractionEnabled = true
         signUpButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(signUpTap)))
     }
@@ -84,9 +93,27 @@ final class EnterScreen: UIViewController {
             .width(231)
             .sizeToFit(.height)
         
+        // Sign up button PinLayout
+        signUpButton.pin
+            .bottom(view.safeAreaInsets.bottom + 26)
+            .left(65)
+            .right(65)
+            .sizeToFit(.width)
+            .height(17)
+        
+        // Description text PinLayout
+        signUpLabel.pin
+            .above(of: signUpButton)
+            .marginBottom(0)
+            .left(65)
+            .right(65)
+            .sizeToFit(.width)
+            .height(17)
+        
         // Enter button PinLayout
         enterButton.pin
-            .top(view.safeAreaInsets.top + 606)
+            .above(of: signUpLabel)
+            .marginBottom(13)
             .hCenter()
             .width(306)
             .height(55)
@@ -99,35 +126,17 @@ final class EnterScreen: UIViewController {
             .width(281)
             .minHeight(78)
             .sizeToFit(.width)
-        
-        // Description text PinLayout
-        signUpLabel.pin
-            .below(of: enterButton)
-            .marginTop(13)
-            .left(65)
-            .right(65)
-            .sizeToFit(.width)
-            .height(17)
-        
-        // Sign up button PinLayout
-        signUpButton.pin
-            .below(of: signUpLabel)
-            .marginTop(0)
-            .left(65)
-            .right(65)
-            .sizeToFit(.width)
-            .height(17)
     }
     
     @objc
     private func enterTouchUp() {
-        enterButton.alpha = 1
+        enterButton.backgroundColor = UIColor(named: "Violet")
         print("[DEBUG] Enter button")
     }
     
     @objc
     private func enterTouchDown() {
-        enterButton.alpha = 0.5
+        enterButton.backgroundColor = UIColor(named: "Violet Pressed")
     }
     
     @objc
