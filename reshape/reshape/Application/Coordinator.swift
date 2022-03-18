@@ -26,6 +26,7 @@ final class Coordinator: CoordinatorProtocol {
             self.navigationControllers[$0]
         }
         
+        
         window.rootViewController = navControllers[0]
         window.makeKeyAndVisible()
         }
@@ -36,8 +37,9 @@ extension Coordinator {
         guard let navController = navigationControllers[.enterScreen] else {
             fatalError("No navController")
         }
-        let EnterViewController =  EnterScreen()
-        navController.setViewControllers([EnterViewController], animated: true)
+        let enterContext = EnterContext(moduleOutput: nil)
+        let enterContainer = EnterContainer.assemble(with: enterContext)
+        navController.setViewControllers([enterContainer.viewController], animated: true)
     }
     
     fileprivate static func makeNavigationControllers() -> [NavControllerType: UINavigationController] {

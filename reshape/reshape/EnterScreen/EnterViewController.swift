@@ -1,31 +1,15 @@
 //
-//  EnterScreen.swift
+//  EnterViewController.swift
 //  reshape
 //
-//  Created by Иван Фомин on 17.03.2022.
+//  Created by Иван Фомин on 18.03.2022.
+//  
 //
 
-import Foundation
 import UIKit
 import PinLayout
 
-final class EnterButton: UIButton {
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
-        
-        self.setTitle("Войти", for: .normal)
-        self.setTitleColor(.white, for: .normal)
-        self.backgroundColor = UIColor(named: "Violet")
-        self.layer.cornerRadius = 16
-        self.titleLabel?.font = UIFont.systemFont(ofSize: 24)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-final class EnterScreen: UIViewController {
+final class EnterViewController: UIViewController {
     // REShape name on top screen
     private let reShapeImage: UIImageView = UIImageView(image: UIImage(named: "GreenVioletName"))
     
@@ -53,33 +37,47 @@ final class EnterScreen: UIViewController {
     }()
     
     // Sign up button (string)
-    let signUpButton: UILabel = {
+    private let signUpButton: UILabel = {
         let label: UILabel = UILabel()
         label.attributedText = NSAttributedString(string: "зарегистироваться", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
         label.textColor = UIColor(named: "Violet")
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 1
         label.textAlignment = .center
+        label.isUserInteractionEnabled = true
         return label
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        viewSubview()
+	private let output: EnterViewOutput
+
+    init(output: EnterViewOutput) {
+        self.output = output
+        
+        super.init(nibName: nil, bundle: nil)
     }
     
-    func viewSubview() {
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+	override func viewDidLoad() {
+		super.viewDidLoad()
+        setupUI()
+	}
+    
+    func setupUI() {
         view.backgroundColor = .white
+        navigationController?.isNavigationBarHidden = true
         view.addSubview(reShapeImage)
         view.addSubview(additionalText)
         view.addSubview(enterButton)
         view.addSubview(signUpLabel)
         view.addSubview(signUpButton)
         
+        enterButton.setupUI(name: "Войти")
         enterButton.addTarget(self, action: #selector(enterTouchUp), for: .touchUpInside)
         enterButton.addTarget(self, action: #selector(enterTouchDown), for: .touchDown)
         
-        signUpButton.isUserInteractionEnabled = true
         signUpButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(signUpTap)))
     }
     
@@ -143,4 +141,7 @@ final class EnterScreen: UIViewController {
     private func signUpTap() {
         print("[DEBUG] Sign Up button")
     }
+}
+
+extension EnterViewController: EnterViewInput {
 }
