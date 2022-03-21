@@ -23,7 +23,7 @@ final class ForgetPasswordScreenViewController: UIViewController {
         mainLabel.textColor = UIColor(named: "Violet")
         return mainLabel
     }()
-    private let emailStackView: CustomStackView = CustomStackView()
+    private let emailStackView: AuthStackView = AuthStackView()
     private let addtitionalLabel: UILabel = {
         let additionalLabel: UILabel = UILabel()
         additionalLabel.text = "Вам на почту придет код, с помощью которого Вы сможете восстановить пароль"
@@ -52,14 +52,13 @@ final class ForgetPasswordScreenViewController: UIViewController {
     
     let defaultHeight: CGFloat = 406
     let dismissibleHeight: CGFloat = 200
-    let maximumContainerHeight: CGFloat = 406
     var currentContainerHeight: CGFloat = 300
     var containerViewHeightConstraint: NSLayoutConstraint?
     var containerViewBottomConstraint: NSLayoutConstraint?
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        raiseViewWithKeyboard()
+        dropDownViewWithoutKeyboard()
         animateShowDimmedView()
         animatePresentContainer()
     }
@@ -77,24 +76,10 @@ final class ForgetPasswordScreenViewController: UIViewController {
 		super.viewDidLoad()
         setUpConstraints()
         setUpUI()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCloseAction))
-        dimmedView.addGestureRecognizer(tapGesture)
         emailStackView.delegate = self
         emailStackView.dataSource = self
         setupPanGesture()
-        closeButton.action = { [weak self] in
-            self?.view.endEditing(true)
-            UIView.animate(withDuration: 0.2) { [weak self] in
-                self?.closeButton.alpha = 0.7
-            } completion: { [weak self] finished in
-                if finished {
-                    self?.animateDismissView()
-                    self?.closeButton.alpha = 1
-                }
-            }
-        }
-        closeButton.isUserInteractionEnabled = true
-	}
+    }
     @objc
     func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo else {return}
@@ -135,39 +120,40 @@ extension ForgetPasswordScreenViewController{
         restoreButton.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(restoreButton)
         
+        dimmedView.pins()
+        
+        containerView.leading()
+        containerView.trailing()
+        
+        mainLabel.leading(69)
+        mainLabel.trailing(-64)
+        mainLabel.height(26)
+        
+        closeButton.height(36)
+        closeButton.width(36)
+        closeButton.trailing(-34)
+        
+        emailStackView.leading(35)
+        emailStackView.trailing(-34)
+        emailStackView.height(69)
+        
+        addtitionalLabel.leading(35)
+        addtitionalLabel.trailing(-34)
+        
+        restoreButton.width(306)
+        restoreButton.height(55)
+        restoreButton.centerX()
+        
         NSLayoutConstraint.activate([
-            
-            dimmedView.topAnchor.constraint(equalTo: view.topAnchor),
-            dimmedView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            dimmedView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            dimmedView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
             mainLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 26),
-            mainLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 69),
-            mainLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -64),
-            mainLabel.heightAnchor.constraint(equalToConstant: 26),
-            
-            closeButton.heightAnchor.constraint(equalToConstant: 36),
-            closeButton.widthAnchor.constraint(equalToConstant: 36),
+
             closeButton.centerYAnchor.constraint(equalTo: mainLabel.centerYAnchor),
-            closeButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -34),
             
             emailStackView.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 26),
-            emailStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 35),
-            emailStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -34),
-            emailStackView.heightAnchor.constraint(equalToConstant: 69),
             
             addtitionalLabel.topAnchor.constraint(equalTo: emailStackView.bottomAnchor, constant: 9),
-            addtitionalLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 35),
-            addtitionalLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -34),
             
             restoreButton.topAnchor.constraint(equalTo: addtitionalLabel.bottomAnchor, constant: 38),
-            restoreButton.widthAnchor.constraint(equalToConstant: 306),
-            restoreButton.heightAnchor.constraint(equalToConstant: 55),
-            restoreButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
         ])
         
         containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: defaultHeight)
@@ -179,6 +165,20 @@ extension ForgetPasswordScreenViewController{
         emailStackView.tag = 2
         restoreButton.setupUI(name: "Восстановить")
         closeButton.isUserInteractionEnabled = true
+        closeButton.action = { [weak self] in
+            self?.view.endEditing(true)
+            UIView.animate(withDuration: 0.2) { [weak self] in
+                self?.closeButton.alpha = 0.7
+            } completion: { [weak self] finished in
+                if finished {
+                    self?.animateDismissView()
+                    self?.closeButton.alpha = 1
+                }
+            }
+        }
+        closeButton.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCloseAction))
+        dimmedView.addGestureRecognizer(tapGesture)
     }
     func setupPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(gesture:)))
@@ -244,14 +244,21 @@ extension ForgetPasswordScreenViewController{
             self?.animateDismissView()
         }
     }
+    private func raiseViewWithKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+
+    }
+    private func dropDownViewWithoutKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
 }
-extension ForgetPasswordScreenViewController: CustomStackViewDelegate {
+extension ForgetPasswordScreenViewController: AuthStackViewDelegate {
     func endEditingTextField(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
     }
 }
-extension ForgetPasswordScreenViewController: CustomStackViewDataSource {
+extension ForgetPasswordScreenViewController: AuthStackViewDataSource {
     func labelText(tag: Int) -> String {
         var returnLabel: String
         switch tag {

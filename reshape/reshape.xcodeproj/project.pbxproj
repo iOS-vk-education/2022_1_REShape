@@ -30,7 +30,7 @@
 		941E811827E6149800A33344 /* LoginScreenProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E811227E6149800A33344 /* LoginScreenProtocols.swift */; };
 		941E811927E6149800A33344 /* LoginScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E811327E6149800A33344 /* LoginScreenInteractor.swift */; };
 		941E811A27E6149800A33344 /* LoginScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E811427E6149800A33344 /* LoginScreenContainer.swift */; };
-		941E811D27E614F300A33344 /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E811C27E614F300A33344 /* CustomStackView.swift */; };
+		941E811D27E614F300A33344 /* AuthStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E811C27E614F300A33344 /* AuthStackView.swift */; };
 		94302BC127E66080009E397B /* ForgetPasswordScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BBB27E66080009E397B /* ForgetPasswordScreenPresenter.swift */; };
 		94302BC227E66080009E397B /* ForgetPasswordScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BBC27E66080009E397B /* ForgetPasswordScreenRouter.swift */; };
 		94302BC327E66080009E397B /* ForgetPasswordScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BBD27E66080009E397B /* ForgetPasswordScreenViewController.swift */; };
@@ -38,6 +38,7 @@
 		94302BC527E66080009E397B /* ForgetPasswordScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BBF27E66080009E397B /* ForgetPasswordScreenInteractor.swift */; };
 		94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BC027E66080009E397B /* ForgetPasswordScreenContainer.swift */; };
 		94302BC827E72E56009E397B /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BC727E72E56009E397B /* CloseButton.swift */; };
+		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,7 +85,7 @@
 		941E811227E6149800A33344 /* LoginScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenProtocols.swift; sourceTree = "<group>"; };
 		941E811327E6149800A33344 /* LoginScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenInteractor.swift; sourceTree = "<group>"; };
 		941E811427E6149800A33344 /* LoginScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenContainer.swift; sourceTree = "<group>"; };
-		941E811C27E614F300A33344 /* CustomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
+		941E811C27E614F300A33344 /* AuthStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStackView.swift; sourceTree = "<group>"; };
 		94302BBB27E66080009E397B /* ForgetPasswordScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordScreenPresenter.swift; sourceTree = "<group>"; };
 		94302BBC27E66080009E397B /* ForgetPasswordScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordScreenRouter.swift; sourceTree = "<group>"; };
 		94302BBD27E66080009E397B /* ForgetPasswordScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordScreenViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 		94302BBF27E66080009E397B /* ForgetPasswordScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordScreenInteractor.swift; sourceTree = "<group>"; };
 		94302BC027E66080009E397B /* ForgetPasswordScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordScreenContainer.swift; sourceTree = "<group>"; };
 		94302BC727E72E56009E397B /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */,
-				941E811C27E614F300A33344 /* CustomStackView.swift */,
+				941E811C27E614F300A33344 /* AuthStackView.swift */,
 				94302BC727E72E56009E397B /* CloseButton.swift */,
 			);
 			path = Views;
@@ -152,6 +154,7 @@
 				2E1F1DBD27E4936700FA7B77 /* Main.storyboard */,
 				36A9DB0927E2AC3500DB5082 /* Assets.xcassets */,
 				36A9DB0B27E2AC3500DB5082 /* LaunchScreen.storyboard */,
+				94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -388,9 +391,10 @@
 				941E811527E6149800A33344 /* LoginScreenPresenter.swift in Sources */,
 				2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */,
 				94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */,
+				94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */,
 				94302BC127E66080009E397B /* ForgetPasswordScreenPresenter.swift in Sources */,
 				94302BC327E66080009E397B /* ForgetPasswordScreenViewController.swift in Sources */,
-				941E811D27E614F300A33344 /* CustomStackView.swift in Sources */,
+				941E811D27E614F300A33344 /* AuthStackView.swift in Sources */,
 				941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */,
 				36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */,
 			);

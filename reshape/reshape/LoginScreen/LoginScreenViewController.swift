@@ -73,8 +73,8 @@ final class LoginScreenViewController: UIViewController {
         return rememberPasswordStackView
     }()
     
-    private let emailStackView: CustomStackView = CustomStackView()
-    private let passwordStackView: CustomStackView = CustomStackView()
+    private let emailStackView: AuthStackView = AuthStackView()
+    private let passwordStackView: AuthStackView = AuthStackView()
     private let loginButton: EnterButton = EnterButton()
     
     lazy var containerView: UIView = {
@@ -93,7 +93,6 @@ final class LoginScreenViewController: UIViewController {
     
     let defaultHeight: CGFloat = 406
     let dismissibleHeight: CGFloat = 200
-    let maximumContainerHeight: CGFloat = 406
     var currentContainerHeight: CGFloat = 300
     var containerViewHeightConstraint: NSLayoutConstraint?
     var containerViewBottomConstraint: NSLayoutConstraint?
@@ -102,8 +101,8 @@ final class LoginScreenViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        raiseViewWithKeyboard()
+        dropDownViewWithoutKeyboard()
         animateShowDimmedView()
         animatePresentContainer()
     }
@@ -122,60 +121,11 @@ final class LoginScreenViewController: UIViewController {
         super.viewDidLoad()
         setUpConstraints()
         setUpUI()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCloseAction))
-        dimmedView.addGestureRecognizer(tapGesture)
         setupPanGesture()
         emailStackView.delegate = self
         emailStackView.dataSource = self
         passwordStackView.delegate = self
         passwordStackView.dataSource = self
-        forgetPasswordButton.isUserInteractionEnabled = true
-        forgetPasswordButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(forgetPassword)))
-        loginButton.action = {[weak self] in
-            self?.view.endEditing(true)
-            UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.loginButton.backgroundColor = UIColor(named: "Violet Pressed")
-            } completion: { [weak self] finished in
-                if finished {
-                    print("loginbutton tapped")
-                    self?.loginButton.backgroundColor = UIColor(named: "Violet")
-                }
-            }
-        }
-        closeButton.action = { [weak self] in
-            self?.view.endEditing(true)
-            UIView.animate(withDuration: 0.2) { [weak self] in
-                self?.closeButton.alpha = 0.7
-            } completion: { [weak self] finished in
-                if finished {
-                    self?.animateDismissView()
-                    self?.closeButton.alpha = 1
-                }
-            }
-        }
-        closeButton.isUserInteractionEnabled = true
-    }
-    
-    //поднятие вью при появлении клавы
-    @objc
-    func keyboardWillShow(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else {return}
-        guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
-        let keyboardFrame = keyboardSize.cgRectValue
-        if self.containerViewBottomConstraint?.constant == 0 {
-            UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.containerViewBottomConstraint?.constant -= keyboardFrame.height
-                self?.view.layoutIfNeeded()
-            }
-        }
-    }
-    //возвращение вью в обычное состояние
-    @objc
-    func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.4) { [weak self] in
-            self?.containerViewBottomConstraint?.constant = 0
-            self?.view.layoutIfNeeded()
-        }
     }
     
     @objc
@@ -198,7 +148,6 @@ extension LoginScreenViewController: LoginScreenViewInput {
 
 extension LoginScreenViewController {
     private func setUpConstraints(){
-        
         view.addSubview(dimmedView)
         view.addSubview(containerView)
         dimmedView.translatesAutoresizingMaskIntoConstraints = false
@@ -225,56 +174,55 @@ extension LoginScreenViewController {
         containerView.addSubview(loginButton)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         
+        dimmedView.pins()
+        
+        mainLabel.pins(UIEdgeInsets(top: 26, left: 112, bottom: -354, right: -113))
+        
+        containerView.leading()
+        containerView.trailing()
+        
+        closeButton.height(36)
+        closeButton.width(36)
+        closeButton.trailing(-34)
+        
+        enterStackView.leading(35)
+        enterStackView.trailing(-34)
+        enterStackView.height(149)
+        
+        emailStackView.leading()
+        emailStackView.trailing()
+        emailStackView.height(69)
+        passwordStackView.leading()
+        passwordStackView.trailing()
+        
+        rememberPasswordStackView.leading(35)
+        rememberPasswordStackView.trailing(-34)
+        rememberPasswordStackView.bottom(-135, isIncludeSafeArea: false)
+        
+        rememberButton.centerY()
+        rememberButton.width(16)
+        rememberButton.height(16)
+        rememberLabel.centerY()
+        
+        forgetPasswordButton.leading(242)
+        forgetPasswordButton.trailing(-32)
+        
+        loginButton.width(306)
+        loginButton.height(55)
+        loginButton.centerX()
+        
         NSLayoutConstraint.activate([
-            
-            dimmedView.topAnchor.constraint(equalTo: view.topAnchor),
-            dimmedView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            dimmedView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            dimmedView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            mainLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 26),
-            mainLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 112),
-            mainLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -113),
-            mainLabel.heightAnchor.constraint(equalToConstant: 26),
-            
-            closeButton.heightAnchor.constraint(equalToConstant: 36),
-            closeButton.widthAnchor.constraint(equalToConstant: 36),
             closeButton.centerYAnchor.constraint(equalTo: mainLabel.centerYAnchor),
-            closeButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -34),
             
             enterStackView.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 26),
-            enterStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 35),
-            enterStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -34),
-            enterStackView.heightAnchor.constraint(equalToConstant: 149),
-            
-            emailStackView.leadingAnchor.constraint(equalTo: enterStackView.leadingAnchor),
-            emailStackView.trailingAnchor.constraint(equalTo: enterStackView.trailingAnchor),
-            emailStackView.heightAnchor.constraint(equalToConstant: 69),
-            
-            passwordStackView.leadingAnchor.constraint(equalTo: enterStackView.leadingAnchor),
-            passwordStackView.trailingAnchor.constraint(equalTo: enterStackView.trailingAnchor),
             
             rememberPasswordStackView.topAnchor.constraint(equalTo: enterStackView.bottomAnchor, constant: 27),
             rememberPasswordStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 35),
             rememberPasswordStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -135),
-            
-            rememberButton.centerYAnchor.constraint(equalTo: rememberPasswordStackView.centerYAnchor),
-            rememberButton.widthAnchor.constraint(equalToConstant: 16),
-            rememberButton.heightAnchor.constraint(equalToConstant: 16),
-            
-            rememberLabel.centerYAnchor.constraint(equalTo: rememberPasswordStackView.centerYAnchor),
-            
+
             forgetPasswordButton.topAnchor.constraint(equalTo: enterStackView.bottomAnchor, constant: 27),
-            forgetPasswordButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor,constant: -32),
-            forgetPasswordButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 242),
             
             loginButton.topAnchor.constraint(equalTo: forgetPasswordButton.bottomAnchor, constant: 28),
-            loginButton.heightAnchor.constraint(equalToConstant: 55),
-            loginButton.widthAnchor.constraint(equalToConstant: 306),
-            loginButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
         ])
         
         containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: defaultHeight)
@@ -288,6 +236,33 @@ extension LoginScreenViewController {
         passwordStackView.textField.isSecureTextEntry = true
         loginButton.setupUI(name: "Войти")
         rememberPasswordStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(rememberPasswordButtonPressed)))
+        forgetPasswordButton.isUserInteractionEnabled = true
+        forgetPasswordButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(forgetPassword)))
+        loginButton.action = {[weak self] in
+            self?.view.endEditing(true)
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                self?.loginButton.backgroundColor = UIColor(named: "Violet Pressed")
+            } completion: { [weak self] finished in
+                if finished {
+                    print("loginbutton tapped")
+                    self?.loginButton.backgroundColor = UIColor(named: "Violet")
+                }
+            }
+        }
+        closeButton.action = { [weak self] in
+            self?.view.endEditing(true)
+            UIView.animate(withDuration: 0.2) { [weak self] in
+                self?.closeButton.alpha = 0.7
+            } completion: { [weak self] finished in
+                if finished {
+                    self?.animateDismissView()
+                    self?.closeButton.alpha = 1
+                }
+            }
+        }
+        closeButton.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCloseAction))
+        dimmedView.addGestureRecognizer(tapGesture)
     }
     @objc
     func rememberPasswordButtonPressed() {
@@ -363,16 +338,44 @@ extension LoginScreenViewController {
         }
         
     }
+    private func raiseViewWithKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+
+    }
+    private func dropDownViewWithoutKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    //поднятие вью при появлении клавы
+    @objc
+    func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else {return}
+        guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+        let keyboardFrame = keyboardSize.cgRectValue
+        if self.containerViewBottomConstraint?.constant == 0 {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                self?.containerViewBottomConstraint?.constant -= keyboardFrame.height
+                self?.view.layoutIfNeeded()
+            }
+        }
+    }
+    //возвращение вью в обычное состояние
+    @objc
+    func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.4) { [weak self] in
+            self?.containerViewBottomConstraint?.constant = 0
+            self?.view.layoutIfNeeded()
+        }
+    }
 }
 
-extension LoginScreenViewController: CustomStackViewDelegate {
+extension LoginScreenViewController: AuthStackViewDelegate {
     func endEditingTextField(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
     }
 }
 
-extension LoginScreenViewController: CustomStackViewDataSource {
+extension LoginScreenViewController: AuthStackViewDataSource {
     func labelText(tag: Int) -> String {
         var returnLabel: String
         switch tag {

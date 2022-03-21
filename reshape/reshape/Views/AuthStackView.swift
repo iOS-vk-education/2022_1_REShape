@@ -8,19 +8,19 @@
 import Foundation
 import UIKit
 
-protocol CustomStackViewDelegate: AnyObject {
+protocol AuthStackViewDelegate: AnyObject {
     func endEditingTextField(_ textField: UITextField) -> Bool
 }
 
-protocol CustomStackViewDataSource: AnyObject {
+protocol AuthStackViewDataSource: AnyObject {
     func labelText(tag: Int) -> String
     func placeholderText(tag: Int) -> String
 }
 
-final class CustomStackView: UIView {
+final class AuthStackView: UIView {
     
-    weak var delegate: CustomStackViewDelegate?
-    weak var dataSource: CustomStackViewDataSource?{
+    weak var delegate: AuthStackViewDelegate?
+    weak var dataSource: AuthStackViewDataSource?{
         didSet {
             label.text = dataSource?.labelText(tag: tag)
             textField.placeholder = dataSource?.placeholderText(tag: tag)
@@ -89,7 +89,7 @@ final class CustomStackView: UIView {
     }
 }
 
-extension CustomStackView: UITextFieldDelegate {
+extension AuthStackView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let delegate = delegate else { return false }
         return delegate.endEditingTextField(textField)
