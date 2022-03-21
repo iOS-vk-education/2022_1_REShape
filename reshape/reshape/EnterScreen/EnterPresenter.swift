@@ -22,10 +22,15 @@ final class EnterPresenter {
 }
 
 extension EnterPresenter: EnterModuleInput {
+
 }
 
 extension EnterPresenter: EnterViewOutput {
+    func showLoginScreen() {
+        router.enterButtonPressed()
+    }
 }
 
 extension EnterPresenter: EnterInteractorOutput {
 }
+

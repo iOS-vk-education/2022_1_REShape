@@ -48,8 +48,8 @@ final class EnterViewController: UIViewController {
         return label
     }()
     
-	private let output: EnterViewOutput
-
+    private let output: EnterViewOutput
+    
     init(output: EnterViewOutput) {
         self.output = output
         
@@ -60,10 +60,10 @@ final class EnterViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         setupUI()
-	}
+    }
     
     func setupUI() {
         view.backgroundColor = .white
@@ -75,9 +75,18 @@ final class EnterViewController: UIViewController {
         view.addSubview(signUpButton)
         
         enterButton.setupUI(name: "Войти")
-        enterButton.addTarget(self, action: #selector(enterTouchUp), for: .touchUpInside)
-        enterButton.addTarget(self, action: #selector(enterTouchDown), for: .touchDown)
         
+        enterButton.action = {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                self?.enterButton.backgroundColor = UIColor(named: "Violet Pressed")
+            } completion: { [weak self] finished in
+                if finished {
+                    self?.output.showLoginScreen()
+                    self?.enterButton.backgroundColor = UIColor(named: "Violet")
+                }
+            }
+        }
+        enterButton.isUserInteractionEnabled = true
         signUpButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(signUpTap)))
     }
     
@@ -124,17 +133,6 @@ final class EnterViewController: UIViewController {
             .width(281)
             .minHeight(78)
             .sizeToFit(.width)
-    }
-    
-    @objc
-    private func enterTouchUp() {
-        enterButton.backgroundColor = UIColor(named: "Violet")
-        print("[DEBUG] Enter button")
-    }
-    
-    @objc
-    private func enterTouchDown() {
-        enterButton.backgroundColor = UIColor(named: "Violet Pressed")
     }
     
     @objc

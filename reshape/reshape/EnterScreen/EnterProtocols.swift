@@ -19,6 +19,7 @@ protocol EnterViewInput: AnyObject {
 }
 
 protocol EnterViewOutput: AnyObject {
+    func showLoginScreen()
 }
 
 protocol EnterInteractorInput: AnyObject {
@@ -28,4 +29,6 @@ protocol EnterInteractorOutput: AnyObject {
 }
 
 protocol EnterRouterInput: AnyObject {
+    func enterButtonPressed()
 }
+
