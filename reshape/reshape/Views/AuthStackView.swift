@@ -72,18 +72,20 @@ final class AuthStackView: UIView {
         self.addSubview(stackView)
         stackView.addArrangedSubview(label)
         stackView.addArrangedSubview(textField)
+        stackView.top(isIncludeSafeArea: false)
+        
+        stackView.leading()
+        stackView.trailing()
+        
+        label.leading(4)
+        label.height(19)
+        
+        textField.leading()
+        textField.trailing()
+        textField.height(42)
         
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            
-            label.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 4),
-            label.heightAnchor.constraint(equalToConstant: 19),
-            
-            textField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            textField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            textField.heightAnchor.constraint(equalToConstant: 42)
         ])
         
     }
