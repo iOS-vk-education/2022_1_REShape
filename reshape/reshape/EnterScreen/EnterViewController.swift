@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PinLayout
 
 final class EnterViewController: UIViewController {
     // REShape name on top screen
@@ -76,6 +75,39 @@ final class EnterViewController: UIViewController {
         
         enterButton.setupUI(name: "Войти")
         
+        // ReShape logo Constraints
+        reShapeImage.translatesAutoresizingMaskIntoConstraints = false
+        reShapeImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
+        reShapeImage.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        reShapeImage.widthAnchor.constraint(equalToConstant: 231).isActive = true
+        reShapeImage.heightAnchor.constraint(lessThanOrEqualToConstant: 72).isActive = true
+        
+        // Sign up button Constraints
+        signUpButton.translatesAutoresizingMaskIntoConstraints = false
+        signUpButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -26).isActive = true
+        signUpButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        signUpButton.heightAnchor.constraint(equalToConstant: 17).isActive = true
+        
+        // Description text Constraints
+        signUpLabel.translatesAutoresizingMaskIntoConstraints = false
+        signUpLabel.bottomAnchor.constraint(equalTo: signUpButton.topAnchor).isActive = true
+        signUpLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        signUpLabel.heightAnchor.constraint(equalToConstant: 17).isActive = true
+        
+        // Enter button constraints
+        enterButton.translatesAutoresizingMaskIntoConstraints = false
+        enterButton.bottomAnchor.constraint(equalTo: signUpLabel.topAnchor, constant: -13).isActive = true
+        enterButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        enterButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
+        enterButton.widthAnchor.constraint(equalToConstant: 306).isActive = true
+        
+        // Additional text constraints
+        additionalText.translatesAutoresizingMaskIntoConstraints = false
+        additionalText.bottomAnchor.constraint(equalTo: enterButton.topAnchor, constant: -30).isActive = true
+        additionalText.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        additionalText.heightAnchor.constraint(greaterThanOrEqualToConstant: 78).isActive = true
+        additionalText.widthAnchor.constraint(equalToConstant: 281).isActive = true
+        
         enterButton.action = {
             UIView.animate(withDuration: 0.4) { [weak self] in
                 self?.enterButton.backgroundColor = UIColor(named: "Violet Pressed")
@@ -88,51 +120,6 @@ final class EnterViewController: UIViewController {
         }
         enterButton.isUserInteractionEnabled = true
         signUpButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(signUpTap)))
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // REShape name PinLayout
-        reShapeImage.pin
-            .top(view.safeAreaInsets.top + 60)
-            .hCenter()
-            .width(231)
-            .sizeToFit(.height)
-        
-        // Sign up button PinLayout
-        signUpButton.pin
-            .bottom(view.safeAreaInsets.bottom + 26)
-            .left(65)
-            .right(65)
-            .sizeToFit(.width)
-            .height(17)
-        
-        // Description text PinLayout
-        signUpLabel.pin
-            .above(of: signUpButton)
-            .marginBottom(0)
-            .left(20)
-            .right(20)
-            .sizeToFit(.width)
-            .height(17)
-        
-        // Enter button PinLayout
-        enterButton.pin
-            .above(of: signUpLabel)
-            .marginBottom(13)
-            .hCenter()
-            .width(306)
-            .height(55)
-        
-        // Additional text PinLayout
-        additionalText.pin
-            .above(of: enterButton)
-            .marginBottom(30)
-            .hCenter()
-            .width(281)
-            .minHeight(78)
-            .sizeToFit(.width)
     }
     
     @objc
