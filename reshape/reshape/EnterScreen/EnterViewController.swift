@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PinLayout
 
 final class EnterViewController: UIViewController {
     // REShape name on top screen
@@ -76,6 +75,43 @@ final class EnterViewController: UIViewController {
         
         enterButton.setupUI(name: "Войти")
         
+        reShapeImage.translatesAutoresizingMaskIntoConstraints = false
+        signUpButton.translatesAutoresizingMaskIntoConstraints = false
+        signUpLabel.translatesAutoresizingMaskIntoConstraints = false
+        enterButton.translatesAutoresizingMaskIntoConstraints = false
+        additionalText.translatesAutoresizingMaskIntoConstraints = false
+        
+        // ReShape logo Constraints
+        reShapeImage.top(60, isIncludeSafeArea: true)
+        reShapeImage.centerX()
+        reShapeImage.width(231)
+        
+        // Sign up button Constraints
+        signUpButton.bottom(-26, isIncludeSafeArea: true)
+        signUpButton.centerX()
+        signUpButton.height(17)
+        
+        // Description text Constraints
+        signUpLabel.centerX()
+        signUpLabel.height(17)
+        
+        // Enter button constraints
+        enterButton.centerX()
+        enterButton.height(55)
+        enterButton.width(306)
+        
+        // Additional text constraints
+        additionalText.centerX()
+        additionalText.width(281)
+        
+        NSLayoutConstraint.activate([
+            reShapeImage.heightAnchor.constraint(lessThanOrEqualToConstant: 72),
+            signUpLabel.bottomAnchor.constraint(equalTo: signUpButton.topAnchor),
+            enterButton.bottomAnchor.constraint(equalTo: signUpLabel.topAnchor, constant: -13),
+            additionalText.bottomAnchor.constraint(equalTo: enterButton.topAnchor, constant: -30),
+            additionalText.heightAnchor.constraint(greaterThanOrEqualToConstant: 78),
+        ])
+        
         enterButton.action = {
             UIView.animate(withDuration: 0.4) { [weak self] in
                 self?.enterButton.backgroundColor = UIColor(named: "Violet Pressed")
@@ -88,51 +124,6 @@ final class EnterViewController: UIViewController {
         }
         enterButton.isUserInteractionEnabled = true
         signUpButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(signUpTap)))
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // REShape name PinLayout
-        reShapeImage.pin
-            .top(view.safeAreaInsets.top + 60)
-            .hCenter()
-            .width(231)
-            .sizeToFit(.height)
-        
-        // Sign up button PinLayout
-        signUpButton.pin
-            .bottom(view.safeAreaInsets.bottom + 26)
-            .left(65)
-            .right(65)
-            .sizeToFit(.width)
-            .height(17)
-        
-        // Description text PinLayout
-        signUpLabel.pin
-            .above(of: signUpButton)
-            .marginBottom(0)
-            .left(20)
-            .right(20)
-            .sizeToFit(.width)
-            .height(17)
-        
-        // Enter button PinLayout
-        enterButton.pin
-            .above(of: signUpLabel)
-            .marginBottom(13)
-            .hCenter()
-            .width(306)
-            .height(55)
-        
-        // Additional text PinLayout
-        additionalText.pin
-            .above(of: enterButton)
-            .marginBottom(30)
-            .hCenter()
-            .width(281)
-            .minHeight(78)
-            .sizeToFit(.width)
     }
     
     @objc
