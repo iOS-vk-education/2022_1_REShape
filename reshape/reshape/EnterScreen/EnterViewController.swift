@@ -75,38 +75,42 @@ final class EnterViewController: UIViewController {
         
         enterButton.setupUI(name: "Войти")
         
-        // ReShape logo Constraints
         reShapeImage.translatesAutoresizingMaskIntoConstraints = false
-        reShapeImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
-        reShapeImage.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        reShapeImage.widthAnchor.constraint(equalToConstant: 231).isActive = true
-        reShapeImage.heightAnchor.constraint(lessThanOrEqualToConstant: 72).isActive = true
+        signUpButton.translatesAutoresizingMaskIntoConstraints = false
+        signUpLabel.translatesAutoresizingMaskIntoConstraints = false
+        enterButton.translatesAutoresizingMaskIntoConstraints = false
+        additionalText.translatesAutoresizingMaskIntoConstraints = false
+        
+        // ReShape logo Constraints
+        reShapeImage.top(60, isIncludeSafeArea: true)
+        reShapeImage.centerX()
+        reShapeImage.width(231)
         
         // Sign up button Constraints
-        signUpButton.translatesAutoresizingMaskIntoConstraints = false
-        signUpButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -26).isActive = true
-        signUpButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        signUpButton.heightAnchor.constraint(equalToConstant: 17).isActive = true
+        signUpButton.bottom(-26, isIncludeSafeArea: true)
+        signUpButton.centerX()
+        signUpButton.height(17)
         
         // Description text Constraints
-        signUpLabel.translatesAutoresizingMaskIntoConstraints = false
-        signUpLabel.bottomAnchor.constraint(equalTo: signUpButton.topAnchor).isActive = true
-        signUpLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        signUpLabel.heightAnchor.constraint(equalToConstant: 17).isActive = true
+        signUpLabel.centerX()
+        signUpLabel.height(17)
         
         // Enter button constraints
-        enterButton.translatesAutoresizingMaskIntoConstraints = false
-        enterButton.bottomAnchor.constraint(equalTo: signUpLabel.topAnchor, constant: -13).isActive = true
-        enterButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        enterButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
-        enterButton.widthAnchor.constraint(equalToConstant: 306).isActive = true
+        enterButton.centerX()
+        enterButton.height(55)
+        enterButton.width(306)
         
         // Additional text constraints
-        additionalText.translatesAutoresizingMaskIntoConstraints = false
-        additionalText.bottomAnchor.constraint(equalTo: enterButton.topAnchor, constant: -30).isActive = true
-        additionalText.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        additionalText.heightAnchor.constraint(greaterThanOrEqualToConstant: 78).isActive = true
-        additionalText.widthAnchor.constraint(equalToConstant: 281).isActive = true
+        additionalText.centerX()
+        additionalText.width(281)
+        
+        NSLayoutConstraint.activate([
+            reShapeImage.heightAnchor.constraint(lessThanOrEqualToConstant: 72),
+            signUpLabel.bottomAnchor.constraint(equalTo: signUpButton.topAnchor),
+            enterButton.bottomAnchor.constraint(equalTo: signUpLabel.topAnchor, constant: -13),
+            additionalText.bottomAnchor.constraint(equalTo: enterButton.topAnchor, constant: -30),
+            additionalText.heightAnchor.constraint(greaterThanOrEqualToConstant: 78),
+        ])
         
         enterButton.action = {
             UIView.animate(withDuration: 0.4) { [weak self] in
