@@ -8,13 +8,9 @@
 import Foundation
 import UIKit
 
-protocol CoordinatorProtocol {
-    func start()
-}
-
-final class Coordinator: CoordinatorProtocol {
-    private let window: UIWindow
-    private lazy var navigationControllers = Coordinator.makeNavigationControllers()
+final class AuthCoordinator: CoordinatorProtocol {
+    internal var window: UIWindow
+    private lazy var navigationControllers = AuthCoordinator.makeNavigationControllers()
     init(window: UIWindow) {
         self.window = window
     }
@@ -32,7 +28,7 @@ final class Coordinator: CoordinatorProtocol {
         }
 }
 
-extension Coordinator {
+extension AuthCoordinator {
     private func setupEnter() {
         guard let navController = navigationControllers[.enterScreen] else {
             fatalError("No navController")

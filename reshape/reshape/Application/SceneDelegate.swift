@@ -23,7 +23,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         window.overrideUserInterfaceStyle = .light
-        coordinator = Coordinator(window: window)
+        let bool = false
+        if bool {
+            coordinator = AppCoordinator(window: window, instructor: .authorization)
+        } else {
+            coordinator = AppCoordinator(window: window, instructor: .main)
+        }
         coordinator?.start()
     }
 }

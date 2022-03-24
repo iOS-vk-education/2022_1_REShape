@@ -41,6 +41,27 @@
 		94302BC527E66080009E397B /* ForgetPasswordScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BBF27E66080009E397B /* ForgetPasswordScreenInteractor.swift */; };
 		94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BC027E66080009E397B /* ForgetPasswordScreenContainer.swift */; };
 		94302BC827E72E56009E397B /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BC727E72E56009E397B /* CloseButton.swift */; };
+		945B383727ECC0B90044E952 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B383627ECC0B90044E952 /* AppCoordinator.swift */; };
+		945B383927ECC0C80044E952 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B383827ECC0C80044E952 /* MainFlowCoordinator.swift */; };
+		945B383B27ECC10D0044E952 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B383A27ECC10D0044E952 /* CoordinatorProtocol.swift */; };
+		945B384527ECC32A0044E952 /* ResultsScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B383F27ECC32A0044E952 /* ResultsScreenPresenter.swift */; };
+		945B384627ECC32A0044E952 /* ResultsScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B384027ECC32A0044E952 /* ResultsScreenRouter.swift */; };
+		945B384727ECC32A0044E952 /* ResultsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B384127ECC32A0044E952 /* ResultsScreenViewController.swift */; };
+		945B384827ECC32A0044E952 /* ResultsScreenProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B384227ECC32A0044E952 /* ResultsScreenProtocols.swift */; };
+		945B384927ECC32A0044E952 /* ResultsScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B384327ECC32A0044E952 /* ResultsScreenInteractor.swift */; };
+		945B384A27ECC32A0044E952 /* ResultsScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B384427ECC32A0044E952 /* ResultsScreenContainer.swift */; };
+		945B385127ECC33A0044E952 /* DietScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B384B27ECC33A0044E952 /* DietScreenPresenter.swift */; };
+		945B385227ECC33A0044E952 /* DietScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B384C27ECC33A0044E952 /* DietScreenRouter.swift */; };
+		945B385327ECC33A0044E952 /* DietScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B384D27ECC33A0044E952 /* DietScreenViewController.swift */; };
+		945B385427ECC33A0044E952 /* DietScreenProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B384E27ECC33A0044E952 /* DietScreenProtocols.swift */; };
+		945B385527ECC33A0044E952 /* DietScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B384F27ECC33A0044E952 /* DietScreenInteractor.swift */; };
+		945B385627ECC33A0044E952 /* DietScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B385027ECC33A0044E952 /* DietScreenContainer.swift */; };
+		945B385D27ECC3500044E952 /* ProfileScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B385727ECC3500044E952 /* ProfileScreenPresenter.swift */; };
+		945B385E27ECC3500044E952 /* ProfileScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B385827ECC3500044E952 /* ProfileScreenRouter.swift */; };
+		945B385F27ECC3500044E952 /* ProfileScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B385927ECC3500044E952 /* ProfileScreenViewController.swift */; };
+		945B386027ECC3500044E952 /* ProfileScreenProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B385A27ECC3500044E952 /* ProfileScreenProtocols.swift */; };
+		945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B385B27ECC3500044E952 /* ProfileScreenInteractor.swift */; };
+		945B386227ECC3500044E952 /* ProfileScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B385C27ECC3500044E952 /* ProfileScreenContainer.swift */; };
 		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +118,27 @@
 		94302BBF27E66080009E397B /* ForgetPasswordScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordScreenInteractor.swift; sourceTree = "<group>"; };
 		94302BC027E66080009E397B /* ForgetPasswordScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordScreenContainer.swift; sourceTree = "<group>"; };
 		94302BC727E72E56009E397B /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		945B383627ECC0B90044E952 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		945B383827ECC0C80044E952 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
+		945B383A27ECC10D0044E952 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		945B383F27ECC32A0044E952 /* ResultsScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsScreenPresenter.swift; sourceTree = "<group>"; };
+		945B384027ECC32A0044E952 /* ResultsScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsScreenRouter.swift; sourceTree = "<group>"; };
+		945B384127ECC32A0044E952 /* ResultsScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsScreenViewController.swift; sourceTree = "<group>"; };
+		945B384227ECC32A0044E952 /* ResultsScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsScreenProtocols.swift; sourceTree = "<group>"; };
+		945B384327ECC32A0044E952 /* ResultsScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsScreenInteractor.swift; sourceTree = "<group>"; };
+		945B384427ECC32A0044E952 /* ResultsScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsScreenContainer.swift; sourceTree = "<group>"; };
+		945B384B27ECC33A0044E952 /* DietScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietScreenPresenter.swift; sourceTree = "<group>"; };
+		945B384C27ECC33A0044E952 /* DietScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietScreenRouter.swift; sourceTree = "<group>"; };
+		945B384D27ECC33A0044E952 /* DietScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietScreenViewController.swift; sourceTree = "<group>"; };
+		945B384E27ECC33A0044E952 /* DietScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietScreenProtocols.swift; sourceTree = "<group>"; };
+		945B384F27ECC33A0044E952 /* DietScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietScreenInteractor.swift; sourceTree = "<group>"; };
+		945B385027ECC33A0044E952 /* DietScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietScreenContainer.swift; sourceTree = "<group>"; };
+		945B385727ECC3500044E952 /* ProfileScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenPresenter.swift; sourceTree = "<group>"; };
+		945B385827ECC3500044E952 /* ProfileScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenRouter.swift; sourceTree = "<group>"; };
+		945B385927ECC3500044E952 /* ProfileScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenViewController.swift; sourceTree = "<group>"; };
+		945B385A27ECC3500044E952 /* ProfileScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenProtocols.swift; sourceTree = "<group>"; };
+		945B385B27ECC3500044E952 /* ProfileScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenInteractor.swift; sourceTree = "<group>"; };
+		945B385C27ECC3500044E952 /* ProfileScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenContainer.swift; sourceTree = "<group>"; };
 		94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,9 +196,9 @@
 		2EECFF3927E505B500BD4BEF /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				945B383527ECC0A60044E952 /* Coordinator */,
 				36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */,
 				36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */,
-				2EA6508B27E9BB94003F41FC /* AuthCoordinator.swift */,
 				2E1F1DBD27E4936700FA7B77 /* Main.storyboard */,
 				36A9DB0927E2AC3500DB5082 /* Assets.xcassets */,
 				36A9DB0B27E2AC3500DB5082 /* LaunchScreen.storyboard */,
@@ -189,6 +231,9 @@
 		36A9DAFF27E2AC3400DB5082 /* reshape */ = {
 			isa = PBXGroup;
 			children = (
+				945B383E27ECC3120044E952 /* ProfileScreen */,
+				945B383D27ECC3030044E952 /* DietScreen */,
+				945B383C27ECC2DB0044E952 /* ResultsScreen */,
 				94302BBA27E66059009E397B /* ForgetPasswordScreen */,
 				2EECFF3927E505B500BD4BEF /* Application */,
 				2EECFF2C27E5035C00BD4BEF /* EnterScreen */,
@@ -240,6 +285,56 @@
 				94302BC027E66080009E397B /* ForgetPasswordScreenContainer.swift */,
 			);
 			path = ForgetPasswordScreen;
+			sourceTree = "<group>";
+		};
+		945B383527ECC0A60044E952 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				2EA6508B27E9BB94003F41FC /* AuthCoordinator.swift */,
+				945B383627ECC0B90044E952 /* AppCoordinator.swift */,
+				945B383827ECC0C80044E952 /* MainFlowCoordinator.swift */,
+				945B383A27ECC10D0044E952 /* CoordinatorProtocol.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		945B383C27ECC2DB0044E952 /* ResultsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				945B383F27ECC32A0044E952 /* ResultsScreenPresenter.swift */,
+				945B384027ECC32A0044E952 /* ResultsScreenRouter.swift */,
+				945B384127ECC32A0044E952 /* ResultsScreenViewController.swift */,
+				945B384227ECC32A0044E952 /* ResultsScreenProtocols.swift */,
+				945B384327ECC32A0044E952 /* ResultsScreenInteractor.swift */,
+				945B384427ECC32A0044E952 /* ResultsScreenContainer.swift */,
+			);
+			path = ResultsScreen;
+			sourceTree = "<group>";
+		};
+		945B383D27ECC3030044E952 /* DietScreen */ = {
+			isa = PBXGroup;
+			children = (
+				945B384B27ECC33A0044E952 /* DietScreenPresenter.swift */,
+				945B384C27ECC33A0044E952 /* DietScreenRouter.swift */,
+				945B384D27ECC33A0044E952 /* DietScreenViewController.swift */,
+				945B384E27ECC33A0044E952 /* DietScreenProtocols.swift */,
+				945B384F27ECC33A0044E952 /* DietScreenInteractor.swift */,
+				945B385027ECC33A0044E952 /* DietScreenContainer.swift */,
+			);
+			path = DietScreen;
+			sourceTree = "<group>";
+		};
+		945B383E27ECC3120044E952 /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				945B385727ECC3500044E952 /* ProfileScreenPresenter.swift */,
+				945B385827ECC3500044E952 /* ProfileScreenRouter.swift */,
+				945B385927ECC3500044E952 /* ProfileScreenViewController.swift */,
+				945B385A27ECC3500044E952 /* ProfileScreenProtocols.swift */,
+				945B385B27ECC3500044E952 /* ProfileScreenInteractor.swift */,
+				945B385C27ECC3500044E952 /* ProfileScreenContainer.swift */,
+			);
+			path = ProfileScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,31 +478,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				945B385527ECC33A0044E952 /* DietScreenInteractor.swift in Sources */,
 				941E811627E6149800A33344 /* LoginScreenRouter.swift in Sources */,
 				941E811A27E6149800A33344 /* LoginScreenContainer.swift in Sources */,
+				945B383727ECC0B90044E952 /* AppCoordinator.swift in Sources */,
 				941E811827E6149800A33344 /* LoginScreenProtocols.swift in Sources */,
 				2E1F1DDA27E4FB7E00FA7B77 /* EnterButton.swift in Sources */,
 				2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */,
 				2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */,
 				94302BC827E72E56009E397B /* CloseButton.swift in Sources */,
 				94302BC227E66080009E397B /* ForgetPasswordScreenRouter.swift in Sources */,
+				945B384627ECC32A0044E952 /* ResultsScreenRouter.swift in Sources */,
+				945B385F27ECC3500044E952 /* ProfileScreenViewController.swift in Sources */,
 				94302BC427E66080009E397B /* ForgetPasswordScreenProtocols.swift in Sources */,
+				945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */,
 				2EECFF3727E5037100BD4BEF /* EnterInteractor.swift in Sources */,
 				941E811927E6149800A33344 /* LoginScreenInteractor.swift in Sources */,
+				945B385E27ECC3500044E952 /* ProfileScreenRouter.swift in Sources */,
+				945B385D27ECC3500044E952 /* ProfileScreenPresenter.swift in Sources */,
 				2EECFF3627E5037100BD4BEF /* EnterProtocols.swift in Sources */,
+				945B384827ECC32A0044E952 /* ResultsScreenProtocols.swift in Sources */,
 				36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */,
+				945B383B27ECC10D0044E952 /* CoordinatorProtocol.swift in Sources */,
+				945B386027ECC3500044E952 /* ProfileScreenProtocols.swift in Sources */,
+				945B384527ECC32A0044E952 /* ResultsScreenPresenter.swift in Sources */,
 				2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */,
 				2EECFF3827E5037100BD4BEF /* EnterContainer.swift in Sources */,
 				94302BC527E66080009E397B /* ForgetPasswordScreenInteractor.swift in Sources */,
+				945B385427ECC33A0044E952 /* DietScreenProtocols.swift in Sources */,
+				945B385327ECC33A0044E952 /* DietScreenViewController.swift in Sources */,
 				941E811527E6149800A33344 /* LoginScreenPresenter.swift in Sources */,
 				2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */,
 				94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */,
+				945B385227ECC33A0044E952 /* DietScreenRouter.swift in Sources */,
+				945B386227ECC3500044E952 /* ProfileScreenContainer.swift in Sources */,
 				94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */,
 				94302BC127E66080009E397B /* ForgetPasswordScreenPresenter.swift in Sources */,
+				945B384927ECC32A0044E952 /* ResultsScreenInteractor.swift in Sources */,
 				94302BC327E66080009E397B /* ForgetPasswordScreenViewController.swift in Sources */,
+				945B383927ECC0C80044E952 /* MainFlowCoordinator.swift in Sources */,
+				945B384727ECC32A0044E952 /* ResultsScreenViewController.swift in Sources */,
 				941E811D27E614F300A33344 /* AuthStackView.swift in Sources */,
 				941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */,
+				945B384A27ECC32A0044E952 /* ResultsScreenContainer.swift in Sources */,
+				945B385627ECC33A0044E952 /* DietScreenContainer.swift in Sources */,
 				36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */,
+				945B385127ECC33A0044E952 /* DietScreenPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
