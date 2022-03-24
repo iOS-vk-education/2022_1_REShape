@@ -24,13 +24,14 @@ protocol LoginScreenViewOutput: AnyObject {
 }
 
 protocol LoginScreenInteractorInput: AnyObject {
+    func rememberUser(isRemembered: Bool, key: String)
 }
 
 protocol LoginScreenInteractorOutput: AnyObject {
 }
 
 protocol LoginScreenRouterInput: AnyObject {
-    func loginButtonPressed()
     func closeButtonPressed()
+    func forgetPasswordButtonPressed()
 }
 

@@ -18,11 +18,10 @@ enum Placeholders: String {
     case email = "abvgd@ya.ru"
     case password = "********"
 }
-
+let defaults = UserDefaults.standard
 final class LoginScreenViewController: UIViewController {
     
     private lazy var closeButton: CloseButton = CloseButton(viewControllerToClose: self)
-    
     private let mainLabel: UILabel = {
         let mainLabel = UILabel()
         mainLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -40,10 +39,11 @@ final class LoginScreenViewController: UIViewController {
         return enterStackView
     }()
     
-    private let rememberButton: UIButton = {
-        let rememberButton = UIButton()
+    private let rememberButton: UIImageView = {
+        let rememberButton = UIImageView()
         rememberButton.translatesAutoresizingMaskIntoConstraints = false
-        rememberButton.setImage(UIImage(named: "notRememberButton"), for: .normal)
+        rememberButton.image = UIImage(named: "notRememberButton")
+//        rememberButton.setImage(UIImage(named: "notRememberButton"), for: .normal)
         return rememberButton
     }()
     private let rememberLabel: UILabel = {
@@ -97,6 +97,7 @@ final class LoginScreenViewController: UIViewController {
     var containerViewHeightConstraint: NSLayoutConstraint?
     var containerViewBottomConstraint: NSLayoutConstraint?
     private let output: LoginScreenViewOutput
+    private let input: LoginScreenInteractorInput
     private lazy var isRemembered: Bool = false
     
     override func viewDidAppear(_ animated: Bool) {
@@ -107,9 +108,9 @@ final class LoginScreenViewController: UIViewController {
         animatePresentContainer()
     }
     
-    init(output: LoginScreenViewOutput) {
+    init(output: LoginScreenViewOutput, input: LoginScreenInteractorInput) {
         self.output = output
-        
+        self.input = input
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -268,11 +269,13 @@ extension LoginScreenViewController {
     func rememberPasswordButtonPressed() {
         print("remember password")
         if isRemembered == false {
-            rememberButton.setImage(UIImage(named: "rememberButton"), for: .normal)
+            rememberButton.image = UIImage(named: "rememberButton")
             isRemembered = !isRemembered
+            self.input.rememberUser(isRemembered: true, key: "isRemembered")
         } else {
-            rememberButton.setImage(UIImage(named: "notRememberButton"), for: .normal)
+            rememberButton.image = UIImage(named: "notRememberButton")
             isRemembered = !isRemembered
+            self.input.rememberUser(isRemembered: false, key: "isRemembered")
         }
     }
     func setupPanGesture() {

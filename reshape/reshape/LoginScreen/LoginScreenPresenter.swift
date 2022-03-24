@@ -30,9 +30,9 @@ extension LoginScreenPresenter: LoginScreenViewOutput {
     }
     
     func showForgetPasswordScreen() {
-        router.loginButtonPressed()
+        router.forgetPasswordButtonPressed()
     }
-    
+
 }
 
 extension LoginScreenPresenter: LoginScreenInteractorOutput {

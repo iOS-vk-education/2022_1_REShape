@@ -13,4 +13,7 @@ final class LoginScreenInteractor {
 }
 
 extension LoginScreenInteractor: LoginScreenInteractorInput {
+    func rememberUser(isRemembered: Bool, key: String){
+        defaults.set(isRemembered, forKey: key)
+    }
 }
