@@ -13,7 +13,7 @@ final class ForgetPasswordScreenRouter {
 }
 
 extension ForgetPasswordScreenRouter: ForgetPasswordScreenRouterInput {
-    func closeButtonPressed(){
+    func closeButton(){
         viewController?.dismiss(animated: true)
     }
 }

@@ -14,13 +14,13 @@ final class LoginScreenRouter {
 
 extension LoginScreenRouter: LoginScreenRouterInput {
     
-    func forgetPasswordButtonPressed() {
+    func forgetPasswordButton() {
         let forgetPasswordScreenContext = ForgetPasswordScreenContext(moduleOutput: nil)
         let forgetPasswordScreenContainer = ForgetPasswordScreenContainer.assemble(with: forgetPasswordScreenContext)
         forgetPasswordScreenContainer.viewController.modalPresentationStyle = .overFullScreen
         self.viewController?.present(forgetPasswordScreenContainer.viewController, animated: false)
     }
-    func closeButtonPressed() {
+    func closeButton() {
         viewController?.dismiss(animated: true)
     }
     

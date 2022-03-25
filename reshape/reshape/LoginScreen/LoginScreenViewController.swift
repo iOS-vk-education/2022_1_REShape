@@ -97,7 +97,6 @@ final class LoginScreenViewController: UIViewController {
     var containerViewHeightConstraint: NSLayoutConstraint?
     var containerViewBottomConstraint: NSLayoutConstraint?
     private let output: LoginScreenViewOutput
-    private let input: LoginScreenInteractorInput
     private lazy var isRemembered: Bool = false
     
     override func viewDidAppear(_ animated: Bool) {
@@ -108,9 +107,8 @@ final class LoginScreenViewController: UIViewController {
         animatePresentContainer()
     }
     
-    init(output: LoginScreenViewOutput, input: LoginScreenInteractorInput) {
+    init(output: LoginScreenViewOutput) {
         self.output = output
-        self.input = input
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -271,11 +269,11 @@ extension LoginScreenViewController {
         if isRemembered == false {
             rememberButton.image = UIImage(named: "rememberButton")
             isRemembered = !isRemembered
-            self.input.rememberUser(isRemembered: true, key: "isRemembered")
+            self.output.isUserRemembered(isRemembered: true, forKey: "isRemembered")
         } else {
             rememberButton.image = UIImage(named: "notRememberButton")
             isRemembered = !isRemembered
-            self.input.rememberUser(isRemembered: false, key: "isRemembered")
+            self.output.isUserRemembered(isRemembered: true, forKey: "isRemembered")
         }
     }
     func setupPanGesture() {

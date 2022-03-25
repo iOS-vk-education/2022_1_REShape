@@ -26,7 +26,7 @@ extension ForgetPasswordScreenPresenter: ForgetPasswordScreenModuleInput {
 
 extension ForgetPasswordScreenPresenter: ForgetPasswordScreenViewOutput {
     func closeForgetPasswordScreen() {
-        router.closeButtonPressed()
+        router.closeButton()
     }
     
 }
