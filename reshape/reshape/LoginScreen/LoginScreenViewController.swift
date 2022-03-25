@@ -101,8 +101,7 @@ final class LoginScreenViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        raiseViewWithKeyboard()
-        dropDownViewWithoutKeyboard()
+        setupObserversForKeyboard()
         animateShowDimmedView()
         animatePresentContainer()
     }
@@ -339,11 +338,8 @@ extension LoginScreenViewController {
         }
         
     }
-    private func raiseViewWithKeyboard(){
+    private func setupObserversForKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-
-    }
-    private func dropDownViewWithoutKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     //поднятие вью при появлении клавы
