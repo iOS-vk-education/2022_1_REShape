@@ -29,5 +29,5 @@ protocol ForgetPasswordScreenInteractorOutput: AnyObject {
 }
 
 protocol ForgetPasswordScreenRouterInput: AnyObject {
-    func closeButtonPressed()
+    func closeButton()
 }

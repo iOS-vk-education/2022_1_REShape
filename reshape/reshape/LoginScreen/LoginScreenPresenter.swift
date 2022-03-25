@@ -26,13 +26,16 @@ extension LoginScreenPresenter: LoginScreenModuleInput {
 
 extension LoginScreenPresenter: LoginScreenViewOutput {
     func closeLoginScreen() {
-        router.closeButtonPressed()
+        router.closeButton()
     }
     
     func showForgetPasswordScreen() {
-        router.loginButtonPressed()
+        router.forgetPasswordButton()
     }
-    
+    func isUserRemembered(isRemembered: Bool, forKey: String){
+        interactor.rememberUser(isRemembered: isRemembered, key: forKey)
+    }
+
 }
 
 extension LoginScreenPresenter: LoginScreenInteractorOutput {

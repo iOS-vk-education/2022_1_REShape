@@ -18,11 +18,10 @@ enum Placeholders: String {
     case email = "abvgd@ya.ru"
     case password = "********"
 }
-
+let defaults = UserDefaults.standard
 final class LoginScreenViewController: UIViewController {
     
     private lazy var closeButton: CloseButton = CloseButton(viewControllerToClose: self)
-    
     private let mainLabel: UILabel = {
         let mainLabel = UILabel()
         mainLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -40,10 +39,11 @@ final class LoginScreenViewController: UIViewController {
         return enterStackView
     }()
     
-    private let rememberButton: UIButton = {
-        let rememberButton = UIButton()
+    private let rememberButton: UIImageView = {
+        let rememberButton = UIImageView()
         rememberButton.translatesAutoresizingMaskIntoConstraints = false
-        rememberButton.setImage(UIImage(named: "notRememberButton"), for: .normal)
+        rememberButton.image = UIImage(named: "notRememberButton")
+//        rememberButton.setImage(UIImage(named: "notRememberButton"), for: .normal)
         return rememberButton
     }()
     private let rememberLabel: UILabel = {
@@ -101,15 +101,13 @@ final class LoginScreenViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        raiseViewWithKeyboard()
-        dropDownViewWithoutKeyboard()
+        setupObserversForKeyboard()
         animateShowDimmedView()
         animatePresentContainer()
     }
     
     init(output: LoginScreenViewOutput) {
         self.output = output
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -268,11 +266,13 @@ extension LoginScreenViewController {
     func rememberPasswordButtonPressed() {
         print("remember password")
         if isRemembered == false {
-            rememberButton.setImage(UIImage(named: "rememberButton"), for: .normal)
+            rememberButton.image = UIImage(named: "rememberButton")
             isRemembered = !isRemembered
+            self.output.isUserRemembered(isRemembered: true, forKey: "isRemembered")
         } else {
-            rememberButton.setImage(UIImage(named: "notRememberButton"), for: .normal)
+            rememberButton.image = UIImage(named: "notRememberButton")
             isRemembered = !isRemembered
+            self.output.isUserRemembered(isRemembered: true, forKey: "isRemembered")
         }
     }
     func setupPanGesture() {
@@ -338,11 +338,8 @@ extension LoginScreenViewController {
         }
         
     }
-    private func raiseViewWithKeyboard(){
+    private func setupObserversForKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-
-    }
-    private func dropDownViewWithoutKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     //поднятие вью при появлении клавы

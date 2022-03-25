@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var coordinator: CoordinatorProtocol?
-
+    
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
@@ -23,7 +23,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         window.overrideUserInterfaceStyle = .light
-        coordinator = Coordinator(window: window)
+        if let isRemembered = defaults.value(forKey: "isRemembered") as? Bool, isRemembered != false {
+            coordinator = AppCoordinator(window: window, instructor: .main)
+        } else {
+            coordinator = AppCoordinator(window: window, instructor: .authorization)
+        }
         coordinator?.start()
     }
 }
