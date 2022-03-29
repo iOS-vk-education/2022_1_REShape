@@ -12,20 +12,20 @@ protocol DietScreenModuleInput {
 	var moduleOutput: DietScreenModuleOutput? { get }
 }
 
-protocol DietScreenModuleOutput: class {
+protocol DietScreenModuleOutput: AnyObject {
 }
 
-protocol DietScreenViewInput: class {
+protocol DietScreenViewInput: AnyObject {
 }
 
-protocol DietScreenViewOutput: class {
+protocol DietScreenViewOutput: AnyObject {
 }
 
-protocol DietScreenInteractorInput: class {
+protocol DietScreenInteractorInput: AnyObject {
 }
 
-protocol DietScreenInteractorOutput: class {
+protocol DietScreenInteractorOutput: AnyObject {
 }
 
-protocol DietScreenRouterInput: class {
+protocol DietScreenRouterInput: AnyObject {
 }
