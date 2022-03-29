@@ -35,6 +35,9 @@ extension LoginScreenPresenter: LoginScreenViewOutput {
     func isUserRemembered(isRemembered: Bool, forKey: String){
         interactor.rememberUser(isRemembered: isRemembered, key: forKey)
     }
+    func showResultsScreen() {
+        router.loginButton()
+    }
 
 }
 

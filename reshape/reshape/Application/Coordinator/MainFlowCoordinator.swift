@@ -25,6 +25,7 @@ final class MainFlowCoordinator: CoordinatorProtocol{
         }
         tabBar.setViewControllers(navigationControllers, animated: true)
         window.rootViewController = tabBar
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {})
         window.makeKeyAndVisible()
     }
 }

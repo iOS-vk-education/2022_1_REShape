@@ -81,6 +81,7 @@ final class LoginScreenViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = UIColor.init(named: "ModalViewColor")
         view.layer.cornerRadius = 40
+        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         view.clipsToBounds = true
         return view
     }()
@@ -242,7 +243,7 @@ extension LoginScreenViewController {
                 self?.loginButton.backgroundColor = UIColor(named: "Violet Pressed")
             } completion: { [weak self] finished in
                 if finished {
-                    print("loginbutton tapped")
+                    self?.output.showResultsScreen()
                     self?.loginButton.backgroundColor = UIColor(named: "Violet")
                 }
             }

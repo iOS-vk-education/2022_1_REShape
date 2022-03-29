@@ -10,6 +10,7 @@ import UIKit
 
 final class LoginScreenRouter {
     var viewController: UIViewController?
+    var window: UIWindow?
 }
 
 extension LoginScreenRouter: LoginScreenRouterInput {
@@ -22,6 +23,13 @@ extension LoginScreenRouter: LoginScreenRouterInput {
     }
     func closeButton() {
         viewController?.dismiss(animated: true)
+    }
+    func loginButton() {
+        guard let window = window else {
+            return
+        }
+        let coordinator = MainFlowCoordinator(window: window)
+        coordinator.start()
     }
     
 }

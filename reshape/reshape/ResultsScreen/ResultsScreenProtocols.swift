@@ -12,20 +12,20 @@ protocol ResultsScreenModuleInput {
 	var moduleOutput: ResultsScreenModuleOutput? { get }
 }
 
-protocol ResultsScreenModuleOutput: class {
+protocol ResultsScreenModuleOutput: AnyObject {
 }
 
-protocol ResultsScreenViewInput: class {
+protocol ResultsScreenViewInput: AnyObject {
 }
 
-protocol ResultsScreenViewOutput: class {
+protocol ResultsScreenViewOutput: AnyObject {
 }
 
-protocol ResultsScreenInteractorInput: class {
+protocol ResultsScreenInteractorInput: AnyObject {
 }
 
-protocol ResultsScreenInteractorOutput: class {
+protocol ResultsScreenInteractorOutput: AnyObject {
 }
 
-protocol ResultsScreenRouterInput: class {
+protocol ResultsScreenRouterInput: AnyObject {
 }

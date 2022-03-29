@@ -10,11 +10,15 @@ import UIKit
 
 final class EnterRouter {
     var viewController: UIViewController?
+    var window: UIWindow?
 }
 
 extension EnterRouter: EnterRouterInput {
     func enterButtonPressed() {
-        let loginScreenContext = LoginScreenContext(moduleOutput: nil)
+        guard let window = window else {
+            return
+        }
+        let loginScreenContext = LoginScreenContext(moduleOutput: nil, window: window)
         let loginScreenContainer = LoginScreenContainer.assemble(with: loginScreenContext)
         loginScreenContainer.viewController.modalPresentationStyle = .overCurrentContext
         self.viewController?.present(loginScreenContainer.viewController, animated: false)
