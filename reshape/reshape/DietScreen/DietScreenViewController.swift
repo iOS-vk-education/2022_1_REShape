@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class DietScreenViewController: UIViewController {
 	private let output: DietScreenViewOutput
+    
+    var rowsInSections: [IndexPath:MealsType] = [:]
+    var disclosureCells: [IndexPath] = []
     
     private var dietLabel: UILabel = {
         let label = UILabel()
@@ -27,12 +31,13 @@ final class DietScreenViewController: UIViewController {
                            attributes: [NSAttributedString.Key.kern: 0.77,
                                         NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .regular),
                                         NSAttributedString.Key.foregroundColor: UIColor(named: "Grey for dietScreen")!])
-//        search.searchTextPositionAdjustment = UIOffset(horizontal: 46, vertical: 0)
         search.searchBarStyle = .minimal
         search.setPositionAdjustment(UIOffset(horizontal: 9, vertical: 0.5), for: .search)
         search.searchTextPositionAdjustment = UIOffset(horizontal: 9, vertical: 0.5)
         return search
     }()
+    
+    private let dietTableView = UITableView(frame: .zero, style: UITableView.Style.grouped)
     
     init(output: DietScreenViewOutput) {
         self.output = output
@@ -54,6 +59,9 @@ final class DietScreenViewController: UIViewController {
     func setupUI() {
         view.addSubview(dietLabel)
         view.addSubview(dietSearchBar)
+        view.addSubview(dietTableView)
+        
+        setupTableView()
     }
     
     func setupConstraint() {
@@ -68,11 +76,210 @@ final class DietScreenViewController: UIViewController {
         dietSearchBar.leading(9)
         dietSearchBar.height(36)
         
+        dietTableView.translatesAutoresizingMaskIntoConstraints = false
+        dietTableView.bottom(isIncludeSafeArea: true)
+        dietTableView.trailing(0)
+        dietTableView.leading(0)
+        
         NSLayoutConstraint.activate([
             dietLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 19),
+            dietTableView.topAnchor.constraint(equalTo: dietSearchBar.bottomAnchor, constant: 21)
         ])
+    }
+    
+    func setupTableView() {
+        dietTableView.backgroundColor = .white
+        dietTableView.delegate = self
+        dietTableView.dataSource = self
+        
+        dietTableView.separatorStyle = .singleLine
+        dietTableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 1, right: 16)
+        dietTableView.separatorColor = .white
+        
+        dietTableView.register(BreakfastCell.self, forCellReuseIdentifier: "BreakfastCell")
+        dietTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MealCell") // TODO
+        dietTableView.register(LunchCell.self, forCellReuseIdentifier: "LunchCell")
+        dietTableView.register(DinnerCell.self, forCellReuseIdentifier: "DinnerCell")
+        dietTableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "Day") // TODO
+    }
+    
+    private func updateCells(at indexPath: IndexPath) {
+        var mealType: MealsType
+        switch rowsInSections[indexPath] {
+        case .breakfast:
+            mealType = .mealBreakfast
+        case .lunch:
+            mealType = .mealLunch
+        case .dinner:
+            mealType = .mealDinner
+        default:
+            return
+        }
+
+        if disclosureCells.contains(indexPath) {
+            guard let numOfMealsInCell = (dietTableView.cellForRow(at:indexPath) as? DietCell)?.mealsList.count else { return }
+            if numOfMealsInCell == 0 { return }
+            dietTableView.beginUpdates()
+            var mealCellsIndexes: [IndexPath] = []
+            for mealNum in (indexPath.row + 1)...(indexPath.row + numOfMealsInCell) {
+                let mealIndex = IndexPath(row: mealNum, section: indexPath.section)
+                mealCellsIndexes.append(mealIndex)
+                rowsInSections[mealIndex] = mealType
+            }
+            dietTableView.insertRows(at: mealCellsIndexes, with: .top)
+            dietTableView.reloadSections([indexPath.section], with: .none)
+            dietTableView.endUpdates()
+        } else {
+            dietTableView.beginUpdates()
+            while rowsInSections.firstIndex(where: { $1 == mealType }) != nil {
+                rowsInSections.remove(at: rowsInSections.firstIndex(where: {
+                    dietTableView.deleteRows(at: [$0], with: .top)
+                    return $1 == mealType
+                })!)
+            }
+            dietTableView.endUpdates()
+        }
+        dietTableView.reloadSections([indexPath.section], with: .none)
+    }
+    
+    private func disclosureCell(at indexPath: IndexPath) {
+        guard let dietCell = dietTableView.cellForRow(at: indexPath) as? DietCell else {
+            return
+        }
+        if disclosureCells.contains(indexPath) {
+            dietCell.disclosure(true)
+        } else {
+            dietCell.disclosure(false)
+        }
     }
 }
 
 extension DietScreenViewController: DietScreenViewInput {
+    func setMealList(_ meals: [Meals], day: Int, mealtype: MealsType) {
+        guard let cellForSetMealIndex = rowsInSections.first(where: {
+            $1 == mealtype && $0.section == day - 1
+        })?.key else {
+            return
+        }
+        guard let cellForSetMeal = dietTableView.cellForRow(at: cellForSetMealIndex) as? DietCell else {
+            return
+        }
+        cellForSetMeal.mealsList = meals
+        updateCells(at: cellForSetMealIndex)
+    }
+}
+
+extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cellTypeSection = rowsInSections[indexPath] else {
+            return .init()
+        }
+        
+        switch cellTypeSection {
+        case .breakfast:
+            return tableView.dequeueReusableCell(withIdentifier: "BreakfastCell", for: indexPath)
+        case .lunch:
+            return tableView.dequeueReusableCell(withIdentifier: "LunchCell", for: indexPath)
+        case .dinner:
+            return tableView.dequeueReusableCell(withIdentifier: "DinnerCell", for: indexPath)
+        case .mealBreakfast:
+            guard let disclosureCellIndex = self.rowsInSections.first(where: {$1 == .breakfast})?.key else {
+                return .init()
+            }
+            guard let mealList = (tableView.cellForRow(at: disclosureCellIndex) as? DietCell)?.mealsList else {
+                return .init()
+            }
+            let mealCell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath)
+            let mealName = mealList[indexPath.row - disclosureCellIndex.row - 1].name
+//            let mealCalories = mealList[indexPath.row - disclosureCellIndex.row - 1].cal
+            
+            var contentConf = mealCell.defaultContentConfiguration()
+            contentConf.text = mealName
+            mealCell.contentConfiguration = contentConf
+            
+            return mealCell
+        case .mealLunch:
+            guard let disclosureCellIndex = self.rowsInSections.first(where: {$1 == .lunch})?.key else {
+                return .init()
+            }
+            guard let mealList = (tableView.cellForRow(at: disclosureCellIndex) as? DietCell)?.mealsList else {
+                return .init()
+            }
+            let mealCell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath)
+            let mealName = mealList[indexPath.row - disclosureCellIndex.row - 1].name
+//            let mealCalories = mealList[indexPath.row - disclosureCellIndex.row - 1].cal
+            
+            var contentConf = mealCell.defaultContentConfiguration()
+            contentConf.text = mealName
+            mealCell.contentConfiguration = contentConf
+            
+            return mealCell
+        case .mealDinner:
+            guard let disclosureCellIndex = self.rowsInSections.first(where: {$1 == .dinner})?.key else {
+                return .init()
+            }
+            guard let mealList = (tableView.cellForRow(at: disclosureCellIndex) as? DietCell)?.mealsList else {
+                return .init()
+            }
+            let mealCell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath)
+            let mealName = mealList[indexPath.row - disclosureCellIndex.row - 1].name
+//            let mealCalories = mealList[indexPath.row - disclosureCellIndex.row - 1].cal
+            
+            var contentConf = mealCell.defaultContentConfiguration()
+            contentConf.text = mealName
+            mealCell.contentConfiguration = contentConf
+            
+            return mealCell
+        default:
+            return .init()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Day")
+        
+        var contentConfiguration = header!.defaultContentConfiguration()
+        contentConfiguration.text = "День \(section + 1)"
+        contentConfiguration.textProperties.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        contentConfiguration.textProperties.color = UIColor(named: "Violet") ?? .systemPurple
+        
+        header?.contentConfiguration = contentConfiguration
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 26 : 41
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        33
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch rowsInSections[indexPath] {
+        case .mealBreakfast, .mealLunch, .mealDinner:
+            return
+        case .breakfast, .lunch, .dinner:
+            disclosureCells.contains(indexPath) ? disclosureCells.removeAll(where: {$0 == indexPath}) : disclosureCells.append(indexPath)
+            disclosureCell(at: indexPath)
+            updateCells(at: indexPath)
+            output.needMealList(day: indexPath.section + 1, mealtype: rowsInSections[indexPath] ?? .none)
+        default:
+            return
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return rowsInSections.filter({$0.key.section == section}).count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        let numOfSec = output.getNumOfDay()
+        for currentSection in 0...numOfSec - 1 {
+            rowsInSections[IndexPath(row: 0, section: currentSection)] = .breakfast
+            rowsInSections[IndexPath(row: 1, section: currentSection)] = .lunch
+            rowsInSections[IndexPath(row: 2, section: currentSection)] = .dinner
+        }
+        return numOfSec
+    }
 }

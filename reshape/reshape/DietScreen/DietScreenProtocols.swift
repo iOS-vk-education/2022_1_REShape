@@ -16,9 +16,12 @@ protocol DietScreenModuleOutput: AnyObject {
 }
 
 protocol DietScreenViewInput: AnyObject {
+    func setMealList(_ meals: [Meals], day: Int, mealtype: MealsType)
 }
 
 protocol DietScreenViewOutput: AnyObject {
+    func needMealList(day: Int, mealtype: MealsType)
+    func getNumOfDay() -> Int
 }
 
 protocol DietScreenInteractorInput: AnyObject {
