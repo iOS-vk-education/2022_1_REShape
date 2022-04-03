@@ -35,8 +35,8 @@ final class ResultsScreenViewController: UIViewController {
         targetLabel.textAlignment = .left
         return targetLabel
     }()
-//    private let edgeInsets =
-
+    //    private let edgeInsets =
+    
     init(output: ResultsScreenViewOutput) {
         self.output = output
         
@@ -81,10 +81,13 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
         
     }
     private func setupUI(){
-        
+        mainView.layer.masksToBounds = false
+        mainView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        mainView.layer.shadowRadius = 5
+        mainView.layer.shadowOpacity = 0.5
         
     }
-
+    
     private func setupCollectionView(){
         
     }
@@ -92,7 +95,7 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
 extension ResultsScreenViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width - 72,
-                                  height: view.frame.height / 10)
+                      height: view.frame.height / 10)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -101,7 +104,11 @@ extension ResultsScreenViewController: UICollectionViewDelegateFlowLayout {
 }
 extension ResultsScreenViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("item selected")
+        if indexPath == [0, 1] {
+            print("weight")
+        } else {
+            print("water")
+        }
     }
 }
 extension ResultsScreenViewController: UICollectionViewDataSource {
@@ -118,6 +125,7 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
         switch indexPath.item {
         case 0:
             cell.configure(category: "Калории", target: "2000 ккал", result: "1000 ккал", percent: "50%", color: "Orange", valueOfprogress: 0.5)
+            cell.isUserInteractionEnabled = false
         case 1:
             cell.configure(category: "Вес", target: "50 кг", result: "52 кг", percent: "-200г", color: "Green", valueOfprogress: 1)
         case 2:

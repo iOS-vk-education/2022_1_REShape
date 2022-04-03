@@ -17,6 +17,7 @@ final class MainFlowCoordinator: CoordinatorProtocol{
     }
     
     func start() {
+        setupTabBar()
         setupResults()
         setupDiet()
         setupProfile()
@@ -31,6 +32,9 @@ final class MainFlowCoordinator: CoordinatorProtocol{
 }
 
 extension MainFlowCoordinator{
+    private func setupTabBar() {
+        tabBar.tabBar.backgroundColor = UIColor(named: "TableViewBackground")
+    }
     private func setupResults() {
         guard let navController = navigationControllers[.results] else {
             fatalError("No navController")
@@ -64,6 +68,8 @@ extension MainFlowCoordinator{
             let tabBarItem = UITabBarItem(title: navControllerKey.title,
                                           image: navControllerKey.image,
                                           tag: navControllerKey.rawValue)
+//            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "Violet") ?? .green], for: .selected)
+//            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
             navigationController.tabBarItem = tabBarItem
             result[navControllerKey] = navigationController
             
