@@ -21,6 +21,7 @@ final class MainFlowCoordinator: CoordinatorProtocol{
         setupResults()
         setupDiet()
         setupProfile()
+        tabBar.tabBar.unselectedItemTintColor = .black
         let navigationControllers = NavControllerType.allCases.compactMap {
             self.navigationControllers[$0]
         }
@@ -66,12 +67,12 @@ extension MainFlowCoordinator{
         NavControllerType.allCases.forEach { navControllerKey in
             let navigationController = UINavigationController()
             let tabBarItem = UITabBarItem(title: navControllerKey.title,
-                                          image: navControllerKey.image,
-                                          tag: navControllerKey.rawValue)
-//            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "Violet") ?? .green], for: .selected)
-//            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+                                          image: navControllerKey.image?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal),
+                                          selectedImage: navControllerKey.image?.withTintColor(UIColor(named: "Violet") ?? .green))
+//                                          tag: navControllerKey.rawValue)
             navigationController.tabBarItem = tabBarItem
             result[navControllerKey] = navigationController
+            UITabBar.appearance().tintColor = UIColor(named: "Violet")
             
             navigationController.isNavigationBarHidden = true
         }
