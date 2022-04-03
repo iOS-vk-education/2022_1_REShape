@@ -21,11 +21,13 @@ final class PhotoProgressView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraints()
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupConstraints()
+        setupUI()
     }
 }
 extension PhotoProgressView{
@@ -42,5 +44,16 @@ extension PhotoProgressView{
         progressBar.centerX()
         progressBar.height(130)
         progressBar.width(130)
+    }
+    func setupUI(){
+        progressBar.progressColor = UIColor(named: "progress") ?? .white
+        progressBar.circleColor = UIColor(named: "progress")?.withAlphaComponent(0) ?? .systemGray
+        progressBar.tag = 101
+        self.perform(#selector(animateProgress), with: nil, afterDelay: 0.3)
+    }
+    @objc
+    func animateProgress() {
+        let cp = self.viewWithTag(101) as! CircularProgressBarView
+        cp.setProgressWithAnimation(duration: 1.0, value: 0.75)
     }
 }
