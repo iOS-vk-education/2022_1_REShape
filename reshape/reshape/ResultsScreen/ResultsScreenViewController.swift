@@ -50,6 +50,7 @@ final class ResultsScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        resultsCollectionView.register(cellType: ResultCollectionCell.self)
         resultsCollectionView.register(UINib(nibName: "ResultCollectionCell", bundle: nil), forCellWithReuseIdentifier: ResultCollectionCell.reuseID)
         setupConstraints()
         setupUI()
@@ -117,10 +118,7 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionCell.reuseID, for: indexPath) as? ResultCollectionCell
-        else  {
-            fatalError()
-        }
+        let cell = collectionView.dequeueCell(cellType: ResultCollectionCell.self, for: indexPath)
         
         switch indexPath.item {
         case 0:
