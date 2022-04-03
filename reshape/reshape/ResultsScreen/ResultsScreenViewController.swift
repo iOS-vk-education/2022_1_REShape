@@ -51,7 +51,6 @@ final class ResultsScreenViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         resultsCollectionView.register(cellType: ResultCollectionCell.self)
-        resultsCollectionView.register(UINib(nibName: "ResultCollectionCell", bundle: nil), forCellWithReuseIdentifier: ResultCollectionCell.reuseID)
         setupConstraints()
         setupUI()
         setupCollectionView()

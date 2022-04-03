@@ -35,6 +35,10 @@ class CircularProgressBarView: UIView {
         super.init(coder: coder)
         createCircularPath()
     }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        circleLayer.cornerRadius = 20
+    }
 }
 extension CircularProgressBarView{
     func createCircularPath() {
