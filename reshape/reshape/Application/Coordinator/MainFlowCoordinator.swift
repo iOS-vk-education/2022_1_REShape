@@ -10,7 +10,7 @@ import UIKit
 
 final class MainFlowCoordinator: CoordinatorProtocol{
     internal var window: UIWindow
-    lazy var tabBar: UITabBarController = UITabBarController()
+    private lazy var tabBar: UITabBarController = UITabBarController()
     private lazy var navigationControllers = MainFlowCoordinator.makeNavigationControllers()
     init (window: UIWindow) {
         self.window = window
