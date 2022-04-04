@@ -9,11 +9,22 @@
 import UIKit
 import SwiftUI
 
+struct mealCells {
+    var cellType: MealsType
+    var disclosureState: Bool
+    var meals: Meals
+    
+    init(initType: MealsType, disclosure: Bool, initMeal: Meals) {
+        cellType = initType
+        disclosureState = disclosure
+        meals = initMeal
+    }
+}
+
 final class DietScreenViewController: UIViewController {
 	private let output: DietScreenViewOutput
     
-    var rowsInSections: [IndexPath:MealsType] = [:]
-    var disclosureCells: [IndexPath] = []
+    var rowsInSections: [IndexPath:mealCells] = [:]
     
     private var dietLabel: UILabel = {
         let label = UILabel()
@@ -97,9 +108,10 @@ final class DietScreenViewController: UIViewController {
         dietTableView.separatorColor = .white
         
         dietTableView.register(BreakfastCell.self, forCellReuseIdentifier: "BreakfastCell")
-        dietTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MealCell") // TODO
+        dietTableView.register(MealCell.self, forCellReuseIdentifier: "MealCell")
         dietTableView.register(LunchCell.self, forCellReuseIdentifier: "LunchCell")
         dietTableView.register(DinnerCell.self, forCellReuseIdentifier: "DinnerCell")
+        dietTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Other")
         dietTableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "Day") // TODO
     }
     
@@ -127,7 +139,6 @@ final class DietScreenViewController: UIViewController {
                 rowsInSections[mealIndex] = mealType
             }
             dietTableView.insertRows(at: mealCellsIndexes, with: .top)
-            dietTableView.reloadSections([indexPath.section], with: .none)
             dietTableView.endUpdates()
         } else {
             dietTableView.beginUpdates()
@@ -172,7 +183,7 @@ extension DietScreenViewController: DietScreenViewInput {
 extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cellTypeSection = rowsInSections[indexPath] else {
-            return .init()
+            return tableView.dequeueReusableCell(withIdentifier: "Other", for: indexPath)
         }
         
         switch cellTypeSection {
@@ -182,56 +193,42 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
             return tableView.dequeueReusableCell(withIdentifier: "LunchCell", for: indexPath)
         case .dinner:
             return tableView.dequeueReusableCell(withIdentifier: "DinnerCell", for: indexPath)
-        case .mealBreakfast:
-            guard let disclosureCellIndex = self.rowsInSections.first(where: {$1 == .breakfast})?.key else {
-                return .init()
-            }
-            guard let mealList = (tableView.cellForRow(at: disclosureCellIndex) as? DietCell)?.mealsList else {
-                return .init()
-            }
-            let mealCell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath)
-            let mealName = mealList[indexPath.row - disclosureCellIndex.row - 1].name
-//            let mealCalories = mealList[indexPath.row - disclosureCellIndex.row - 1].cal
-            
-            var contentConf = mealCell.defaultContentConfiguration()
-            contentConf.text = mealName
-            mealCell.contentConfiguration = contentConf
-            
-            return mealCell
-        case .mealLunch:
-            guard let disclosureCellIndex = self.rowsInSections.first(where: {$1 == .lunch})?.key else {
-                return .init()
-            }
-            guard let mealList = (tableView.cellForRow(at: disclosureCellIndex) as? DietCell)?.mealsList else {
-                return .init()
-            }
-            let mealCell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath)
-            let mealName = mealList[indexPath.row - disclosureCellIndex.row - 1].name
-//            let mealCalories = mealList[indexPath.row - disclosureCellIndex.row - 1].cal
-            
-            var contentConf = mealCell.defaultContentConfiguration()
-            contentConf.text = mealName
-            mealCell.contentConfiguration = contentConf
-            
-            return mealCell
-        case .mealDinner:
-            guard let disclosureCellIndex = self.rowsInSections.first(where: {$1 == .dinner})?.key else {
-                return .init()
-            }
-            guard let mealList = (tableView.cellForRow(at: disclosureCellIndex) as? DietCell)?.mealsList else {
-                return .init()
-            }
-            let mealCell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath)
-            let mealName = mealList[indexPath.row - disclosureCellIndex.row - 1].name
-//            let mealCalories = mealList[indexPath.row - disclosureCellIndex.row - 1].cal
-            
-            var contentConf = mealCell.defaultContentConfiguration()
-            contentConf.text = mealName
-            mealCell.contentConfiguration = contentConf
-            
-            return mealCell
+//        case .mealBreakfast:
+//            guard let disclosureCellIndex = self.rowsInSections.first(where: {$1 == .breakfast})?.key else {
+//                return .init()
+//            }
+//            guard let mealList = (tableView.cellForRow(at: disclosureCellIndex) as? DietCell)?.mealsList else {
+//                return .init()
+//            }
+//            let mealCell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath)
+//            let mealName = mealList[indexPath.row - disclosureCellIndex.row - 1].name
+////            let mealCalories = mealList[indexPath.row - disclosureCellIndex.row - 1].cal
+//
+//            var contentConf = mealCell.defaultContentConfiguration()
+//            contentConf.text = mealName
+//            mealCell.contentConfiguration = contentConf
+//
+//            return mealCell
+//        case .mealLunch:
+//            guard let disclosureCellIndex = self.rowsInSections.first(where: {$1 == .lunch})?.key else {
+//                return .init()
+//            }
+//            guard let mealList = (tableView.cellForRow(at: disclosureCellIndex) as? DietCell)?.mealsList else {
+//                return .init()
+//            }
+//            let mealCell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath)
+//            let mealName = mealList[indexPath.row - disclosureCellIndex.row - 1].name
+////            let mealCalories = mealList[indexPath.row - disclosureCellIndex.row - 1].cal
+//
+//            var contentConf = mealCell.defaultContentConfiguration()
+//            contentConf.text = mealName
+//            mealCell.contentConfiguration = contentConf
+//
+//            return mealCell
+        case .mealDinner, .mealBreakfast, .mealLunch:
+            return tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath)
         default:
-            return .init()
+            return tableView.dequeueReusableCell(withIdentifier: "Other", for: indexPath)
         }
     }
     

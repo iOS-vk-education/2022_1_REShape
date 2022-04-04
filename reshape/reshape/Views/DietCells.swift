@@ -15,152 +15,139 @@ enum MealsType {
 struct Meals {
     var name: String
     var cal: Double
+    
+    init(mealName: String, calories: Double) {
+        name = mealName
+        cal = calories
+    }
 }
 
-class DietCell: UITableViewCell {
-    var disclosureState = false
-    var mealType: MealsType = .none
-    var mealsList: [Meals] = []
-    
-    let mealTypeLabel: UILabel = {
+final class DietCell: UITableViewCell {
+    private let mealTypeLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: "Dark Violet")
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
-    private let background = UIView()
+
     private var disclosureImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Closure")
-        imageView.animationDuration = 0.5
         return imageView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupBackground()
-        selectionStyle = .none
+        setupCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupBackground() {
-        self.addSubview(background)
-        
-        background.backgroundColor = UIColor(named: "ModalViewColor")
-        background.addSubview(mealTypeLabel)
-        background.addSubview(disclosureImage)
-        
+    private func setupCell() {
+        self.addSubview(mealTypeLabel)
+        self.addSubview(disclosureImage)
+        backgroundColor = UIColor(named: "ModalViewColor")
         setupConstraints()
-        self.backgroundView = background
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         mealTypeLabel.translatesAutoresizingMaskIntoConstraints = false
-        mealTypeLabel.leftAnchor.constraint(equalTo: background.leftAnchor, constant: 11).isActive = true
-        mealTypeLabel.topAnchor.constraint(equalTo: background.topAnchor, constant: 8).isActive = true
+        mealTypeLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 11).isActive = true
+        mealTypeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
         mealTypeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 36).isActive = true
         mealTypeLabel.height(17)
         
         disclosureImage.translatesAutoresizingMaskIntoConstraints = false
         disclosureImage.width(6)
         disclosureImage.height(14)
-        disclosureImage.rightAnchor.constraint(equalTo: background.rightAnchor, constant: -16).isActive = true
-        disclosureImage.topAnchor.constraint(equalTo: background.topAnchor, constant: 10).isActive = true
-        
-        background.translatesAutoresizingMaskIntoConstraints = false
-        background.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16).isActive = true
-        background.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
-        background.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        background.height(33)
+        disclosureImage.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
+        disclosureImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        mealTypeLabel.text = ""
+        disclosureImage.image = UIImage(named: "Closure")
+    }
+    
+    func setText(_ text: String) {
+        mealTypeLabel.text = text
     }
     
     func disclosure(_ discl: Bool) {
-        if (discl && !disclosureState) {
-            disclosureImage.rotateClockwise()
-            disclosureImage.transform = transform.rotated(by: Double.pi/2)
-            disclosureState = true
-        } else if (!discl && disclosureState) {
-            disclosureImage.rotateAntiClockwise()
-            disclosureImage.transform = transform.rotated(by: -Double.pi/2)
-            disclosureState = false
+        if discl {
+//            disclosureImage.rotateClockwise()
+            disclosureImage.image = UIImage(named: "Closure")
+            disclosureImage.transform = disclosureImage.transform.rotated(by: Double.pi/2)
+        } else {
+//            disclosureImage.rotateAntiClockwise()
+            disclosureImage.image = UIImage(named: "Closure")
         }
     }
 }
 
-final class BreakfastCell: DietCell {
+final class MealCell: UITableViewCell {
+    private var checkCircleImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "notRememberButton")
+        return imageView
+    }()
+    
+    private var mealNameLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: "Dark Violet")
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        return label
+    }()
+    
+    private var caloriesLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: "Dark Violet")
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        mealType = .breakfast
-        mealTypeLabel.attributedText = NSAttributedString(string: "Завтрак", attributes: [NSAttributedString.Key.kern: 0.77])
+        setupCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setupBackground() {
-        super.setupBackground()
-        guard let background = self.backgroundView else {
-            return
-        }
-        background.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        background.layer.cornerRadius = 12
-        
-        self.backgroundView = background
-    }
-}
-
-final class LunchCell: DietCell {
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        mealType = .lunch
-        mealTypeLabel.attributedText = NSAttributedString(string: "Обед", attributes: [NSAttributedString.Key.kern: 0.77])
+    func setupCell() {
+        self.addSubview(checkCircleImage)
+        self.addSubview(mealNameLabel)
+        self.addSubview(caloriesLabel)
+        backgroundColor = UIColor(named: "ModalViewColor")
+        setupConstarints()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-final class DinnerCell: DietCell {
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        mealType = .dinner
-        mealTypeLabel.attributedText = NSAttributedString(string: "Ужин", attributes: [NSAttributedString.Key.kern: 0.77])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func setupBackground() {
-        super.setupBackground()
-        guard let background = self.backgroundView else {
-            return
-        }
-        background.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        background.layer.cornerRadius = 12
-        
-        self.backgroundView = background
+    func setupConstarints() {
+        checkCircleImage.translatesAutoresizingMaskIntoConstraints = false
+        checkCircleImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 11).isActive = true
+        checkCircleImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        checkCircleImage.height(12)
+        checkCircleImage.width(12)
     }
 }
 
 extension UIImageView {
     func rotateClockwise() {
         let rotation : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation")
-        rotation.fromValue = 0
-        rotation.toValue = Double.pi/2
+        rotation.fromValue = transform.rotated(by: 0)
+        rotation.toValue = transform.rotated(by: Double.pi/2)
         rotation.duration = 0.5
         self.layer.add(rotation, forKey: "rotationClockwiseAnimation")
     }
 
     func rotateAntiClockwise() {
         let rotation : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation")
-        rotation.fromValue = Double.pi/2
-        rotation.toValue = 0
+        rotation.fromValue = transform.rotated(by: 0)
+        rotation.toValue = transform.rotated(by: -Double.pi/2)
         rotation.duration = 0.5
         self.layer.add(rotation, forKey: "rotationAntiClockwiseAnimation")
     }

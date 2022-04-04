@@ -47,8 +47,8 @@ extension DietScreenPresenter: DietScreenViewOutput {
             mealString = "Meal for dinner"
         }
         print("[DEBUG] \(mealString) clicked at \(day)")
-//        let meal: [Meals] = [Meals(name: "new", cal: 500), Meals(name: "second", cal: 300)]
-//        view?.setMealList(meal, day: day, mealtype: mealtype)
+        let meal: [Meals] = [Meals(name: "new", cal: 500), Meals(name: "second", cal: 300)]
+        view?.setMealList(meal, day: day, mealtype: mealtype)
     }
     
     func getNumOfDay() -> Int {
