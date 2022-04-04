@@ -17,7 +17,10 @@ final class PhotoProgressView: UIView {
         personImage.image = UIImage(named: "person")
         return personImage
     }()
-    private let progressBar: CircularProgressBarView = CircularProgressBarView(frame: CGRect(x: 0, y: 0, width: 130, height: 130))
+    private let progressBar: CircularProgressBarView = CircularProgressBarView(frame:CGRect(x: 0,
+                                                                                             y: 0,
+                                                                                             width: 130,
+                                                                                             height: 130))
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraints()
