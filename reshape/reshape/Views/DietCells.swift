@@ -32,7 +32,7 @@ final class DietCell: UITableViewCell {
 
     private var disclosureImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Closure")
+        imageView.image = UIImage()
         return imageView
     }()
     
@@ -69,7 +69,7 @@ final class DietCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         mealTypeLabel.text = ""
-        disclosureImage.image = UIImage(named: "Closure")
+        disclosureImage.image = UIImage()
     }
     
     func setText(_ text: String) {
