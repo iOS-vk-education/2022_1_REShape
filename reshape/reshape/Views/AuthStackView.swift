@@ -84,10 +84,6 @@ final class AuthStackView: UIView {
         textField.trailing()
         textField.height(42)
         
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: self.topAnchor),
-        ])
-        
     }
 }
 

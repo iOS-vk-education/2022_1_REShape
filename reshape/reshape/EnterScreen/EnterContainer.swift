@@ -21,6 +21,7 @@ final class EnterContainer {
 
 		presenter.view = viewController
         router.viewController = viewController
+        router.window = context.window
 		presenter.moduleOutput = context.moduleOutput
 
 		interactor.output = presenter
@@ -37,4 +38,5 @@ final class EnterContainer {
 
 struct EnterContext {
 	weak var moduleOutput: EnterModuleOutput?
+    let window: UIWindow
 }

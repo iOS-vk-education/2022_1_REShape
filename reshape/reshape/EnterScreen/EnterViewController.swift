@@ -29,7 +29,7 @@ final class EnterViewController: UIViewController {
         let label: UILabel = UILabel()
         label.text = "Если у вас нет аккаунта, то нажмите"
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor(named: "Light Gray")
+        label.textColor = UIColor.lightGrayColor
         label.numberOfLines = 1
         label.textAlignment = .center
         return label
@@ -39,7 +39,7 @@ final class EnterViewController: UIViewController {
     private let signUpButton: UILabel = {
         let label: UILabel = UILabel()
         label.attributedText = NSAttributedString(string: "зарегистироваться", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
-        label.textColor = UIColor(named: "Violet")
+        label.textColor = UIColor.violetColor
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -114,11 +114,11 @@ final class EnterViewController: UIViewController {
         
         enterButton.action = {
             UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.enterButton.backgroundColor = UIColor(named: "Violet Pressed")
+                self?.enterButton.backgroundColor = UIColor.darkVioletColor
             } completion: { [weak self] finished in
                 if finished {
                     self?.output.showLoginScreen()
-                    self?.enterButton.backgroundColor = UIColor(named: "Violet")
+                    self?.enterButton.backgroundColor = UIColor.violetColor
                 }
             }
         }

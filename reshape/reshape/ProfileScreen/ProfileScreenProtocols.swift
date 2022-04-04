@@ -12,20 +12,20 @@ protocol ProfileScreenModuleInput {
 	var moduleOutput: ProfileScreenModuleOutput? { get }
 }
 
-protocol ProfileScreenModuleOutput: class {
+protocol ProfileScreenModuleOutput: AnyObject {
 }
 
-protocol ProfileScreenViewInput: class {
+protocol ProfileScreenViewInput: AnyObject {
 }
 
-protocol ProfileScreenViewOutput: class {
+protocol ProfileScreenViewOutput: AnyObject {
 }
 
-protocol ProfileScreenInteractorInput: class {
+protocol ProfileScreenInteractorInput: AnyObject {
 }
 
-protocol ProfileScreenInteractorOutput: class {
+protocol ProfileScreenInteractorOutput: AnyObject {
 }
 
-protocol ProfileScreenRouterInput: class {
+protocol ProfileScreenRouterInput: AnyObject {
 }

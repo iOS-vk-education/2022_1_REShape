@@ -33,7 +33,7 @@ extension AuthCoordinator {
         guard let navController = navigationControllers[.enterScreen] else {
             fatalError("No navController")
         }
-        let enterContext = EnterContext(moduleOutput: nil)
+        let enterContext = EnterContext(moduleOutput: nil, window: window)
         let enterContainer = EnterContainer.assemble(with: enterContext)
         navController.setViewControllers([enterContainer.viewController], animated: true)
     }

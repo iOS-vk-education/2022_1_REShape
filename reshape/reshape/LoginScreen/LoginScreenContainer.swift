@@ -21,6 +21,7 @@ final class LoginScreenContainer {
 
 		presenter.view = viewController
         router.viewController = viewController
+        router.window = context.window
 		presenter.moduleOutput = context.moduleOutput
 
 		interactor.output = presenter
@@ -37,4 +38,5 @@ final class LoginScreenContainer {
 
 struct LoginScreenContext {
 	weak var moduleOutput: LoginScreenModuleOutput?
+    let window: UIWindow
 }

@@ -25,7 +25,7 @@ final class EnterButton: UIButton {
         title = name
         self.setTitle(title, for: .normal)
         self.setTitleColor(.white, for: .normal)
-        self.backgroundColor = UIColor(named: "Violet")
+        self.backgroundColor = UIColor.violetColor
         self.layer.cornerRadius = 16
         self.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)

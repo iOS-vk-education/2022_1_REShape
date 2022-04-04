@@ -25,6 +25,9 @@ extension ResultsScreenPresenter: ResultsScreenModuleInput {
 }
 
 extension ResultsScreenPresenter: ResultsScreenViewOutput {
+    func caloriesTapped() {
+        router.didCaloriesTapped()
+    }
 }
 
 extension ResultsScreenPresenter: ResultsScreenInteractorOutput {
