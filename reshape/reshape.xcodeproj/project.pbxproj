@@ -69,6 +69,13 @@
 		945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B387327F31FC00044E952 /* CircularProgressBarView.swift */; };
 		945B387627F357450044E952 /* PhotoProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B387527F357450044E952 /* PhotoProgressView.swift */; };
 		9478494F27FAEA3700138DA4 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478494E27FAEA3700138DA4 /* ColorExtension.swift */; };
+		9478495727FB221400138DA4 /* RegisterScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495127FB221400138DA4 /* RegisterScreenPresenter.swift */; };
+		9478495827FB221400138DA4 /* RegisterScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495227FB221400138DA4 /* RegisterScreenRouter.swift */; };
+		9478495927FB221400138DA4 /* RegisterScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495327FB221400138DA4 /* RegisterScreenViewController.swift */; };
+		9478495A27FB221400138DA4 /* RegisterScreenProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495427FB221400138DA4 /* RegisterScreenProtocols.swift */; };
+		9478495B27FB221400138DA4 /* RegisterScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495527FB221400138DA4 /* RegisterScreenInteractor.swift */; };
+		9478495C27FB221400138DA4 /* RegisterScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495627FB221400138DA4 /* RegisterScreenContainer.swift */; };
+		9478495E27FB2EC900138DA4 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495D27FB2EC900138DA4 /* NavigationBarView.swift */; };
 		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
 /* End PBXBuildFile section */
 
@@ -153,6 +160,13 @@
 		945B387327F31FC00044E952 /* CircularProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBarView.swift; sourceTree = "<group>"; };
 		945B387527F357450044E952 /* PhotoProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressView.swift; sourceTree = "<group>"; };
 		9478494E27FAEA3700138DA4 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		9478495127FB221400138DA4 /* RegisterScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenPresenter.swift; sourceTree = "<group>"; };
+		9478495227FB221400138DA4 /* RegisterScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenRouter.swift; sourceTree = "<group>"; };
+		9478495327FB221400138DA4 /* RegisterScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenViewController.swift; sourceTree = "<group>"; };
+		9478495427FB221400138DA4 /* RegisterScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenProtocols.swift; sourceTree = "<group>"; };
+		9478495527FB221400138DA4 /* RegisterScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenInteractor.swift; sourceTree = "<group>"; };
+		9478495627FB221400138DA4 /* RegisterScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenContainer.swift; sourceTree = "<group>"; };
+		9478495D27FB2EC900138DA4 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,6 +207,7 @@
 				945B387127F0C4F70044E952 /* CustomView.swift */,
 				945B387327F31FC00044E952 /* CircularProgressBarView.swift */,
 				945B387527F357450044E952 /* PhotoProgressView.swift */,
+				9478495D27FB2EC900138DA4 /* NavigationBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -250,6 +265,7 @@
 		36A9DAFF27E2AC3400DB5082 /* reshape */ = {
 			isa = PBXGroup;
 			children = (
+				9478495027FB21ED00138DA4 /* RegistrationScreen */,
 				945B383E27ECC3120044E952 /* ProfileScreen */,
 				945B383D27ECC3030044E952 /* DietScreen */,
 				945B383C27ECC2DB0044E952 /* ResultsScreen */,
@@ -364,6 +380,19 @@
 				9437920227F9AFA10000188E /* ResultCollectionCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		9478495027FB21ED00138DA4 /* RegistrationScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9478495127FB221400138DA4 /* RegisterScreenPresenter.swift */,
+				9478495227FB221400138DA4 /* RegisterScreenRouter.swift */,
+				9478495327FB221400138DA4 /* RegisterScreenViewController.swift */,
+				9478495427FB221400138DA4 /* RegisterScreenProtocols.swift */,
+				9478495527FB221400138DA4 /* RegisterScreenInteractor.swift */,
+				9478495627FB221400138DA4 /* RegisterScreenContainer.swift */,
+			);
+			path = RegistrationScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -516,17 +545,21 @@
 				2E1F1DDA27E4FB7E00FA7B77 /* EnterButton.swift in Sources */,
 				2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */,
 				2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */,
+				9478495B27FB221400138DA4 /* RegisterScreenInteractor.swift in Sources */,
 				945B387627F357450044E952 /* PhotoProgressView.swift in Sources */,
+				9478495927FB221400138DA4 /* RegisterScreenViewController.swift in Sources */,
 				94302BC827E72E56009E397B /* CloseButton.swift in Sources */,
 				94302BC227E66080009E397B /* ForgetPasswordScreenRouter.swift in Sources */,
 				945B384627ECC32A0044E952 /* ResultsScreenRouter.swift in Sources */,
 				945B385F27ECC3500044E952 /* ProfileScreenViewController.swift in Sources */,
 				94302BC427E66080009E397B /* ForgetPasswordScreenProtocols.swift in Sources */,
+				9478495C27FB221400138DA4 /* RegisterScreenContainer.swift in Sources */,
 				945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */,
 				2EECFF3727E5037100BD4BEF /* EnterInteractor.swift in Sources */,
 				941E811927E6149800A33344 /* LoginScreenInteractor.swift in Sources */,
 				945B387227F0C4F70044E952 /* CustomView.swift in Sources */,
 				945B385E27ECC3500044E952 /* ProfileScreenRouter.swift in Sources */,
+				9478495827FB221400138DA4 /* RegisterScreenRouter.swift in Sources */,
 				945B385D27ECC3500044E952 /* ProfileScreenPresenter.swift in Sources */,
 				2EECFF3627E5037100BD4BEF /* EnterProtocols.swift in Sources */,
 				945B384827ECC32A0044E952 /* ResultsScreenProtocols.swift in Sources */,
@@ -545,16 +578,19 @@
 				94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */,
 				945B385227ECC33A0044E952 /* DietScreenRouter.swift in Sources */,
 				945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */,
+				9478495E27FB2EC900138DA4 /* NavigationBarView.swift in Sources */,
 				945B386227ECC3500044E952 /* ProfileScreenContainer.swift in Sources */,
 				94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */,
 				94302BC127E66080009E397B /* ForgetPasswordScreenPresenter.swift in Sources */,
 				945B384927ECC32A0044E952 /* ResultsScreenInteractor.swift in Sources */,
 				94302BC327E66080009E397B /* ForgetPasswordScreenViewController.swift in Sources */,
+				9478495727FB221400138DA4 /* RegisterScreenPresenter.swift in Sources */,
 				945B383927ECC0C80044E952 /* MainFlowCoordinator.swift in Sources */,
 				945B384727ECC32A0044E952 /* ResultsScreenViewController.swift in Sources */,
 				941E811D27E614F300A33344 /* AuthStackView.swift in Sources */,
 				941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */,
 				9437920627FA19780000188E /* ReuseIdentifier.swift in Sources */,
+				9478495A27FB221400138DA4 /* RegisterScreenProtocols.swift in Sources */,
 				945B384A27ECC32A0044E952 /* ResultsScreenContainer.swift in Sources */,
 				945B385627ECC33A0044E952 /* DietScreenContainer.swift in Sources */,
 				36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */,
