@@ -22,7 +22,7 @@ protocol LoginScreenViewOutput: AnyObject {
     func showForgetPasswordScreen()
     func closeLoginScreen()
     func isUserRemembered(isRemembered: Bool, forKey: String)
-    func showResultsScreen()
+    func loginDidTapped()
 }
 
 protocol LoginScreenInteractorInput: AnyObject {
@@ -33,8 +33,8 @@ protocol LoginScreenInteractorOutput: AnyObject {
 }
 
 protocol LoginScreenRouterInput: AnyObject {
-    func closeButton()
-    func forgetPasswordButton()
-    func loginButton()
+    func closeButtonTapped()
+    func forgetPasswordButtonTapped()
+    func didLogged()
 }
 

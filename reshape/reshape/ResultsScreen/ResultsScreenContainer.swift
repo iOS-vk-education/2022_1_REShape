@@ -11,6 +11,7 @@ import UIKit
 final class ResultsScreenContainer {
     let input: ResultsScreenModuleInput
 	let viewController: UIViewController
+
 	private(set) weak var router: ResultsScreenRouterInput!
 
 	static func assemble(with context: ResultsScreenContext) -> ResultsScreenContainer {
@@ -21,7 +22,8 @@ final class ResultsScreenContainer {
 
 		presenter.view = viewController
 		presenter.moduleOutput = context.moduleOutput
-
+        router.viewController = viewController
+        router.window = context.window
 		interactor.output = presenter
 
         return ResultsScreenContainer(view: viewController, input: presenter, router: router)
@@ -36,4 +38,5 @@ final class ResultsScreenContainer {
 
 struct ResultsScreenContext {
 	weak var moduleOutput: ResultsScreenModuleOutput?
+    let window: UIWindow
 }

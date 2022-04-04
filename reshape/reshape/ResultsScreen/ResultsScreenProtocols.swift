@@ -19,6 +19,7 @@ protocol ResultsScreenViewInput: AnyObject {
 }
 
 protocol ResultsScreenViewOutput: AnyObject {
+    func caloriesTapped()
 }
 
 protocol ResultsScreenInteractorInput: AnyObject {
@@ -28,4 +29,5 @@ protocol ResultsScreenInteractorOutput: AnyObject {
 }
 
 protocol ResultsScreenRouterInput: AnyObject {
+    func didCaloriesTapped()
 }

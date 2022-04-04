@@ -68,6 +68,7 @@
 		945B387227F0C4F70044E952 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B387127F0C4F70044E952 /* CustomView.swift */; };
 		945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B387327F31FC00044E952 /* CircularProgressBarView.swift */; };
 		945B387627F357450044E952 /* PhotoProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B387527F357450044E952 /* PhotoProgressView.swift */; };
+		9478494F27FAEA3700138DA4 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478494E27FAEA3700138DA4 /* ColorExtension.swift */; };
 		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
 /* End PBXBuildFile section */
 
@@ -151,6 +152,7 @@
 		945B387127F0C4F70044E952 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		945B387327F31FC00044E952 /* CircularProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBarView.swift; sourceTree = "<group>"; };
 		945B387527F357450044E952 /* PhotoProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressView.swift; sourceTree = "<group>"; };
+		9478494E27FAEA3700138DA4 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -220,6 +222,7 @@
 				94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */,
 				2EA6508D27E9C7FF003F41FC /* GoogleService-Info.plist */,
 				9437920527FA19780000188E /* ReuseIdentifier.swift */,
+				9478494E27FAEA3700138DA4 /* ColorExtension.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 				945B385627ECC33A0044E952 /* DietScreenContainer.swift in Sources */,
 				36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */,
 				945B385127ECC33A0044E952 /* DietScreenPresenter.swift in Sources */,
+				9478494F27FAEA3700138DA4 /* ColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

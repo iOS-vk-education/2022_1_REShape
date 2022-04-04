@@ -27,7 +27,7 @@ final class LoginScreenViewController: UIViewController {
         mainLabel.translatesAutoresizingMaskIntoConstraints = false
         mainLabel.text = "Вход в аккаунт"
         mainLabel.textAlignment = .center
-        mainLabel.textColor = UIColor(named: "Violet")
+        mainLabel.textColor = UIColor.violetColor
         mainLabel.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         return mainLabel
     }()
@@ -60,7 +60,7 @@ final class LoginScreenViewController: UIViewController {
         forgetPasswordButton.translatesAutoresizingMaskIntoConstraints = false
         forgetPasswordButton.text = "Забыли пароль?"
         forgetPasswordButton.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        forgetPasswordButton.textColor = UIColor(named: "Violet")
+        forgetPasswordButton.textColor = UIColor.violetColor
         forgetPasswordButton.attributedText = NSAttributedString(string: forgetPasswordButton.text ?? "", attributes:
                                                                     [.underlineStyle: NSUnderlineStyle.single.rawValue])
         return forgetPasswordButton
@@ -79,7 +79,7 @@ final class LoginScreenViewController: UIViewController {
     
     lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.init(named: "ModalViewColor")
+        view.backgroundColor = UIColor.modalViewGrayColor
         view.layer.cornerRadius = 40
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         view.clipsToBounds = true
@@ -240,11 +240,11 @@ extension LoginScreenViewController {
         loginButton.action = {[weak self] in
             self?.view.endEditing(true)
             UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.loginButton.backgroundColor = UIColor(named: "Violet Pressed")
+                self?.loginButton.backgroundColor = UIColor.darkVioletColor
             } completion: { [weak self] finished in
                 if finished {
-                    self?.output.showResultsScreen()
-                    self?.loginButton.backgroundColor = UIColor(named: "Violet")
+                    self?.output.loginDidTapped()
+                    self?.loginButton.backgroundColor = UIColor.violetColor
                 }
             }
         }

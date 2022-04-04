@@ -46,8 +46,8 @@ extension PhotoProgressView{
         progressBar.width(130)
     }
     func setupUI(){
-        progressBar.progressColor = UIColor(named: "progress") ?? .white
-        progressBar.circleColor = UIColor(named: "progress")?.withAlphaComponent(0) ?? .systemGray
+        progressBar.progressColor = UIColor.blueColor ?? .white
+        progressBar.circleColor = UIColor.blueColor?.withAlphaComponent(0) ?? .systemGray
         progressBar.tag = 101
         self.perform(#selector(animateProgress), with: nil, afterDelay: 0.3)
     }

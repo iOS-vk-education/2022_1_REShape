@@ -127,7 +127,7 @@ final class CustomView: UIView {
         NSLayoutConstraint.activate([
             targetStackView.centerYAnchor.constraint(equalTo: progressStackView.centerYAnchor)
         ])
-        targetStackView.leading(31)
+        targetStackView.leading(39)
         targetStackView.width(55)
         targetStackView.addArrangedSubview(targetNumberLabel)
         targetStackView.addArrangedSubview(targetLabel)

@@ -20,7 +20,7 @@ final class ForgetPasswordScreenViewController: UIViewController {
         mainLabel.text = "Восстановление пароля"
         mainLabel.textAlignment = .center
         mainLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        mainLabel.textColor = UIColor(named: "Violet")
+        mainLabel.textColor = UIColor.violetColor
         return mainLabel
     }()
     private let emailStackView: AuthStackView = AuthStackView()
@@ -37,7 +37,7 @@ final class ForgetPasswordScreenViewController: UIViewController {
     
     lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.init(named: "ModalViewColor")
+        view.backgroundColor = UIColor.modalViewGrayColor
         view.layer.cornerRadius = 40
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         view.clipsToBounds = true

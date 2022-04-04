@@ -49,8 +49,6 @@ final class ResultsScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        resultsCollectionView.register(cellType: ResultCollectionCell.self)
         setupConstraints()
         setupUI()
         setupCollectionView()
@@ -81,6 +79,7 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
         
     }
     private func setupUI(){
+        view.backgroundColor = .white
         mainView.layer.masksToBounds = false
         mainView.layer.shadowOffset = CGSize(width: 4, height: 4)
         mainView.layer.shadowRadius = 5
@@ -89,44 +88,72 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
     }
     
     private func setupCollectionView(){
-        
+        resultsCollectionView.register(cellType: ResultCollectionCell.self)
     }
 }
 extension ResultsScreenViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         return CGSize(width: view.frame.width - 72,
                       height: view.frame.height / 10)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return CGFloat(26.0)
     }
 }
 extension ResultsScreenViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath == [0, 1] {
-            print("weight")
-        } else {
-            print("water")
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.item {
+        case 0:
+            self.output.caloriesTapped()
+            
+        case 1:
+            print("вес")
+        case 2:
+            print("вода")
+        default: break
         }
     }
 }
 extension ResultsScreenViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         return 3
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueCell(cellType: ResultCollectionCell.self, for: indexPath)
         
         switch indexPath.item {
         case 0:
-            cell.configure(category: "Калории", target: "2000 ккал", result: "1000 ккал", percent: "50%", color: "Orange", valueOfprogress: 0.5)
-            cell.isUserInteractionEnabled = false
+            cell.configure(category: "Калории",
+                           target: "2000 ккал",
+                           result: "1000 ккал",
+                           percent: "50%",
+                           color: "Orange",
+                           valueOfprogress: 0.5)
         case 1:
-            cell.configure(category: "Вес", target: "50 кг", result: "52 кг", percent: "-200г", color: "Green", valueOfprogress: 1)
+            cell.configure(category: "Вес",
+                           target: "50 кг",
+                           result: "52 кг",
+                           percent: "-200г",
+                           color: "Green",
+                           valueOfprogress: 1)
         case 2:
-            cell.configure(category: "Вода", target: "2 литра", result: "1,25 литра", percent: "62%", color: "Blue", valueOfprogress: 0.62)
+            cell.configure(category: "Вода",
+                           target: "2 литра",
+                           result: "1,25 литра",
+                           percent: "62%",
+                           color: "Blue",
+                           valueOfprogress: 0.62)
         default:
             break
         }

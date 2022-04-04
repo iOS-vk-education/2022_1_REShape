@@ -10,7 +10,7 @@ import UIKit
 
 final class MainFlowCoordinator: CoordinatorProtocol{
     internal var window: UIWindow
-    private lazy var tabBar: UITabBarController = UITabBarController()
+    lazy var tabBar: UITabBarController = UITabBarController()
     private lazy var navigationControllers = MainFlowCoordinator.makeNavigationControllers()
     init (window: UIWindow) {
         self.window = window
@@ -34,13 +34,13 @@ final class MainFlowCoordinator: CoordinatorProtocol{
 
 extension MainFlowCoordinator{
     private func setupTabBar() {
-        tabBar.tabBar.backgroundColor = UIColor(named: "TableViewBackground")
+        tabBar.tabBar.backgroundColor = UIColor.backgroundGrayColor
     }
     private func setupResults() {
         guard let navController = navigationControllers[.results] else {
             fatalError("No navController")
         }
-        let resultsContext = ResultsScreenContext(moduleOutput: nil)
+        let resultsContext = ResultsScreenContext(moduleOutput: nil, window: window)
         let resultsContainer = ResultsScreenContainer.assemble(with: resultsContext)
         navController.setViewControllers([resultsContainer.viewController], animated: true)
     }
@@ -68,11 +68,11 @@ extension MainFlowCoordinator{
             let navigationController = UINavigationController()
             let tabBarItem = UITabBarItem(title: navControllerKey.title,
                                           image: navControllerKey.image?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal),
-                                          selectedImage: navControllerKey.image?.withTintColor(UIColor(named: "Violet") ?? .green))
+                                          selectedImage: navControllerKey.image?.withTintColor(UIColor.violetColor ?? .green))
 //                                          tag: navControllerKey.rawValue)
             navigationController.tabBarItem = tabBarItem
             result[navControllerKey] = navigationController
-            UITabBar.appearance().tintColor = UIColor(named: "Violet")
+            UITabBar.appearance().tintColor = UIColor.violetColor
             
             navigationController.isNavigationBarHidden = true
         }
