@@ -41,6 +41,9 @@
 		94302BC527E66080009E397B /* ForgetPasswordScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BBF27E66080009E397B /* ForgetPasswordScreenInteractor.swift */; };
 		94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BC027E66080009E397B /* ForgetPasswordScreenContainer.swift */; };
 		94302BC827E72E56009E397B /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94302BC727E72E56009E397B /* CloseButton.swift */; };
+		9437920327F9AFA10000188E /* ResultCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437920127F9AFA10000188E /* ResultCollectionCell.swift */; };
+		9437920427F9AFA10000188E /* ResultCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9437920227F9AFA10000188E /* ResultCollectionCell.xib */; };
+		9437920627FA19780000188E /* ReuseIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437920527FA19780000188E /* ReuseIdentifier.swift */; };
 		945B383727ECC0B90044E952 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B383627ECC0B90044E952 /* AppCoordinator.swift */; };
 		945B383927ECC0C80044E952 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B383827ECC0C80044E952 /* MainFlowCoordinator.swift */; };
 		945B383B27ECC10D0044E952 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B383A27ECC10D0044E952 /* CoordinatorProtocol.swift */; };
@@ -62,6 +65,10 @@
 		945B386027ECC3500044E952 /* ProfileScreenProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B385A27ECC3500044E952 /* ProfileScreenProtocols.swift */; };
 		945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B385B27ECC3500044E952 /* ProfileScreenInteractor.swift */; };
 		945B386227ECC3500044E952 /* ProfileScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B385C27ECC3500044E952 /* ProfileScreenContainer.swift */; };
+		945B387227F0C4F70044E952 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B387127F0C4F70044E952 /* CustomView.swift */; };
+		945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B387327F31FC00044E952 /* CircularProgressBarView.swift */; };
+		945B387627F357450044E952 /* PhotoProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945B387527F357450044E952 /* PhotoProgressView.swift */; };
+		9478494F27FAEA3700138DA4 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478494E27FAEA3700138DA4 /* ColorExtension.swift */; };
 		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
 /* End PBXBuildFile section */
 
@@ -118,6 +125,9 @@
 		94302BBF27E66080009E397B /* ForgetPasswordScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordScreenInteractor.swift; sourceTree = "<group>"; };
 		94302BC027E66080009E397B /* ForgetPasswordScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordScreenContainer.swift; sourceTree = "<group>"; };
 		94302BC727E72E56009E397B /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		9437920127F9AFA10000188E /* ResultCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCollectionCell.swift; sourceTree = "<group>"; };
+		9437920227F9AFA10000188E /* ResultCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultCollectionCell.xib; sourceTree = "<group>"; };
+		9437920527FA19780000188E /* ReuseIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifier.swift; sourceTree = "<group>"; };
 		945B383627ECC0B90044E952 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		945B383827ECC0C80044E952 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
 		945B383A27ECC10D0044E952 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
@@ -139,6 +149,10 @@
 		945B385A27ECC3500044E952 /* ProfileScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenProtocols.swift; sourceTree = "<group>"; };
 		945B385B27ECC3500044E952 /* ProfileScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenInteractor.swift; sourceTree = "<group>"; };
 		945B385C27ECC3500044E952 /* ProfileScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenContainer.swift; sourceTree = "<group>"; };
+		945B387127F0C4F70044E952 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
+		945B387327F31FC00044E952 /* CircularProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBarView.swift; sourceTree = "<group>"; };
+		945B387527F357450044E952 /* PhotoProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProgressView.swift; sourceTree = "<group>"; };
+		9478494E27FAEA3700138DA4 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,6 +190,9 @@
 				2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */,
 				941E811C27E614F300A33344 /* AuthStackView.swift */,
 				94302BC727E72E56009E397B /* CloseButton.swift */,
+				945B387127F0C4F70044E952 /* CustomView.swift */,
+				945B387327F31FC00044E952 /* CircularProgressBarView.swift */,
+				945B387527F357450044E952 /* PhotoProgressView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -204,6 +221,8 @@
 				36A9DB0B27E2AC3500DB5082 /* LaunchScreen.storyboard */,
 				94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */,
 				2EA6508D27E9C7FF003F41FC /* GoogleService-Info.plist */,
+				9437920527FA19780000188E /* ReuseIdentifier.swift */,
+				9478494E27FAEA3700138DA4 /* ColorExtension.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -301,6 +320,7 @@
 		945B383C27ECC2DB0044E952 /* ResultsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				945B387727F35FFC0044E952 /* Cells */,
 				945B383F27ECC32A0044E952 /* ResultsScreenPresenter.swift */,
 				945B384027ECC32A0044E952 /* ResultsScreenRouter.swift */,
 				945B384127ECC32A0044E952 /* ResultsScreenViewController.swift */,
@@ -335,6 +355,15 @@
 				945B385C27ECC3500044E952 /* ProfileScreenContainer.swift */,
 			);
 			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
+		945B387727F35FFC0044E952 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				9437920127F9AFA10000188E /* ResultCollectionCell.swift */,
+				9437920227F9AFA10000188E /* ResultCollectionCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,6 +479,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9437920427F9AFA10000188E /* ResultCollectionCell.xib in Resources */,
 				2E1F1DBF27E4936700FA7B77 /* Main.storyboard in Resources */,
 				2EA6508E27E9C7FF003F41FC /* GoogleService-Info.plist in Resources */,
 				36A9DB0D27E2AC3500DB5082 /* LaunchScreen.storyboard in Resources */,
@@ -486,6 +516,7 @@
 				2E1F1DDA27E4FB7E00FA7B77 /* EnterButton.swift in Sources */,
 				2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */,
 				2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */,
+				945B387627F357450044E952 /* PhotoProgressView.swift in Sources */,
 				94302BC827E72E56009E397B /* CloseButton.swift in Sources */,
 				94302BC227E66080009E397B /* ForgetPasswordScreenRouter.swift in Sources */,
 				945B384627ECC32A0044E952 /* ResultsScreenRouter.swift in Sources */,
@@ -494,11 +525,13 @@
 				945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */,
 				2EECFF3727E5037100BD4BEF /* EnterInteractor.swift in Sources */,
 				941E811927E6149800A33344 /* LoginScreenInteractor.swift in Sources */,
+				945B387227F0C4F70044E952 /* CustomView.swift in Sources */,
 				945B385E27ECC3500044E952 /* ProfileScreenRouter.swift in Sources */,
 				945B385D27ECC3500044E952 /* ProfileScreenPresenter.swift in Sources */,
 				2EECFF3627E5037100BD4BEF /* EnterProtocols.swift in Sources */,
 				945B384827ECC32A0044E952 /* ResultsScreenProtocols.swift in Sources */,
 				36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */,
+				9437920327F9AFA10000188E /* ResultCollectionCell.swift in Sources */,
 				945B383B27ECC10D0044E952 /* CoordinatorProtocol.swift in Sources */,
 				945B386027ECC3500044E952 /* ProfileScreenProtocols.swift in Sources */,
 				945B384527ECC32A0044E952 /* ResultsScreenPresenter.swift in Sources */,
@@ -511,6 +544,7 @@
 				2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */,
 				94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */,
 				945B385227ECC33A0044E952 /* DietScreenRouter.swift in Sources */,
+				945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */,
 				945B386227ECC3500044E952 /* ProfileScreenContainer.swift in Sources */,
 				94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */,
 				94302BC127E66080009E397B /* ForgetPasswordScreenPresenter.swift in Sources */,
@@ -520,10 +554,12 @@
 				945B384727ECC32A0044E952 /* ResultsScreenViewController.swift in Sources */,
 				941E811D27E614F300A33344 /* AuthStackView.swift in Sources */,
 				941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */,
+				9437920627FA19780000188E /* ReuseIdentifier.swift in Sources */,
 				945B384A27ECC32A0044E952 /* ResultsScreenContainer.swift in Sources */,
 				945B385627ECC33A0044E952 /* DietScreenContainer.swift in Sources */,
 				36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */,
 				945B385127ECC33A0044E952 /* DietScreenPresenter.swift in Sources */,
+				9478494F27FAEA3700138DA4 /* ColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

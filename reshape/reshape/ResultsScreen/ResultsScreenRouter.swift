@@ -9,7 +9,12 @@
 import UIKit
 
 final class ResultsScreenRouter {
+    var viewController: UIViewController?
+    var window: UIWindow?
 }
 
 extension ResultsScreenRouter: ResultsScreenRouterInput {
+    func didCaloriesTapped() {
+        self.viewController?.tabBarController?.selectedIndex = 1
+    }
 }
