@@ -27,6 +27,35 @@ extension DietScreenPresenter: DietScreenModuleInput {
 }
 
 extension DietScreenPresenter: DietScreenViewOutput {
+    func checkedMeal(atPosition position: Int, forMeal celltype: MealsType, inDay day: Int) {
+        var mealString: String
+        switch celltype {
+        case .breakfast:
+            mealString = "Meal for breakfast"
+        case .lunch:
+            mealString = "Meal for lunch"
+        case .dinner:
+            mealString = "Meal for dinner"
+        default:
+            return
+        }
+        print("[DEBUG] \(mealString) checked at \(day) day in \(position) position")
+    }
+    
+    func uncheckedMeal(atPosition position: Int, forMeal celltype: MealsType, inDay day: Int) {
+        var mealString: String
+        switch celltype {
+        case .breakfast:
+            mealString = "Meal for breakfast"
+        case .lunch:
+            mealString = "Meal for lunch"
+        case .dinner:
+            mealString = "Meal for dinner"
+        default:
+            return
+        }
+        print("[DEBUG] \(mealString) unchecked at \(day) day in \(position) position")
+    }
     
     func needMealList(day: Int, mealtype: MealsType) {
         var mealString: String
@@ -37,18 +66,12 @@ extension DietScreenPresenter: DietScreenViewOutput {
             mealString = "Lunch"
         case .dinner:
             mealString = "Dinner"
-        case .none:
-            mealString = "None"
-        case .mealBreakfast:
-            mealString = "Meal for breakfast"
-        case .mealLunch:
-            mealString = "Meal for lunch"
-        case .mealDinner:
-            mealString = "Meal for dinner"
+        default:
+            return
         }
         print("[DEBUG] \(mealString) clicked at \(day)")
-        let meal: [Meals] = [Meals(name: "new", cal: 500), Meals(name: "second", cal: 300)]
-        view?.setMealList(meal, day: day, mealtype: mealtype)
+        let meal: [Meals] = [Meals(mealName: "first", calories: 400, check: true), Meals(mealName: "second", calories: 300)]
+        view?.setMealList(meal, day: day, celltype: mealtype)
     }
     
     func getNumOfDay() -> Int {
