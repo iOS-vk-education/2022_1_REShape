@@ -15,7 +15,13 @@ final class RegisterScreenViewController: UIViewController {
         navBar.translatesAutoresizingMaskIntoConstraints = false
         return navBar
     }()
-    
+    private var addPhoto: UIImageView = {
+        var photo = UIImageView()
+        photo.translatesAutoresizingMaskIntoConstraints = false
+        photo.image = UIImage(named: "Add")
+        return photo
+    }()
+    private var imagePicker: ImagePicker!
     init(output: RegisterScreenViewOutput) {
         self.output = output
         
@@ -28,30 +34,58 @@ final class RegisterScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         setupConstraints()
         setupUI()
-        customNavigationBarView.delegate = self
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        addPhoto.layer.cornerRadius = addPhoto.frame.size.height / 2
+//        addPhoto.contentMode = .center
+        addPhoto.layer.masksToBounds = true
     }
 }
 
 extension RegisterScreenViewController {
     private func setupConstraints(){
         view.addSubview(customNavigationBarView)
-        customNavigationBarView.top(isIncludeSafeArea: true)
+        customNavigationBarView.top(isIncludeSafeArea: false)
         customNavigationBarView.leading()
         customNavigationBarView.trailing()
         customNavigationBarView.height(80)
         
-    }
-    private func setupUI(){
+        addPhoto.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(addPhoto)
+        addPhoto.centerX()
+        addPhoto.top(104, isIncludeSafeArea: false)
+        addPhoto.height(130)
+        addPhoto.width(130)
         
     }
+    private func setupUI(){
+        view.backgroundColor = .white
+        customNavigationBarView.delegate = self
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        addPhoto.isUserInteractionEnabled = true
+        addPhoto.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectPhoto)))
+
+    }
+    
+    @objc
+    func selectPhoto(){
+        imagePicker.present(from: addPhoto)
+    }
 }
+
 
 extension RegisterScreenViewController: NavigationBarDelegate{
     func backButtonAction() {
         output.backButtonPressed()
+    }
+}
+
+extension RegisterScreenViewController: ImagePickerDelegate{
+    func didSelect(image: UIImage?) {
+        self.addPhoto.image = image
     }
 }
 

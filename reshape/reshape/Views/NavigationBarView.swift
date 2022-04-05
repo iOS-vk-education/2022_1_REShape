@@ -46,7 +46,7 @@ extension NavigationBarView {
         self.addSubview(mainLabel)
         self.addSubview(backButton)
         
-        mainLabel.top(31, isIncludeSafeArea: false)
+        mainLabel.top(40, isIncludeSafeArea: false)
         mainLabel.centerX()
         
         NSLayoutConstraint.activate([

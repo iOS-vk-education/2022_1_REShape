@@ -76,6 +76,7 @@
 		9478495B27FB221400138DA4 /* RegisterScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495527FB221400138DA4 /* RegisterScreenInteractor.swift */; };
 		9478495C27FB221400138DA4 /* RegisterScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495627FB221400138DA4 /* RegisterScreenContainer.swift */; };
 		9478495E27FB2EC900138DA4 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495D27FB2EC900138DA4 /* NavigationBarView.swift */; };
+		9478496527FC0A3500138DA4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478496427FC0A3500138DA4 /* ImagePicker.swift */; };
 		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
 /* End PBXBuildFile section */
 
@@ -167,6 +168,7 @@
 		9478495527FB221400138DA4 /* RegisterScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenInteractor.swift; sourceTree = "<group>"; };
 		9478495627FB221400138DA4 /* RegisterScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenContainer.swift; sourceTree = "<group>"; };
 		9478495D27FB2EC900138DA4 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		9478496427FC0A3500138DA4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -228,16 +230,14 @@
 		2EECFF3927E505B500BD4BEF /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				9478496327FC0A1400138DA4 /* Helpers */,
 				945B383527ECC0A60044E952 /* Coordinator */,
 				36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */,
 				36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */,
 				2E1F1DBD27E4936700FA7B77 /* Main.storyboard */,
 				36A9DB0927E2AC3500DB5082 /* Assets.xcassets */,
 				36A9DB0B27E2AC3500DB5082 /* LaunchScreen.storyboard */,
-				94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */,
 				2EA6508D27E9C7FF003F41FC /* GoogleService-Info.plist */,
-				9437920527FA19780000188E /* ReuseIdentifier.swift */,
-				9478494E27FAEA3700138DA4 /* ColorExtension.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -393,6 +393,17 @@
 				9478495627FB221400138DA4 /* RegisterScreenContainer.swift */,
 			);
 			path = RegistrationScreen;
+			sourceTree = "<group>";
+		};
+		9478496327FC0A1400138DA4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */,
+				9437920527FA19780000188E /* ReuseIdentifier.swift */,
+				9478494E27FAEA3700138DA4 /* ColorExtension.swift */,
+				9478496427FC0A3500138DA4 /* ImagePicker.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -583,6 +594,7 @@
 				94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */,
 				94302BC127E66080009E397B /* ForgetPasswordScreenPresenter.swift in Sources */,
 				945B384927ECC32A0044E952 /* ResultsScreenInteractor.swift in Sources */,
+				9478496527FC0A3500138DA4 /* ImagePicker.swift in Sources */,
 				94302BC327E66080009E397B /* ForgetPasswordScreenViewController.swift in Sources */,
 				9478495727FB221400138DA4 /* RegisterScreenPresenter.swift in Sources */,
 				945B383927ECC0C80044E952 /* MainFlowCoordinator.swift in Sources */,
