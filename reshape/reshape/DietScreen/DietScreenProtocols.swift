@@ -10,7 +10,6 @@ import Foundation
 
 protocol DietScreenModuleInput {
 	var moduleOutput: DietScreenModuleOutput? { get }
-    func setMealList(_ meals: [Meals], day: Int, celltype: MealsType)
 }
 
 protocol DietScreenModuleOutput: AnyObject {
@@ -19,11 +18,12 @@ protocol DietScreenModuleOutput: AnyObject {
 protocol DietScreenViewInput: AnyObject {
     func showCells(for indexPaths: [IndexPath])
     func hideCells(for indexPaths: [IndexPath])
+    func reloadTableView()
 }
 
 protocol DietScreenViewOutput: AnyObject {
     // Запрос на получение данных
-    func initCellData()
+    func updateNumOfDays()
     func updateMealList(day: Int, mealtype: MealsType)
     
     // Геттеры
@@ -41,9 +41,17 @@ protocol DietScreenViewOutput: AnyObject {
 }
 
 protocol DietScreenInteractorInput: AnyObject {
+    // Геттеры
+    func getNumOfDays()
+    func getMealList(toDay day: Int, toMeal mealtype: MealsType)
+    
+    // Сеттеры
+    func setMealState(_ state: Bool, atPosition position: Int, forMeal celltype: MealsType, inDay day: Int)
 }
 
 protocol DietScreenInteractorOutput: AnyObject {
+    func setMealList(_ meals: [Meals], day: Int, celltype: MealsType)
+    func setNumOfDays(_ days: Int)
 }
 
 protocol DietScreenRouterInput: AnyObject {

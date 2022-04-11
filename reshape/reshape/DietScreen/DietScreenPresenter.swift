@@ -8,75 +8,6 @@
 
 import Foundation
 
-enum MealsType {
-    case breakfast, lunch, dinner, none,
-         mealBreakfast, mealLunch, mealDinner
-    
-    var revert: MealsType {
-        switch self {
-        case .breakfast:
-            return .mealBreakfast
-        case .lunch:
-            return .mealLunch
-        case .dinner:
-            return .mealDinner
-        case .mealBreakfast:
-            return .breakfast
-        case .mealLunch:
-            return .lunch
-        case .mealDinner:
-            return .dinner
-        case .none:
-            return .none
-        }
-    }
-    
-    var text: String {
-        switch self {
-        case .breakfast:
-            return "Завтрак"
-        case .lunch:
-            return "Обед"
-        case .dinner:
-            return "Ужин"
-        case .none:
-            return ""
-        case .mealBreakfast:
-            return "Блюдо завтрака"
-        case .mealLunch:
-            return "Блюдо обеда"
-        case .mealDinner:
-            return "Блюдо ужина"
-        }
-    }
-}
-
-struct Meals {
-    var name: String
-    var cal: Double
-    var checked: Bool
-    
-    init(mealName: String, calories: Double, check: Bool = false) {
-        name = mealName
-        cal = calories
-        checked = check
-    }
-}
-
-struct CellInfo {
-    var section: Int
-    var cellType: MealsType
-    var disclosureState: Bool
-    var meals: [Meals]
-    
-    init(_ sec: Int, initType: MealsType) {
-        section = sec
-        cellType = initType
-        disclosureState = false
-        meals = []
-    }
-}
-
 final class DietScreenPresenter {
 	weak var view: DietScreenViewInput?
     weak var moduleOutput: DietScreenModuleOutput?
@@ -93,6 +24,7 @@ final class DietScreenPresenter {
         self.interactor = interactor
     }
     
+    // Подготовка к добавлению или удачению ячеек
     private func prepareCells(mealType celltype: MealsType, atSection section: Int)
     -> (cellTypeForRemove: MealsType, mealDataSize: Int, dietCellIndex: Int, mealIndexPath: [IndexPath])? {
         if (rowInSection.count <= section) { return nil }
@@ -109,37 +41,25 @@ final class DietScreenPresenter {
         return (cellTypeForRemove, mealDataSize, dietCellIndex, mealIndexPath)
     }
 
+    // Обработка изменения состояния раскрывающейся ячейки
     private func changeDisclosure(toState state: Bool, forMeal meal: MealsType, fromSection section: Int) {
         let dataCellIndex = self.indexOfCellData(forMeal: meal, atSection: section)
-        cellData[dataCellIndex].disclosureState = state
+        cellData[dataCellIndex].changeDisclosure(toState: state)
     }
-        
+
+    // Обработка изменения состояния блюда
     private func changeMealState(toState state: Bool, atIndex index: Int, forMeal meal: MealsType, fromSection section: Int) {
         let dataCellIndex = self.indexOfCellData(forMeal: meal.revert, atSection: section)
-        cellData[dataCellIndex].meals[index].checked = state
+        interactor.setMealState(state, atPosition: index, forMeal: meal, inDay: section + 1)
+        cellData[dataCellIndex].changeMealState(atIndex: index, toState: state)
     }
     
+    // Получение индекса для внутренней базе данных
     private func indexOfCellData(forMeal meal: MealsType, atSection section: Int) -> Int {
         guard let index = cellData.firstIndex(where: { $0.section == section && $0.cellType == meal }) else {
             fatalError("Can't find cell index for \(meal.text)!")
         }
         return index
-    }
-}
-
-extension DietScreenPresenter: DietScreenModuleInput {
-    func setMealList(_ meals: [Meals], day: Int, celltype: MealsType) {
-        if (rowInSection.count < day) { return }
-        
-        // Очистка ячеек из таблицы
-        self.uncheckedDiet(mealType: celltype, inSection: day - 1)
-        
-        // Обновление данных ячейки
-        let dataIndex = self.indexOfCellData(forMeal: celltype, atSection: day - 1)
-        cellData[dataIndex].meals = meals
-        
-        // Добавление ячеек с новыми данными
-        self.checkedDiet(mealType: celltype, inSection: day - 1)
     }
 }
 
@@ -169,41 +89,34 @@ extension DietScreenPresenter: DietScreenViewOutput {
         return rowInSection[indexPath.section][indexPath.row]
     }
     
+    // Получения количества секций
     func getNumOfDay() -> Int {
         return numOfSec
     }
     
+    // Получение числа строк к секции
     func getNumOfRows(inSection section: Int) -> Int {
         if rowInSection.count <= section { return 0 }
         else { return rowInSection[section].count }
     }
 }
 
+// Запросы от таблицы
 extension DietScreenPresenter {
-    func initCellData() {
-        // Add from Model
-        numOfSec = 10
-        for curSection in 0...numOfSec-1 {
-            rowInSection.insert([.breakfast, .lunch, .dinner], at: curSection)
-            cellData.append(contentsOf: [
-                CellInfo(curSection, initType: .breakfast),
-                CellInfo(curSection, initType: .lunch),
-                CellInfo(curSection, initType: .dinner)
-            ])
-        }
+    // Запрос на получение количества дней и инициализация каждого дня
+    func updateNumOfDays() {
+        interactor.getNumOfDays()
     }
     
-    // Запрос на обновление данных (Отправитьь запрос в модель)
+    // Запрос в интерактор на полученние новых данных
     func updateMealList(day: Int, mealtype: MealsType) {
-        let meal: [Meals] = [Meals(mealName: "first", calories: 400, check: true), Meals(mealName: "second", calories: 300)]
-        self.setMealList(meal, day: day, celltype: mealtype)
+        interactor.getMealList(toDay: day, toMeal: mealtype)
     }
 }
 
-// Обработчики нажатий
+// Обработчики нажатий на ячейки
 extension DietScreenPresenter {
     func checkedDiet(mealType celltype: MealsType, inSection section: Int) {
-        print("[DEBUG] \(celltype.text) disclosure at \(section + 1)")
         self.changeDisclosure(toState: true, forMeal: celltype, fromSection: section)
         guard let (cellTypeForRemove, mealDataSize, dietCellIndex, mealIndexPath) = self.prepareCells(mealType: celltype, atSection: section) else {
             return
@@ -213,7 +126,6 @@ extension DietScreenPresenter {
     }
     
     func uncheckedDiet(mealType celltype: MealsType, inSection section: Int) {
-        print("[DEBUG] \(celltype.text) closure at \(section + 1)")
         self.changeDisclosure(toState: false, forMeal: celltype, fromSection: section)
         guard let (cellTypeForRemove, _, _, mealIndexPath) = prepareCells(mealType: celltype, atSection: section) else {
             return
@@ -223,15 +135,47 @@ extension DietScreenPresenter {
     }
     
     func checkedMeal(atPosition position: Int, forMeal celltype: MealsType, inSection section: Int) {
-        print("[DEBUG] \(celltype.text) checked at \(section + 1) day in \(position) position")
         self.changeMealState(toState: true, atIndex: position, forMeal: celltype, fromSection: section)
     }
     
     func uncheckedMeal(atPosition position: Int, forMeal celltype: MealsType, inSection section: Int) {
-        print("[DEBUG] \(celltype.text) unchecked at \(section + 1) day in \(position) position")
         self.changeMealState(toState: false, atIndex: position, forMeal: celltype, fromSection: section)
     }
 }
 
+// Обработчики ответа от интерактора
 extension DietScreenPresenter: DietScreenInteractorOutput {
+    func setMealList(_ meals: [Meals], day: Int, celltype: MealsType) {
+        if (rowInSection.count < day) { return }
+        
+        // Получение индекса ячейки
+        let dataIndex = self.indexOfCellData(forMeal: celltype, atSection: day - 1)
+        
+        // Очистка ячеек из таблицы
+        self.uncheckedDiet(mealType: celltype, inSection: day - 1)
+        
+        // Обновление данных ячеек
+        cellData[dataIndex].updateMeals(to: meals)
+        
+        // Добавление ячеек с новыми данными
+        self.checkedDiet(mealType: celltype, inSection: day - 1)
+    }
+    
+    func setNumOfDays(_ days: Int) {
+        numOfSec = days
+        
+        // Создание начальных полей секции
+        for curSection in 0...numOfSec-1 {
+            rowInSection.insert([.breakfast, .lunch, .dinner], at: curSection)
+            cellData.append(contentsOf: [
+                CellInfo(curSection, initType: .breakfast),
+                CellInfo(curSection, initType: .lunch),
+                CellInfo(curSection, initType: .dinner)
+            ])
+        }
+        
+        view?.reloadTableView()
+    }
 }
+
+extension DietScreenPresenter: DietScreenModuleInput {}

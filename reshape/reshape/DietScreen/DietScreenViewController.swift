@@ -92,8 +92,8 @@ final class DietScreenViewController: UIViewController {
     }
     
     func setupTableView() {
-        // Загрузка и обработка данных в Presenterе
-        output.initCellData()
+        // Запрос данных в Presenterе
+        output.updateNumOfDays()
         
         // Настройка визуала
         dietTableView.backgroundColor = .white
@@ -121,6 +121,10 @@ extension DietScreenViewController: DietScreenViewInput {
         dietTableView.beginUpdates()
         dietTableView.deleteRows(at: indexPaths, with: .top)
         dietTableView.endUpdates()
+    }
+    
+    func reloadTableView() {
+        self.dietTableView.reloadData()
     }
 }
 
