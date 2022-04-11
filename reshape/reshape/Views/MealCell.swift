@@ -16,20 +16,20 @@ final class MealCell: UITableViewCell {
     
     private var mealNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(named: "Dark Violet")
+        label.textColor = UIColor.blackVioletColor
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
     
     private var caloriesLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(named: "Dark Violet")
+        label.textColor = UIColor.blackVioletColor
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: style, reuseIdentifier: "MealCell")
         setupCell()
     }
     
@@ -48,7 +48,7 @@ final class MealCell: UITableViewCell {
         self.addSubview(checkCircleImage)
         self.addSubview(mealNameLabel)
         self.addSubview(caloriesLabel)
-        backgroundColor = UIColor(named: "ModalViewColor")
+        backgroundColor = UIColor.modalViewGrayColor
         setupConstarints()
     }
     

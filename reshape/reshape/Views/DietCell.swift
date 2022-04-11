@@ -10,7 +10,7 @@ import UIKit
 final class DietCell: UITableViewCell {
     private let mealTypeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(named: "Dark Violet")
+        label.textColor = UIColor.blackVioletColor
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
@@ -25,7 +25,7 @@ final class DietCell: UITableViewCell {
     private var disclosureHeightConstraints: NSLayoutConstraint = NSLayoutConstraint()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: style, reuseIdentifier: "DietCell")
         setupCell()
     }
     
@@ -36,7 +36,7 @@ final class DietCell: UITableViewCell {
     private func setupCell() {
         self.addSubview(mealTypeLabel)
         self.addSubview(disclosureImage)
-        backgroundColor = UIColor(named: "ModalViewColor")
+        backgroundColor = UIColor.modalViewGrayColor
         setupConstraints()
     }
     
@@ -85,23 +85,5 @@ final class DietCell: UITableViewCell {
         disclosureImage.image = UIImage(named: "Closure")
         disclosureWidthConstraints.constant = 6
         disclosureHeightConstraints.constant = 14
-    }
-}
-
-extension UIImageView {
-    func rotateClockwise() {
-        let rotation : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotation.fromValue = -Double.pi/2
-        rotation.toValue = 0
-        rotation.duration = 0.2
-        self.layer.add(rotation, forKey: "rotationClockwiseAnimation")
-    }
-
-    func rotateAntiClockwise() {
-        let rotation : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotation.fromValue = Double.pi/2
-        rotation.toValue = 0
-        rotation.duration = 0.2
-        self.layer.add(rotation, forKey: "rotationAntiClockwiseAnimation")
     }
 }
