@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		2E1F1DBF27E4936700FA7B77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E1F1DBD27E4936700FA7B77 /* Main.storyboard */; };
 		2E1F1DDA27E4FB7E00FA7B77 /* EnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */; };
+		2EA1E89F27FCDB47001B329A /* MealCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E89E27FCDB47001B329A /* MealCell.swift */; };
+		2EA1E8A127FCDB8E001B329A /* DietHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E8A027FCDB8E001B329A /* DietHeader.swift */; };
 		2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6508B27E9BB94003F41FC /* AuthCoordinator.swift */; };
 		2EA6508E27E9C7FF003F41FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2EA6508D27E9C7FF003F41FC /* GoogleService-Info.plist */; };
 		2EA6509127E9C9D3003F41FC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2EA6509027E9C9D3003F41FC /* FirebaseAuth */; };
 		2EA6509327E9C9D3003F41FC /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 2EA6509227E9C9D3003F41FC /* FirebaseDatabase */; };
-		2EA6509527F2ED07003F41FC /* DietCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6509427F2ED06003F41FC /* DietCells.swift */; };
+		2EA6509527F2ED07003F41FC /* DietCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6509427F2ED06003F41FC /* DietCell.swift */; };
 		2EC90F5027E3B74200F2F5FC /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC90F4F27E3B74200F2F5FC /* PinLayout */; };
 		2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */; };
 		2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */; };
@@ -93,9 +95,11 @@
 /* Begin PBXFileReference section */
 		2E1F1DBE27E4936700FA7B77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterButton.swift; sourceTree = "<group>"; };
+		2EA1E89E27FCDB47001B329A /* MealCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCell.swift; sourceTree = "<group>"; };
+		2EA1E8A027FCDB8E001B329A /* DietHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietHeader.swift; sourceTree = "<group>"; };
 		2EA6508B27E9BB94003F41FC /* AuthCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		2EA6508D27E9C7FF003F41FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		2EA6509427F2ED06003F41FC /* DietCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietCells.swift; sourceTree = "<group>"; };
+		2EA6509427F2ED06003F41FC /* DietCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietCell.swift; sourceTree = "<group>"; };
 		2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPresenter.swift; sourceTree = "<group>"; };
 		2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRouter.swift; sourceTree = "<group>"; };
 		2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterViewController.swift; sourceTree = "<group>"; };
@@ -192,7 +196,9 @@
 				2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */,
 				941E811C27E614F300A33344 /* AuthStackView.swift */,
 				94302BC727E72E56009E397B /* CloseButton.swift */,
-				2EA6509427F2ED06003F41FC /* DietCells.swift */,
+				2EA6509427F2ED06003F41FC /* DietCell.swift */,
+				2EA1E8A027FCDB8E001B329A /* DietHeader.swift */,
+				2EA1E89E27FCDB47001B329A /* MealCell.swift */,
 				945B387127F0C4F70044E952 /* CustomView.swift */,
 				945B387327F31FC00044E952 /* CircularProgressBarView.swift */,
 				945B387527F357450044E952 /* PhotoProgressView.swift */,
@@ -523,7 +529,7 @@
 				94302BC827E72E56009E397B /* CloseButton.swift in Sources */,
 				94302BC227E66080009E397B /* ForgetPasswordScreenRouter.swift in Sources */,
 				945B384627ECC32A0044E952 /* ResultsScreenRouter.swift in Sources */,
-				2EA6509527F2ED07003F41FC /* DietCells.swift in Sources */,
+				2EA6509527F2ED07003F41FC /* DietCell.swift in Sources */,
 				945B385F27ECC3500044E952 /* ProfileScreenViewController.swift in Sources */,
 				94302BC427E66080009E397B /* ForgetPasswordScreenProtocols.swift in Sources */,
 				945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */,
@@ -537,6 +543,7 @@
 				36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */,
 				9437920327F9AFA10000188E /* ResultCollectionCell.swift in Sources */,
 				945B383B27ECC10D0044E952 /* CoordinatorProtocol.swift in Sources */,
+				2EA1E8A127FCDB8E001B329A /* DietHeader.swift in Sources */,
 				945B386027ECC3500044E952 /* ProfileScreenProtocols.swift in Sources */,
 				945B384527ECC32A0044E952 /* ResultsScreenPresenter.swift in Sources */,
 				2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */,
@@ -559,6 +566,7 @@
 				941E811D27E614F300A33344 /* AuthStackView.swift in Sources */,
 				941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */,
 				9437920627FA19780000188E /* ReuseIdentifier.swift in Sources */,
+				2EA1E89F27FCDB47001B329A /* MealCell.swift in Sources */,
 				945B384A27ECC32A0044E952 /* ResultsScreenContainer.swift in Sources */,
 				945B385627ECC33A0044E952 /* DietScreenContainer.swift in Sources */,
 				36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */,

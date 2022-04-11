@@ -9,6 +9,23 @@
 import UIKit
 import SwiftUI
 
+enum MealsType {
+    case breakfast, lunch, dinner, none,
+         mealBreakfast, mealLunch, mealDinner
+}
+
+struct Meals {
+    var name: String
+    var cal: Double
+    var checked: Bool
+    
+    init(mealName: String, calories: Double, check: Bool = false) {
+        name = mealName
+        cal = calories
+        checked = check
+    }
+}
+
 struct CellInfo {
     var section: Int
     var cellType: MealsType
@@ -200,17 +217,17 @@ extension DietScreenViewController: DietScreenViewInput {
 extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (rowInSection.count <= indexPath.section || rowInSection[indexPath.section].count <= indexPath.row) {
-            return tableView.dequeueReusableCell(withIdentifier: "Other", for: indexPath)
+            return .init()
         }
         
         let cellInfo = rowInSection[indexPath.section][indexPath.row]
         switch cellInfo {
         case .breakfast, .lunch, .dinner:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "DietCell", for: indexPath) as? DietCell else {
-                return tableView.dequeueReusableCell(withIdentifier: "Other", for: indexPath)
+                return .init()
             }
             guard let data = cellData.first(where: { $0.section == indexPath.section && $0.cellType == cellInfo }) else {
-                return tableView.dequeueReusableCell(withIdentifier: "Other", for: indexPath)
+                return .init()
             }
             
             if data.disclosureState {
@@ -233,22 +250,22 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         case .mealBreakfast, .mealLunch, .mealDinner:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath) as? MealCell else {
-                return tableView.dequeueReusableCell(withIdentifier: "Other", for: indexPath)
+                return .init()
             }
             
             guard let cellText = revertCellType(from: cellInfo) else {
                 return .init()
             }
             if cellText == MealsType.none {
-                return tableView.dequeueReusableCell(withIdentifier: "Other", for: indexPath)
+                return .init()
             }
             guard let data = cellData.first(where: { $0.section == indexPath.section && $0.cellType == cellText }) else {
-                return tableView.dequeueReusableCell(withIdentifier: "Other", for: indexPath)
+                return .init()
             }
             
             let breakfastCellRow = rowInSection[indexPath.section].firstIndex(of: cellText)!
             if indexPath.row > (data.meals.count + breakfastCellRow) {
-                return tableView.dequeueReusableCell(withIdentifier: "Other", for: indexPath)
+                return .init()
             }
             let currentMealCell = data.meals[indexPath.row - breakfastCellRow - 1]
             
@@ -258,6 +275,8 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
             return tableView.dequeueReusableCell(withIdentifier: "Other", for: indexPath)
         }
     }
+    
+    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Day")
@@ -327,6 +346,10 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return numOfSec
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
     }
 }
 
