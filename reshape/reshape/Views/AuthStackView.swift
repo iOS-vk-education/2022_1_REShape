@@ -15,6 +15,7 @@ protocol AuthStackViewDelegate: AnyObject {
 protocol AuthStackViewDataSource: AnyObject {
     func labelText(tag: Int) -> String
     func placeholderText(tag: Int) -> String
+    func isSecurityEntryOn(for tag: Int) -> Bool
 }
 
 final class AuthStackView: UIView {
@@ -24,10 +25,15 @@ final class AuthStackView: UIView {
         didSet {
             label.text = dataSource?.labelText(tag: tag)
             textField.placeholder = dataSource?.placeholderText(tag: tag)
+            textField.isSecureTextEntry = dataSource?.isSecurityEntryOn(for: tag) ?? false
         }
     }
-    
-    lazy var label: UILabel = {
+    var backgroundTFColor: UIColor = UIColor.green {
+        didSet {
+            textField.backgroundColor = backgroundTFColor
+        }
+    }
+    private lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -35,14 +41,14 @@ final class AuthStackView: UIView {
         return label
     }()
     
-    lazy var textField : UITextField = {
+    private lazy var textField : UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.layer.sublayerTransform = CATransform3DMakeTranslation(8, 0, 0)
         textField.layer.cornerRadius = 10
         textField.clipsToBounds = true
         textField.textColor = .black
-        textField.backgroundColor = .systemBackground
+        textField.backgroundColor = backgroundTFColor
         textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return textField
     }()

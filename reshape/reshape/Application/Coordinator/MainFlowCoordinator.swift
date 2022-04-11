@@ -34,7 +34,7 @@ final class MainFlowCoordinator: CoordinatorProtocol{
 
 extension MainFlowCoordinator{
     private func setupTabBar() {
-        tabBar.tabBar.backgroundColor = UIColor.backgroundGrayColor
+        tabBar.tabBar.backgroundColor = UIColor.modalViewGrayColor
     }
     private func setupResults() {
         guard let navController = navigationControllers[.results] else {

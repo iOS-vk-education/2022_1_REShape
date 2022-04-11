@@ -23,7 +23,7 @@ final class RegisterScreenContainer {
 		presenter.moduleOutput = context.moduleOutput
         router.viewController = viewController
 		interactor.output = presenter
-
+        router.window = context.window
         return RegisterScreenContainer(view: viewController, input: presenter, router: router)
 	}
 

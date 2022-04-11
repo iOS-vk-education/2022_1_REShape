@@ -12,6 +12,8 @@ final class ForgetPasswordScreenViewController: UIViewController {
     
 	private let output: ForgetPasswordScreenViewOutput
 
+    weak var delegate: (AuthStackViewDelegate)?
+    weak var dataSource: (AuthStackViewDataSource)?
     private lazy var closeButton: CloseButton = CloseButton(viewControllerToClose: self)
 
     private let mainLabel: UILabel = {
@@ -24,6 +26,8 @@ final class ForgetPasswordScreenViewController: UIViewController {
         return mainLabel
     }()
     private let emailStackView: AuthStackView = AuthStackView()
+
+
     private let addtitionalLabel: UILabel = {
         let additionalLabel: UILabel = UILabel()
         additionalLabel.text = "Вам на почту придет код, с помощью которого Вы сможете восстановить пароль"
@@ -179,6 +183,7 @@ extension ForgetPasswordScreenViewController{
         closeButton.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCloseAction))
         dimmedView.addGestureRecognizer(tapGesture)
+        emailStackView.backgroundTFColor = UIColor.white 
     }
     func setupPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(gesture:)))
@@ -259,6 +264,10 @@ extension ForgetPasswordScreenViewController: AuthStackViewDelegate {
     }
 }
 extension ForgetPasswordScreenViewController: AuthStackViewDataSource {
+    func isSecurityEntryOn(for tag: Int) -> Bool {
+        return false
+    }
+    
     func labelText(tag: Int) -> String {
         var returnLabel: String
         switch tag {

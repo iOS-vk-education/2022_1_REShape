@@ -20,6 +20,7 @@ protocol RegisterScreenViewInput: AnyObject {
 
 protocol RegisterScreenViewOutput: AnyObject {
     func backButtonPressed()
+    func registerDidTap()
 }
 
 protocol RegisterScreenInteractorInput: AnyObject {
@@ -30,4 +31,5 @@ protocol RegisterScreenInteractorOutput: AnyObject {
 
 protocol RegisterScreenRouterInput: AnyObject {
     func backButtonTapped()
+    func registerButtonTapped()
 }

@@ -230,9 +230,11 @@ extension LoginScreenViewController {
         containerViewBottomConstraint?.isActive = true
     }
     private func setUpUI(){
+        emailStackView.backgroundTFColor = .white
         emailStackView.tag = 0
         passwordStackView.tag = 1
-        passwordStackView.textField.isSecureTextEntry = true
+        passwordStackView.backgroundTFColor = .white
+//        passwordStackView.textField.isSecureTextEntry = true
         loginButton.setupUI(name: "Войти")
         rememberPasswordStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(rememberPasswordButtonPressed)))
         forgetPasswordButton.isUserInteractionEnabled = true
@@ -273,7 +275,7 @@ extension LoginScreenViewController {
         } else {
             rememberButton.image = UIImage(named: "notRememberButton")
             isRemembered = !isRemembered
-            self.output.isUserRemembered(isRemembered: true, forKey: "isRemembered")
+            self.output.isUserRemembered(isRemembered: false, forKey: "isRemembered")
         }
     }
     func setupPanGesture() {
@@ -374,6 +376,14 @@ extension LoginScreenViewController: AuthStackViewDelegate {
 }
 
 extension LoginScreenViewController: AuthStackViewDataSource {
+    func isSecurityEntryOn(for tag: Int) -> Bool {
+        if tag == 0 {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func labelText(tag: Int) -> String {
         var returnLabel: String
         switch tag {

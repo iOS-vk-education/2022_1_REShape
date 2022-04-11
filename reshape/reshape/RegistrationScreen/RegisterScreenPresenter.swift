@@ -25,6 +25,10 @@ extension RegisterScreenPresenter: RegisterScreenModuleInput {
 }
 
 extension RegisterScreenPresenter: RegisterScreenViewOutput {
+    func registerDidTap() {
+        router.registerButtonTapped()
+    }
+    
     func backButtonPressed(){
         router.backButtonTapped()
     }
