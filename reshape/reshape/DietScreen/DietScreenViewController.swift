@@ -93,7 +93,7 @@ final class DietScreenViewController: UIViewController {
     
     func setupTableView() {
         // Запрос данных в Presenterе
-        output.updateNumOfDays()
+        output.requestNumOfDays()
         
         // Настройка визуала
         dietTableView.backgroundColor = .white
@@ -130,11 +130,11 @@ extension DietScreenViewController: DietScreenViewInput {
 
 extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
-        let mealType = output.getMealType(from: indexPath)
+        let mealType = output.getCellType(from: indexPath)
         switch mealType {
         case .breakfast, .lunch, .dinner:
             // Получение и установка данных для текущей ячейки
-            let cellData = output.getCellData(forMeal: mealType, atSection: indexPath.section)
+            let cellData = output.getCellInfo(forMeal: mealType, atSection: indexPath.section)
             
             let cell = tableView.dequeueCell(cellType: DietCell.self, for: indexPath)
             cell.disclosure(cellData.disclosureState, animated: false)
@@ -176,30 +176,22 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        let mealType = output.getMealType(from: indexPath)
+        let mealType = output.getCellType(from: indexPath)
         switch mealType {
         case .breakfast, .lunch, .dinner:
             // Получение блока данных
-            let cellData = output.getCellData(forMeal: mealType, atSection: indexPath.section)
+            let newCellDisclosureState = output.getCellInfo(forMeal: mealType, atSection: indexPath.section).disclosureState.revert
             
             // Проверка и изменение состояния
-            (cell as? DietCell)?.disclosure(cellData.disclosureState.revert)
-            if cellData.disclosureState == .disclosure {
-                output.uncheckedDiet(mealType: mealType, inSection: indexPath.section)
-            } else {
-                output.checkedDiet(mealType: mealType, inSection: indexPath.section)
-            }
+            (cell as? DietCell)?.disclosure(newCellDisclosureState)
+            output.clickedDiet(newCellDisclosureState, mealType: mealType, inSection: indexPath.section)
         case .mealLunch, .mealDinner, .mealBreakfast:
             // Получение данных о блюде
-            let mealData = output.getMealData(forMeal: mealType.revert, atIndex: indexPath)
+            let newMealChecked = !output.getMealData(forMeal: mealType.revert, atIndex: indexPath).checked
 
             // Проверка состояния блюда и изменение его состояния
-            (cell as? MealCell)?.setState(at: !mealData.checked)
-            if mealData.checked {
-                output.uncheckedMeal(forMeal: mealType.revert, atIndex: indexPath)
-            } else {
-                output.checkedMeal(forMeal: mealType.revert, atIndex: indexPath)
-            }
+            (cell as? MealCell)?.setState(at: newMealChecked)
+            output.clickedMeal(newMealChecked, forMeal: mealType.revert, atIndex: indexPath)
         default:
             return
         }

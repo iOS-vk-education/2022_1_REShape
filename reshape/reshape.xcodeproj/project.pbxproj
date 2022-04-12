@@ -210,6 +210,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		2EA1E8A6280604CE001B329A /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
 		2EECFF2C27E5035C00BD4BEF /* EnterScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -265,6 +272,7 @@
 		36A9DAFF27E2AC3400DB5082 /* reshape */ = {
 			isa = PBXGroup;
 			children = (
+				2EA1E8A6280604CE001B329A /* Entities */,
 				945B383E27ECC3120044E952 /* ProfileScreen */,
 				945B383D27ECC3030044E952 /* DietScreen */,
 				945B383C27ECC2DB0044E952 /* ResultsScreen */,
