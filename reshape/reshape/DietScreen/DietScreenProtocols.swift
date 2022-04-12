@@ -15,6 +15,7 @@ protocol DietScreenModuleInput {
 protocol DietScreenModuleOutput: AnyObject {
 }
 
+// Команды управляющие вьюхой
 protocol DietScreenViewInput: AnyObject {
     func showCells(for indexPaths: [IndexPath])
     func hideCells(for indexPaths: [IndexPath])
@@ -22,22 +23,22 @@ protocol DietScreenViewInput: AnyObject {
 }
 
 protocol DietScreenViewOutput: AnyObject {
-    // Запрос на получение данных
+    // Запросы на необходимость получение новых данных
     func updateNumOfDays()
-    func updateMealList(day: Int, mealtype: MealsType)
     
     // Геттеры
     func getNumOfDay() -> Int
     func getMealType(from indexPath: IndexPath) -> MealsType
     func getCellData(forMeal meal: MealsType, atSection section: Int) -> CellInfo
+    func getMealData(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Meals
     func getCellIndex(forMeal meal: MealsType, atSection section: Int) -> Int
     func getNumOfRows(inSection section: Int) -> Int
     
-    // Обработчики нажатий
+    // Обработчики нажатий на ячейки
     func checkedDiet(mealType celltype: MealsType, inSection section: Int)
     func uncheckedDiet(mealType celltype: MealsType, inSection section: Int)
-    func checkedMeal(atPosition position: Int, forMeal celltype: MealsType, inSection section: Int)
-    func uncheckedMeal(atPosition position: Int, forMeal celltype: MealsType, inSection section: Int)
+    func checkedMeal(forMeal celltype: MealsType, atIndex indexPath: IndexPath)
+    func uncheckedMeal(forMeal celltype: MealsType, atIndex indexPath: IndexPath)
 }
 
 protocol DietScreenInteractorInput: AnyObject {
@@ -45,7 +46,7 @@ protocol DietScreenInteractorInput: AnyObject {
     func getNumOfDays()
     func getMealList(toDay day: Int, toMeal mealtype: MealsType)
     
-    // Сеттеры
+    // Запись в FireBase информации о состоянии блюда
     func setMealState(_ state: Bool, atPosition position: Int, forMeal celltype: MealsType, inDay day: Int)
 }
 

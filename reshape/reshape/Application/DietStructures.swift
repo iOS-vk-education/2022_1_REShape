@@ -5,6 +5,23 @@
 //  Created by Иван Фомин on 11.04.2022.
 //
 
+// Disclosure state
+enum DisclosureState {
+    case disclosure, closure, reload
+    
+    var revert: DisclosureState {
+        switch self {
+        case .disclosure:
+            return .closure
+        case .closure:
+            return .disclosure
+        default:
+            return .reload
+        }
+    }
+}
+
+// Типы ячеек
 enum MealsType {
     case breakfast, lunch, dinner, none,
          mealBreakfast, mealLunch, mealDinner
@@ -48,6 +65,7 @@ enum MealsType {
     }
 }
 
+// Структура блюда
 struct Meals {
     var name: String
     var cal: Double
@@ -73,16 +91,17 @@ struct Meals {
     }
 }
 
+// База данных ячейки
 class CellInfo {
     var section: Int
     var cellType: MealsType
-    var disclosureState: Bool
+    var disclosureState: DisclosureState
     var meals: [Meals]
     
     init(_ sec: Int, initType: MealsType) {
         section = sec
         cellType = initType
-        disclosureState = false
+        disclosureState = .closure
         meals = []
     }
     
@@ -94,7 +113,7 @@ class CellInfo {
         self.meals[index].checked = state
     }
     
-    func changeDisclosure(toState state: Bool) {
+    func changeDisclosure(toState state: DisclosureState) {
         self.disclosureState = state
     }
 }

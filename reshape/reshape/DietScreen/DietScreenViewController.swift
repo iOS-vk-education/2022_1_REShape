@@ -26,7 +26,7 @@ final class DietScreenViewController: UIViewController {
         NSAttributedString(string: "ПОИСК ПО ДНЯМ",
                            attributes: [NSAttributedString.Key.kern: 0.77,
                                         NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .regular),
-                                        NSAttributedString.Key.foregroundColor: UIColor.pureGreyColor!])
+                                        NSAttributedString.Key.foregroundColor: UIColor.pureGreyColor as Any])
         search.searchBarStyle = .minimal
         search.setPositionAdjustment(UIOffset(horizontal: 9, vertical: 0.5), for: .search)
         search.searchTextPositionAdjustment = UIOffset(horizontal: 9, vertical: 0.5)
@@ -133,30 +133,19 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
         let mealType = output.getMealType(from: indexPath)
         switch mealType {
         case .breakfast, .lunch, .dinner:
-            let cell = tableView.dequeueCell(cellType: DietCell.self, for: indexPath)
-            
             // Получение и установка данных для текущей ячейки
             let cellData = output.getCellData(forMeal: mealType, atSection: indexPath.section)
-            cellData.disclosureState ? cell.disclosure(animated: false) : cell.closure(animated: false)
-            cell.setText(mealType.text)
             
+            let cell = tableView.dequeueCell(cellType: DietCell.self, for: indexPath)
+            cell.disclosure(cellData.disclosureState, animated: false)
+            cell.setText(mealType.text)
             return cell
         case .mealBreakfast, .mealLunch, .mealDinner:
-            let cell = tableView.dequeueCell(cellType: MealCell.self, for: indexPath)
-            
-            // Получение позиции родительской ячейки и блока данных
-            let dietCellIndex = output.getCellIndex(forMeal: mealType.revert, atSection: indexPath.section)
-            let dietCellData = output.getCellData(forMeal: mealType.revert, atSection: indexPath.section)
-            
-            // Проверка на размер блока данных
-            if indexPath.row - dietCellIndex > dietCellData.meals.count {
-                return .init()
-            }
-            
             // Получение данных для текущей ячейки
-            let currentMealCell = dietCellData.meals[indexPath.row - dietCellIndex - 1]
-            cell.setMealInformation(currentMealCell.name, calories: currentMealCell.cal, state: currentMealCell.checked)
+            let mealData = output.getMealData(forMeal: mealType.revert, atIndex: indexPath)
             
+            let cell = tableView.dequeueCell(cellType: MealCell.self, for: indexPath)
+            cell.setMealInformation(mealData.name, calories: mealData.cal, state: mealData.checked)
             return cell
         case .none:
             return .init()
@@ -182,7 +171,7 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        33
+        return 33
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -191,36 +180,25 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
         switch mealType {
         case .breakfast, .lunch, .dinner:
             // Получение блока данных
-            let dietCellData = output.getCellData(forMeal: mealType, atSection: indexPath.section)
+            let cellData = output.getCellData(forMeal: mealType, atSection: indexPath.section)
             
             // Проверка и изменение состояния
-            if dietCellData.disclosureState {
-                (cell as? DietCell)?.closure()
+            (cell as? DietCell)?.disclosure(cellData.disclosureState.revert)
+            if cellData.disclosureState == .disclosure {
                 output.uncheckedDiet(mealType: mealType, inSection: indexPath.section)
             } else {
-                (cell as? DietCell)?.disclosure()
                 output.checkedDiet(mealType: mealType, inSection: indexPath.section)
-                output.updateMealList(day: indexPath.section + 1, mealtype: mealType)
             }
         case .mealLunch, .mealDinner, .mealBreakfast:
-            // Получение позиции родительской ячейки
-            let dataCellIndex = output.getCellIndex(forMeal: mealType.revert, atSection: indexPath.section)
-            
-            // Расчет индекса блюда в списке
-            let currentMealIndex = indexPath.row - dataCellIndex - 1
-            
             // Получение данных о блюде
-            let mealData = output.getCellData(forMeal: mealType.revert, atSection: indexPath.section).meals[currentMealIndex]
-            
+            let mealData = output.getMealData(forMeal: mealType.revert, atIndex: indexPath)
 
-            
             // Проверка состояния блюда и изменение его состояния
+            (cell as? MealCell)?.setState(at: !mealData.checked)
             if mealData.checked {
-                (cell as? MealCell)?.setState(at: false)
-                output.uncheckedMeal(atPosition: currentMealIndex, forMeal: mealType, inSection: indexPath.section)
+                output.uncheckedMeal(forMeal: mealType.revert, atIndex: indexPath)
             } else {
-                (cell as? MealCell)?.setState(at: true)
-                output.checkedMeal(atPosition: currentMealIndex, forMeal: mealType, inSection: indexPath.section)
+                output.checkedMeal(forMeal: mealType.revert, atIndex: indexPath)
             }
         default:
             return
@@ -229,11 +207,11 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        output.getNumOfRows(inSection: section)
+        return output.getNumOfRows(inSection: section)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        output.getNumOfDay()
+        return output.getNumOfDay()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

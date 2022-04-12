@@ -67,23 +67,26 @@ final class DietCell: UITableViewCell {
         mealTypeLabel.text = text
     }
     
-    func disclosure(animated: Bool = true) {
-        if animated {
-            disclosureImage.rotateClockwise()
+    func disclosure(_ state: DisclosureState, animated: Bool = true) {
+        switch state {
+        case .closure:
+            if animated {
+                disclosureImage.rotateAntiClockwise()
+            }
+            disclosureImage.image = nil
+            disclosureImage.image = UIImage(named: "Closure")
+            disclosureWidthConstraints.constant = 6
+            disclosureHeightConstraints.constant = 14
+        case .reload:
+            return
+        case .disclosure:
+            if animated {
+                disclosureImage.rotateClockwise()
+            }
+            disclosureImage.image = nil
+            disclosureImage.image = UIImage(named: "Disclosure")
+            disclosureWidthConstraints.constant = 14
+            disclosureHeightConstraints.constant = 6
         }
-        disclosureImage.image = nil
-        disclosureImage.image = UIImage(named: "Disclosure")
-        disclosureWidthConstraints.constant = 14
-        disclosureHeightConstraints.constant = 6
-    }
-    
-    func closure(animated: Bool = true) {
-        if animated {
-            disclosureImage.rotateAntiClockwise()
-        }
-        disclosureImage.image = nil
-        disclosureImage.image = UIImage(named: "Closure")
-        disclosureWidthConstraints.constant = 6
-        disclosureHeightConstraints.constant = 14
     }
 }
