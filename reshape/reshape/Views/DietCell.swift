@@ -25,7 +25,7 @@ final class DietCell: UITableViewCell {
     private var disclosureHeightConstraints: NSLayoutConstraint = NSLayoutConstraint()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: "DietCell")
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
     }
     
@@ -62,9 +62,12 @@ final class DietCell: UITableViewCell {
         mealTypeLabel.text = ""
         disclosureImage.image = nil
     }
-    
-    func setText(_ text: String) {
+}
+
+extension DietCell {
+    func setData(text: String, state: DisclosureState) {
         mealTypeLabel.text = text
+        self.disclosure(state, animated: false)
     }
     
     func disclosure(_ state: DisclosureState, animated: Bool = true) {

@@ -33,7 +33,7 @@ protocol DietScreenViewOutput: AnyObject {
     func getCellType(from indexPath: IndexPath) -> MealsType
     func getCellIndex(forMeal meal: MealsType, atSection section: Int) -> Int
     func getCellInfo(forMeal meal: MealsType, atSection section: Int) -> CellInfo
-    func getMealData(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Meals
+    func getMealData(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> MealInfo
     
     // Обработчики нажатий на ячейки
     func clickedDiet(_ state: DisclosureState, mealType celltype: MealsType, inSection section: Int)
@@ -55,7 +55,7 @@ protocol DietScreenInteractorInput: AnyObject {
 
 protocol DietScreenInteractorOutput: AnyObject {
     // Ответы на запросы презентера или интерактора
-    func updateMealData(_ meals: [Meals], forMeal meal: MealsType, atSection section: Int)
+    func updateMealData(_ meals: [MealInfo], forMeal meal: MealsType, atSection section: Int)
     func updateNumOfDays(_ days: Int)
 }
 

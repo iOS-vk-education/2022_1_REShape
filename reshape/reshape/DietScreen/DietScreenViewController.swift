@@ -106,7 +106,7 @@ final class DietScreenViewController: UIViewController {
         dietTableView.dataSource = self
         dietTableView.register(DietCell.self)
         dietTableView.register(MealCell.self)
-        dietTableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "Day") // TODO
+        dietTableView.register(DietHeader.self)
     }
     
 }
@@ -137,8 +137,7 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
             let cellData = output.getCellInfo(forMeal: mealType, atSection: indexPath.section)
             
             let cell = tableView.dequeueCell(cellType: DietCell.self, for: indexPath)
-            cell.disclosure(cellData.disclosureState, animated: false)
-            cell.setText(mealType.text)
+            cell.setData(text: mealType.text, state: cellData.disclosureState)
             return cell
         case .mealBreakfast, .mealLunch, .mealDinner:
             // Получение данных для текущей ячейки
@@ -155,14 +154,8 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Day")
-        
-        var contentConfiguration = header!.defaultContentConfiguration()
-        contentConfiguration.text = "День \(section + 1)"
-        contentConfiguration.textProperties.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        contentConfiguration.textProperties.color = UIColor.violetColor ?? .systemPurple
-        
-        header?.contentConfiguration = contentConfiguration
+        let header = tableView.dequeueHeader(headerType: DietHeader.self)
+        header.setDay(section + 1)
         return header
     }
     

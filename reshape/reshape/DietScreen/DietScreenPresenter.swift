@@ -66,7 +66,7 @@ final class DietScreenPresenter {
 // Геттеры
 extension DietScreenPresenter: DietScreenViewOutput {
     // Получение информации о блюде
-    func getMealData(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Meals {
+    func getMealData(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> MealInfo {
         // Получение базы данных родительской ячейки
         let dietCellData = self.getCellInfo(forMeal: meal, atSection: indexPath.section)
         
@@ -138,7 +138,7 @@ extension DietScreenPresenter {
 
 // Обработчики ответа от интерактора
 extension DietScreenPresenter: DietScreenInteractorOutput {
-    func updateMealData(_ meals: [Meals], forMeal meal: MealsType, atSection section: Int) {
+    func updateMealData(_ meals: [MealInfo], forMeal meal: MealsType, atSection section: Int) {
         if (rowInSection.count <= section) { return }
         
         // Обновление блюд, если ячейка открыта

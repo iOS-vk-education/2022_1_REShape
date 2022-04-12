@@ -47,8 +47,19 @@ extension UITableView {
         }
         return cell
     }
+    
+    func dequeueHeader<T: UITableViewHeaderFooterView>(headerType: T.Type) -> T {
+        guard let header = self.dequeueReusableHeaderFooterView(withIdentifier: T.reuseIdentifier) as? T else {
+            fatalError("Can't deque")
+        }
+        return header
+    }
 
     func register<T: UITableViewCell>(_ cellType: T.Type) {
         self.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+    }
+    
+    func register<T: UITableViewHeaderFooterView>(_ headerType: T.Type) {
+        self.register(headerType, forHeaderFooterViewReuseIdentifier: headerType.reuseIdentifier)
     }
 }
