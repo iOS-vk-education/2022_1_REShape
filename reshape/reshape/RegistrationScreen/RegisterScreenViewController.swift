@@ -85,11 +85,12 @@ final class RegisterScreenViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupObserversForKeyboard()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
@@ -135,8 +136,6 @@ extension RegisterScreenViewController {
         ])
         registrationScrollView.leading(0)
         registrationScrollView.trailing(0)
-        registrationScrollView.bottom(isIncludeSafeArea: false)
-        registrationScrollView.centerX()
         
         registrationScrollView.addSubview(contentView)
         contentView.top(isIncludeSafeArea: false)
@@ -202,9 +201,12 @@ extension RegisterScreenViewController {
     }
     @objc
     func keyboardWillShow(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else {return}
-        guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
-        let keyboardFrame = keyboardSize.cgRectValue
+//        guard let userInfo = notification.userInfo else {return}
+//        guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+//        let keyboardFrame = keyboardSize.cgRectValue
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
 //        var contentInset:UIEdgeInsets = self.registrationScrollView.contentInset
 //        contentInset.bottom = keyboardFrame.size.height
 //        UIView.animate(withDuration: 0.4){
@@ -213,10 +215,11 @@ extension RegisterScreenViewController {
 
         if self.registrationScrollViewConstraint?.constant == 0 {
             UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.registrationScrollViewConstraint?.constant -= keyboardFrame.height
+                self?.registrationScrollViewConstraint?.constant -= keyboardHeight
                 self?.view.layoutIfNeeded()
             }
         }
+    }
     }
     //возвращение вью в обычное состояние
     @objc
