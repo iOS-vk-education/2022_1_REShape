@@ -120,34 +120,34 @@ extension WaterScreenViewController: UICollectionViewDataSource {
             case 0:
                 cell.layer.cornerRadius = 10
                 cell.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-            cell.configure(cup: UIImage(named: "Glass")!,
+            cell.configure(cup: UIImage(named: "StillWater")!,
                            water: "Вода",
                            volume: "500 мл")
             case 1:
-                cell.configure(cup: UIImage(named: "Gradient")!,
-                               water: "Возраст",
+                cell.configure(cup: UIImage(named: "Coffee")!,
+                               water: "Кофе",
                                volume: "500 мл")
             case 2:
-                cell.configure(cup: UIImage(named: "Gradient")!,
-                               water: "Рост",
+                cell.configure(cup: UIImage(named: "Tea")!,
+                               water: "Чай",
                                volume: "500 мл")
             case 3:
-                cell.configure(cup: UIImage(named: "Gradient")!,
+                cell.configure(cup: UIImage(named: "SparklingWater")!,
                                water: "Начальный вес",
                                volume: "500 мл")
             case 4:
-                cell.configure(cup: UIImage(named: "Gradient")!,
-                               water: "Цель по весу",
+                cell.configure(cup: UIImage(named: "Milk")!,
+                               water: "Молоко",
                                volume: "500 мл")
             case 5:
-                cell.configure(cup: UIImage(named: "Gradient")!,
-                               water: "Начальный вес",
+                cell.configure(cup: UIImage(named: "Alcohol")!,
+                               water: "Алкоголь",
                                volume: "500 мл")
             case 6:
             cell.layer.cornerRadius = 10
             cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-                cell.configure(cup: UIImage(named: "Gradient")!,
-                               water: "Начальный вес",
+                cell.configure(cup: UIImage(named: "Juice")!,
+                               water: "Сок",
                                volume: "500 мл")
             default:
                 break
