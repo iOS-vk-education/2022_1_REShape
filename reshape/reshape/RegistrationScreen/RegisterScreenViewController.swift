@@ -55,6 +55,11 @@ final class RegisterScreenViewController: UIViewController {
         return photoLabel
     }()
 
+    private let contentView: UIView = {
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        return contentView
+    }()
     private let registrationScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -62,10 +67,10 @@ final class RegisterScreenViewController: UIViewController {
         return scrollView
     }()
     
-    private let contentView: RegistrationContentView = {
-        let contentView = RegistrationContentView()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        return contentView
+    private let registrationView: RegistrationContentView = {
+        let registrationView = RegistrationContentView()
+        registrationView.translatesAutoresizingMaskIntoConstraints = false
+        return registrationView
     }()
     private var registrationTableBottomConstraint: NSLayoutConstraint?
     private var imagePicker: ImagePicker?
@@ -92,6 +97,9 @@ final class RegisterScreenViewController: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        let heightFrame = registrationView.frame.height
+        let widthFrame = view.frame.width
+        registrationScrollView.contentSize = CGSize(width: widthFrame, height: heightFrame)
         addPhoto.layer.cornerRadius = addPhoto.frame.size.height / 2
         addPhoto.layer.masksToBounds = true
         if addPhoto.image == nil {
@@ -125,8 +133,8 @@ extension RegisterScreenViewController {
         NSLayoutConstraint.activate([
             registrationScrollView.topAnchor.constraint(equalTo: photoLabel.bottomAnchor, constant: 5)
         ])
-        registrationScrollView.leading(35)
-        registrationScrollView.trailing(-35)
+        registrationScrollView.leading(0)
+        registrationScrollView.trailing(0)
         registrationScrollView.bottom(isIncludeSafeArea: true)
         registrationScrollView.centerX()
         
@@ -135,6 +143,12 @@ extension RegisterScreenViewController {
         contentView.leading()
         contentView.trailing()
         contentView.bottom(isIncludeSafeArea: false)
+        
+        contentView.addSubview(registrationView)
+        registrationView.top(isIncludeSafeArea: false)
+        registrationView.leading(35)
+        registrationView.trailing(-35)
+        registrationView.bottom(isIncludeSafeArea: false)
     }
     private func setupUI(){
         view.backgroundColor = .white

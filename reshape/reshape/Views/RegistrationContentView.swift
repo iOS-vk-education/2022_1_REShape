@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+
+
 final class RegistrationContentView: UIView {
     
     private let genderStackView: GenderStackView = {
@@ -173,12 +175,9 @@ extension RegistrationContentView {
         registrationButton.bottom(isIncludeSafeArea: false)
     }
     func setupUI(){
-//        nameStackView.delegate = self
-//        nameStackView.dataSource = self
+        
         nameStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
         
-//        surnameStackView.delegate = self
-//        surnameStackView.dataSource = self
         surnameStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
         
         ageStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
@@ -197,3 +196,4 @@ extension RegistrationContentView {
 
     }
 }
+
