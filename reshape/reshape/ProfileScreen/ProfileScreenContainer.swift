@@ -2,8 +2,8 @@
 //  ProfileScreenContainer.swift
 //  reshape
 //
-//  Created by Veronika on 24.03.2022.
-//  
+//  Created by Полина Константинова on 30.03.2022.
+//
 //
 
 import UIKit
@@ -21,7 +21,8 @@ final class ProfileScreenContainer {
 
 		presenter.view = viewController
 		presenter.moduleOutput = context.moduleOutput
-
+        router.viewController = viewController
+        router.window = context.window
 		interactor.output = presenter
 
         return ProfileScreenContainer(view: viewController, input: presenter, router: router)
@@ -36,4 +37,5 @@ final class ProfileScreenContainer {
 
 struct ProfileScreenContext {
 	weak var moduleOutput: ProfileScreenModuleOutput?
+    let window: UIWindow
 }

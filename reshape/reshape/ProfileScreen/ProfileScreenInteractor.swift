@@ -2,7 +2,7 @@
 //  ProfileScreenInteractor.swift
 //  reshape
 //
-//  Created by Veronika on 24.03.2022.
+//  Created by Полина Константинова on 30.03.2022.
 //  
 //
 
