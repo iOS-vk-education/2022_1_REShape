@@ -39,12 +39,13 @@ final class RegistrationContentView: UIView {
             stack.translatesAutoresizingMaskIntoConstraints = false
             stack.backgroundTFColor = .modalViewGrayColor ?? .gray
             stack.tag = value + 1
+            stack.textField.autocorrectionType = .no
             stackViews.append(stack)
         }
         return stackViews
     }()
     
-    private let registrationButton: EnterButton = {
+    let registrationButton: EnterButton = {
         let registrationButton = EnterButton()
         registrationButton.translatesAutoresizingMaskIntoConstraints = false
         registrationButton.tag = 9
@@ -98,7 +99,7 @@ extension RegistrationContentView {
             stackViews[0].trailing()
             stackViews[0].height(69)
         }
-
+        
         self.addSubview(registrationButton)
         guard let lastView = stackViews.last else {
             return
@@ -112,9 +113,26 @@ extension RegistrationContentView {
         registrationButton.bottom(isIncludeSafeArea: false)
     }
     func setupUI(){
-        
         registrationButton.setupUI(name: "Зарегестрироваться")
-
+    }
+    
+    func isFieldEmpty()->[String]{
+        var emptyFields: [String] = [String]()
+        if genderStackView.isSelectedItem {
+            for stack in stackViews{
+                if let text = stack.textField.text, text.isEmpty, let label = stack.label.text {
+                    emptyFields.append(label)
+                }
+            }
+        } else {
+            emptyFields.append("Пол")
+            for stack in stackViews{
+                if let text = stack.textField.text, text.isEmpty, let label = stack.label.text{
+                    emptyFields.append(label)
+                }
+            }
+        }
+        return emptyFields
     }
 }
 
@@ -125,3 +143,5 @@ extension RegistrationContentView: AuthStackViewDelegate {
         return delegate.endEditingTextField(textField)
     }
 }
+
+

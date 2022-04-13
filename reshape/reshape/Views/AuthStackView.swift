@@ -38,7 +38,7 @@ final class AuthStackView: UIView {
             textField.backgroundColor = backgroundTFColor
         }
     }
-    private lazy var label: UILabel = {
+    private(set) lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)

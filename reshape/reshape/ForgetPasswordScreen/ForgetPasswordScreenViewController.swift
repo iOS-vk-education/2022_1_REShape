@@ -264,18 +264,15 @@ extension ForgetPasswordScreenViewController: AuthStackViewDelegate {
     }
 }
 extension ForgetPasswordScreenViewController: AuthStackViewDataSource {
+    func setupKeyboardType(for tag: Int) -> UIKeyboardType {
+        return UIKeyboardType.default
+    }
+    
     func addDoneButton(for tag: Int) -> UIView {
         let keyboardToolbar = UIToolbar()
         keyboardToolbar.isHidden = true
         return keyboardToolbar
     }
-    
-    
-    
-    func setupKeyboardType(for tag: Int) -> UIKeyboardType {
-        return UIKeyboardType.default
-    }
-    
     
     func isSecurityEntryOn(for tag: Int) -> Bool {
         return false

@@ -54,7 +54,7 @@ final class RegisterScreenViewController: UIViewController {
         photoLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         return photoLabel
     }()
-
+    
     private let contentView: UIView = {
         let contentView = UIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -135,7 +135,7 @@ extension RegisterScreenViewController {
         ])
         registrationScrollView.leading(0)
         registrationScrollView.trailing(0)
-//        registrationScrollView.bottom(isIncludeSafeArea: false)
+        registrationScrollView.bottom(isIncludeSafeArea: false)
         registrationScrollView.centerX()
         
         registrationScrollView.addSubview(contentView)
@@ -149,8 +149,10 @@ extension RegisterScreenViewController {
         registrationView.leading()
         registrationView.trailing()
         registrationView.bottom(isIncludeSafeArea: false)
+        
         registrationScrollViewConstraint = registrationScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         registrationScrollViewConstraint?.isActive = true
+  
     }
     private func setupUI(){
         view.backgroundColor = .white
@@ -159,15 +161,37 @@ extension RegisterScreenViewController {
         addPhoto.isUserInteractionEnabled = true
         addPhoto.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                              action: #selector(selectPhoto)))
-
+        
         registrationView.dataSource = self
+        registrationView.registrationButton.action = {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                self?.registrationView.registrationButton.backgroundColor = UIColor.darkVioletColor
+            } completion: { [weak self] finished in
+                guard let `self` = self else { return }
+                if finished {
+                    let isEmpty = self.registrationView.isFieldEmpty()
+                    if isEmpty.count > 0 {
+                        let alert = UIAlertController(title: "Заполните форму",
+                                                      message: "Пожалуйста, проверьте пустые поля: \(isEmpty.joined(separator: ", "))",
+                                                      preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "Ок",
+                                                      style: UIAlertAction.Style.default,
+                                                      handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        self.output.registerDidTap()
+                    }
+                    self.registrationView.registrationButton.backgroundColor = UIColor.violetColor
+                }
+            }
+        }
     }
     
     @objc
     func selectPhoto(){
         imagePicker?.present(from: addPhoto)
     }
-
+    
     private func setupObserversForKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -181,6 +205,12 @@ extension RegisterScreenViewController {
         guard let userInfo = notification.userInfo else {return}
         guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         let keyboardFrame = keyboardSize.cgRectValue
+//        var contentInset:UIEdgeInsets = self.registrationScrollView.contentInset
+//        contentInset.bottom = keyboardFrame.size.height
+//        UIView.animate(withDuration: 0.4){
+//            self.registrationScrollView.contentInset = contentInset
+//        }
+
         if self.registrationScrollViewConstraint?.constant == 0 {
             UIView.animate(withDuration: 0.4) { [weak self] in
                 self?.registrationScrollViewConstraint?.constant -= keyboardFrame.height
@@ -192,6 +222,8 @@ extension RegisterScreenViewController {
     @objc
     func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.4) { [weak self] in
+//            let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+//            self?.registrationScrollView.contentInset = contentInset
             self?.registrationScrollViewConstraint?.constant = 0
             self?.view.layoutIfNeeded()
         }
@@ -206,7 +238,15 @@ extension RegisterScreenViewController {
 
 extension RegisterScreenViewController: NavigationBarDelegate{
     func backButtonAction() {
-        output.backButtonPressed()
+        view.endEditing(true)
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.customNavigationBarView.backButton.alpha = 0.7
+        } completion: { [weak self] finished in
+            if finished {
+                self?.output.backButtonPressed()
+                
+            }
+        }
     }
 }
 
@@ -243,15 +283,6 @@ extension RegisterScreenViewController: AuthStackViewDataSource {
         
     }
     
-    func setupKeyType(for tag: Int) -> UIReturnKeyType {
-        switch tag {
-        case 2...5:
-            return UIReturnKeyType.continue
-        default:
-            return UIReturnKeyType.default
-        }
-    }
-    
     func setupKeyboardType(for tag: Int) -> UIKeyboardType {
         switch tag {
         case 3...6:
@@ -264,7 +295,11 @@ extension RegisterScreenViewController: AuthStackViewDataSource {
     
     
     func isSecurityEntryOn(for tag: Int) -> Bool {
-        return false
+        if tag == 8 {
+            return true
+        } else {
+            return false
+        }
     }
     
     func labelText(tag: Int) -> String {
