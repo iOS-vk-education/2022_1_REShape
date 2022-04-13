@@ -43,7 +43,7 @@ final class LoginScreenViewController: UIViewController {
         let rememberButton = UIImageView()
         rememberButton.translatesAutoresizingMaskIntoConstraints = false
         rememberButton.image = UIImage(named: "notRememberButton")
-//        rememberButton.setImage(UIImage(named: "notRememberButton"), for: .normal)
+        //        rememberButton.setImage(UIImage(named: "notRememberButton"), for: .normal)
         return rememberButton
     }()
     private let rememberLabel: UILabel = {
@@ -218,7 +218,7 @@ extension LoginScreenViewController {
             rememberPasswordStackView.topAnchor.constraint(equalTo: enterStackView.bottomAnchor, constant: 27),
             rememberPasswordStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 35),
             rememberPasswordStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -135),
-
+            
             forgetPasswordButton.topAnchor.constraint(equalTo: enterStackView.bottomAnchor, constant: 27),
             
             loginButton.topAnchor.constraint(equalTo: forgetPasswordButton.bottomAnchor, constant: 28),
@@ -234,7 +234,6 @@ extension LoginScreenViewController {
         emailStackView.tag = 0
         passwordStackView.tag = 1
         passwordStackView.backgroundTFColor = .white
-//        passwordStackView.textField.isSecureTextEntry = true
         loginButton.setupUI(name: "Войти")
         rememberPasswordStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(rememberPasswordButtonPressed)))
         forgetPasswordButton.isUserInteractionEnabled = true
@@ -376,6 +375,21 @@ extension LoginScreenViewController: AuthStackViewDelegate {
 }
 
 extension LoginScreenViewController: AuthStackViewDataSource {
+    func addDoneButton(for tag: Int) -> UIView {
+        let keyboardToolbar = UIToolbar()
+        keyboardToolbar.isHidden = true
+        return keyboardToolbar
+    }
+    
+    func setupKeyType(for tag: Int) -> UIReturnKeyType {
+        return UIReturnKeyType.default
+    }
+    
+    func setupKeyboardType(for tag: Int) -> UIKeyboardType {
+        return UIKeyboardType.default
+    }
+    
+    
     func isSecurityEntryOn(for tag: Int) -> Bool {
         if tag == 0 {
             return false

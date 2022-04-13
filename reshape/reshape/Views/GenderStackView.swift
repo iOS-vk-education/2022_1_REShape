@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class GenderCell: UITableViewCell {
+final class GenderStackView: UIView {
     
     private lazy var genderLabel: UILabel = {
         let gender = UILabel()
@@ -34,22 +34,23 @@ final class GenderCell: UITableViewCell {
         stackView.spacing = 5
         return stackView
     }()
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupConstraints()
-        setupUI()
+    private(set) var isSelectedItem: Bool = false
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setupConstraints()
+        self.setupUI()
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.setupConstraints()
-        setupUI()
+        self.setupUI()
     }
 }
-extension GenderCell{
+extension GenderStackView{
     private func setupConstraints(){
         
-        self.contentView.addSubview(genderStackView)
+        self.addSubview(genderStackView)
         genderStackView.addArrangedSubview(genderLabel)
         genderStackView.addArrangedSubview(buttonStackView)
         buttonStackView.addArrangedSubview(manButton)
@@ -76,6 +77,7 @@ extension GenderCell{
         manButton.setupUI(title: "Mуж")
         manButton.tag = 1
         manButton.action = {
+            self.isSelectedItem = true
             self.selectItem(selected: self.manButton.tag)
         }
 
@@ -83,6 +85,7 @@ extension GenderCell{
         womanButton.setupUI(title: "Жен")
         womanButton.tag = 2
         womanButton.action = {
+            self.isSelectedItem = true
             self.selectItem(selected: self.womanButton.tag)
         }
     }

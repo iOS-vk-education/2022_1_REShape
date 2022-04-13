@@ -32,7 +32,7 @@ final class RegisterScreenViewController: UIViewController {
         case email = "Введите свою почту"
         case password = "Придумайте пароль"
     }
-
+    
     private let output: RegisterScreenViewOutput
     private let customNavigationBarView: NavigationBarView = {
         let navBar = NavigationBarView()
@@ -54,7 +54,19 @@ final class RegisterScreenViewController: UIViewController {
         photoLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         return photoLabel
     }()
-    private let registrationTableView: UITableView = UITableView()
+
+    private let registrationScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private let contentView: RegistrationContentView = {
+        let contentView = RegistrationContentView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        return contentView
+    }()
     private var registrationTableBottomConstraint: NSLayoutConstraint?
     private var imagePicker: ImagePicker?
     
@@ -77,7 +89,6 @@ final class RegisterScreenViewController: UIViewController {
         super.viewDidLoad()
         setupConstraints()
         setupUI()
-        setupTableView()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -110,18 +121,20 @@ extension RegisterScreenViewController {
             photoLabel.topAnchor.constraint(equalTo: addPhoto.bottomAnchor, constant: 5)
         ])
         
-        view.addSubview(registrationTableView)
-        registrationTableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(registrationScrollView)
         NSLayoutConstraint.activate([
-            registrationTableView.topAnchor.constraint(equalTo: photoLabel.bottomAnchor,
-                                                       constant: 5)
+            registrationScrollView.topAnchor.constraint(equalTo: photoLabel.bottomAnchor, constant: 5)
         ])
-        registrationTableView.leading(35)
-        registrationTableView.trailing(-34)
-        registrationTableView.bottom(isIncludeSafeArea: false)
-        registrationTableBottomConstraint = registrationTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        registrationTableBottomConstraint?.isActive = true
+        registrationScrollView.leading(35)
+        registrationScrollView.trailing(-35)
+        registrationScrollView.bottom(isIncludeSafeArea: true)
+        registrationScrollView.centerX()
         
+        registrationScrollView.addSubview(contentView)
+        contentView.top(isIncludeSafeArea: false)
+        contentView.leading()
+        contentView.trailing()
+        contentView.bottom(isIncludeSafeArea: false)
     }
     private func setupUI(){
         view.backgroundColor = .white
@@ -130,28 +143,21 @@ extension RegisterScreenViewController {
         addPhoto.isUserInteractionEnabled = true
         addPhoto.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                              action: #selector(selectPhoto)))
-        
+
     }
     
     @objc
     func selectPhoto(){
         imagePicker?.present(from: addPhoto)
     }
-    private func setupTableView(){
-        registrationTableView.delegate = self
-        registrationTableView.dataSource = self
-        registrationTableView.rowHeight = 80
-//        registrationTableView.
-        registrationTableView.allowsSelection = false
-        registrationTableView.register(StackViewCell.self)
-        registrationTableView.register(GenderCell.self)
-        registrationTableView.register(ButtonCell.self)
-        registrationTableView.separatorStyle = .none
-        registrationTableView.showsVerticalScrollIndicator = false
-    }
+
     private func setupObserversForKeyboard(){
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
     }
     @objc
     func keyboardWillShow(notification: NSNotification) {
@@ -173,7 +179,11 @@ extension RegisterScreenViewController {
             self?.view.layoutIfNeeded()
         }
     }
-
+    @objc
+    func endEditing() {
+        view.endEditing(true)
+    }
+    
 }
 
 
@@ -189,71 +199,63 @@ extension RegisterScreenViewController: ImagePickerDelegate{
     }
 }
 
-extension RegisterScreenViewController: UITableViewDelegate{
-    
-}
-
-extension RegisterScreenViewController: UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
-            let cell = registrationTableView.dequeueCell(cellType: GenderCell.self, for: indexPath)
-            return cell
-        case 1...8:
-            let cell = registrationTableView.dequeueCell(cellType: StackViewCell.self, for: indexPath)
-            cell.tag = indexPath.row - 1
-            cell.dataSource = self
-            cell.delegate = self
-            return cell
-        case 9:
-            let cell = registrationTableView.dequeueCell(cellType: ButtonCell.self, for: indexPath)
-            cell.action = {[weak self] in
-                self?.view.endEditing(true)
-                UIView.animate(withDuration: 0.4) {
-                    cell.registerButton.backgroundColor = .darkVioletColor
-                } completion: { [weak self] finished in
-                    if finished {
-                        self?.output.registerDidTap()
-                        cell.registerButton.backgroundColor = .violetColor
-                    }
-                }
-            }
-            return cell
-        default:
-            return UITableViewCell()
-        }
-        
-    }
-
-
-}
 
 extension RegisterScreenViewController: RegisterScreenViewInput {
 }
 
-extension RegisterScreenViewController: AuthStackViewCellDelegate {
+
+
+extension RegisterScreenViewController: AuthStackViewDelegate {
     func endEditingTextField(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
     }
-    
-    
 }
+
+
 extension RegisterScreenViewController: AuthStackViewDataSource {
+    
+    
+    func addDoneButton(for tag: Int) -> UIView {
+        let keyboardToolbar = UIToolbar()
+        keyboardToolbar.sizeToFit()
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .done,
+                                            target: self, action: #selector(endEditing))
+        keyboardToolbar.items = [doneBarButton]
+        return keyboardToolbar
+        
+    }
+    
+    func setupKeyType(for tag: Int) -> UIReturnKeyType {
+        switch tag {
+        case 2...5:
+            return UIReturnKeyType.continue
+        default:
+            return UIReturnKeyType.default
+        }
+    }
+    
+    func setupKeyboardType(for tag: Int) -> UIKeyboardType {
+        switch tag {
+        case 2...5:
+            return UIKeyboardType.numberPad
+        default:
+            return UIKeyboardType.default
+        }
+    }
+    
+    
+    
     func isSecurityEntryOn(for tag: Int) -> Bool {
         return false
     }
     
     func labelText(tag: Int) -> String {
-        return RegistrationLabels.allCases[tag].rawValue
-
+        return RegistrationLabels.allCases[tag - 1].rawValue
+        
     }
     
     func placeholderText(tag: Int) -> String {
-        return RegistrationPlaceholders.allCases[tag].rawValue
+        return RegistrationPlaceholders.allCases[tag - 1].rawValue
     }
 }
