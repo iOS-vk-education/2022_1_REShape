@@ -8,10 +8,23 @@
 import Foundation
 import UIKit
 
+protocol RegistrationContentViewDelegate: AnyObject {
+    func endEditingTextField(_ textField: UITextField) -> Bool
+}
+protocol RegistrationContentViewDataSource: AnyObject {}
+
 
 
 final class RegistrationContentView: UIView {
     
+    weak var delegate: RegistrationContentViewDelegate?
+    weak var dataSource: RegistrationContentViewDataSource? {
+        didSet {
+            for stack in stackViews{
+                stack.dataSource = dataSource as? AuthStackViewDataSource
+            }
+        }
+    }
     private let genderStackView: GenderStackView = {
         let stackView = GenderStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -19,59 +32,16 @@ final class RegistrationContentView: UIView {
         return stackView
     }()
     
-    private let nameStackView: AuthStackView = {
-        let nameStackView = AuthStackView()
-        nameStackView.translatesAutoresizingMaskIntoConstraints = false
-        nameStackView.tag = 1
-        return nameStackView
-    }()
-    private let surnameStackView: AuthStackView = {
-        let nameStackView = AuthStackView()
-        nameStackView.translatesAutoresizingMaskIntoConstraints = false
-        nameStackView.tag = 2
-        return nameStackView
-    }()
-    
-    private let ageStackView: AuthStackView = {
-        let ageStackView = AuthStackView()
-        ageStackView.translatesAutoresizingMaskIntoConstraints = false
-        ageStackView.tag = 3
-        return ageStackView
-    }()
-    
-    private let heightStackView: AuthStackView = {
-        let heightStackView = AuthStackView()
-        heightStackView.translatesAutoresizingMaskIntoConstraints = false
-        heightStackView.tag = 4
-        return heightStackView
-    }()
-    
-    private let weightStackView: AuthStackView = {
-        let weightStackView = AuthStackView()
-        weightStackView.translatesAutoresizingMaskIntoConstraints = false
-        weightStackView.tag = 5
-        return weightStackView
-    }()
-    
-    private let targetStackView: AuthStackView = {
-        let targetStackView = AuthStackView()
-        targetStackView.translatesAutoresizingMaskIntoConstraints = false
-        targetStackView.tag = 6
-        return targetStackView
-    }()
-    
-    private let emailStackView: AuthStackView = {
-        let emailStackView = AuthStackView()
-        emailStackView.translatesAutoresizingMaskIntoConstraints = false
-        emailStackView.tag = 7
-        return emailStackView
-    }()
-    
-    private let passwordStackView: AuthStackView = {
-        let passwordStackView = AuthStackView()
-        passwordStackView.translatesAutoresizingMaskIntoConstraints = false
-        passwordStackView.tag = 8
-        return passwordStackView
+    private lazy var stackViews: [AuthStackView] = {
+        var stackViews = [AuthStackView]()
+        for value in 0..<8 {
+            let stack = AuthStackView()
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            stack.backgroundTFColor = .modalViewGrayColor ?? .gray
+            stack.tag = value + 1
+            stackViews.append(stack)
+        }
+        return stackViews
     }()
     
     private let registrationButton: EnterButton = {
@@ -101,73 +71,40 @@ extension RegistrationContentView {
         genderStackView.trailing()
         genderStackView.height(69)
         
-        self.addSubview(nameStackView)
-        NSLayoutConstraint.activate([
-            nameStackView.topAnchor.constraint(equalTo: genderStackView.bottomAnchor, constant: 11)
-        ])
-        nameStackView.leading()
-        nameStackView.trailing()
-        nameStackView.height(69)
+        if let firstView = stackViews.first, stackViews.count > 1 {
+            self.addSubview(firstView)
+            NSLayoutConstraint.activate([
+                firstView.topAnchor.constraint(equalTo: genderStackView.bottomAnchor, constant: 11)
+            ])
+            firstView.leading()
+            firstView.trailing()
+            firstView.height(69)
+            
+            for value in 1..<8{
+                self.addSubview(stackViews[value])
+                stackViews[value].leading()
+                stackViews[value].trailing()
+                stackViews[value].height(69)
+                NSLayoutConstraint.activate([
+                    stackViews[value].topAnchor.constraint(equalTo: stackViews[value - 1].bottomAnchor, constant: 11)
+                ])
+            }
+        } else {
+            self.addSubview(stackViews[0])
+            NSLayoutConstraint.activate([
+                stackViews[0].topAnchor.constraint(equalTo: genderStackView.bottomAnchor, constant: 15)
+            ])
+            stackViews[0].leading()
+            stackViews[0].trailing()
+            stackViews[0].height(69)
+        }
 
-        self.addSubview(surnameStackView)
-        NSLayoutConstraint.activate([
-            surnameStackView.topAnchor.constraint(equalTo: nameStackView.bottomAnchor, constant: 11)
-        ])
-        surnameStackView.leading()
-        surnameStackView.trailing()
-        surnameStackView.height(69)
-        
-        self.addSubview(ageStackView)
-        NSLayoutConstraint.activate([
-            ageStackView.topAnchor.constraint(equalTo: surnameStackView.bottomAnchor, constant: 11)
-        ])
-        ageStackView.leading()
-        ageStackView.trailing()
-        ageStackView.height(69)
-        
-        self.addSubview(heightStackView)
-        NSLayoutConstraint.activate([
-            heightStackView.topAnchor.constraint(equalTo: ageStackView.bottomAnchor, constant: 11)
-        ])
-        heightStackView.leading()
-        heightStackView.trailing()
-        heightStackView.height(69)
-        
-        self.addSubview(weightStackView)
-        NSLayoutConstraint.activate([
-            weightStackView.topAnchor.constraint(equalTo: heightStackView.bottomAnchor, constant: 11)
-        ])
-        weightStackView.leading()
-        weightStackView.trailing()
-        weightStackView.height(69)
-        
-        self.addSubview(targetStackView)
-        NSLayoutConstraint.activate([
-            targetStackView.topAnchor.constraint(equalTo: weightStackView.bottomAnchor, constant: 11)
-        ])
-        targetStackView.leading()
-        targetStackView.trailing()
-        targetStackView.height(69)
-        
-        self.addSubview(emailStackView)
-        NSLayoutConstraint.activate([
-            emailStackView.topAnchor.constraint(equalTo: targetStackView.bottomAnchor, constant: 11)
-        ])
-        emailStackView.leading()
-        emailStackView.trailing()
-        emailStackView.height(69)
-        
-        self.addSubview(passwordStackView)
-        NSLayoutConstraint.activate([
-            passwordStackView.topAnchor.constraint(equalTo: emailStackView.bottomAnchor, constant: 11)
-        ])
-        passwordStackView.leading()
-        passwordStackView.trailing()
-        passwordStackView.height(69)
-        
         self.addSubview(registrationButton)
+        guard let lastView = stackViews.last else {
+            return
+        }
         NSLayoutConstraint.activate([
-            registrationButton.topAnchor.constraint(equalTo: passwordStackView.bottomAnchor, constant: 11)
+            registrationButton.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: 11)
         ])
         registrationButton.leading()
         registrationButton.trailing()
@@ -176,24 +113,9 @@ extension RegistrationContentView {
     }
     func setupUI(){
         
-        nameStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
-        
-        surnameStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
-        
-        ageStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
-        
-        heightStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
-        
-        weightStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
-        
-        targetStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
-
-        emailStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
-        
-        passwordStackView.backgroundTFColor = .modalViewGrayColor ?? .gray
-        
         registrationButton.setupUI(name: "Зарегестрироваться")
 
     }
 }
+
 

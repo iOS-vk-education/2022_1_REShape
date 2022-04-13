@@ -135,19 +135,19 @@ extension RegisterScreenViewController {
         ])
         registrationScrollView.leading(0)
         registrationScrollView.trailing(0)
-        registrationScrollView.bottom(isIncludeSafeArea: true)
+        registrationScrollView.bottom(isIncludeSafeArea: false)
         registrationScrollView.centerX()
         
         registrationScrollView.addSubview(contentView)
         contentView.top(isIncludeSafeArea: false)
-        contentView.leading()
-        contentView.trailing()
+        contentView.leading(35)
+        contentView.trailing(-35)
         contentView.bottom(isIncludeSafeArea: false)
         
         contentView.addSubview(registrationView)
         registrationView.top(isIncludeSafeArea: false)
-        registrationView.leading(35)
-        registrationView.trailing(-35)
+        registrationView.leading()
+        registrationView.trailing()
         registrationView.bottom(isIncludeSafeArea: false)
     }
     private func setupUI(){
