@@ -53,6 +53,8 @@ final class DietScreenViewController: UIViewController {
         setupUI()
         // Настройка AutoLayout
         setupConstraint()
+        // Запрос числа дней в Presenterе
+        output.requestNumOfDays()
 	}
     
     func setupUI() {
@@ -92,9 +94,6 @@ final class DietScreenViewController: UIViewController {
     }
     
     func setupTableView() {
-        // Запрос данных в Presenterе
-        output.requestNumOfDays()
-        
         // Настройка визуала
         dietTableView.backgroundColor = .white
         dietTableView.separatorStyle = .singleLine
@@ -125,6 +124,10 @@ extension DietScreenViewController: DietScreenViewInput {
     
     func reloadTableView() {
         self.dietTableView.reloadData()
+    }
+    
+    func reloadTableSections(atSection sections: IndexSet) {
+        self.dietTableView.reloadSections(sections, with: .none)
     }
 }
 

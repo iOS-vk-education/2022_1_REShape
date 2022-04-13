@@ -40,10 +40,13 @@ final class DietScreenPresenter {
         
         // Обновление массива отображаемых ячеек
         let cellTypeForUpdate = celltype.revert
-        if disclosure != .disclosure {
+        switch disclosure {
+        case .closure:
             rowInSection[section].removeAll(where: {$0 == cellTypeForUpdate})
-        }
-        if disclosure != .closure {
+        case .disclosure:
+            rowInSection[section].insert(contentsOf: Array(repeating: cellTypeForUpdate, count: mealDataSize), at: dietCellIndex + 1)
+        case .reload:
+            rowInSection[section].removeAll(where: {$0 == cellTypeForUpdate})
             rowInSection[section].insert(contentsOf: Array(repeating: cellTypeForUpdate, count: mealDataSize), at: dietCellIndex + 1)
         }
         return mealIndexPath
@@ -148,7 +151,7 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
         }
         
         // Перезагрузка таблицы
-        view?.reloadTableView()
+        view?.reloadTableSections(atSection: IndexSet(integer: section))
     }
     
     func updateNumOfDays(_ days: Int) {
