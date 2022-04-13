@@ -12,20 +12,20 @@ protocol WaterScreenModuleInput {
 	var moduleOutput: WaterScreenModuleOutput? { get }
 }
 
-protocol WaterScreenModuleOutput: class {
+protocol WaterScreenModuleOutput: AnyObject {
 }
 
-protocol WaterScreenViewInput: class {
+protocol WaterScreenViewInput: AnyObject {
 }
 
-protocol WaterScreenViewOutput: class {
+protocol WaterScreenViewOutput: AnyObject {
 }
 
-protocol WaterScreenInteractorInput: class {
+protocol WaterScreenInteractorInput: AnyObject {
 }
 
-protocol WaterScreenInteractorOutput: class {
+protocol WaterScreenInteractorOutput: AnyObject {
 }
 
-protocol WaterScreenRouterInput: class {
+protocol WaterScreenRouterInput: AnyObject {
 }

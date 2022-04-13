@@ -19,7 +19,7 @@ final class WaterScreenContainer {
         let presenter = WaterScreenPresenter(router: router, interactor: interactor)
 		let viewController = WaterScreenViewController(output: presenter)
 
-		presenter.view = viewController
+//		presenter.view = viewController
 		presenter.moduleOutput = context.moduleOutput
 
 		interactor.output = presenter
