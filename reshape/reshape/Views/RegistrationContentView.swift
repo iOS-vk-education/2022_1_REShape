@@ -18,10 +18,10 @@ protocol RegistrationContentViewDataSource: AnyObject {}
 final class RegistrationContentView: UIView {
     
     weak var delegate: RegistrationContentViewDelegate?
-    weak var dataSource: RegistrationContentViewDataSource? {
+    weak var dataSource: AuthStackViewDataSource? {
         didSet {
             for stack in stackViews{
-                stack.dataSource = dataSource as? AuthStackViewDataSource
+                stack.dataSource = dataSource
             }
         }
     }
@@ -119,3 +119,9 @@ extension RegistrationContentView {
 }
 
 
+extension RegistrationContentView: AuthStackViewDelegate {
+    func endEditingTextField(_ textField: UITextField) -> Bool {
+        guard let delegate = delegate else { return false }
+        return delegate.endEditingTextField(textField)
+    }
+}

@@ -72,7 +72,7 @@ final class RegisterScreenViewController: UIViewController {
         registrationView.translatesAutoresizingMaskIntoConstraints = false
         return registrationView
     }()
-    private var registrationTableBottomConstraint: NSLayoutConstraint?
+    private var registrationScrollViewConstraint: NSLayoutConstraint?
     private var imagePicker: ImagePicker?
     
     init(output: RegisterScreenViewOutput) {
@@ -135,7 +135,7 @@ extension RegisterScreenViewController {
         ])
         registrationScrollView.leading(0)
         registrationScrollView.trailing(0)
-        registrationScrollView.bottom(isIncludeSafeArea: false)
+//        registrationScrollView.bottom(isIncludeSafeArea: false)
         registrationScrollView.centerX()
         
         registrationScrollView.addSubview(contentView)
@@ -149,6 +149,8 @@ extension RegisterScreenViewController {
         registrationView.leading()
         registrationView.trailing()
         registrationView.bottom(isIncludeSafeArea: false)
+        registrationScrollViewConstraint = registrationScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        registrationScrollViewConstraint?.isActive = true
     }
     private func setupUI(){
         view.backgroundColor = .white
@@ -158,6 +160,7 @@ extension RegisterScreenViewController {
         addPhoto.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                              action: #selector(selectPhoto)))
 
+        registrationView.dataSource = self
     }
     
     @objc
@@ -178,9 +181,9 @@ extension RegisterScreenViewController {
         guard let userInfo = notification.userInfo else {return}
         guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         let keyboardFrame = keyboardSize.cgRectValue
-        if self.registrationTableBottomConstraint?.constant == 0 {
+        if self.registrationScrollViewConstraint?.constant == 0 {
             UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.registrationTableBottomConstraint?.constant -= keyboardFrame.height
+                self?.registrationScrollViewConstraint?.constant -= keyboardFrame.height
                 self?.view.layoutIfNeeded()
             }
         }
@@ -189,7 +192,7 @@ extension RegisterScreenViewController {
     @objc
     func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.4) { [weak self] in
-            self?.registrationTableBottomConstraint?.constant = 0
+            self?.registrationScrollViewConstraint?.constant = 0
             self?.view.layoutIfNeeded()
         }
     }
@@ -219,7 +222,7 @@ extension RegisterScreenViewController: RegisterScreenViewInput {
 
 
 
-extension RegisterScreenViewController: AuthStackViewDelegate {
+extension RegisterScreenViewController: RegistrationContentViewDelegate {
     func endEditingTextField(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
@@ -251,7 +254,7 @@ extension RegisterScreenViewController: AuthStackViewDataSource {
     
     func setupKeyboardType(for tag: Int) -> UIKeyboardType {
         switch tag {
-        case 2...5:
+        case 3...6:
             return UIKeyboardType.numberPad
         default:
             return UIKeyboardType.default
