@@ -93,6 +93,10 @@ final class RegisterScreenViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillDisappear(_ animated: Bool){
+        super.viewWillDisappear(animated)
+        unsetupObserversForKeyboard()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -221,13 +225,25 @@ extension RegisterScreenViewController {
                                                object: nil)
     }
     
+    
+    /// удаление обсерверов для клавиатуры
+    private func unsetupObserversForKeyboard(){
+        
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: self.view.window)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: self.view.window)
+        
+    }
+    
     /// поднятие вью при появлении клавиатуры
     @objc
     func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo else {return}
         guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         let keyboardFrame = keyboardSize.cgRectValue
-        print(keyboardFrame.height)
         if self.registrationScrollViewConstraint?.constant == 0 {
             UIView.animate(withDuration: 0.4) { [weak self] in
                 self?.registrationScrollViewConstraint?.constant -= keyboardFrame.height
