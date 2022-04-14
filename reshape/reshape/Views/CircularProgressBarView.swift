@@ -14,7 +14,7 @@ class CircularProgressBarView: UIView {
     private var progressLayer = CAShapeLayer()
     private var startPoint = CGFloat(-Double.pi / 2)
     private var endPoint = CGFloat(3 * Double.pi / 2)
-    var progressColor:UIColor = UIColor.white {
+    var progressColor: UIColor = UIColor.white {
         didSet {
             progressLayer.strokeColor = progressColor.cgColor
         }

@@ -15,6 +15,9 @@ protocol AuthStackViewDelegate: AnyObject {
 protocol AuthStackViewDataSource: AnyObject {
     func labelText(tag: Int) -> String
     func placeholderText(tag: Int) -> String
+    func isSecurityEntryOn(for tag: Int) -> Bool
+    func setupKeyboardType(for tag: Int) -> UIKeyboardType
+    func addDoneButton(for tag: Int) ->  UIView
 }
 
 final class AuthStackView: UIView {
@@ -24,10 +27,18 @@ final class AuthStackView: UIView {
         didSet {
             label.text = dataSource?.labelText(tag: tag)
             textField.placeholder = dataSource?.placeholderText(tag: tag)
+            textField.isSecureTextEntry = dataSource?.isSecurityEntryOn(for: tag) ?? false
+            textField.keyboardType = dataSource?.setupKeyboardType(for: tag) ?? UIKeyboardType.default
+            textField.inputAccessoryView = dataSource?.addDoneButton(for: tag)
         }
     }
-    
-    lazy var label: UILabel = {
+
+    var backgroundTFColor: UIColor = UIColor.green {
+        didSet {
+            textField.backgroundColor = backgroundTFColor
+        }
+    }
+    private(set) lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -35,14 +46,14 @@ final class AuthStackView: UIView {
         return label
     }()
     
-    lazy var textField : UITextField = {
+    private(set) lazy var textField : UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.layer.sublayerTransform = CATransform3DMakeTranslation(8, 0, 0)
         textField.layer.cornerRadius = 10
         textField.clipsToBounds = true
         textField.textColor = .black
-        textField.backgroundColor = .systemBackground
+        textField.backgroundColor = backgroundTFColor
         textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return textField
     }()
@@ -93,3 +104,4 @@ extension AuthStackView: UITextFieldDelegate {
         return delegate.endEditingTextField(textField)
     }
 }
+

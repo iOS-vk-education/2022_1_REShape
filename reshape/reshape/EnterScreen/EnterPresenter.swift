@@ -29,6 +29,9 @@ extension EnterPresenter: EnterViewOutput {
     func showLoginScreen() {
         router.enterButtonPressed()
     }
+    func registerUser() {
+        router.signUpTapped()
+    }
 }
 
 extension EnterPresenter: EnterInteractorOutput {

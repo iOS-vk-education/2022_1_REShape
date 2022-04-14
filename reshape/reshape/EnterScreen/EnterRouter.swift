@@ -23,4 +23,12 @@ extension EnterRouter: EnterRouterInput {
         loginScreenContainer.viewController.modalPresentationStyle = .overCurrentContext
         self.viewController?.present(loginScreenContainer.viewController, animated: false)
     }
+    func signUpTapped() {
+        guard let window = window else {
+            return
+        }
+        let registerScreenContext = RegisterScreenContext(moduleOutput: nil, window: window)
+        let registerScreenContainer = RegisterScreenContainer.assemble(with: registerScreenContext)
+        self.viewController?.navigationController?.pushViewController(registerScreenContainer.viewController, animated: true)
+    }
 }

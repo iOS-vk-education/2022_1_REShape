@@ -128,7 +128,14 @@ final class EnterViewController: UIViewController {
     
     @objc
     private func signUpTap() {
-        print("[DEBUG] Sign Up button")
+        UIView.animate(withDuration: 0.4) { [weak self] in
+            self?.signUpButton.textColor = UIColor.darkVioletColor
+        } completion: { [weak self] finished in
+            if finished {
+                self?.output.registerUser()
+                self?.signUpButton.textColor = UIColor.violetColor
+            }
+        }
     }
 }
 

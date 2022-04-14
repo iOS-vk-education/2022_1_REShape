@@ -35,7 +35,6 @@ final class ResultsScreenViewController: UIViewController {
         targetLabel.textAlignment = .left
         return targetLabel
     }()
-    //    private let edgeInsets =
     
     init(output: ResultsScreenViewOutput) {
         self.output = output
