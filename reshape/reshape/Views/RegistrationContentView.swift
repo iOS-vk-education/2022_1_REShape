@@ -25,6 +25,7 @@ final class RegistrationContentView: UIView {
             }
         }
     }
+    // вью с кнопка выбора пола
     private let genderStackView: GenderStackView = {
         let stackView = GenderStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,6 +66,8 @@ final class RegistrationContentView: UIView {
 }
 
 extension RegistrationContentView {
+    
+    /// настройка отступов
     func setupConstraints(){
         self.addSubview(genderStackView)
         genderStackView.top(isIncludeSafeArea: false)
@@ -116,6 +119,7 @@ extension RegistrationContentView {
         registrationButton.setupUI(name: "Зарегестрироваться")
     }
     
+    /// проверка на заполненность полей и выбора кнопки
     func isFieldEmpty()->[String]{
         var emptyFields: [String] = [String]()
         if genderStackView.isSelectedItem {

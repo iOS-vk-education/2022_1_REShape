@@ -11,6 +11,7 @@ import UIKit
 
 final class RegisterScreenViewController: UIViewController {
     
+    ///текст для полей лейблов
     private enum RegistrationLabels: String, CaseIterable {
         case name = "Имя"
         case surname = "Фамилия"
@@ -22,6 +23,7 @@ final class RegisterScreenViewController: UIViewController {
         case password = "Пароль"
     }
     
+    ///текст для плейсхолдеров текстовых полей
     private enum RegistrationPlaceholders: String, CaseIterable {
         case name = "Введите свое имя"
         case surname = "Введите свою фамилию"
@@ -34,16 +36,22 @@ final class RegisterScreenViewController: UIViewController {
     }
     
     private let output: RegisterScreenViewOutput
+    
+    ///кастомный навигейшн бар
     private let customNavigationBarView: NavigationBarView = {
         let navBar = NavigationBarView()
         navBar.translatesAutoresizingMaskIntoConstraints = false
         return navBar
     }()
+    
+    ///вью для добавления фотографии пользователя
     private var addPhoto: UIImageView = {
         var photo = UIImageView()
         photo.translatesAutoresizingMaskIntoConstraints = false
         return photo
     }()
+    
+    /// лейбл под фотографией
     private let photoLabel: UILabel = {
         let photoLabel = UILabel()
         photoLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -95,14 +103,20 @@ final class RegisterScreenViewController: UIViewController {
         super.viewDidLoad()
         setupConstraints()
         setupUI()
+
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let heightFrame = registrationView.frame.height
         let widthFrame = view.frame.width
+        //установление размеров скрол вью
         registrationScrollView.contentSize = CGSize(width: widthFrame, height: heightFrame)
+        
+        // скругление углов имадж вью
         addPhoto.layer.cornerRadius = addPhoto.frame.size.height / 2
         addPhoto.layer.masksToBounds = true
+        
+        // если пользователь зашел в установку фото, но вышел ничего не выбрав установится дефолтная фотография
         if addPhoto.image == nil {
             addPhoto.image = UIImage(named: "Add")
         }
@@ -110,6 +124,8 @@ final class RegisterScreenViewController: UIViewController {
 }
 
 extension RegisterScreenViewController {
+    
+    /// настройка отступов
     private func setupConstraints(){
         view.addSubview(customNavigationBarView)
         customNavigationBarView.top(isIncludeSafeArea: false)
@@ -153,6 +169,7 @@ extension RegisterScreenViewController {
         registrationScrollViewConstraint?.isActive = true
   
     }
+    
     private func setupUI(){
         view.backgroundColor = .white
         customNavigationBarView.delegate = self
@@ -162,6 +179,8 @@ extension RegisterScreenViewController {
                                                              action: #selector(selectPhoto)))
         
         registrationView.dataSource = self
+        
+        //добавление экшна на кнопку
         registrationView.registrationButton.action = {
             UIView.animate(withDuration: 0.4) { [weak self] in
                 self?.registrationView.registrationButton.backgroundColor = UIColor.darkVioletColor
@@ -170,6 +189,7 @@ extension RegisterScreenViewController {
                 if finished {
                     let isEmpty = self.registrationView.isFieldEmpty()
                     if isEmpty.count > 0 {
+                        // появления алерта, если есть незаполненные поля
                         let alert = UIAlertController(title: "Заполните форму",
                                                       message: "Пожалуйста, проверьте пустые поля: \(isEmpty.joined(separator: ", "))",
                                                       preferredStyle: UIAlertController.Style.alert)
@@ -191,6 +211,7 @@ extension RegisterScreenViewController {
         imagePicker?.present(from: addPhoto)
     }
     
+    /// добавление обсерверов для клавиатуры
     private func setupObserversForKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -199,34 +220,25 @@ extension RegisterScreenViewController {
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
     }
+    
+    /// поднятие вью при появлении клавиатуры
     @objc
     func keyboardWillShow(notification: NSNotification) {
-//        guard let userInfo = notification.userInfo else {return}
-//        guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
-//        let keyboardFrame = keyboardSize.cgRectValue
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-//        var contentInset:UIEdgeInsets = self.registrationScrollView.contentInset
-//        contentInset.bottom = keyboardFrame.size.height
-//        UIView.animate(withDuration: 0.4){
-//            self.registrationScrollView.contentInset = contentInset
-//        }
-
+        guard let userInfo = notification.userInfo else {return}
+        guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+        let keyboardFrame = keyboardSize.cgRectValue
+        print(keyboardFrame.height)
         if self.registrationScrollViewConstraint?.constant == 0 {
             UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.registrationScrollViewConstraint?.constant -= keyboardHeight
+                self?.registrationScrollViewConstraint?.constant -= keyboardFrame.height
                 self?.view.layoutIfNeeded()
             }
         }
     }
-    }
-    //возвращение вью в обычное состояние
+    ///возвращение вью в обычное состояние
     @objc
     func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.4) { [weak self] in
-//            let contentInset:UIEdgeInsets = UIEdgeInsets.zero
-//            self?.registrationScrollView.contentInset = contentInset
             self?.registrationScrollViewConstraint?.constant = 0
             self?.view.layoutIfNeeded()
         }
@@ -240,6 +252,7 @@ extension RegisterScreenViewController {
 
 
 extension RegisterScreenViewController: NavigationBarDelegate{
+    /// нажатие кнопки назад, переход на предыдущий экран
     func backButtonAction() {
         view.endEditing(true)
         UIView.animate(withDuration: 0.3) { [weak self] in
@@ -254,6 +267,7 @@ extension RegisterScreenViewController: NavigationBarDelegate{
 }
 
 extension RegisterScreenViewController: ImagePickerDelegate{
+    /// выбор фото
     func didSelect(image: UIImage?) {
         self.addPhoto.image = image
     }
@@ -275,7 +289,7 @@ extension RegisterScreenViewController: RegistrationContentViewDelegate {
 
 extension RegisterScreenViewController: AuthStackViewDataSource {
     
-    
+    /// кнопка Done для клаиатуры
     func addDoneButton(for tag: Int) -> UIView {
         let keyboardToolbar = UIToolbar()
         keyboardToolbar.sizeToFit()
@@ -286,6 +300,7 @@ extension RegisterScreenViewController: AuthStackViewDataSource {
         
     }
     
+    /// настройка необходимого типа клавиатуры
     func setupKeyboardType(for tag: Int) -> UIKeyboardType {
         switch tag {
         case 3...6:
@@ -295,8 +310,7 @@ extension RegisterScreenViewController: AuthStackViewDataSource {
         }
     }
     
-    
-    
+    /// натсройка безопасного ввода текста
     func isSecurityEntryOn(for tag: Int) -> Bool {
         if tag == 8 {
             return true
@@ -305,11 +319,13 @@ extension RegisterScreenViewController: AuthStackViewDataSource {
         }
     }
     
+    /// проставления текста в лейбл
     func labelText(tag: Int) -> String {
         return RegistrationLabels.allCases[tag - 1].rawValue
         
     }
     
+    /// проставление текста в плейсхолдер
     func placeholderText(tag: Int) -> String {
         return RegistrationPlaceholders.allCases[tag - 1].rawValue
     }
