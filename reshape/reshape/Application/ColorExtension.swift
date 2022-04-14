@@ -18,4 +18,6 @@ extension UIColor {
     static let backgroundGrayColor = UIColor(named: "TableViewBackground")
     static let violetColor = UIColor(named: "Violet")
     static let darkVioletColor = UIColor(named: "VioletPressed")
+    static let blackVioletColor = UIColor(named: "Dark Violet")
+    static let pureGreyColor = UIColor(named: "Grey for dietScreen")
 }

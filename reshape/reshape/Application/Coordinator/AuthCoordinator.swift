@@ -46,6 +46,8 @@ extension AuthCoordinator {
             navBarAppearance.configureWithDefaultBackground()
             navigationController.navigationBar.scrollEdgeAppearance = navBarAppearance
             result[navControllerKey] = navigationController
+            
+            navigationController.isNavigationBarHidden = true
         }
         return result
     }
