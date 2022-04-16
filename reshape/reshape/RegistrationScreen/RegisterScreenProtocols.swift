@@ -21,9 +21,31 @@ protocol RegisterScreenViewInput: AnyObject {
 protocol RegisterScreenViewOutput: AnyObject {
     func backButtonPressed()
     func registerDidTap()
+    func didRegisterUser(photo: String,
+                         gender: String,
+                         name: String,
+                         surname: String,
+                         age: Int,
+                         height: Double,
+                         weight: Double,
+                         target: Double,
+                         email: String,
+                         password: String,
+                         completion: @escaping (String?) -> ())
 }
 
 protocol RegisterScreenInteractorInput: AnyObject {
+    func registerUser(photo: String,
+                              gender: String,
+                              name: String,
+                              surname: String,
+                              age: Int,
+                              height: Double,
+                              weight: Double,
+                              target: Double,
+                              email: String,
+                              password: String,
+                              completion: @escaping (String?) -> ())
 }
 
 protocol RegisterScreenInteractorOutput: AnyObject {

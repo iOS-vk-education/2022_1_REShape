@@ -244,8 +244,31 @@ extension LoginScreenViewController {
                 self?.loginButton.backgroundColor = UIColor.darkVioletColor
             } completion: { [weak self] finished in
                 if finished {
-                    self?.output.loginDidTapped()
-                    self?.loginButton.backgroundColor = UIColor.violetColor
+                    guard let `self` = self else { return }
+                    if finished {
+                        let isEmpty = self.isFieldEmpty()
+                        if isEmpty.count > 0 {
+                            
+                            // появления алерта, если есть незаполненные поля
+                            self.makeAlert("Заполните форму", "Пожалуйста, проверьте пустые поля: \(isEmpty.joined(separator: ", "))")
+                        } else {
+                            if let email = self.emailStackView.textField.text,
+                               let password = self.passwordStackView.textField.text{
+                                self.output.didCheckLogin(email: email, password: password){ error in
+                                    DispatchQueue.main.async {
+                                        if let error = error {
+                                            self.makeAlert("Error", error)
+                                        } else {
+                                            self.output.loginDidTapped()
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                        
+                        self.loginButton.backgroundColor = UIColor.violetColor
+                    }
                 }
             }
         }
@@ -364,6 +387,20 @@ extension LoginScreenViewController {
             self?.containerViewBottomConstraint?.constant = 0
             self?.view.layoutIfNeeded()
         }
+    }
+    func isFieldEmpty()->[String]{
+        var emptyFields: [String] = [String]()
+        if let email = emailStackView.textField.text,
+           email.isEmpty,
+           let label = emailStackView.label.text {
+            emptyFields.append(label)
+        }
+        if let password = passwordStackView.textField.text,
+           password.isEmpty,
+           let label = passwordStackView.label.text{
+            emptyFields.append(label)
+        }
+        return emptyFields
     }
 }
 

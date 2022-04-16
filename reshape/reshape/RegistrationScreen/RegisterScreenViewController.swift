@@ -190,13 +190,7 @@ extension RegisterScreenViewController {
                     let isEmpty = self.registrationView.isFieldEmpty()
                     if isEmpty.count > 0 {
                         // появления алерта, если есть незаполненные поля
-                        let alert = UIAlertController(title: "Заполните форму",
-                                                      message: "Пожалуйста, проверьте пустые поля: \(isEmpty.joined(separator: ", "))",
-                                                      preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "Ок",
-                                                      style: UIAlertAction.Style.default,
-                                                      handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                        makeAlert("Заполните форму", "Пожалуйста, проверьте пустые поля: \(isEmpty.joined(separator: ", "))")
                     } else {
                         self.output.registerDidTap()
                     }

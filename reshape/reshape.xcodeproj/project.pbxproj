@@ -89,6 +89,9 @@
 		9478496527FC0A3500138DA4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478496427FC0A3500138DA4 /* ImagePicker.swift */; };
 		94CAB9A02806BA0C00ACAB8C /* RegistrationContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB99F2806BA0C00ACAB8C /* RegistrationContentView.swift */; };
 		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
+		94FC78382809E46D003477FA /* AuthManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC78372809E46D003477FA /* AuthManger.swift */; };
+		94FC783A2809E586003477FA /* AuthErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC78392809E586003477FA /* AuthErrorCode.swift */; };
+		94FC783C280B0C43003477FA /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC783B280B0C43003477FA /* Alert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +195,9 @@
 		9478496427FC0A3500138DA4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		94CAB99F2806BA0C00ACAB8C /* RegistrationContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationContentView.swift; sourceTree = "<group>"; };
 		94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		94FC78372809E46D003477FA /* AuthManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManger.swift; sourceTree = "<group>"; };
+		94FC78392809E586003477FA /* AuthErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthErrorCode.swift; sourceTree = "<group>"; };
+		94FC783B280B0C43003477FA /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +275,7 @@
 		2EECFF3927E505B500BD4BEF /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				94FC78362809E459003477FA /* NetworkManagers */,
 				9478496327FC0A1400138DA4 /* Helpers */,
 				945B383527ECC0A60044E952 /* Coordinator */,
 				36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */,
@@ -443,8 +450,18 @@
 				60E44D9928082ABC00B3DDE6 /* ColorExtension.swift */,
 				94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */,
 				9478496427FC0A3500138DA4 /* ImagePicker.swift */,
+				94FC78392809E586003477FA /* AuthErrorCode.swift */,
+				94FC783B280B0C43003477FA /* Alert.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		94FC78362809E459003477FA /* NetworkManagers */ = {
+			isa = PBXGroup;
+			children = (
+				94FC78372809E46D003477FA /* AuthManger.swift */,
+			);
+			path = NetworkManagers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -611,6 +628,7 @@
 				94302BC427E66080009E397B /* ForgetPasswordScreenProtocols.swift in Sources */,
 				9478495C27FB221400138DA4 /* RegisterScreenContainer.swift in Sources */,
 				945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */,
+				94FC783C280B0C43003477FA /* Alert.swift in Sources */,
 				945ADFAB27FC4EDD00222156 /* GenderStackView.swift in Sources */,
 				2EECFF3727E5037100BD4BEF /* EnterInteractor.swift in Sources */,
 				945ADFAD27FDC54800222156 /* GenderButton.swift in Sources */,
@@ -633,6 +651,7 @@
 				94302BC527E66080009E397B /* ForgetPasswordScreenInteractor.swift in Sources */,
 				945B385427ECC33A0044E952 /* DietScreenProtocols.swift in Sources */,
 				945B385327ECC33A0044E952 /* DietScreenViewController.swift in Sources */,
+				94FC783A2809E586003477FA /* AuthErrorCode.swift in Sources */,
 				941E811527E6149800A33344 /* LoginScreenPresenter.swift in Sources */,
 				2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */,
 				94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */,
@@ -652,6 +671,7 @@
 				945B383927ECC0C80044E952 /* MainFlowCoordinator.swift in Sources */,
 				2EB767C42806060D008868DD /* MealsType.swift in Sources */,
 				945B384727ECC32A0044E952 /* ResultsScreenViewController.swift in Sources */,
+				94FC78382809E46D003477FA /* AuthManger.swift in Sources */,
 				941E811D27E614F300A33344 /* AuthStackView.swift in Sources */,
 				941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */,
 				2EA1E89F27FCDB47001B329A /* MealCell.swift in Sources */,

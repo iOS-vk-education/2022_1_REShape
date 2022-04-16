@@ -25,6 +25,30 @@ extension RegisterScreenPresenter: RegisterScreenModuleInput {
 }
 
 extension RegisterScreenPresenter: RegisterScreenViewOutput {
+    func didRegisterUser(photo: String,
+                         gender: String,
+                         name: String,
+                         surname: String,
+                         age: Int,
+                         height: Double,
+                         weight: Double,
+                         target: Double,
+                         email: String,
+                         password: String,
+                         completion: @escaping (String?) -> ()) {
+        interactor.registerUser(photo: photo,
+                                gender: gender,
+                                name: name,
+                                surname: surname,
+                                age: age,
+                                height: height,
+                                weight: weight,
+                                target: target,
+                                email: email,
+                                password: password,
+                                completion: completion)
+    }
+    
     func registerDidTap() {
         router.registerButtonTapped()
     }
