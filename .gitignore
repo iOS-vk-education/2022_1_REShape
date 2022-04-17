@@ -81,11 +81,11 @@ playground.xcworkspace
 
 # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
 
-# Packages/
+Packages/
 
 # Package.pins
 
-# Package.resolved
+Package.resolved
 
 # *.xcodeproj
 
@@ -95,7 +95,7 @@ playground.xcworkspace
 
 # hence it is not needed unless you have added a package configuration file to your project
 
-# .swiftpm
+#.swiftpm
 
 
 
@@ -122,6 +122,7 @@ Pods/
 #
 
 # Add this line if you want to avoid checking in source code from the Xcode workspace
+Podfile.lock
 
 *.xcworkspace
 
