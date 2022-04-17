@@ -26,7 +26,7 @@ final class RegistrationContentView: UIView {
         }
     }
     // вью с кнопка выбора пола
-    let genderStackView: GenderStackView = {
+    private(set) lazy var genderStackView: GenderStackView = {
         let stackView = GenderStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.tag = 0
