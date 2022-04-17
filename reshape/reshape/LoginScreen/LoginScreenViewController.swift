@@ -103,6 +103,7 @@ final class LoginScreenViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupObserversForKeyboard()
+        unsetupObserversForKeyboard()
         animateShowDimmedView()
         animatePresentContainer()
     }
@@ -248,7 +249,6 @@ extension LoginScreenViewController {
                     if finished {
                         let isEmpty = self.isFieldEmpty()
                         if isEmpty.count > 0 {
-                            
                             // появления алерта, если есть незаполненные поля
                             self.makeAlert("Заполните форму", "Пожалуйста, проверьте пустые поля: \(isEmpty.joined(separator: ", "))")
                         } else {
@@ -366,6 +366,15 @@ extension LoginScreenViewController {
     private func setupObserversForKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func unsetupObserversForKeyboard(){
+        NotificationCenter.default.removeObserver(self,
+                                                   name: UIResponder.keyboardWillShowNotification,
+                                                   object: self.view.window)
+         NotificationCenter.default.removeObserver(self,
+                                                   name: UIResponder.keyboardWillHideNotification,
+                                                   object: self.view.window)
     }
     //поднятие вью при появлении клавы
     @objc

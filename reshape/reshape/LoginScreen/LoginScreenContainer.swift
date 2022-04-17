@@ -18,12 +18,13 @@ final class LoginScreenContainer {
         let interactor = LoginScreenInteractor()
         let presenter = LoginScreenPresenter(router: router, interactor: interactor)
 		let viewController = LoginScreenViewController(output: presenter)
+        let manager = LoginManager()
 
 		presenter.view = viewController
         router.viewController = viewController
         router.window = context.window
 		presenter.moduleOutput = context.moduleOutput
-
+        interactor.manager = manager
 		interactor.output = presenter
 
         return LoginScreenContainer(view: viewController, input: presenter, router: router)

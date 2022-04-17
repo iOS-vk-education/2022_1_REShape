@@ -20,5 +20,10 @@ final class AuthManger{
             completion(authDataResult, error)
         }
     }
+    static func restorePassword(email: String, completion: @escaping (Error?) -> ()) {
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            completion(error)
+        }
+    }
     
 }

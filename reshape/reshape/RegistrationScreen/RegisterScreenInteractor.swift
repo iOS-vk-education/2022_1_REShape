@@ -7,44 +7,40 @@
 //
 
 import Foundation
-import Firebase
+
+
+
 
 final class RegisterScreenInteractor {
     weak var output: RegisterScreenInteractorOutput?
+    var manager: RegistrationManager?
 }
 
 extension RegisterScreenInteractor: RegisterScreenInteractorInput {
-    func registerUser(photo: String,
-                              gender: String,
-                              name: String,
-                              surname: String,
-                              age: Int,
-                              height: Double,
-                              weight: Double,
-                              target: Double,
-                              email: String,
-                              password: String,
-                              completion: @escaping (String?) -> ()){
-        AuthManger.register(email: email, password: password){ (result, error) in
-            guard let error = error else {
-                if let result = result {
-                    let ref = Database.database().reference().child("users")
-                    ref.child(result.user.uid).updateChildValues(["photo": photo,
-                                                                  "gender": gender,
-                                                                  "name": name,
-                                                                  "surname": surname,
-                                                                  "age": age,
-                                                                  "height": height,
-                                                                  "weight": weight,
-                                                                  "target": target,
-                                                                  "email": email])
-                }
-                completion(nil)
-                return
-            }
-            if let authError = AuthErrorCode(rawValue: error._code) {
-                completion(authError.errorMessage)
-            }
+    func register(photo: Data,
+                  gender: String,
+                  name: String,
+                  surname: String,
+                  age: String,
+                  height: String,
+                  weight: String,
+                  target: String,
+                  email: String,
+                  password: String,
+                  completion: @escaping (String?) -> ()){
+        guard let manager = manager else {
+            return
         }
+        manager.registerUser(photo: photo,
+                              gender: gender,
+                              name: name,
+                              surname: surname,
+                              age: age,
+                              height: height,
+                              weight: weight,
+                              target: target,
+                              email: email,
+                              password: password,
+                              completion: completion)
     }
 }

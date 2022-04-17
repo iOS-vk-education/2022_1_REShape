@@ -20,9 +20,11 @@ protocol ForgetPasswordScreenViewInput: AnyObject {
 
 protocol ForgetPasswordScreenViewOutput: AnyObject {
     func closeForgetPasswordScreen()
+    func didRestorePassword(email: String, completion: @escaping (String?) -> ())
 }
 
 protocol ForgetPasswordScreenInteractorInput: AnyObject {
+    func restorePassword(email: String, completion: @escaping (String?) -> ())
 }
 
 protocol ForgetPasswordScreenInteractorOutput: AnyObject {

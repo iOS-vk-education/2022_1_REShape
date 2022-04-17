@@ -18,12 +18,14 @@ final class RegisterScreenContainer {
         let interactor = RegisterScreenInteractor()
         let presenter = RegisterScreenPresenter(router: router, interactor: interactor)
 		let viewController = RegisterScreenViewController(output: presenter)
+        let manager = RegistrationManager()
 
 		presenter.view = viewController
 		presenter.moduleOutput = context.moduleOutput
         router.viewController = viewController
 		interactor.output = presenter
         router.window = context.window
+        interactor.manager = manager
         return RegisterScreenContainer(view: viewController, input: presenter, router: router)
 	}
 

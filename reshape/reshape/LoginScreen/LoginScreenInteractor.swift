@@ -11,22 +11,20 @@ import FirebaseAuth
 
 final class LoginScreenInteractor {
 	weak var output: LoginScreenInteractorOutput?
+    var manager: LoginManager?
 }
 
 extension LoginScreenInteractor: LoginScreenInteractorInput {
+    func checkLogIn(email: String, password: String, completion: @escaping (String?) -> ()) {
+        guard let manager = manager else {
+            return
+        }
+        manager.logIn(email: email, password: password, completion: completion)
+    }
+    
     func rememberUser(isRemembered: Bool, key: String){
         defaults.set(isRemembered, forKey: key)
     }
     
-    func checkLogIn(email: String, password: String, completion: @escaping (String?) -> ()) {
-        AuthManger.logIn(email: email, password: password) { authDataResult , error in
-            guard let error = error else {
-                completion(nil)
-                return
-            }
-            if let authError = AuthErrorCode(rawValue: error._code) {
-                completion(authError.errorMessage)
-            }
-        }
-    }
+    
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol RegisterScreenModuleInput {
-	var moduleOutput: RegisterScreenModuleOutput? { get }
+    var moduleOutput: RegisterScreenModuleOutput? { get }
 }
 
 protocol RegisterScreenModuleOutput: AnyObject {
@@ -21,31 +21,31 @@ protocol RegisterScreenViewInput: AnyObject {
 protocol RegisterScreenViewOutput: AnyObject {
     func backButtonPressed()
     func registerDidTap()
-    func didRegisterUser(photo: String,
+    func didRegisterUser(photo: Data,
                          gender: String,
                          name: String,
                          surname: String,
-                         age: Int,
-                         height: Double,
-                         weight: Double,
-                         target: Double,
+                         age: String,
+                         height: String,
+                         weight: String,
+                         target: String,
                          email: String,
                          password: String,
                          completion: @escaping (String?) -> ())
 }
 
 protocol RegisterScreenInteractorInput: AnyObject {
-    func registerUser(photo: String,
-                              gender: String,
-                              name: String,
-                              surname: String,
-                              age: Int,
-                              height: Double,
-                              weight: Double,
-                              target: Double,
-                              email: String,
-                              password: String,
-                              completion: @escaping (String?) -> ())
+    func register(photo: Data,
+                  gender: String,
+                  name: String,
+                  surname: String,
+                  age: String,
+                  height: String,
+                  weight: String,
+                  target: String,
+                  email: String,
+                  password: String,
+                  completion: @escaping (String?) -> ())
 }
 
 protocol RegisterScreenInteractorOutput: AnyObject {
