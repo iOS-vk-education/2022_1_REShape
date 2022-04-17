@@ -13,7 +13,11 @@ import Foundation
 
 final class RegisterScreenInteractor {
     weak var output: RegisterScreenInteractorOutput?
-    var manager: RegistrationManager?
+    var manager: RegistrationManager
+    
+    init(manager: RegistrationManager){
+        self.manager = manager
+    }
 }
 
 extension RegisterScreenInteractor: RegisterScreenInteractorInput {
@@ -26,11 +30,7 @@ extension RegisterScreenInteractor: RegisterScreenInteractorInput {
                   weight: String,
                   target: String,
                   email: String,
-                  password: String,
-                  completion: @escaping (String?) -> ()){
-        guard let manager = manager else {
-            return
-        }
+                  password: String){
         manager.registerUser(photo: photo,
                               gender: gender,
                               name: name,
@@ -40,7 +40,9 @@ extension RegisterScreenInteractor: RegisterScreenInteractorInput {
                               weight: weight,
                               target: target,
                               email: email,
-                              password: password,
-                              completion: completion)
+                             password: password){ error in
+            self.output?.registerStatus(errorString: error)
+            
+        }
     }
 }

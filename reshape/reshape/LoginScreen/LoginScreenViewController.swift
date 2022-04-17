@@ -103,9 +103,12 @@ final class LoginScreenViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupObserversForKeyboard()
-        unsetupObserversForKeyboard()
         animateShowDimmedView()
         animatePresentContainer()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsetupObserversForKeyboard()
     }
     
     init(output: LoginScreenViewOutput) {
@@ -397,7 +400,7 @@ extension LoginScreenViewController {
             self?.view.layoutIfNeeded()
         }
     }
-    func isFieldEmpty()->[String]{
+    private func isFieldEmpty()->[String]{
         var emptyFields: [String] = [String]()
         if let email = emailStackView.textField.text,
            email.isEmpty,

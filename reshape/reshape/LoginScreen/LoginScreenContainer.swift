@@ -15,16 +15,16 @@ final class LoginScreenContainer {
 
 	static func assemble(with context: LoginScreenContext) -> LoginScreenContainer {
         let router = LoginScreenRouter()
-        let interactor = LoginScreenInteractor()
+        let manager = LoginManager()
+        let interactor = LoginScreenInteractor(manager: manager)
         let presenter = LoginScreenPresenter(router: router, interactor: interactor)
 		let viewController = LoginScreenViewController(output: presenter)
-        let manager = LoginManager()
+
 
 		presenter.view = viewController
         router.viewController = viewController
         router.window = context.window
 		presenter.moduleOutput = context.moduleOutput
-        interactor.manager = manager
 		interactor.output = presenter
 
         return LoginScreenContainer(view: viewController, input: presenter, router: router)

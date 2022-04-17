@@ -16,6 +16,7 @@ protocol RegisterScreenModuleOutput: AnyObject {
 }
 
 protocol RegisterScreenViewInput: AnyObject {
+    func didRegisterStatusSet(errorString: String?)
 }
 
 protocol RegisterScreenViewOutput: AnyObject {
@@ -30,8 +31,7 @@ protocol RegisterScreenViewOutput: AnyObject {
                          weight: String,
                          target: String,
                          email: String,
-                         password: String,
-                         completion: @escaping (String?) -> ())
+                         password: String)
 }
 
 protocol RegisterScreenInteractorInput: AnyObject {
@@ -44,11 +44,11 @@ protocol RegisterScreenInteractorInput: AnyObject {
                   weight: String,
                   target: String,
                   email: String,
-                  password: String,
-                  completion: @escaping (String?) -> ())
+                  password: String)
 }
 
 protocol RegisterScreenInteractorOutput: AnyObject {
+    func registerStatus(errorString: String?)
 }
 
 protocol RegisterScreenRouterInput: AnyObject {

@@ -12,20 +12,22 @@ final class RegisterScreenContainer {
     let input: RegisterScreenModuleInput
 	let viewController: UIViewController
 	private(set) weak var router: RegisterScreenRouterInput!
+    
+
 
 	static func assemble(with context: RegisterScreenContext) -> RegisterScreenContainer {
         let router = RegisterScreenRouter()
-        let interactor = RegisterScreenInteractor()
+        let manager = RegistrationManager()
+        let interactor = RegisterScreenInteractor(manager: manager)
         let presenter = RegisterScreenPresenter(router: router, interactor: interactor)
 		let viewController = RegisterScreenViewController(output: presenter)
-        let manager = RegistrationManager()
+        
 
 		presenter.view = viewController
 		presenter.moduleOutput = context.moduleOutput
         router.viewController = viewController
 		interactor.output = presenter
         router.window = context.window
-        interactor.manager = manager
         return RegisterScreenContainer(view: viewController, input: presenter, router: router)
 	}
 

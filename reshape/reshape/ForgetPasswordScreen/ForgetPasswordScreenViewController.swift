@@ -64,6 +64,9 @@ final class ForgetPasswordScreenViewController: UIViewController {
         animateShowDimmedView()
         animatePresentContainer()
         setupObserversForKeyboard()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         unsetupObserversForKeyboard()
     }
     init(output: ForgetPasswordScreenViewOutput) {

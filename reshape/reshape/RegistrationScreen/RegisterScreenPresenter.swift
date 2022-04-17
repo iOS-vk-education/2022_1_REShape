@@ -34,8 +34,7 @@ extension RegisterScreenPresenter: RegisterScreenViewOutput {
                          weight: String,
                          target: String,
                          email: String,
-                         password: String,
-                         completion: @escaping (String?) -> ()){
+                         password: String){
         interactor.register(photo: photo,
                             gender: gender,
                             name: name,
@@ -45,8 +44,8 @@ extension RegisterScreenPresenter: RegisterScreenViewOutput {
                             weight: weight,
                             target: target,
                             email: email,
-                            password: password,
-                            completion: completion)
+                            password: password)
+                            
     }
     func registerDidTap() {
         router.registerButtonTapped()
@@ -58,4 +57,8 @@ extension RegisterScreenPresenter: RegisterScreenViewOutput {
 }
 
 extension RegisterScreenPresenter: RegisterScreenInteractorOutput {
+    func registerStatus(errorString: String?) {
+        view?.didRegisterStatusSet(errorString: errorString)
+    }
+    
 }
