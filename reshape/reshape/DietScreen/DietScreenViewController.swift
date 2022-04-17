@@ -15,7 +15,7 @@ final class DietScreenViewController: UIViewController {
         let label = UILabel()
         label.text = "РАЦИОНЫ ПИТАНИЯ"
         label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        label.textColor = UIColor.blackVioletColor
+        label.textColor = UIColor.darkVioletColor
         label.numberOfLines = 1
         return label
     }()

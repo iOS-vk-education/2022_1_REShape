@@ -19,6 +19,7 @@ protocol WeightViewInput: AnyObject {
 }
 
 protocol WeightViewOutput: AnyObject {
+    func backButtonPressed()
 }
 
 protocol WeightInteractorInput: AnyObject {
@@ -28,4 +29,5 @@ protocol WeightInteractorOutput: AnyObject {
 }
 
 protocol WeightRouterInput: AnyObject {
+    func backButtonTapped()
 }

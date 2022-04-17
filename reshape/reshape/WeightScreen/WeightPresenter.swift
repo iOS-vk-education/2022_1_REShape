@@ -25,6 +25,10 @@ extension WeightPresenter: WeightModuleInput {
 }
 
 extension WeightPresenter: WeightViewOutput {
+    func backButtonPressed() {
+        router.backButtonTapped()
+    }
+    
 }
 
 extension WeightPresenter: WeightInteractorOutput {

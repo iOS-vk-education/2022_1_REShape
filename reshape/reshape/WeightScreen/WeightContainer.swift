@@ -21,6 +21,8 @@ final class WeightContainer {
 
 		presenter.view = viewController
 		presenter.moduleOutput = context.moduleOutput
+        
+        router.viewController = viewController
 
 		interactor.output = presenter
 

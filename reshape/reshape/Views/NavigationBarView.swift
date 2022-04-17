@@ -30,6 +30,7 @@ final class NavigationBarView: UIView {
         button.setImage(UIImage(named: "back"),for: .normal)
         return button
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraints()
@@ -62,6 +63,32 @@ extension NavigationBarView {
     @objc
     func backButtonTapped(){
         delegate?.backButtonAction()
+    }
+}
+
+extension NavigationBarView {
+    func setConfigForWeightScreen(withName name: String) {
+        setupConstraintsForWeightScreen()
+        setupUIForWeightScreen(setName: name)
+    }
+    
+    private func setupConstraintsForWeightScreen() {
+        NSLayoutConstraint.deactivate(self.constraints)
+        backButton.height(27)
+        backButton.width(76)
+        backButton.leading(17)
+        NSLayoutConstraint.activate([
+            backButton.topAnchor.constraint(equalTo: self.topAnchor),
+            mainLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
+            mainLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+        ])
+    }
+    
+    private func setupUIForWeightScreen(setName name: String) {
+        backButton.contentHorizontalAlignment = .leading
+        self.mainLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        self.mainLabel.textColor = .white
+        self.mainLabel.attributedText = NSAttributedString(string: name, attributes: [ NSAttributedString.Key.kern: 0.77])
     }
 }
 

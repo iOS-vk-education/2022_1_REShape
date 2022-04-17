@@ -10,7 +10,7 @@ import UIKit
 final class DietCell: UITableViewCell {
     private let mealTypeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.blackVioletColor
+        label.textColor = UIColor.darkVioletColor
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()

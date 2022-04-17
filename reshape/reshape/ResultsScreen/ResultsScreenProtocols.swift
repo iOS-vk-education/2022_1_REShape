@@ -20,6 +20,7 @@ protocol ResultsScreenViewInput: AnyObject {
 
 protocol ResultsScreenViewOutput: AnyObject {
     func caloriesTapped()
+    func weightTapped()
 }
 
 protocol ResultsScreenInteractorInput: AnyObject {
@@ -30,4 +31,5 @@ protocol ResultsScreenInteractorOutput: AnyObject {
 
 protocol ResultsScreenRouterInput: AnyObject {
     func didCaloriesTapped()
+    func didWeightTapped()
 }

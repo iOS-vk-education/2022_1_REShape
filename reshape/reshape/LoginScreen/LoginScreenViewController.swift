@@ -241,7 +241,7 @@ extension LoginScreenViewController {
         loginButton.action = {[weak self] in
             self?.view.endEditing(true)
             UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.loginButton.backgroundColor = UIColor.darkVioletColor
+                self?.loginButton.backgroundColor = UIColor.transparentVioletColor
             } completion: { [weak self] finished in
                 if finished {
                     self?.output.loginDidTapped()

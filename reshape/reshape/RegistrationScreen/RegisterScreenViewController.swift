@@ -183,7 +183,7 @@ extension RegisterScreenViewController {
         //добавление экшна на кнопку
         registrationView.registrationButton.action = {
             UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.registrationView.registrationButton.backgroundColor = UIColor.darkVioletColor
+                self?.registrationView.registrationButton.backgroundColor = UIColor.transparentVioletColor
             } completion: { [weak self] finished in
                 guard let `self` = self else { return }
                 if finished {

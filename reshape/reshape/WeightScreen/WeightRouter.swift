@@ -9,7 +9,11 @@
 import UIKit
 
 final class WeightRouter {
+    var viewController: UIViewController?
 }
 
 extension WeightRouter: WeightRouterInput {
+    func backButtonTapped() {
+        self.viewController?.navigationController?.popViewController(animated: true)
+    }
 }

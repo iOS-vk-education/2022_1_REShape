@@ -16,14 +16,14 @@ final class MealCell: UITableViewCell {
     
     private var mealNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.blackVioletColor
+        label.textColor = UIColor.darkVioletColor
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
     
     private var caloriesLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.blackVioletColor
+        label.textColor = UIColor.darkVioletColor
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
