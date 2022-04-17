@@ -18,8 +18,9 @@ final class LoginScreenInteractor {
 }
 
 extension LoginScreenInteractor: LoginScreenInteractorInput {
-    func checkLogIn(email: String, password: String, completion: @escaping (String?) -> ()) {
-        manager.logIn(email: email, password: password, completion: completion)
+    func checkLogIn(email: String, password: String) {
+        manager.logIn(email: email, password: password){error in
+            self.output?.loginStatus(errorString: error)}
     }
     
     func rememberUser(isRemembered: Bool, key: String){

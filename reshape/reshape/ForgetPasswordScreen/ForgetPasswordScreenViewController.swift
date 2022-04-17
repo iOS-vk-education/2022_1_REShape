@@ -109,6 +109,20 @@ final class ForgetPasswordScreenViewController: UIViewController {
     }
 }
 
+extension ForgetPasswordScreenViewController: ForgetPasswordScreenViewInput{
+    func didRestorePasswordStatusSet(errorString: String?) {
+        DispatchQueue.main.async {
+            if let error = errorString {
+                self.makeAlert("Ошибка", error)
+            } else {
+                self.output.closeForgetPasswordScreen()
+            }
+        }
+    }
+    
+    
+}
+
 extension ForgetPasswordScreenViewController{
     private func setUpConstraints(){
         
@@ -184,16 +198,7 @@ extension ForgetPasswordScreenViewController{
                             self.makeAlert("Заполните форму", "Пожалуйста, проверьте пустые поля: Почта")
                         } else {
                             if let email = self.emailStackView.textField.text{
-                                self.output.didRestorePassword(email: email){ error in
-                                    DispatchQueue.main.async {
-                                        if let error = error {
-                                            self.makeAlert("Error", error)
-                                        } else {
-                                            self.output.closeForgetPasswordScreen()
-                                        }
-                                    }
-                                }
-                                
+                                self.output.didRestorePassword(email: email)
                             }
                         }
                         

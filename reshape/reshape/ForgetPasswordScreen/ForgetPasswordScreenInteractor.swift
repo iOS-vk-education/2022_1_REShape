@@ -19,8 +19,11 @@ final class ForgetPasswordScreenInteractor {
 
 extension ForgetPasswordScreenInteractor: ForgetPasswordScreenInteractorInput {
     
-    func restorePassword(email: String, completion: @escaping (String?) -> ()) {
-        manager.resetPassword(email: email, completion: completion)
+    func restorePassword(email: String) {
+        manager.resetPassword(email: email){error in
+            self.output?.restorePasswordStatus(errorString: error)
+            
+        }
     }
     
 }

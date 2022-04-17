@@ -39,10 +39,14 @@ extension LoginScreenPresenter: LoginScreenViewOutput {
         router.didLogged()
     }
 
-    func didCheckLogin(email: String, password: String, completion: @escaping (String?) -> ()) {
-        interactor.checkLogIn(email: email, password: password, completion: completion)
+    func didCheckLogin(email: String, password: String) {
+        interactor.checkLogIn(email: email, password: password)
     }
 }
 
 extension LoginScreenPresenter: LoginScreenInteractorOutput {
+    func loginStatus(errorString: String?) {
+        view?.didLoginStatusSet(errorString: errorString)
+    }
+    
 }

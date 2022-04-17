@@ -25,8 +25,8 @@ extension ForgetPasswordScreenPresenter: ForgetPasswordScreenModuleInput {
 }
 
 extension ForgetPasswordScreenPresenter: ForgetPasswordScreenViewOutput {
-    func didRestorePassword(email: String, completion: @escaping (String?) -> ()) {
-        interactor.restorePassword(email: email, completion: completion)
+    func didRestorePassword(email: String) {
+        interactor.restorePassword(email: email)
     }
     
     func closeForgetPasswordScreen() {
@@ -36,4 +36,8 @@ extension ForgetPasswordScreenPresenter: ForgetPasswordScreenViewOutput {
 }
 
 extension ForgetPasswordScreenPresenter: ForgetPasswordScreenInteractorOutput {
+    func restorePasswordStatus(errorString: String?) {
+        view?.didRestorePasswordStatusSet(errorString: errorString)
+    }
+    
 }
