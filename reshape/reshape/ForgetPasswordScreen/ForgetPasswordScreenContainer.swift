@@ -15,14 +15,15 @@ final class ForgetPasswordScreenContainer {
 
 	static func assemble(with context: ForgetPasswordScreenContext) -> ForgetPasswordScreenContainer {
         let router = ForgetPasswordScreenRouter()
-        let interactor = ForgetPasswordScreenInteractor()
+        let manager = ForgetPasswordManager()
+        let interactor = ForgetPasswordScreenInteractor(manager: manager)
         let presenter = ForgetPasswordScreenPresenter(router: router, interactor: interactor)
 		let viewController = ForgetPasswordScreenViewController(output: presenter)
+
 
         presenter.view = viewController as? ForgetPasswordScreenViewInput
         router.viewController = viewController
 		presenter.moduleOutput = context.moduleOutput
-
 		interactor.output = presenter
 
         return ForgetPasswordScreenContainer(view: viewController, input: presenter, router: router)

@@ -98,12 +98,17 @@ final class RegisterScreenViewController: UIViewController {
         super.viewDidAppear(animated)
         setupObserversForKeyboard()
     }
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsetupObserversForKeyboard()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
         setupUI()
-
+        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -167,7 +172,7 @@ extension RegisterScreenViewController {
         
         registrationScrollViewConstraint = registrationScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         registrationScrollViewConstraint?.isActive = true
-  
+        
     }
     
     private func setupUI(){
@@ -181,28 +186,8 @@ extension RegisterScreenViewController {
         registrationView.dataSource = self
         
         //добавление экшна на кнопку
-        registrationView.registrationButton.action = {
-            UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.registrationView.registrationButton.backgroundColor = UIColor.darkVioletColor
-            } completion: { [weak self] finished in
-                guard let `self` = self else { return }
-                if finished {
-                    let isEmpty = self.registrationView.isFieldEmpty()
-                    if isEmpty.count > 0 {
-                        // появления алерта, если есть незаполненные поля
-                        let alert = UIAlertController(title: "Заполните форму",
-                                                      message: "Пожалуйста, проверьте пустые поля: \(isEmpty.joined(separator: ", "))",
-                                                      preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "Ок",
-                                                      style: UIAlertAction.Style.default,
-                                                      handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    } else {
-                        self.output.registerDidTap()
-                    }
-                    self.registrationView.registrationButton.backgroundColor = UIColor.violetColor
-                }
-            }
+        registrationView.registrationButton.action = { [weak self] in 
+            self?.registrationButtonAction()
         }
     }
     
@@ -221,6 +206,15 @@ extension RegisterScreenViewController {
                                                object: nil)
     }
     
+    /// удаление обсерверов для клавиатуры
+    private func unsetupObserversForKeyboard(){
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: self.view.window)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: self.view.window)
+    }
     /// поднятие вью при появлении клавиатуры
     @objc
     func keyboardWillShow(notification: NSNotification) {
@@ -247,8 +241,48 @@ extension RegisterScreenViewController {
     func endEditing() {
         view.endEditing(true)
     }
-    
+    func registrationButtonAction(){
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                self?.registrationView.registrationButton.backgroundColor = UIColor.darkVioletColor
+            } completion: { [weak self] finished in
+                guard let `self` = self else { return }
+                if finished {
+                    let isEmpty = self.registrationView.isFieldEmpty()
+                    if isEmpty.count > 0 {
+                        // появления алерта, если есть незаполненные поля
+                        self.makeAlert("Заполните форму", "Пожалуйста, проверьте пустые поля: \(isEmpty.joined(separator: ", "))")
+                    } else {
+                        guard let imageData = self.addPhoto.image?.jpegData(compressionQuality: 0.4) else {
+                            return
+                        }
+                        
+                        if let gender = self.registrationView.genderStackView.genderText,
+                            let name = self.registrationView.stackViews[0].textField.text,
+                           let surname = self.registrationView.stackViews[1].textField.text,
+                           let age = self.registrationView.stackViews[2].textField.text,
+                           let height = self.registrationView.stackViews[3].textField.text,
+                           let weight = self.registrationView.stackViews[4].textField.text,
+                           let target = self.registrationView.stackViews[5].textField.text,
+                           let email = self.registrationView.stackViews[6].textField.text,
+                           let password = self.registrationView.stackViews[7].textField.text{
+                                self.output.didRegisterUser(photo: imageData,
+                                                        gender: gender,
+                                                        name: name,
+                                                        surname: surname,
+                                                        age: age,
+                                                        height: height,
+                                                        weight: weight,
+                                                        target: target,
+                                                        email: email,
+                                                        password: password)
+                        }
+                        self.registrationView.registrationButton.backgroundColor = UIColor.violetColor
+                    }
+                }
+            }
+    }
 }
+
 
 
 extension RegisterScreenViewController: NavigationBarDelegate{
@@ -275,6 +309,17 @@ extension RegisterScreenViewController: ImagePickerDelegate{
 
 
 extension RegisterScreenViewController: RegisterScreenViewInput {
+    func didRegisterStatusSet(errorString: String?) {
+        DispatchQueue.main.async {
+            if let error = errorString {
+                self.makeAlert("Ошибка", error)
+            } else {
+                self.output.registerDidTap()
+            }
+            
+        }
+    }
+    
 }
 
 

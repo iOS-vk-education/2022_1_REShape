@@ -61,10 +61,13 @@ final class ForgetPasswordScreenViewController: UIViewController {
     var containerViewBottomConstraint: NSLayoutConstraint?
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        raiseViewWithKeyboard()
-        dropDownViewWithoutKeyboard()
         animateShowDimmedView()
         animatePresentContainer()
+        setupObserversForKeyboard()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsetupObserversForKeyboard()
     }
     init(output: ForgetPasswordScreenViewOutput) {
         self.output = output
@@ -104,6 +107,20 @@ final class ForgetPasswordScreenViewController: UIViewController {
             self?.view.layoutIfNeeded()
         }
     }
+}
+
+extension ForgetPasswordScreenViewController: ForgetPasswordScreenViewInput{
+    func didRestorePasswordStatusSet(errorString: String?) {
+        DispatchQueue.main.async {
+            if let error = errorString {
+                self.makeAlert("Ошибка", error)
+            } else {
+                self.output.closeForgetPasswordScreen()
+            }
+        }
+    }
+    
+    
 }
 
 extension ForgetPasswordScreenViewController{
@@ -168,6 +185,28 @@ extension ForgetPasswordScreenViewController{
     private func setUpUI(){
         emailStackView.tag = 2
         restoreButton.setupUI(name: "Восстановить")
+        restoreButton.action = {[weak self] in
+            self?.view.endEditing(true)
+            UIView.animate(withDuration: 0.2){[weak self] in
+                self?.restoreButton.backgroundColor = .darkVioletColor
+            } completion: { [weak self] finished in
+                if finished {
+                    guard let `self` = self else { return }
+                    if finished {
+                        if let email = self.emailStackView.textField.text, email.isEmpty{
+                            // появления алерта, если есть незаполненные поля
+                            self.makeAlert("Заполните форму", "Пожалуйста, проверьте пустые поля: Почта")
+                        } else {
+                            if let email = self.emailStackView.textField.text{
+                                self.output.didRestorePassword(email: email)
+                            }
+                        }
+                        
+                        self.restoreButton.backgroundColor = UIColor.violetColor
+                    }
+                }
+            }
+        }
         closeButton.isUserInteractionEnabled = true
         closeButton.action = { [weak self] in
             self?.view.endEditing(true)
@@ -249,12 +288,20 @@ extension ForgetPasswordScreenViewController{
             self?.animateDismissView()
         }
     }
-    private func raiseViewWithKeyboard(){
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
+    
+    private func setupObserversForKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    private func dropDownViewWithoutKeyboard(){
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    private func unsetupObserversForKeyboard(){
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: self.view.window)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: self.view.window)
     }
 }
 extension ForgetPasswordScreenViewController: AuthStackViewDelegate {

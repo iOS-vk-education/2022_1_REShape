@@ -20,6 +20,7 @@ final class GenderStackView: UIView {
     }()
     private let manButton: GenderButton = GenderButton()
     private let womanButton: GenderButton = GenderButton()
+    private(set) var genderText: String?
     private let buttonStackView: UIStackView = {
         let buttonStackView = UIStackView()
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -96,14 +97,15 @@ extension GenderStackView{
             manButton.label.textColor = .white
             womanButton.backgroundColor = .modalViewGrayColor
             womanButton.label.textColor = .black
+            genderText = "man"
         case 2:
             womanButton.backgroundColor = .violetColor
             womanButton.label.textColor = .white
             manButton.backgroundColor = .modalViewGrayColor
             manButton.label.textColor = .black
+            genderText = "woman"
         default: break
         }
         
     }
-
 }
