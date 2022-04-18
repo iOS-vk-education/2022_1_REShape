@@ -20,9 +20,11 @@ protocol WeightViewInput: AnyObject {
 
 protocol WeightViewOutput: AnyObject {
     func backButtonPressed()
+    func getLastWeightData() -> WeightDataModel
 }
 
 protocol WeightInteractorInput: AnyObject {
+    func getLastWeightData() -> WeightDataModel
 }
 
 protocol WeightInteractorOutput: AnyObject {

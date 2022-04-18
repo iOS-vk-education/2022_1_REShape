@@ -122,8 +122,9 @@ playground.xcworkspace
 #
 
 # Add this line if you want to avoid checking in source code from the Xcode workspace
+Podfile.lock
 
-# *.xcworkspace
+*.xcworkspace
 
 
 
