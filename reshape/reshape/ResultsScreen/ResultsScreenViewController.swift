@@ -3,7 +3,7 @@
 //  reshape
 //
 //  Created by Veronika on 24.03.2022.
-//  
+//
 //
 
 import UIKit
@@ -79,12 +79,9 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
     }
     private func setupUI(){
         view.backgroundColor = .white
-//        mainView.layer.masksToBounds = false
-//        mainView.layer.shadowOffset = CGSize(width: 4, height: 4)
-//        mainView.layer.shadowRadius = 5
-//        mainView.layer.shadowOpacity = 0.5
         mainView.setupGradient(withColor: [UIColor.lightVioletColor!.cgColor,
                                            UIColor.darkVioletColor!.cgColor])
+        mainView.verticalGradient()
     }
     
     private func setupCollectionView(){

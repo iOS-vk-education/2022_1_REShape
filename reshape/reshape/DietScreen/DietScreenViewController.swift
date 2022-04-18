@@ -3,13 +3,13 @@
 //  reshape
 //
 //  Created by Veronika on 24.03.2022.
-//  
+//
 //
 
 import UIKit
 
 final class DietScreenViewController: UIViewController {
-	private let output: DietScreenViewOutput
+    private let output: DietScreenViewOutput
     
     private var dietLabel: UILabel = {
         let label = UILabel()
@@ -46,8 +46,8 @@ final class DietScreenViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         // Настройка отображения компонентов
         setupUI()
@@ -55,7 +55,7 @@ final class DietScreenViewController: UIViewController {
         setupConstraint()
         // Запрос числа дней в Presenterе
         output.requestNumOfDays()
-	}
+    }
     
     func setupUI() {
         view.backgroundColor = .white
@@ -97,7 +97,7 @@ final class DietScreenViewController: UIViewController {
         // Настройка визуала
         dietTableView.backgroundColor = .white
         dietTableView.separatorStyle = .singleLine
-        dietTableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 1, right: 16)
+        dietTableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 1, right: 0)
         dietTableView.separatorColor = .white
         
         // Настройка действий с таблицей
@@ -132,7 +132,7 @@ extension DietScreenViewController: DietScreenViewInput {
 }
 
 extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let mealType = output.getCellType(from: indexPath)
         switch mealType {
         case .breakfast, .lunch, .dinner:

@@ -7,14 +7,7 @@
 
 import UIKit
 
-final class DietCell: UITableViewCell {
-    private let mealTypeLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.darkVioletColor
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        return label
-    }()
-
+final class DietCell: AbstractCell {
     private var disclosureImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = nil
@@ -34,19 +27,11 @@ final class DietCell: UITableViewCell {
     }
     
     private func setupCell() {
-        self.addSubview(mealTypeLabel)
         self.addSubview(disclosureImage)
-        backgroundColor = UIColor.modalViewGrayColor
         setupConstraints()
     }
     
     private func setupConstraints() {
-        mealTypeLabel.translatesAutoresizingMaskIntoConstraints = false
-        mealTypeLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 11).isActive = true
-        mealTypeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
-        mealTypeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 36).isActive = true
-        mealTypeLabel.height(17)
-        
         disclosureImage.translatesAutoresizingMaskIntoConstraints = false
         disclosureWidthConstraints = disclosureImage.widthAnchor.constraint(equalToConstant: 6)
         disclosureHeightConstraints = disclosureImage.heightAnchor.constraint(equalToConstant: 14)
@@ -59,14 +44,13 @@ final class DietCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        mealTypeLabel.text = ""
         disclosureImage.image = nil
     }
 }
 
 extension DietCell {
     func setData(text: String, state: DisclosureState) {
-        mealTypeLabel.text = text
+        self.setCellText(text)
         self.disclosure(state, animated: false)
     }
     

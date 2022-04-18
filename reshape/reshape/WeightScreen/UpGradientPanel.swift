@@ -16,9 +16,8 @@ class UpGradientPanel: UIView {
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         layer.cornerRadius = 40
         layer.shadowOffset = CGSize(width: 4, height: 4)
-        layer.shadowRadius = 4
+        layer.shadowRadius = 5
         layer.shadowOpacity = 0.5
-//        layer.shadowColor = UIColor.shadowColor!.cgColor
         return layer
     }()
     
@@ -39,5 +38,47 @@ class UpGradientPanel: UIView {
         self.layoutIfNeeded()
         gradient.frame = self.bounds
         gradient.colors = color
+    }
+}
+   
+extension UpGradientPanel {
+    func mainDiagonalGradient(reverse: Bool = false) {
+        if reverse {
+            gradient.startPoint = CGPoint(x: 1, y: 1)
+            gradient.endPoint = CGPoint(x: 0, y: 0)
+        } else {
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 1)
+        }
+    }
+    
+    func additDiagonalGradient(reverse: Bool = false) {
+        if reverse {
+            gradient.startPoint = CGPoint(x: 0, y: 1)
+            gradient.endPoint = CGPoint(x: 1, y: 0)
+        } else {
+            gradient.startPoint = CGPoint(x: 1, y: 0)
+            gradient.endPoint = CGPoint(x: 0, y: 1)
+        }
+    }
+    
+    func verticalGradient(reverse: Bool = false) {
+        if reverse {
+            gradient.startPoint = CGPoint(x: 0.5, y: 1)
+            gradient.endPoint = CGPoint(x: 0.5, y: 0)
+        } else {
+            gradient.startPoint = CGPoint(x: 0.5, y: 0)
+            gradient.endPoint = CGPoint(x: 0.5, y: 1)
+        }
+    }
+    
+    func horizontalGradient(reverse: Bool = false) {
+        if reverse {
+            gradient.startPoint = CGPoint(x: 1, y: 0.5)
+            gradient.endPoint = CGPoint(x: 0, y: 0.5)
+        } else {
+            gradient.startPoint = CGPoint(x: 0, y: 0.5)
+            gradient.endPoint = CGPoint(x: 1, y: 0.5)
+        }
     }
 }
