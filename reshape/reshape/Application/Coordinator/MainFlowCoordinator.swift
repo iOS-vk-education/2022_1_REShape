@@ -53,6 +53,16 @@ extension MainFlowCoordinator{
         navController.setViewControllers([dietContainer.viewController], animated: true)
     }
     
+    private func setupWater() {
+        guard let navController = navigationControllers[.results] else {
+            fatalError("No navController")
+        }
+        
+        let waterContext = WaterScreenContext(moduleOutput: nil, window: window)
+        let waterContainer = WaterScreenContainer.assemble(with: waterContext)
+        navController.setViewControllers([waterContainer.viewController], animated: true)
+    }
+    
     private func setupProfile() {
         guard let navController = navigationControllers[.profile] else {
             fatalError("No navController")

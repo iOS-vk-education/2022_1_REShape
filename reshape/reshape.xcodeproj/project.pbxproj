@@ -89,6 +89,18 @@
 		9478496527FC0A3500138DA4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478496427FC0A3500138DA4 /* ImagePicker.swift */; };
 		94CAB9A02806BA0C00ACAB8C /* RegistrationContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB99F2806BA0C00ACAB8C /* RegistrationContentView.swift */; };
 		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
+		F743548A280B337C002E03BB /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435488280B337C002E03BB /* ProfileCollectionCell.swift */; };
+		F743548B280B337C002E03BB /* ProfileCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7435489280B337C002E03BB /* ProfileCollectionCell.xib */; };
+		F7435493280B35A0002E03BB /* WaterScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F743548D280B35A0002E03BB /* WaterScreenPresenter.swift */; };
+		F7435494280B35A0002E03BB /* WaterScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F743548E280B35A0002E03BB /* WaterScreenRouter.swift */; };
+		F7435495280B35A0002E03BB /* WaterScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F743548F280B35A0002E03BB /* WaterScreenViewController.swift */; };
+		F7435496280B35A0002E03BB /* WaterScreenProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435490280B35A0002E03BB /* WaterScreenProtocols.swift */; };
+		F7435497280B35A0002E03BB /* WaterScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435491280B35A0002E03BB /* WaterScreenInteractor.swift */; };
+		F7435498280B35A0002E03BB /* WaterScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435492280B35A0002E03BB /* WaterScreenContainer.swift */; };
+		F74354A1280B48CA002E03BB /* CustomProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A0280B48CA002E03BB /* CustomProfileView.swift */; };
+		F74354A3280B4913002E03BB /* CustomWaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A2280B4913002E03BB /* CustomWaterView.swift */; };
+		F74354A6280EDA61002E03BB /* WaterCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A4280EDA61002E03BB /* WaterCollectionCell.swift */; };
+		F74354A7280EDA61002E03BB /* WaterCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F74354A5280EDA61002E03BB /* WaterCollectionCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +204,18 @@
 		9478496427FC0A3500138DA4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		94CAB99F2806BA0C00ACAB8C /* RegistrationContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationContentView.swift; sourceTree = "<group>"; };
 		94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		F7435488280B337C002E03BB /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionCell.swift; sourceTree = "<group>"; };
+		F7435489280B337C002E03BB /* ProfileCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileCollectionCell.xib; sourceTree = "<group>"; };
+		F743548D280B35A0002E03BB /* WaterScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenPresenter.swift; sourceTree = "<group>"; };
+		F743548E280B35A0002E03BB /* WaterScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenRouter.swift; sourceTree = "<group>"; };
+		F743548F280B35A0002E03BB /* WaterScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenViewController.swift; sourceTree = "<group>"; };
+		F7435490280B35A0002E03BB /* WaterScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenProtocols.swift; sourceTree = "<group>"; };
+		F7435491280B35A0002E03BB /* WaterScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenInteractor.swift; sourceTree = "<group>"; };
+		F7435492280B35A0002E03BB /* WaterScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenContainer.swift; sourceTree = "<group>"; };
+		F74354A0280B48CA002E03BB /* CustomProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProfileView.swift; sourceTree = "<group>"; };
+		F74354A2280B4913002E03BB /* CustomWaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaterView.swift; sourceTree = "<group>"; };
+		F74354A4280EDA61002E03BB /* WaterCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterCollectionCell.swift; sourceTree = "<group>"; };
+		F74354A5280EDA61002E03BB /* WaterCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaterCollectionCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +262,8 @@
 				9478495D27FB2EC900138DA4 /* NavigationBarView.swift */,
 				945ADFAC27FDC54800222156 /* GenderButton.swift */,
 				94CAB99F2806BA0C00ACAB8C /* RegistrationContentView.swift */,
+				F74354A0280B48CA002E03BB /* CustomProfileView.swift */,
+				F74354A2280B4913002E03BB /* CustomWaterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -305,6 +331,7 @@
 		36A9DAFF27E2AC3400DB5082 /* reshape */ = {
 			isa = PBXGroup;
 			children = (
+				F743548C280B3580002E03BB /* WaterScreen */,
 				2EA1E8A6280604CE001B329A /* Entities */,
 				9478495027FB21ED00138DA4 /* RegistrationScreen */,
 				945B383E27ECC3120044E952 /* ProfileScreen */,
@@ -404,6 +431,7 @@
 		945B383E27ECC3120044E952 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
+				F7435487280B3353002E03BB /* Cells */,
 				945B385727ECC3500044E952 /* ProfileScreenPresenter.swift */,
 				945B385827ECC3500044E952 /* ProfileScreenRouter.swift */,
 				945B385927ECC3500044E952 /* ProfileScreenViewController.swift */,
@@ -445,6 +473,38 @@
 				9478496427FC0A3500138DA4 /* ImagePicker.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		F7435487280B3353002E03BB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F7435488280B337C002E03BB /* ProfileCollectionCell.swift */,
+				F7435489280B337C002E03BB /* ProfileCollectionCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F743548C280B3580002E03BB /* WaterScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F7435499280B35A4002E03BB /* Cells */,
+				F743548D280B35A0002E03BB /* WaterScreenPresenter.swift */,
+				F743548E280B35A0002E03BB /* WaterScreenRouter.swift */,
+				F743548F280B35A0002E03BB /* WaterScreenViewController.swift */,
+				F7435490280B35A0002E03BB /* WaterScreenProtocols.swift */,
+				F7435491280B35A0002E03BB /* WaterScreenInteractor.swift */,
+				F7435492280B35A0002E03BB /* WaterScreenContainer.swift */,
+			);
+			path = WaterScreen;
+			sourceTree = "<group>";
+		};
+		F7435499280B35A4002E03BB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F74354A4280EDA61002E03BB /* WaterCollectionCell.swift */,
+				F74354A5280EDA61002E03BB /* WaterCollectionCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -565,6 +625,8 @@
 				2EA6508E27E9C7FF003F41FC /* GoogleService-Info.plist in Resources */,
 				36A9DB0D27E2AC3500DB5082 /* LaunchScreen.storyboard in Resources */,
 				36A9DB0A27E2AC3500DB5082 /* Assets.xcassets in Resources */,
+				F743548B280B337C002E03BB /* ProfileCollectionCell.xib in Resources */,
+				F74354A7280EDA61002E03BB /* WaterCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,7 +656,10 @@
 				2EB767C2280605E7008868DD /* DisclosureState.swift in Sources */,
 				941E811A27E6149800A33344 /* LoginScreenContainer.swift in Sources */,
 				945B383727ECC0B90044E952 /* AppCoordinator.swift in Sources */,
+				F74354A3280B4913002E03BB /* CustomWaterView.swift in Sources */,
 				941E811827E6149800A33344 /* LoginScreenProtocols.swift in Sources */,
+				F7435495280B35A0002E03BB /* WaterScreenViewController.swift in Sources */,
+				F7435493280B35A0002E03BB /* WaterScreenPresenter.swift in Sources */,
 				2E1F1DDA27E4FB7E00FA7B77 /* EnterButton.swift in Sources */,
 				60E44D9828082AB000B3DDE6 /* ReuseIdentifier.swift in Sources */,
 				2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */,
@@ -607,7 +672,9 @@
 				945B384627ECC32A0044E952 /* ResultsScreenRouter.swift in Sources */,
 				2EA1E8A528045BB6001B329A /* CellInfo.swift in Sources */,
 				2EA6509527F2ED07003F41FC /* DietCell.swift in Sources */,
+				F74354A6280EDA61002E03BB /* WaterCollectionCell.swift in Sources */,
 				945B385F27ECC3500044E952 /* ProfileScreenViewController.swift in Sources */,
+				F7435496280B35A0002E03BB /* WaterScreenProtocols.swift in Sources */,
 				94302BC427E66080009E397B /* ForgetPasswordScreenProtocols.swift in Sources */,
 				9478495C27FB221400138DA4 /* RegisterScreenContainer.swift in Sources */,
 				945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */,
@@ -624,7 +691,9 @@
 				945B384827ECC32A0044E952 /* ResultsScreenProtocols.swift in Sources */,
 				36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */,
 				9437920327F9AFA10000188E /* ResultCollectionCell.swift in Sources */,
+				F743548A280B337C002E03BB /* ProfileCollectionCell.swift in Sources */,
 				945B383B27ECC10D0044E952 /* CoordinatorProtocol.swift in Sources */,
+				F74354A1280B48CA002E03BB /* CustomProfileView.swift in Sources */,
 				2EA1E8A127FCDB8E001B329A /* DietHeader.swift in Sources */,
 				945B386027ECC3500044E952 /* ProfileScreenProtocols.swift in Sources */,
 				945B384527ECC32A0044E952 /* ResultsScreenPresenter.swift in Sources */,
@@ -638,9 +707,11 @@
 				94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */,
 				945B385227ECC33A0044E952 /* DietScreenRouter.swift in Sources */,
 				945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */,
+				F7435498280B35A0002E03BB /* WaterScreenContainer.swift in Sources */,
 				9478495E27FB2EC900138DA4 /* NavigationBarView.swift in Sources */,
 				945B386227ECC3500044E952 /* ProfileScreenContainer.swift in Sources */,
 				94CAB9A02806BA0C00ACAB8C /* RegistrationContentView.swift in Sources */,
+				F7435494280B35A0002E03BB /* WaterScreenRouter.swift in Sources */,
 				94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */,
 				94302BC127E66080009E397B /* ForgetPasswordScreenPresenter.swift in Sources */,
 				945B384927ECC32A0044E952 /* ResultsScreenInteractor.swift in Sources */,
@@ -658,6 +729,7 @@
 				9478495A27FB221400138DA4 /* RegisterScreenProtocols.swift in Sources */,
 				945B384A27ECC32A0044E952 /* ResultsScreenContainer.swift in Sources */,
 				945B385627ECC33A0044E952 /* DietScreenContainer.swift in Sources */,
+				F7435497280B35A0002E03BB /* WaterScreenInteractor.swift in Sources */,
 				36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */,
 				945B385127ECC33A0044E952 /* DietScreenPresenter.swift in Sources */,
 			);
