@@ -24,7 +24,7 @@ final class WeightContainer {
         
         router.viewController = viewController
 
-		interactor.output = presenter
+        interactor.output = presenter
 
         return WeightContainer(view: viewController, input: presenter, router: router)
 	}

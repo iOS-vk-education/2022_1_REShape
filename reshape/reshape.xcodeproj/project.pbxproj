@@ -37,6 +37,7 @@
 		2EF20BF6280DF0CE0019CF64 /* WeightDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BF5280DF0CE0019CF64 /* WeightDataModel.swift */; };
 		2EF20BF8280DF0E70019CF64 /* WeightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BF7280DF0E70019CF64 /* WeightCell.swift */; };
 		2EF20BFC280DF19D0019CF64 /* UpGradientPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BFB280DF19C0019CF64 /* UpGradientPanel.swift */; };
+		2EF20BFE280F4F600019CF64 /* DateTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BFD280F4F600019CF64 /* DateTimeCell.swift */; };
 		36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */; };
 		36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */; };
 		36A9DB0A27E2AC3500DB5082 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36A9DB0927E2AC3500DB5082 /* Assets.xcassets */; };
@@ -147,6 +148,7 @@
 		2EF20BF5280DF0CE0019CF64 /* WeightDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightDataModel.swift; sourceTree = "<group>"; };
 		2EF20BF7280DF0E70019CF64 /* WeightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightCell.swift; sourceTree = "<group>"; };
 		2EF20BFB280DF19C0019CF64 /* UpGradientPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpGradientPanel.swift; sourceTree = "<group>"; };
+		2EF20BFD280F4F600019CF64 /* DateTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeCell.swift; sourceTree = "<group>"; };
 		36A9DAFD27E2AC3400DB5082 /* reshape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reshape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				2EF20BF7280DF0E70019CF64 /* WeightCell.swift */,
+				2EF20BFD280F4F600019CF64 /* DateTimeCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -838,6 +841,7 @@
 				2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */,
 				94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */,
 				945B385227ECC33A0044E952 /* DietScreenRouter.swift in Sources */,
+				2EF20BFE280F4F600019CF64 /* DateTimeCell.swift in Sources */,
 				945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */,
 				9478495E27FB2EC900138DA4 /* NavigationBarView.swift in Sources */,
 				945B386227ECC3500044E952 /* ProfileScreenContainer.swift in Sources */,

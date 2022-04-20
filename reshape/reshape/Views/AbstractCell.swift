@@ -17,7 +17,7 @@ class AbstractCell: UITableViewCell {
         return label
     }()
     
-    private var leftCellNameAnchor = NSLayoutConstraint()
+    private var leftCellNameConstraint = NSLayoutConstraint()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,9 +30,9 @@ class AbstractCell: UITableViewCell {
     
     private func setupLabel() {
         self.addSubview(cellName)
-        leftCellNameAnchor = cellName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 11)
+        leftCellNameConstraint = cellName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 11)
         NSLayoutConstraint.activate([
-            leftCellNameAnchor,
+            leftCellNameConstraint,
             cellName.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
             cellName.widthAnchor.constraint(greaterThanOrEqualToConstant: 36)
         ])
@@ -50,8 +50,8 @@ class AbstractCell: UITableViewCell {
     }
     
     func changeLeftTextConstraint(toAnchor anchor: NSLayoutXAxisAnchor, constant: CGFloat) {
-        NSLayoutConstraint.deactivate([leftCellNameAnchor])
-        leftCellNameAnchor = cellName.leftAnchor.constraint(equalTo: anchor, constant: constant)
-        NSLayoutConstraint.activate([leftCellNameAnchor])
+        NSLayoutConstraint.deactivate([leftCellNameConstraint])
+        leftCellNameConstraint = cellName.leftAnchor.constraint(equalTo: anchor, constant: constant)
+        NSLayoutConstraint.activate([leftCellNameConstraint])
     }
 }

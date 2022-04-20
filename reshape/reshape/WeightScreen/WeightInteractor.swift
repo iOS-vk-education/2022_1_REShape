@@ -13,6 +13,7 @@ final class WeightInteractor {
     
     init() {
         getDataFromLocalBase()
+        getDataFromRemoteBase()
     }
     
     private func getDataFromLocalBase() {
@@ -23,14 +24,35 @@ final class WeightInteractor {
         ]
     }
     
+    deinit {
+        defaults.set(viewModels, forKey: "WeightData")
+    }
+    
     private func getDataFromRemoteBase() {
-        
+        print("[DEBUG] Запрос на загрузку удаленной БД весов")
+//        /* Необходимо разблокировать после реализации загрузки из удаленной БД */
+//        let newWeight = [WeightDataModel]()
+//        newWeight.enumerated().forEach({
+//            if $1 != self.viewModels[$0] {
+//                self.viewModels.insert($1, at: $0)
+//            }
+//        })
+//        self.newWeightGetting()
     }
 }
 
 extension WeightInteractor: WeightInteractorInput {
+    func getWeightData(atBackPosition position: Int) -> WeightDataModel {
+        let pos = viewModels.count - position - 1
+        return (pos >= 0) ? viewModels[pos] : WeightDataModel()
+    }
+    
+    func uploadNewWeight(weightData: WeightDataModel) {
+        viewModels.append(weightData)
+        print("[DEBUG] Загрузка локальной БД (обновления БД) весов на сервер")
+    }
+    
     func getLastWeightData() -> WeightDataModel {
-        getDataFromRemoteBase()
-        return viewModels.last ?? WeightDataModel()
+        return getWeightData(atBackPosition: 0)
     }
 }

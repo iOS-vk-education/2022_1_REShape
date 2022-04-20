@@ -8,14 +8,17 @@
 import UIKit
 
 final class WeightCell: AbstractCell {
-    private let rightLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = UIColor.darkVioletColor
-        label.text = ""
-        label.textAlignment = .right
-        return label
+    weak var view: WeightViewInput?
+    
+    private let rightTextField: UITextField = {
+        let text = UITextField()
+        text.translatesAutoresizingMaskIntoConstraints = false
+        text.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        text.textColor = UIColor.darkVioletColor
+        text.text = ""
+        text.textAlignment = .right
+        text.keyboardType = .numbersAndPunctuation
+        return text
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -29,29 +32,63 @@ final class WeightCell: AbstractCell {
     }
     
     private func setupCell() {
-        self.addSubview(rightLabel)
+        self.addSubview(rightTextField)
+        rightTextField.delegate = self
     }
     
     private func setupConstraints() {
+        rightTextField.width(100)
         NSLayoutConstraint.activate([
-            rightLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
-            rightLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            rightTextField.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
+            rightTextField.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        rightLabel.text = ""
+        rightTextField.text = "0"
     }
 }
 
 extension WeightCell {
-    func setData(stringForCell cellText: String, stringForData dataText: String) {
+    func setData(stringForCell cellText: String, stringForData dataText: Int) {
         self.setCellText(cellText)
-        rightLabel.text = dataText
+        self.setData(stringForData: dataText)
     }
     
-    func setData(stringForData dataText: String) {
-        rightLabel.text = dataText
+    func setData(stringForData dataText: Int) {
+        rightTextField.text = "\(dataText)"
+    }
+    
+    func tapped() {
+        rightTextField.becomeFirstResponder()
+    }
+    
+    func unchosen() {
+        rightTextField.endEditing(false)
+    }
+}
+
+extension WeightCell: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        view?.startEditing()
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let weight = Int(rightTextField.text ?? "") else {
+            view?.cancelEditing()
+            return true
+        }
+        view?.endEditing(withWeight: weight)
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        guard let weight = Int(rightTextField.text ?? "") else {
+            view?.cancelEditing()
+            return
+        }
+        view?.endEditing(withWeight: weight)
     }
 }

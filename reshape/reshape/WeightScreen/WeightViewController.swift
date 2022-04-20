@@ -49,14 +49,15 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         setupUI()
         setupConstraints()
         setupGradientPanel()
+        addGestureRecognizer()
         
 	}
     private func setupUI() {
         view.backgroundColor = .white
         view.addSubview(upGradientPanel)
         view.addSubview(navBarView)
-        view.addSubview(addLabel)
         view.addSubview(addTable)
+        view.addSubview(addLabel)
         setupTableView()
     }
     
@@ -98,19 +99,51 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         addTable.separatorStyle = .singleLine
         addTable.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 1, right: 0)
         addTable.separatorColor = .white
+        addTable.register(DateTimeCell.self)
         addTable.register(WeightCell.self)
         addTable.delegate = self
         addTable.dataSource = self
         addTable.isScrollEnabled = false
-    }
-    
-    @objc
-    func swipeToBack(_ gesture: UIScreenEdgePanGestureRecognizer) {
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        addTable.contentInset.top = -32
     }
 }
 
 extension WeightViewController: WeightViewInput {
+    func reloadData() {
+        addTable.reloadSections(IndexSet(integer: 0), with: .none)
+    }
+    
+    func startEditing() {
+        // For date
+        guard let cellDate = addTable.cellForRow(at: IndexPath(row: 0, section: 0)) as? DateTimeCell else { return }
+        cellDate.setData(stringForData: WeightDataModel.convertToDateString(fromDate: Date()))
+        
+        // For time
+        guard let cellTime = addTable.cellForRow(at: IndexPath(row: 1, section: 0)) as? DateTimeCell else { return }
+        cellTime.setData(stringForData: WeightDataModel.convertToTimeString(fromDate: Date()))
+    }
+    
+    func endEditing(withWeight weight: Int) {
+        view.endEditing(true)
+        output.uploadNewWeight(newDate: WeightDataModel.convertToDateString(fromDate: Date()),
+                               newTime: WeightDataModel.convertToTimeString(fromDate: Date()),
+                               newWeight: weight)
+    }
+    
+    func cancelEditing() {
+        view.endEditing(true)
+        // For date
+        guard let cellDate = addTable.cellForRow(at: IndexPath(row: 0, section: 0)) as? DateTimeCell else { return }
+        cellDate.setData(stringForData: output.getLastDate())
+        
+        // For time
+        guard let cellTime = addTable.cellForRow(at: IndexPath(row: 1, section: 0)) as? DateTimeCell else { return }
+        cellTime.setData(stringForData: output.getLastTime())
+        
+        // For weight
+        guard let cellWeight = addTable.cellForRow(at: IndexPath(row: 2, section: 0)) as? WeightCell else { return }
+        cellWeight.setData(stringForData: output.getLastWeight())
+    }
 }
 
 extension WeightViewController: NavigationBarDelegate {
@@ -132,36 +165,34 @@ extension WeightViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let data = output.getLastWeightData()
-        let cell = tableView.dequeueCell(cellType: WeightCell.self, for: indexPath)
         switch indexPath.row {
         case 0:
-            cell.setData(stringForCell: "Дата", stringForData: data.getDateString())
+            let cell = tableView.dequeueCell(cellType: DateTimeCell.self, for: indexPath)
+            cell.setData(stringForCell: "Дата", stringForData: output.getLastDate())
+            cell.selectionStyle = .none
+            return cell
         case 1:
-            cell.setData(stringForCell: "Время", stringForData: data.getTimeString())
+            let cell = tableView.dequeueCell(cellType: DateTimeCell.self, for: indexPath)
+            cell.setData(stringForCell: "Время", stringForData: output.getLastTime())
+            cell.selectionStyle = .none
+            return cell
         case 2:
-            cell.setData(stringForCell: "Вес", stringForData: "\(data.getWeight())")
+            let cell = tableView.dequeueCell(cellType: WeightCell.self, for: indexPath)
+            cell.setData(stringForCell: "Вес", stringForData: output.getLastWeight())
+            cell.view = self
+            cell.selectionStyle = .none
+            return cell
         default:
             break
         }
-        return cell
+        return .init()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 2 {
-            // For day
-            guard let cellDate = addTable.cellForRow(at: IndexPath(row: 0, section: indexPath.section)) as? WeightCell else { return }
-            cellDate.setData(stringForData: WeightDataModel.convertToDateString(fromDate: Date()))
-            
-            // For time
-            guard let cellTime = addTable.cellForRow(at: IndexPath(row: 1, section: indexPath.section)) as? WeightCell else { return }
-            cellTime.setData(stringForData: WeightDataModel.convertToTimeString(fromDate: Date()))
-            
-            // For weight
-            guard let cellWeight = addTable.cellForRow(at: indexPath) as? WeightCell else { return }
-            cellWeight.isEditing = true
+            guard let cell = addTable.cellForRow(at: indexPath) as? WeightCell else { return }
+            cell.tapped()
         }
-        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -171,12 +202,18 @@ extension WeightViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 33
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
+}
+
+extension WeightViewController {
+    func addGestureRecognizer() {
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        singleTap.cancelsTouchesInView = false
+        singleTap.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(singleTap)
     }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0
+
+    @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
+        guard let cell = addTable.cellForRow(at: IndexPath(row: 2, section: 0)) as? WeightCell else { return }
+        cell.unchosen()
     }
 }
