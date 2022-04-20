@@ -44,6 +44,8 @@
 		36A9DB1827E2AC3500DB5082 /* reshapeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB1727E2AC3500DB5082 /* reshapeTests.swift */; };
 		36A9DB2227E2AC3500DB5082 /* reshapeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB2127E2AC3500DB5082 /* reshapeUITests.swift */; };
 		36A9DB2427E2AC3500DB5082 /* reshapeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB2327E2AC3500DB5082 /* reshapeUITestsLaunchTests.swift */; };
+		60ABD9F32810620800D03118 /* WaterCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60ABD9F12810620700D03118 /* WaterCollectionCell.xib */; };
+		60ABD9F42810620800D03118 /* WaterCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60ABD9F22810620800D03118 /* WaterCollectionCell.swift */; };
 		60E44D9828082AB000B3DDE6 /* ReuseIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E44D9728082AB000B3DDE6 /* ReuseIdentifier.swift */; };
 		60E44D9A28082ABC00B3DDE6 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E44D9928082ABC00B3DDE6 /* ColorExtension.swift */; };
 		941E811527E6149800A33344 /* LoginScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E810F27E6149800A33344 /* LoginScreenPresenter.swift */; };
@@ -98,6 +100,13 @@
 		9478496527FC0A3500138DA4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478496427FC0A3500138DA4 /* ImagePicker.swift */; };
 		94CAB9A02806BA0C00ACAB8C /* RegistrationContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB99F2806BA0C00ACAB8C /* RegistrationContentView.swift */; };
 		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
+		94FC78382809E46D003477FA /* AuthManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC78372809E46D003477FA /* AuthManger.swift */; };
+		94FC783A2809E586003477FA /* AuthErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC78392809E586003477FA /* AuthErrorCode.swift */; };
+		94FC783C280B0C43003477FA /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC783B280B0C43003477FA /* Alert.swift */; };
+		94FC7843280C3A7A003477FA /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC7842280C3A7A003477FA /* RegistrationManager.swift */; };
+		94FC7845280C468F003477FA /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC7844280C468F003477FA /* LoginManager.swift */; };
+		94FC7847280C4745003477FA /* ForgetPasswordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC7846280C4744003477FA /* ForgetPasswordManager.swift */; };
+		94FC784B280C9E15003477FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94FC784A280C9E15003477FA /* GoogleService-Info.plist */; };
 		F743548A280B337C002E03BB /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435488280B337C002E03BB /* ProfileCollectionCell.swift */; };
 		F743548B280B337C002E03BB /* ProfileCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7435489280B337C002E03BB /* ProfileCollectionCell.xib */; };
 		F7435493280B35A0002E03BB /* WaterScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F743548D280B35A0002E03BB /* WaterScreenPresenter.swift */; };
@@ -108,15 +117,6 @@
 		F7435498280B35A0002E03BB /* WaterScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435492280B35A0002E03BB /* WaterScreenContainer.swift */; };
 		F74354A1280B48CA002E03BB /* CustomProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A0280B48CA002E03BB /* CustomProfileView.swift */; };
 		F74354A3280B4913002E03BB /* CustomWaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A2280B4913002E03BB /* CustomWaterView.swift */; };
-		F74354A6280EDA61002E03BB /* WaterCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A4280EDA61002E03BB /* WaterCollectionCell.swift */; };
-		F74354A7280EDA61002E03BB /* WaterCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F74354A5280EDA61002E03BB /* WaterCollectionCell.xib */; };
-		94FC78382809E46D003477FA /* AuthManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC78372809E46D003477FA /* AuthManger.swift */; };
-		94FC783A2809E586003477FA /* AuthErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC78392809E586003477FA /* AuthErrorCode.swift */; };
-		94FC783C280B0C43003477FA /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC783B280B0C43003477FA /* Alert.swift */; };
-		94FC7843280C3A7A003477FA /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC7842280C3A7A003477FA /* RegistrationManager.swift */; };
-		94FC7845280C468F003477FA /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC7844280C468F003477FA /* LoginManager.swift */; };
-		94FC7847280C4745003477FA /* ForgetPasswordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC7846280C4744003477FA /* ForgetPasswordManager.swift */; };
-		94FC784B280C9E15003477FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94FC784A280C9E15003477FA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +178,8 @@
 		36A9DB1D27E2AC3500DB5082 /* reshapeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = reshapeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A9DB2127E2AC3500DB5082 /* reshapeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reshapeUITests.swift; sourceTree = "<group>"; };
 		36A9DB2327E2AC3500DB5082 /* reshapeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reshapeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		60ABD9F12810620700D03118 /* WaterCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaterCollectionCell.xib; sourceTree = "<group>"; };
+		60ABD9F22810620800D03118 /* WaterCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterCollectionCell.swift; sourceTree = "<group>"; };
 		60E44D9728082AB000B3DDE6 /* ReuseIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReuseIdentifier.swift; path = ../ReuseIdentifier.swift; sourceTree = "<group>"; };
 		60E44D9928082ABC00B3DDE6 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorExtension.swift; path = ../ColorExtension.swift; sourceTree = "<group>"; };
 		941E810F27E6149800A33344 /* LoginScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenPresenter.swift; sourceTree = "<group>"; };
@@ -232,6 +234,13 @@
 		9478496427FC0A3500138DA4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		94CAB99F2806BA0C00ACAB8C /* RegistrationContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationContentView.swift; sourceTree = "<group>"; };
 		94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		94FC78372809E46D003477FA /* AuthManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManger.swift; sourceTree = "<group>"; };
+		94FC78392809E586003477FA /* AuthErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthErrorCode.swift; sourceTree = "<group>"; };
+		94FC783B280B0C43003477FA /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		94FC7842280C3A7A003477FA /* RegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
+		94FC7844280C468F003477FA /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		94FC7846280C4744003477FA /* ForgetPasswordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordManager.swift; sourceTree = "<group>"; };
+		94FC784A280C9E15003477FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F7435488280B337C002E03BB /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionCell.swift; sourceTree = "<group>"; };
 		F7435489280B337C002E03BB /* ProfileCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileCollectionCell.xib; sourceTree = "<group>"; };
 		F743548D280B35A0002E03BB /* WaterScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenPresenter.swift; sourceTree = "<group>"; };
@@ -242,15 +251,6 @@
 		F7435492280B35A0002E03BB /* WaterScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenContainer.swift; sourceTree = "<group>"; };
 		F74354A0280B48CA002E03BB /* CustomProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProfileView.swift; sourceTree = "<group>"; };
 		F74354A2280B4913002E03BB /* CustomWaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaterView.swift; sourceTree = "<group>"; };
-		F74354A4280EDA61002E03BB /* WaterCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterCollectionCell.swift; sourceTree = "<group>"; };
-		F74354A5280EDA61002E03BB /* WaterCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaterCollectionCell.xib; sourceTree = "<group>"; };
-		94FC78372809E46D003477FA /* AuthManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManger.swift; sourceTree = "<group>"; };
-		94FC78392809E586003477FA /* AuthErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthErrorCode.swift; sourceTree = "<group>"; };
-		94FC783B280B0C43003477FA /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		94FC7842280C3A7A003477FA /* RegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
-		94FC7844280C468F003477FA /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
-		94FC7846280C4744003477FA /* ForgetPasswordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordManager.swift; sourceTree = "<group>"; };
-		94FC784A280C9E15003477FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -397,6 +397,7 @@
 				36A9DB1627E2AC3500DB5082 /* reshapeTests */,
 				36A9DB2027E2AC3500DB5082 /* reshapeUITests */,
 				36A9DAFE27E2AC3400DB5082 /* Products */,
+				FC90ACCCC59A2A3ABC6D3D2D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -414,7 +415,6 @@
 			isa = PBXGroup;
 			children = (
 				F743548C280B3580002E03BB /* WaterScreen */,
-				2EA1E8A6280604CE001B329A /* Entities */,
 				2EF20BFF2810285A0019CF64 /* Entities */,
 				2EB767C72809F02D008868DD /* WeightScreen */,
 				9478495027FB21ED00138DA4 /* RegistrationScreen */,
@@ -446,6 +446,15 @@
 				36A9DB2327E2AC3500DB5082 /* reshapeUITestsLaunchTests.swift */,
 			);
 			path = reshapeUITests;
+			sourceTree = "<group>";
+		};
+		60ABD9F52810623E00D03118 /* WaterCells */ = {
+			isa = PBXGroup;
+			children = (
+				60ABD9F22810620800D03118 /* WaterCollectionCell.swift */,
+				60ABD9F12810620700D03118 /* WaterCollectionCell.xib */,
+			);
+			path = WaterCells;
 			sourceTree = "<group>";
 		};
 		941E811B27E614A800A33344 /* LoginScreen */ = {
@@ -567,6 +576,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		94FC78362809E459003477FA /* NetworkManagers */ = {
+			isa = PBXGroup;
+			children = (
+				94FC78372809E46D003477FA /* AuthManger.swift */,
+			);
+			path = NetworkManagers;
+			sourceTree = "<group>";
+		};
 		F7435487280B3353002E03BB /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -579,7 +596,7 @@
 		F743548C280B3580002E03BB /* WaterScreen */ = {
 			isa = PBXGroup;
 			children = (
-				F7435499280B35A4002E03BB /* Cells */,
+				60ABD9F52810623E00D03118 /* WaterCells */,
 				F743548D280B35A0002E03BB /* WaterScreenPresenter.swift */,
 				F743548E280B35A0002E03BB /* WaterScreenRouter.swift */,
 				F743548F280B35A0002E03BB /* WaterScreenViewController.swift */,
@@ -590,20 +607,11 @@
 			path = WaterScreen;
 			sourceTree = "<group>";
 		};
-		F7435499280B35A4002E03BB /* Cells */ = {
+		FC90ACCCC59A2A3ABC6D3D2D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F74354A4280EDA61002E03BB /* WaterCollectionCell.swift */,
-				F74354A5280EDA61002E03BB /* WaterCollectionCell.xib */,
 			);
-			path = Cells;
-        };
-		94FC78362809E459003477FA /* NetworkManagers */ = {
-			isa = PBXGroup;
-			children = (
-				94FC78372809E46D003477FA /* AuthManger.swift */,
-			);
-			path = NetworkManagers;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -711,12 +719,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9437920427F9AFA10000188E /* ResultCollectionCell.xib in Resources */,
+				60ABD9F32810620800D03118 /* WaterCollectionCell.xib in Resources */,
 				2E1F1DBF27E4936700FA7B77 /* Main.storyboard in Resources */,
 				94FC784B280C9E15003477FA /* GoogleService-Info.plist in Resources */,
 				36A9DB0D27E2AC3500DB5082 /* LaunchScreen.storyboard in Resources */,
 				36A9DB0A27E2AC3500DB5082 /* Assets.xcassets in Resources */,
 				F743548B280B337C002E03BB /* ProfileCollectionCell.xib in Resources */,
-				F74354A7280EDA61002E03BB /* WaterCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -767,7 +775,6 @@
 				945B384627ECC32A0044E952 /* ResultsScreenRouter.swift in Sources */,
 				2EA1E8A528045BB6001B329A /* CellInfo.swift in Sources */,
 				2EA6509527F2ED07003F41FC /* DietCell.swift in Sources */,
-				F74354A6280EDA61002E03BB /* WaterCollectionCell.swift in Sources */,
 				945B385F27ECC3500044E952 /* ProfileScreenViewController.swift in Sources */,
 				F7435496280B35A0002E03BB /* WaterScreenProtocols.swift in Sources */,
 				94302BC427E66080009E397B /* ForgetPasswordScreenProtocols.swift in Sources */,
@@ -811,6 +818,7 @@
 				945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */,
 				F7435498280B35A0002E03BB /* WaterScreenContainer.swift in Sources */,
 				9478495E27FB2EC900138DA4 /* NavigationBarView.swift in Sources */,
+				60ABD9F42810620800D03118 /* WaterCollectionCell.swift in Sources */,
 				945B386227ECC3500044E952 /* ProfileScreenContainer.swift in Sources */,
 				94FC7847280C4745003477FA /* ForgetPasswordManager.swift in Sources */,
 				94CAB9A02806BA0C00ACAB8C /* RegistrationContentView.swift in Sources */,
