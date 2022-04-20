@@ -54,6 +54,7 @@ final class ResultsScreenViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         mainView.changeState()
     }
 }
