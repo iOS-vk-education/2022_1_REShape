@@ -32,7 +32,7 @@ class WeightDataModel {
 }
 
 // Опреаторы сравнения
-extension WeightDataModel {
+extension WeightDataModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(modelWeight)
     }
@@ -48,10 +48,6 @@ extension WeightDataModel {
             return false
         }
         return true
-    }
-    
-    static func !=(left: WeightDataModel, right: WeightDataModel) -> Bool {
-        return left == right ? false : true
     }
 }
 
