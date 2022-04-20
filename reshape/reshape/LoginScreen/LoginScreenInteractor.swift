@@ -23,7 +23,7 @@ extension LoginScreenInteractor: LoginScreenInteractorInput {
             self.output?.loginStatus(errorString: error)}
     }
     
-    func rememberUser(isRemembered: Bool, key: String){
+    func rememberUser(isRemembered: Bool, key: String) {
         defaults.set(isRemembered, forKey: key)
     }
     

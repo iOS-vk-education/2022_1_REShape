@@ -12,7 +12,6 @@ target 'reshape' do
 	pod 'Firebase/Database'
 	pod 'Firebase/Core'
 
-
   target 'reshapeTests' do
     inherit! :search_paths
     # Pods for testing
