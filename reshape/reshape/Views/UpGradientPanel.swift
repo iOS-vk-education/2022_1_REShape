@@ -26,8 +26,7 @@ class UpGradientPanel: UIView {
         setupUI()
     }
     
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
+    func changeState() {
         self.layoutIfNeeded()
         gradient.frame = self.bounds
     }
@@ -41,8 +40,6 @@ class UpGradientPanel: UIView {
     }
     
     func setupGradientColor(withColor color: [CGColor]) {
-        self.layoutIfNeeded()
-        gradient.frame = self.bounds
         gradient.colors = color
     }
 }

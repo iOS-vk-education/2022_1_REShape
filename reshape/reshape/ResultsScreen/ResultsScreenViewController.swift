@@ -52,6 +52,10 @@ final class ResultsScreenViewController: UIViewController {
         setupUI()
         setupCollectionView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        mainView.changeState()
+    }
 }
 
 extension ResultsScreenViewController: ResultsScreenViewInput {
@@ -79,12 +83,9 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
     }
     private func setupUI(){
         view.backgroundColor = .white
-//        mainView.layer.masksToBounds = false
-//        mainView.layer.shadowOffset = CGSize(width: 4, height: 4)
-//        mainView.layer.shadowRadius = 5
-//        mainView.layer.shadowOpacity = 0.5
         mainView.setupGradientColor(withColor: [UIColor.lightVioletColor!.cgColor,
                                                 UIColor.darkVioletColor!.cgColor])
+        mainView.setupGradientDirection(withDirection: .topToDown)
     }
     
     private func setupCollectionView(){

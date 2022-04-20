@@ -33,6 +33,10 @@ class WeightDataModel {
 
 // Опреаторы сравнения
 extension WeightDataModel {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(modelWeight)
+    }
+    
     static func ==(left: WeightDataModel, right: WeightDataModel) -> Bool {
         if left.modelTime != right.modelTime {
             return false

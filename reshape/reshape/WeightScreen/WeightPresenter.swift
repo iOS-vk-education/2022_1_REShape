@@ -25,6 +25,14 @@ extension WeightPresenter: WeightModuleInput {
 }
 
 extension WeightPresenter: WeightViewOutput {
+    func getCurrentDate() -> String {
+        return Date().dateString()
+    }
+    
+    func getCurrentTime() -> String {
+        return Date().timeString()
+    }
+    
     func getShortDate(atBackPosition position: Int) -> String {
         return interactor.getWeightData(atBackPosition: position).getShortDateString()
     }

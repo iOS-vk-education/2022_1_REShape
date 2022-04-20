@@ -33,6 +33,8 @@ protocol WeightViewOutput: AnyObject {
     func getLastWeight() -> Int
     func getLastDate() -> String
     func getLastTime() -> String
+    func getCurrentDate() -> String
+    func getCurrentTime() -> String
     
     // Геттеры для графика
     func getShortDate(atBackPosition position: Int) -> String
