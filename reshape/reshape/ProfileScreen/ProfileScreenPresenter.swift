@@ -25,6 +25,9 @@ extension ProfileScreenPresenter: ProfileScreenModuleInput {
 }
 
 extension ProfileScreenPresenter: ProfileScreenViewOutput {
+    func quitButtonPressed() {
+        router.quitButtonTapped()
+    }
 }
 
 extension ProfileScreenPresenter: ProfileScreenInteractorOutput {

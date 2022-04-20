@@ -22,7 +22,7 @@ extension ResultsScreenRouter: ResultsScreenRouterInput {
         let waterScreenContext = WaterScreenContext(moduleOutput: nil, window: window)
         let waterScreenContainer = WaterScreenContainer.assemble(with: waterScreenContext)
         waterScreenContainer.viewController.modalPresentationStyle = .overCurrentContext
-        self.viewController?.present(waterScreenContainer.viewController, animated: true)
+        self.viewController?.navigationController?.pushViewController(waterScreenContainer.viewController, animated: true)
     }
     
     func didCaloriesTapped() {

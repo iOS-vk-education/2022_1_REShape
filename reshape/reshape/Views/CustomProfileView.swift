@@ -8,8 +8,15 @@
 import Foundation
 import UIKit
 
+protocol CustomProfileDelegate: AnyObject {
+    func quitButtonAction()
+}
+
 final class CustomProfileView: UIView {
+    weak var delegate: CustomProfileDelegate?
+    
     private let progressBar: CircularProgressBarView = CircularProgressBarView(frame: CGRect(x: 0, y: 0, width: 143, height: 143))
+    
     private let backgroundImage: UIImageView = {
         let backgroundImage = UIImageView()
         backgroundImage.image = UIImage(named: "Gradient")
@@ -20,6 +27,13 @@ final class CustomProfileView: UIView {
         backgroundImage.layer.shadowOffset = CGSize(width: 4, height: 4)
         backgroundImage.layer.shadowColor = CGColor(red: 20, green: 4, blue: 65, alpha: 0.2)
         return backgroundImage
+    }()
+    
+    let quitButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "quitButton"),for: .normal)
+        return button
     }()
     
     private let nameLabel: UILabel = {
@@ -61,8 +75,7 @@ final class CustomProfileView: UIView {
         setupUI()
 
     }
-   
-    
+
     private func setupConstraints(){
         self.addSubview(backgroundImage)
         backgroundImage.top(isIncludeSafeArea: false)
@@ -90,11 +103,23 @@ final class CustomProfileView: UIView {
         phoneNumberLabel.leading()
         phoneNumberLabel.trailing()
         
+        self.addSubview(quitButton)
+        NSLayoutConstraint.activate([
+            quitButton.topAnchor.constraint(equalTo: backgroundImage.topAnchor, constant: 65)
+        ])
+        quitButton.trailing(-30)
     }
+    
     func setupUI(){
         progressBar.progressColor = UIColor.blueColor ?? .white
         progressBar.circleColor = UIColor.blueColor?.withAlphaComponent(0) ?? .systemGray
         progressBar.tag = 101
+        
+        quitButton.isUserInteractionEnabled = true
+        quitButton.addTarget(self, action: #selector(quitButtonTapped), for: .touchUpInside)
+    }
+    @objc func quitButtonTapped(){
+        delegate?.quitButtonAction()
     }
 }
     

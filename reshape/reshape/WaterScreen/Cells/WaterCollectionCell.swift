@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol WaterCollectionCellDelegate: AnyObject {
+    func endEditingTextField(_ textField: UITextField) -> Bool
+}
+
 class WaterCollectionCell: UICollectionViewCell {
+    
+    weak var delegate: WaterCollectionCellDelegate?
 
     @IBOutlet weak var volumeLabel: UILabel!
     @IBOutlet weak var waterLabel: UILabel!
@@ -28,6 +34,4 @@ class WaterCollectionCell: UICollectionViewCell {
         volumeLabel?.text = volume
         cupImage?.image = cup
     }
-    
-
 }

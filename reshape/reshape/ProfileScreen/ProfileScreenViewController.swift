@@ -49,13 +49,6 @@ final class ProfileScreenViewController: UIViewController {
         collection.dataSource = self
         return collection
     }()
-    
-    private let quitButton: EnterButton = {
-        let quitButton = EnterButton()
-        quitButton.translatesAutoresizingMaskIntoConstraints = false
-        quitButton.tag = 9
-        return quitButton
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +57,7 @@ final class ProfileScreenViewController: UIViewController {
         setupCollectionView()
         
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         addPhoto.layer.cornerRadius = addPhoto.frame.size.height / 2
@@ -106,25 +100,15 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
         NSLayoutConstraint.activate([
             addPhoto.centerXAnchor.constraint(equalTo: mainView.centerXAnchor)
         ])
-//        addPhoto.center = mainView.center
         addPhoto.centerX()
-//        addPhoto.top(104, isIncludeSafeArea: false)
         
         NSLayoutConstraint.activate([
             addPhoto.centerYAnchor.constraint(equalTo: mainView.centerYAnchor)
         ])
         addPhoto.height(130)
         addPhoto.width(130)
-        
-        view.addSubview(quitButton)
-//        NSLayoutConstraint.activate([
-//            quitButton.topAnchor.constraint(equalTo: profileCollectionView.bottomAnchor, constant: 21)])
-        quitButton.leading()
-        quitButton.trailing()
-        quitButton.height(55)
-        quitButton.bottom(isIncludeSafeArea: false)
-        
     }
+    
     func setupUI() {
         view.backgroundColor = .white
         
@@ -136,26 +120,16 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
         addPhoto.isUserInteractionEnabled = true
         addPhoto.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                              action: #selector(selectPhoto)))
-        quitButton.action = {
-            UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.quitButton.backgroundColor = UIColor.darkVioletColor
-            } completion: { [weak self] finished in
-                if finished {
-                    self?.quitButton.backgroundColor = UIColor.violetColor
-                }
-            }
-        }
-        quitButton.isUserInteractionEnabled = true
-
     }
+    
     @objc func selectPhoto(){
         imagePicker?.present(from: addPhoto)
     }
+    
     private func setupCollectionView(){
         profileCollectionView.register(cellType: ProfileCollectionCell.self)
     }
 }
-
 
 extension ProfileScreenViewController: ImagePickerDelegate{
     func didSelect(image: UIImage?) {
@@ -216,4 +190,17 @@ extension ProfileScreenViewController: UICollectionViewDataSource {
 
             return cell
         }
+}
+
+extension ProfileScreenViewController: CustomProfileDelegate {
+    func quitButtonAction() {
+        view.endEditing(true)
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.mainView.quitButton.alpha = 0.7
+        } completion: { [weak self] finished in
+            if finished {
+                self?.output.quitButtonPressed()
+            }
+        }
+    }
 }

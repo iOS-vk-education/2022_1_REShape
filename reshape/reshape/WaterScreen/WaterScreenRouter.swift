@@ -15,6 +15,8 @@ final class WaterScreenRouter {
 
 extension WaterScreenRouter: WaterScreenRouterInput {
     func waterBackButtonTapped() {
-        self.viewController?.navigationController?.popViewController(animated: true)
+        
+        self.viewController?.tabBarController?.selectedIndex = 0
+
     }
 }

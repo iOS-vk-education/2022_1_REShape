@@ -19,6 +19,7 @@ protocol ProfileScreenViewInput: AnyObject {
 }
 
 protocol ProfileScreenViewOutput: AnyObject {
+    func quitButtonPressed()
 }
 
 protocol ProfileScreenInteractorInput: AnyObject {
@@ -28,4 +29,5 @@ protocol ProfileScreenInteractorOutput: AnyObject {
 }
 
 protocol ProfileScreenRouterInput: AnyObject {
+    func quitButtonTapped()
 }

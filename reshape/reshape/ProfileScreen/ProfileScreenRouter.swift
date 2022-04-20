@@ -9,7 +9,16 @@
 import UIKit
 
 final class ProfileScreenRouter {
+    var viewController: UIViewController?
+    var window: UIWindow?
 }
 
 extension ProfileScreenRouter: ProfileScreenRouterInput {
+    func quitButtonTapped() {
+        guard let window = window else {
+            return
+        }
+        let coordinator = AuthCoordinator(window: window)
+        coordinator.start()
+    }
 }

@@ -13,7 +13,9 @@ protocol CustomWaterViewDelegate: AnyObject {
 }
 
 final class CustomWaterView: UIView {
+    
     weak var delegate: CustomWaterViewDelegate?
+    
     private let waterImage: UIImageView = {
         let waterImage = UIImageView()
         waterImage.image = UIImage(named: "WaterGradient")
@@ -44,31 +46,44 @@ final class CustomWaterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraints()
+        setupUI()
 
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.setupConstraints()
+        setupUI()
 
     }
-   
-    private func setupConstraints(){
-        self.addSubview(waterImage)
-        waterImage.top(60, isIncludeSafeArea: false)
-        waterImage.leading()
-        waterImage.trailing()
-        waterImage.bottom(isIncludeSafeArea: false)
+}
+    extension CustomWaterView {
+        func setupConstraints(){
+            self.addSubview(waterImage)
+            waterImage.top(60, isIncludeSafeArea: false)
+            waterImage.leading()
+            waterImage.trailing()
+            waterImage.bottom(isIncludeSafeArea: false)
+            
+            self.addSubview(waterBackButton)
+            NSLayoutConstraint.activate([waterBackButton.bottomAnchor.constraint(equalTo: waterImage.topAnchor, constant: 10)])
+            waterBackButton.leading(17)
+            
+            self.addSubview(percentLabel)
+            percentLabel.centerX()
+            NSLayoutConstraint.activate([percentLabel.topAnchor.constraint(equalTo: waterImage.topAnchor, constant: 117)])
+            percentLabel.height(30)
+            percentLabel.width(100)
+        }
         
-        self.addSubview(waterBackButton)
-        NSLayoutConstraint.activate([waterBackButton.bottomAnchor.constraint(equalTo: waterImage.topAnchor, constant: 10)])
-        waterBackButton.leading(17)
-        
-        self.addSubview(percentLabel)
-        percentLabel.centerX()
-        NSLayoutConstraint.activate([percentLabel.topAnchor.constraint(equalTo: waterImage.topAnchor, constant: 117)])
-        percentLabel.height(30)
-        percentLabel.width(100)
-    }
+        func setupUI(){
+            waterBackButton.isUserInteractionEnabled = true
+            waterBackButton.addTarget(self, action:#selector(waterBackButtonTapped), for: .touchUpInside)
+        }
+        @objc
+        func waterBackButtonTapped(){
+            delegate?.waterBackButtonAct()
+        }
+    
 }
     

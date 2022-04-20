@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 final class WaterScreenViewController: UIViewController {
     private let output: WaterScreenViewOutput
     private let mainView: CustomWaterView = CustomWaterView()
@@ -25,7 +27,7 @@ final class WaterScreenViewController: UIViewController {
     private let informHeaderLabel: UILabel = {
         let informHeaderLabel = UILabel()
         informHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
-        informHeaderLabel.text = "Выпито:"
+        informHeaderLabel.text = "Выпито сегодня:"
         informHeaderLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
         informHeaderLabel.textColor = .black
         informHeaderLabel.textAlignment = .left
@@ -50,20 +52,22 @@ final class WaterScreenViewController: UIViewController {
     }
 }
 
-
 extension WaterScreenViewController: ProfileScreenViewInput {
     private func setupConstraints(){
+        
         view.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
         mainView.top(isIncludeSafeArea: false)
         mainView.leading()
         mainView.trailing()
         mainView.height(view.bounds.height / 2.5)
+        
         view.addSubview(informHeaderLabel)
         NSLayoutConstraint.activate([
             informHeaderLabel.topAnchor.constraint(equalTo: mainView.bottomAnchor, constant: 21)
         ])
         informHeaderLabel.leading(33)
+        
         view.addSubview(waterCollectionView)
         NSLayoutConstraint.activate([
             waterCollectionView.topAnchor.constraint(equalTo: informHeaderLabel.bottomAnchor, constant: 21)
@@ -72,8 +76,8 @@ extension WaterScreenViewController: ProfileScreenViewInput {
         waterCollectionView.leading()
         waterCollectionView.trailing()
         waterCollectionView.height(view.bounds.height / 2.5)
-
     }
+    
     func setupUI() {
         view.backgroundColor = .white
         mainView.layer.masksToBounds = false
@@ -81,13 +85,13 @@ extension WaterScreenViewController: ProfileScreenViewInput {
         mainView.layer.shadowRadius = 5
         mainView.layer.shadowOpacity = 0.5
         mainView.delegate = self
-        
-
     }
+    
     private func setupCollectionView(){
         waterCollectionView.register(cellType: WaterCollectionCell.self)
     }
 }
+
 extension WaterScreenViewController: CustomWaterViewDelegate {
         func waterBackButtonAct() {
             view.endEditing(true)
@@ -96,7 +100,6 @@ extension WaterScreenViewController: CustomWaterViewDelegate {
             } completion: { [weak self] finished in
                 if finished {
                     self?.output.waterBackButtonPressed()
-                    
                 }
             }
         }
@@ -169,6 +172,3 @@ extension WaterScreenViewController: UICollectionViewDataSource {
             return cell
         }
 }
-
-
-
