@@ -25,6 +25,10 @@ extension ForgetPasswordScreenPresenter: ForgetPasswordScreenModuleInput {
 }
 
 extension ForgetPasswordScreenPresenter: ForgetPasswordScreenViewOutput {
+    func didRestorePassword(email: String) {
+        interactor.restorePassword(email: email)
+    }
+    
     func closeForgetPasswordScreen() {
         router.closeButton()
     }
@@ -32,4 +36,8 @@ extension ForgetPasswordScreenPresenter: ForgetPasswordScreenViewOutput {
 }
 
 extension ForgetPasswordScreenPresenter: ForgetPasswordScreenInteractorOutput {
+    func restorePasswordStatus(errorString: String?) {
+        view?.didRestorePasswordStatusSet(errorString: errorString)
+    }
+    
 }

@@ -8,19 +8,8 @@
 import Foundation
 import UIKit
 
-final class CustomView: UIView {
+final class CustomView: UpGradientPanel {
     var progressView: CircularProgressBarView = CircularProgressBarView()
-    private let backgroundImage: UIImageView = {
-        let backgroundImage = UIImageView()
-        backgroundImage.image = UIImage(named: "Gradient")
-        backgroundImage.layer.cornerRadius = 40
-        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        backgroundImage.layer.masksToBounds = true
-        backgroundImage.layer.shadowOffset = CGSize(width: 4, height: 4)
-        backgroundImage.layer.shadowColor = CGColor(red: 20, green: 4, blue: 65, alpha: 0.2)
-        return backgroundImage
-    }()
     private let progressNumberLabel: UILabel = {
         let progressNumberLabel = UILabel()
         progressNumberLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -106,11 +95,6 @@ final class CustomView: UIView {
         self.setupConstraints()
     }
     private func setupConstraints(){
-        self.addSubview(backgroundImage)
-        backgroundImage.top(isIncludeSafeArea: false)
-        backgroundImage.leading()
-        backgroundImage.trailing()
-        backgroundImage.bottom(isIncludeSafeArea: false)
         self.addSubview(progressStackView)
         progressStackView.top(127, isIncludeSafeArea: false)
         progressStackView.trailing(-39)

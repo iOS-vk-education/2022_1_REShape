@@ -14,19 +14,24 @@ final class ResultsScreenRouter {
 }
 
 extension ResultsScreenRouter: ResultsScreenRouterInput {
-   
+    
     func didWaterTapped() {
         guard let window = window else {
             return
-    }
+        }
         let waterScreenContext = WaterScreenContext(moduleOutput: nil, window: window)
         let waterScreenContainer = WaterScreenContainer.assemble(with: waterScreenContext)
         waterScreenContainer.viewController.modalPresentationStyle = .overCurrentContext
         self.viewController?.navigationController?.pushViewController(waterScreenContainer.viewController, animated: true)
     }
+    func didWeightTapped() {
+        let WeightContext = WeightContext(moduleOutput: nil)
+        let WeightContainer = WeightContainer.assemble(with: WeightContext)
+        self.viewController?.navigationController?.pushViewController(WeightContainer.viewController, animated: true)
+    }
     
     func didCaloriesTapped() {
         self.viewController?.tabBarController?.selectedIndex = 1
     }
-   
+    
 }

@@ -114,7 +114,7 @@ final class EnterViewController: UIViewController {
         
         enterButton.action = {
             UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.enterButton.backgroundColor = UIColor.darkVioletColor
+                self?.enterButton.backgroundColor = UIColor.transparentVioletColor
             } completion: { [weak self] finished in
                 if finished {
                     self?.output.showLoginScreen()
@@ -129,7 +129,7 @@ final class EnterViewController: UIViewController {
     @objc
     private func signUpTap() {
         UIView.animate(withDuration: 0.4) { [weak self] in
-            self?.signUpButton.textColor = UIColor.darkVioletColor
+            self?.signUpButton.textColor = UIColor.transparentVioletColor
         } completion: { [weak self] finished in
             if finished {
                 self?.output.registerUser()

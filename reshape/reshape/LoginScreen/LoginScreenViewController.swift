@@ -106,6 +106,10 @@ final class LoginScreenViewController: UIViewController {
         animateShowDimmedView()
         animatePresentContainer()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsetupObserversForKeyboard()
+    }
     
     init(output: LoginScreenViewOutput) {
         self.output = output
@@ -142,6 +146,16 @@ final class LoginScreenViewController: UIViewController {
 }
 
 extension LoginScreenViewController: LoginScreenViewInput {
+    
+    func didLoginStatusSet(errorString: String?){
+        DispatchQueue.main.async {
+            if let error = errorString {
+                self.makeAlert("Ошибка", error)
+            } else {
+                self.output.loginDidTapped()
+            }
+        }
+    }
 }
 
 
@@ -244,8 +258,21 @@ extension LoginScreenViewController {
                 self?.loginButton.backgroundColor = UIColor.darkVioletColor
             } completion: { [weak self] finished in
                 if finished {
-                    self?.output.loginDidTapped()
-                    self?.loginButton.backgroundColor = UIColor.violetColor
+                    guard let `self` = self else { return }
+                    if finished {
+                        let isEmpty = self.isFieldEmpty()
+                        if isEmpty.count > 0 {
+                            // появления алерта, если есть незаполненные поля
+                            self.makeAlert("Заполните форму", "Пожалуйста, проверьте пустые поля: \(isEmpty.joined(separator: ", "))")
+                        } else {
+                            if let email = self.emailStackView.textField.text,
+                               let password = self.passwordStackView.textField.text{
+                                self.output.didCheckLogin(email: email, password: password)
+                            }
+                        }
+                        
+                        self.loginButton.backgroundColor = UIColor.violetColor
+                    }
                 }
             }
         }
@@ -264,6 +291,7 @@ extension LoginScreenViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCloseAction))
         dimmedView.addGestureRecognizer(tapGesture)
     }
+    
     @objc
     func rememberPasswordButtonPressed() {
         print("remember password")
@@ -344,6 +372,15 @@ extension LoginScreenViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    private func unsetupObserversForKeyboard(){
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: self.view.window)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: self.view.window)
+    }
     //поднятие вью при появлении клавы
     @objc
     func keyboardWillShow(notification: NSNotification) {
@@ -364,6 +401,20 @@ extension LoginScreenViewController {
             self?.containerViewBottomConstraint?.constant = 0
             self?.view.layoutIfNeeded()
         }
+    }
+    private func isFieldEmpty()->[String]{
+        var emptyFields: [String] = [String]()
+        if let email = emailStackView.textField.text,
+           email.isEmpty,
+           let label = emailStackView.label.text {
+            emptyFields.append(label)
+        }
+        if let password = passwordStackView.textField.text,
+           password.isEmpty,
+           let label = passwordStackView.label.text{
+            emptyFields.append(label)
+        }
+        return emptyFields
     }
 }
 

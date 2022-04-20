@@ -7,23 +7,16 @@
 
 import UIKit
 
-final class MealCell: UITableViewCell {
+final class MealCell: AbstractCell {
     private var checkCircleImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "notRememberButton")
         return imageView
     }()
     
-    private var mealNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.blackVioletColor
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        return label
-    }()
-    
     private var caloriesLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.blackVioletColor
+        label.textColor = UIColor.darkVioletColor
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
@@ -39,16 +32,13 @@ final class MealCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        mealNameLabel.text = ""
         caloriesLabel.text = ""
         checkCircleImage.image = UIImage(named: "notRememberButton")
     }
     
     func setupCell() {
         self.addSubview(checkCircleImage)
-        self.addSubview(mealNameLabel)
         self.addSubview(caloriesLabel)
-        backgroundColor = UIColor.modalViewGrayColor
         setupConstarints()
     }
     
@@ -59,11 +49,7 @@ final class MealCell: UITableViewCell {
         checkCircleImage.height(12)
         checkCircleImage.width(12)
         
-        mealNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        mealNameLabel.leftAnchor.constraint(equalTo: checkCircleImage.rightAnchor, constant: 6).isActive = true
-        mealNameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        mealNameLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
-        mealNameLabel.height(17)
+        self.changeLeftTextConstraint(toAnchor: checkCircleImage.rightAnchor, constant: 6)
         
         caloriesLabel.translatesAutoresizingMaskIntoConstraints = false
         caloriesLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12).isActive = true
@@ -73,7 +59,7 @@ final class MealCell: UITableViewCell {
     }
     
     func setMealInformation(_ name: String, calories: Double, state: Bool) {
-        mealNameLabel.text = name
+        setCellText(name)
         caloriesLabel.text = "\(Int(calories)) ккал"
         setState(at: state)
     }
