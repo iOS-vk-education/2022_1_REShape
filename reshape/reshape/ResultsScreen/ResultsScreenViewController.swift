@@ -83,8 +83,8 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
 //        mainView.layer.shadowOffset = CGSize(width: 4, height: 4)
 //        mainView.layer.shadowRadius = 5
 //        mainView.layer.shadowOpacity = 0.5
-        mainView.setupGradient(withColor: [UIColor.lightVioletColor!.cgColor,
-                                           UIColor.darkVioletColor!.cgColor])
+        mainView.setupGradientColor(withColor: [UIColor.lightVioletColor!.cgColor,
+                                                UIColor.darkVioletColor!.cgColor])
     }
     
     private func setupCollectionView(){

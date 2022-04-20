@@ -38,6 +38,8 @@
 		2EF20BF8280DF0E70019CF64 /* WeightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BF7280DF0E70019CF64 /* WeightCell.swift */; };
 		2EF20BFC280DF19D0019CF64 /* UpGradientPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BFB280DF19C0019CF64 /* UpGradientPanel.swift */; };
 		2EF20BFE280F4F600019CF64 /* DateTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BFD280F4F600019CF64 /* DateTimeCell.swift */; };
+		2EF20C01281028750019CF64 /* GradientType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20C00281028750019CF64 /* GradientType.swift */; };
+		2EF20C03281039E50019CF64 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20C02281039E50019CF64 /* DateExtension.swift */; };
 		36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */; };
 		36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */; };
 		36A9DB0A27E2AC3500DB5082 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36A9DB0927E2AC3500DB5082 /* Assets.xcassets */; };
@@ -149,6 +151,8 @@
 		2EF20BF7280DF0E70019CF64 /* WeightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightCell.swift; sourceTree = "<group>"; };
 		2EF20BFB280DF19C0019CF64 /* UpGradientPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpGradientPanel.swift; sourceTree = "<group>"; };
 		2EF20BFD280F4F600019CF64 /* DateTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeCell.swift; sourceTree = "<group>"; };
+		2EF20C00281028750019CF64 /* GradientType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientType.swift; sourceTree = "<group>"; };
+		2EF20C02281039E50019CF64 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		36A9DAFD27E2AC3400DB5082 /* reshape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reshape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -354,6 +358,14 @@
 			path = WeightModel;
 			sourceTree = "<group>";
 		};
+		2EF20BFF2810285A0019CF64 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				2EF20C00281028750019CF64 /* GradientType.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
 		34434F93A668CEEA91C14553 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -389,6 +401,7 @@
 		36A9DAFF27E2AC3400DB5082 /* reshape */ = {
 			isa = PBXGroup;
 			children = (
+				2EF20BFF2810285A0019CF64 /* Entities */,
 				2EB767C72809F02D008868DD /* WeightScreen */,
 				9478495027FB21ED00138DA4 /* RegistrationScreen */,
 				945B383E27ECC3120044E952 /* ProfileScreen */,
@@ -542,6 +555,7 @@
 				60E44D9928082ABC00B3DDE6 /* ColorExtension.swift */,
 				94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */,
 				9478496427FC0A3500138DA4 /* ImagePicker.swift */,
+				2EF20C02281039E50019CF64 /* DateExtension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -788,6 +802,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EF20BF8280DF0E70019CF64 /* WeightCell.swift in Sources */,
+				2EF20C03281039E50019CF64 /* DateExtension.swift in Sources */,
 				945B385527ECC33A0044E952 /* DietScreenInteractor.swift in Sources */,
 				941E811627E6149800A33344 /* LoginScreenRouter.swift in Sources */,
 				2EB767C2280605E7008868DD /* DisclosureState.swift in Sources */,
@@ -860,6 +875,7 @@
 				2EB767C42806060D008868DD /* MealsType.swift in Sources */,
 				945B384727ECC32A0044E952 /* ResultsScreenViewController.swift in Sources */,
 				941E811D27E614F300A33344 /* AuthStackView.swift in Sources */,
+				2EF20C01281028750019CF64 /* GradientType.swift in Sources */,
 				2EB767D02809F08F008868DD /* WeightViewController.swift in Sources */,
 				941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */,
 				2EA1E89F27FCDB47001B329A /* MealCell.swift in Sources */,

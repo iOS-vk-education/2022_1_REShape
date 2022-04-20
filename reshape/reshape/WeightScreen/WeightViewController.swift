@@ -60,6 +60,7 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         view.addSubview(addLabel)
         setupTableView()
     }
+
     
     private func setupNavigation() {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -69,8 +70,8 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
     }
     
     private func setupGradientPanel() {
-        upGradientPanel.setupGradient(withColor: [UIColor.greenColor!.cgColor,
-                                                  UIColor.darkGreenColor!.cgColor])
+        upGradientPanel.setupGradientColor(withColor: [UIColor.greenColor!.cgColor,
+                                                       UIColor.darkGreenColor!.cgColor])
     }
 
     private func setupConstraints() {
@@ -116,17 +117,17 @@ extension WeightViewController: WeightViewInput {
     func startEditing() {
         // For date
         guard let cellDate = addTable.cellForRow(at: IndexPath(row: 0, section: 0)) as? DateTimeCell else { return }
-        cellDate.setData(stringForData: WeightDataModel.convertToDateString(fromDate: Date()))
+        cellDate.setData(stringForData: Date().dateString())
         
         // For time
         guard let cellTime = addTable.cellForRow(at: IndexPath(row: 1, section: 0)) as? DateTimeCell else { return }
-        cellTime.setData(stringForData: WeightDataModel.convertToTimeString(fromDate: Date()))
+        cellTime.setData(stringForData: Date().timeString())
     }
     
     func endEditing(withWeight weight: Int) {
         view.endEditing(true)
-        output.uploadNewWeight(newDate: WeightDataModel.convertToDateString(fromDate: Date()),
-                               newTime: WeightDataModel.convertToTimeString(fromDate: Date()),
+        output.uploadNewWeight(newDate: Date().dateString(),
+                               newTime: Date().timeString(),
                                newWeight: weight)
     }
     

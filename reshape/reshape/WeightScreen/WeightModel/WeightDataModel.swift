@@ -25,13 +25,13 @@ class WeightDataModel {
     }
     
     init(date: Date, weight: Int) {
-        self.modelDate = WeightDataModel.convertToDateString(fromDate: date)
-        self.modelTime = WeightDataModel.convertToTimeString(fromDate: date)
+        self.modelDate = date.dateString()
+        self.modelTime = date.timeString()
         self.modelWeight = weight
     }
 }
 
-// Статические функции
+// Опреаторы сравнения
 extension WeightDataModel {
     static func ==(left: WeightDataModel, right: WeightDataModel) -> Bool {
         if left.modelTime != right.modelTime {
@@ -49,36 +49,12 @@ extension WeightDataModel {
     static func !=(left: WeightDataModel, right: WeightDataModel) -> Bool {
         return left == right ? false : true
     }
-    
-    static func convertToDateString(fromDate date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru")
-        dateFormatter.dateFormat = "d MMMM yyyy'г'"
-        
-        return dateFormatter.string(from: date)
-    }
-    
-    static func convertToTimeString(fromDate date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru")
-        dateFormatter.dateFormat = "HH:mm"
-        
-        return dateFormatter.string(from: date)
-    }
-    
-    static func convertToDate(fromDate dateString: String, fromTime timeString: String) -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru")
-        dateFormatter.dateFormat = "d MMMM yyyy'г' HH:mm"
-        
-        return dateFormatter.date(from: "\(dateString) \(timeString)") ?? Date()
-    }
 }
 
 // Геттеры
 extension WeightDataModel {
     func getDate() -> Date {
-        return WeightDataModel.convertToDate(fromDate: self.modelDate, fromTime: self.modelTime)
+        return Date(fromDate: self.modelDate, fromTime: self.modelTime)
     }
     
     func getDateString() -> String {

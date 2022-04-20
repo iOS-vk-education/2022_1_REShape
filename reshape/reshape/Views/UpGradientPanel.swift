@@ -26,6 +26,12 @@ class UpGradientPanel: UIView {
         setupUI()
     }
     
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        self.layoutIfNeeded()
+        gradient.frame = self.bounds
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -34,7 +40,7 @@ class UpGradientPanel: UIView {
         self.layer.addSublayer(gradient)
     }
     
-    func setupGradient(withColor color: [CGColor]) {
+    func setupGradientColor(withColor color: [CGColor]) {
         self.layoutIfNeeded()
         gradient.frame = self.bounds
         gradient.colors = color
@@ -42,43 +48,8 @@ class UpGradientPanel: UIView {
 }
    
 extension UpGradientPanel {
-    func mainDiagonalGradient(reverse: Bool = false) {
-        if reverse {
-            gradient.startPoint = CGPoint(x: 1, y: 1)
-            gradient.endPoint = CGPoint(x: 0, y: 0)
-        } else {
-            gradient.startPoint = CGPoint(x: 0, y: 0)
-            gradient.endPoint = CGPoint(x: 1, y: 1)
-        }
-    }
-    
-    func additDiagonalGradient(reverse: Bool = false) {
-        if reverse {
-            gradient.startPoint = CGPoint(x: 0, y: 1)
-            gradient.endPoint = CGPoint(x: 1, y: 0)
-        } else {
-            gradient.startPoint = CGPoint(x: 1, y: 0)
-            gradient.endPoint = CGPoint(x: 0, y: 1)
-        }
-    }
-    
-    func verticalGradient(reverse: Bool = false) {
-        if reverse {
-            gradient.startPoint = CGPoint(x: 0.5, y: 1)
-            gradient.endPoint = CGPoint(x: 0.5, y: 0)
-        } else {
-            gradient.startPoint = CGPoint(x: 0.5, y: 0)
-            gradient.endPoint = CGPoint(x: 0.5, y: 1)
-        }
-    }
-    
-    func horizontalGradient(reverse: Bool = false) {
-        if reverse {
-            gradient.startPoint = CGPoint(x: 1, y: 0.5)
-            gradient.endPoint = CGPoint(x: 0, y: 0.5)
-        } else {
-            gradient.startPoint = CGPoint(x: 0, y: 0.5)
-            gradient.endPoint = CGPoint(x: 1, y: 0.5)
-        }
+    func setupGradientDirection(withDirection direction: GradientType = .mainDiagonal) {
+        gradient.startPoint = direction.start
+        gradient.endPoint = direction.end
     }
 }

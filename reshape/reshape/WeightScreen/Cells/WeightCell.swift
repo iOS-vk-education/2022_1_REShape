@@ -17,7 +17,7 @@ final class WeightCell: AbstractCell {
         text.textColor = UIColor.darkVioletColor
         text.text = ""
         text.textAlignment = .right
-        text.keyboardType = .numbersAndPunctuation
+        text.keyboardType = .decimalPad
         return text
     }()
     
@@ -75,17 +75,17 @@ extension WeightCell: UITextFieldDelegate {
         return true
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let weight = Int(rightTextField.text ?? "") else {
-            view?.cancelEditing()
-            return true
-        }
-        view?.endEditing(withWeight: weight)
-        return true
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        guard let weight = Int(rightTextField.text ?? "") else {
+//            view?.cancelEditing()
+//            return true
+//        }
+//        view?.endEditing(withWeight: weight)
+//        return true
+//    }
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        guard let weight = Int(rightTextField.text ?? "") else {
+        guard let weight = Int(rightTextField.text!) else {
             view?.cancelEditing()
             return
         }
