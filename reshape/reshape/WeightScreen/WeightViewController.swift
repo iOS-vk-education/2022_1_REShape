@@ -51,10 +51,14 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         setupGradientPanel()
         addGestureRecognizer()
 	}
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        upGradientPanel.reloadGradient()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        upGradientPanel.changeState()
+        upGradientPanel.reloadGradient()
     }
     
     private func setupUI() {
@@ -129,7 +133,7 @@ extension WeightViewController: WeightViewInput {
         cellTime.setData(stringForData: output.getCurrentTime())
     }
     
-    func endEditing(withWeight weight: Int) {
+    func endEditing(withWeight weight: String) {
         view.endEditing(true)
         output.uploadNewWeight(newDate: output.getCurrentDate(),
                                newTime: output.getCurrentTime(),

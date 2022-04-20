@@ -53,9 +53,14 @@ final class ResultsScreenViewController: UIViewController {
         setupCollectionView()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        mainView.reloadGradient()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        mainView.changeState()
+        mainView.reloadGradient()
     }
 }
 

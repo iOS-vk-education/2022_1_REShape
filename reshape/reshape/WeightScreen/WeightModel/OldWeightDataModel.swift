@@ -1,5 +1,5 @@
 //
-//  WeightDataModel.swift
+//  OldWeightDataModel.swift
 //  reshape
 //
 //  Created by Иван Фомин on 17.04.2022.
@@ -7,24 +7,24 @@
 
 import Foundation
 
-class WeightDataModel {
+class OldWeightDataModel {
     private var modelDate: String
     private var modelTime: String
-    private var modelWeight: Int
+    private var modelWeight: String
     
     init() {
         self.modelDate = ""
         self.modelTime = ""
-        self.modelWeight = 0
+        self.modelWeight = ""
     }
     
-    init(date: String, time: String, weight: Int) {
+    init(date: String, time: String, weight: String) {
         self.modelDate = date
         self.modelTime = time
         self.modelWeight = weight
     }
     
-    init(date: Date, weight: Int) {
+    init(date: Date, weight: String) {
         self.modelDate = date.dateString()
         self.modelTime = date.timeString()
         self.modelWeight = weight
@@ -32,12 +32,14 @@ class WeightDataModel {
 }
 
 // Опреаторы сравнения
-extension WeightDataModel: Hashable {
+extension OldWeightDataModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(modelWeight)
+        hasher.combine(modelTime)
+        hasher.combine(modelDate)
     }
-    
-    static func ==(left: WeightDataModel, right: WeightDataModel) -> Bool {
+
+    static func ==(left: OldWeightDataModel, right: OldWeightDataModel) -> Bool {
         if left.modelTime != right.modelTime {
             return false
         }
@@ -52,13 +54,9 @@ extension WeightDataModel: Hashable {
 }
 
 // Геттеры
-extension WeightDataModel {
+extension OldWeightDataModel {
     func getDate() -> Date {
         return Date(fromDate: self.modelDate, fromTime: self.modelTime)
-    }
-    
-    func getDateString() -> String {
-        return modelDate
     }
     
     func getShortDateString() -> String {
@@ -77,7 +75,11 @@ extension WeightDataModel {
         return modelTime
     }
     
-    func getWeight() -> Int {
+    func getDateString() -> String {
+        return modelDate
+    }
+    
+    func getWeight() -> String {
         return modelWeight
     }
 }

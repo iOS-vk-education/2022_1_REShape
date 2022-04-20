@@ -26,11 +26,6 @@ class UpGradientPanel: UIView {
         setupUI()
     }
     
-    func changeState() {
-        self.layoutIfNeeded()
-        gradient.frame = self.bounds
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -41,6 +36,11 @@ class UpGradientPanel: UIView {
     
     func setupGradientColor(withColor color: [CGColor]) {
         gradient.colors = color
+    }
+    
+    func reloadGradient() {
+        self.layoutIfNeeded()
+        gradient.frame = self.bounds
     }
 }
    

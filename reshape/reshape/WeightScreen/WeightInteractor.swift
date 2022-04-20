@@ -6,53 +6,67 @@
 //
 
 import Foundation
+import CoreData
 
 final class WeightInteractor {
     weak var output: WeightInteractorOutput?
-    private var viewModels = [WeightDataModel]()
+    private var localViewModels = [OldWeightDataModel]()
+    private var remoteViewModels = [OldWeightDataModel]()
     
     init() {
         getDataFromLocalBase()
         getDataFromRemoteBase()
-    }
-    
-    private func getDataFromLocalBase() {
-        viewModels = defaults.array(forKey: "WeightData") as? [WeightDataModel] ?? [
-            WeightDataModel(date: "15 апреля 2022г", time: "12:45", weight: 45),
-            WeightDataModel(date: "16 апреля 2022г", time: "16:45", weight: 47),
-            WeightDataModel(date: "17 апреля 2022г", time: "13:28", weight: 47),
-        ]
+        
     }
     
     deinit {
-        defaults.set(viewModels, forKey: "WeightData")
+        saveLocalBase()
+    }
+    
+    private func getDataFromLocalBase() {
+        localViewModels = [
+            OldWeightDataModel(date: "15 апреля 2022г", time: "12:45", weight: "45"),
+            OldWeightDataModel(date: "16 апреля 2022г", time: "16:45", weight: "47"),
+            OldWeightDataModel(date: "17 апреля 2022г", time: "13:28", weight: "47"),
+        ]
     }
     
     private func getDataFromRemoteBase() {
         print("[DEBUG] Запрос на загрузку удаленной БД весов")
+        remoteViewModels = [OldWeightDataModel()]
 //        /* Необходимо разблокировать после реализации загрузки из удаленной БД */
-//        let newWeight = [WeightDataModel]()
-//        newWeight.enumerated().forEach({
-//            if $1 != self.viewModels[$0] {
-//                self.viewModels.insert($1, at: $0)
-//            }
-//        })
+//        updateLocalBase()
 //        self.newWeightGetting()
+    }
+    
+    private func updateLocalBase() {
+        remoteViewModels.enumerated().forEach({
+            if $1 != self.localViewModels[$0] {
+                self.localViewModels.replaceSubrange($0...$0, with: [$1])
+            }
+        })
+    }
+    
+    private func saveLocalBase() {
+        
     }
 }
 
 extension WeightInteractor: WeightInteractorInput {
-    func getWeightData(atBackPosition position: Int) -> WeightDataModel {
-        let pos = viewModels.count - position - 1
-        return (pos >= 0) ? viewModels[pos] : WeightDataModel()
+    func getWeightData(atBackPosition position: Int) -> OldWeightDataModel {
+        let pos = localViewModels.count - position - 1
+        return (pos >= 0) ? localViewModels[pos] : OldWeightDataModel()
     }
     
-    func uploadNewWeight(weightData: WeightDataModel) {
-        viewModels.append(weightData)
+    func uploadNewWeight(weightData: OldWeightDataModel) {
         print("[DEBUG] Загрузка локальной БД (обновления БД) весов на сервер")
+        // Если удачно загрузилось
+        localViewModels.append(weightData)
+        // Если неудачно
+//        output?.undoUploadNewWeight()
     }
     
-    func getLastWeightData() -> WeightDataModel {
+    func getLastWeightData() -> OldWeightDataModel {
         return getWeightData(atBackPosition: 0)
     }
 }
