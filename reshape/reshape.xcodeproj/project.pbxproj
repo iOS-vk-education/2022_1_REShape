@@ -17,6 +17,11 @@
 		2EA1E8A528045BB6001B329A /* CellInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E8A428045BB6001B329A /* CellInfo.swift */; };
 		2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6508B27E9BB94003F41FC /* AuthCoordinator.swift */; };
 		2EA6509527F2ED07003F41FC /* DietCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6509427F2ED06003F41FC /* DietCell.swift */; };
+		2EAA1B5F2812ADFD00CA4847 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */; };
+		2EAA1B662812FE8F00CA4847 /* WeightModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B642812FE8F00CA4847 /* WeightModel.xcdatamodeld */; };
+		2EAA1B682812FEC100CA4847 /* WeightModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B672812FEC100CA4847 /* WeightModelController.swift */; };
+		2EAA1B6F28130A7800CA4847 /* WeightModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B6D28130A7800CA4847 /* WeightModel+CoreDataClass.swift */; };
+		2EAA1B7028130A7800CA4847 /* WeightModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B6E28130A7800CA4847 /* WeightModel+CoreDataProperties.swift */; };
 		2EB767C2280605E7008868DD /* DisclosureState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767C1280605E7008868DD /* DisclosureState.swift */; };
 		2EB767C42806060D008868DD /* MealsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767C32806060D008868DD /* MealsType.swift */; };
 		2EB767C628060645008868DD /* MealInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767C528060645008868DD /* MealInfo.swift */; };
@@ -139,6 +144,11 @@
 		2EA1E8A428045BB6001B329A /* CellInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellInfo.swift; sourceTree = "<group>"; };
 		2EA6508B27E9BB94003F41FC /* AuthCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		2EA6509427F2ED06003F41FC /* DietCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietCell.swift; sourceTree = "<group>"; };
+		2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		2EAA1B652812FE8F00CA4847 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		2EAA1B672812FEC100CA4847 /* WeightModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightModelController.swift; sourceTree = "<group>"; };
+		2EAA1B6D28130A7800CA4847 /* WeightModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeightModel+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2EAA1B6E28130A7800CA4847 /* WeightModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeightModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EB767C1280605E7008868DD /* DisclosureState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureState.swift; sourceTree = "<group>"; };
 		2EB767C32806060D008868DD /* MealsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsType.swift; sourceTree = "<group>"; };
 		2EB767C528060645008868DD /* MealInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealInfo.swift; sourceTree = "<group>"; };
@@ -246,6 +256,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EAA1B5F2812ADFD00CA4847 /* CoreData.framework in Frameworks */,
 				7603292D4EAB5D9C281BB938 /* Pods_reshape.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +283,7 @@
 		246FD6F18E831BC8C5BD4F83 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */,
 				10DCC44A988116639741C6F6 /* Pods_reshape.framework */,
 				353F3C6FB248B36FB486BEDC /* Pods_reshape_reshapeUITests.framework */,
 				ED6BD05EB76C641AACDC618C /* Pods_reshapeTests.framework */,
@@ -298,9 +310,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		2EAA1B50281097F200CA4847 /* CoreData */ = {
+		2EAA1B632812FE8F00CA4847 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				2EAA1B642812FE8F00CA4847 /* WeightModel.xcdatamodeld */,
+				2EAA1B672812FEC100CA4847 /* WeightModelController.swift */,
+				2EAA1B6D28130A7800CA4847 /* WeightModel+CoreDataClass.swift */,
+				2EAA1B6E28130A7800CA4847 /* WeightModel+CoreDataProperties.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -308,12 +324,12 @@
 		2EB767C72809F02D008868DD /* WeightScreen */ = {
 			isa = PBXGroup;
 			children = (
-				2EAA1B50281097F200CA4847 /* CoreData */,
+				2EAA1B632812FE8F00CA4847 /* CoreData */,
 				2EF20BFA280DF0F60019CF64 /* WeightModel */,
 				2EF20BF9280DF0F00019CF64 /* Cells */,
 				2EB767C82809F08F008868DD /* WeightPresenter.swift */,
-				2EB767C92809F08F008868DD /* WeightRouter.swift */,
 				2EB767CA2809F08F008868DD /* WeightViewController.swift */,
+				2EB767C92809F08F008868DD /* WeightRouter.swift */,
 				2EB767CB2809F08F008868DD /* WeightProtocols.swift */,
 				2EB767CD2809F08F008868DD /* WeightContainer.swift */,
 				2E67309F2809F61000992435 /* WeightInteractor.swift */,
@@ -896,6 +912,7 @@
 				2EF20BFE280F4F600019CF64 /* DateTimeCell.swift in Sources */,
 				945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */,
 				9478495E27FB2EC900138DA4 /* NavigationBarView.swift in Sources */,
+				2EAA1B7028130A7800CA4847 /* WeightModel+CoreDataProperties.swift in Sources */,
 				945B386227ECC3500044E952 /* ProfileScreenContainer.swift in Sources */,
 				94FC7847280C4745003477FA /* ForgetPasswordManager.swift in Sources */,
 				94CAB9A02806BA0C00ACAB8C /* RegistrationContentView.swift in Sources */,
@@ -913,6 +930,7 @@
 				2EB767C42806060D008868DD /* MealsType.swift in Sources */,
 				945B384727ECC32A0044E952 /* ResultsScreenViewController.swift in Sources */,
 				94FC78382809E46D003477FA /* AuthManger.swift in Sources */,
+				2EAA1B6F28130A7800CA4847 /* WeightModel+CoreDataClass.swift in Sources */,
 				941E811D27E614F300A33344 /* AuthStackView.swift in Sources */,
 				2EF20C01281028750019CF64 /* GradientType.swift in Sources */,
 				2EB767D02809F08F008868DD /* WeightViewController.swift in Sources */,
@@ -920,9 +938,11 @@
 				2EA1E89F27FCDB47001B329A /* MealCell.swift in Sources */,
 				9478495A27FB221400138DA4 /* RegisterScreenProtocols.swift in Sources */,
 				945B384A27ECC32A0044E952 /* ResultsScreenContainer.swift in Sources */,
+				2EAA1B662812FE8F00CA4847 /* WeightModel.xcdatamodeld in Sources */,
 				945B385627ECC33A0044E952 /* DietScreenContainer.swift in Sources */,
 				94FC7845280C468F003477FA /* LoginManager.swift in Sources */,
 				2E6730A02809F61000992435 /* WeightInteractor.swift in Sources */,
+				2EAA1B682812FEC100CA4847 /* WeightModelController.swift in Sources */,
 				36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */,
 				945B385127ECC33A0044E952 /* DietScreenPresenter.swift in Sources */,
 			);
@@ -1296,6 +1316,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2EAA1B642812FE8F00CA4847 /* WeightModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2EAA1B652812FE8F00CA4847 /* CoreDataModel.xcdatamodel */,
+			);
+			currentVersion = 2EAA1B652812FE8F00CA4847 /* CoreDataModel.xcdatamodel */;
+			path = WeightModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 36A9DAF527E2AC3400DB5082 /* Project object */;
 }

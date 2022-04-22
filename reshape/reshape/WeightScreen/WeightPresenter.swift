@@ -34,28 +34,27 @@ extension WeightPresenter: WeightViewOutput {
     }
     
     func getShortDate(atBackPosition position: Int) -> String {
-        return interactor.getWeightData(atBackPosition: position).getShortDateString()
+        return interactor.getWeightData(atBackPosition: position)?.getShortDateString() ?? ""
     }
     
     func getWeight(atBackPosition position: Int) -> String {
-        return interactor.getWeightData(atBackPosition: position).getWeight()
+        return interactor.getWeightData(atBackPosition: position)?.getWeight() ?? ""
     }
     
     func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String) {
-        let weightData = OldWeightDataModel(date: date, time: time, weight: weight)
-        interactor.uploadNewWeight(weightData: weightData)
+        interactor.uploadNewWeight(newDate: date, newTime: time, newWeight: weight)
     }
     
     func getLastTime() -> String {
-        return interactor.getLastWeightData().getTimeString()
+        return interactor.getLastWeightData()?.getTimeString() ?? ""
     }
     
     func getLastDate() -> String {
-        return interactor.getLastWeightData().getDateString()
+        return interactor.getLastWeightData()?.getDateString() ?? ""
     }
     
     func getLastWeight() -> String {
-        return interactor.getLastWeightData().getWeight()
+        return interactor.getLastWeightData()?.getWeight() ?? ""
     }
     
     func backButtonPressed() {

@@ -46,13 +46,13 @@ protocol WeightViewOutput: AnyObject {
 
 protocol WeightInteractorInput: AnyObject {
     // Получение данных о весе для графика из локальной БД
-    func getWeightData(atBackPosition position: Int) -> OldWeightDataModel
+    func getWeightData(atBackPosition position: Int) -> WeightModel?
     
     // Получение данных о весе для ячеек из локальной БД
-    func getLastWeightData() -> OldWeightDataModel
+    func getLastWeightData() -> WeightModel?
     
     // Запрос на загрузку изменнногот веса
-    func uploadNewWeight(weightData: OldWeightDataModel)
+    func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String)
 }
 
 protocol WeightInteractorOutput: AnyObject {

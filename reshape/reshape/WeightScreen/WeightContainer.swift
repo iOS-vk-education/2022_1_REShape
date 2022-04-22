@@ -14,9 +14,12 @@ final class WeightContainer {
 	private(set) weak var router: WeightRouterInput!
 
 	static func assemble(with context: WeightContext) -> WeightContainer {
+        let weightModelController = WeightModelController(completionClosure: {})
+        
         let router = WeightRouter()
-        let interactor = WeightInteractor()
+        let interactor = WeightInteractor(coreDataController: weightModelController)
         let presenter = WeightPresenter(router: router, interactor: interactor)
+//                                        context: weightModelController.managedObjectContext)
 		let viewController = WeightViewController(output: presenter)
 
 		presenter.view = viewController

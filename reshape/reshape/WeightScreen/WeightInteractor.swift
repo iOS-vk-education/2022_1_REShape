@@ -10,63 +10,77 @@ import CoreData
 
 final class WeightInteractor {
     weak var output: WeightInteractorOutput?
-    private var localViewModels = [OldWeightDataModel]()
-    private var remoteViewModels = [OldWeightDataModel]()
+    private var localViewModels: [WeightModel] = []
+    private let weightModelController: WeightModelController
+    private let coreDataContext: NSManagedObjectContext
     
-    init() {
-        getDataFromLocalBase()
+    init(coreDataController: WeightModelController) {
+        weightModelController = coreDataController
+        coreDataContext = weightModelController.managedObjectContext
+        updateLocalBase()
         getDataFromRemoteBase()
-        
     }
     
     deinit {
-        saveLocalBase()
+        weightModelController.saveContext()
     }
     
-    private func getDataFromLocalBase() {
-        localViewModels = [
-            OldWeightDataModel(date: "15 апреля 2022г", time: "12:45", weight: "45"),
-            OldWeightDataModel(date: "16 апреля 2022г", time: "16:45", weight: "47"),
-            OldWeightDataModel(date: "17 апреля 2022г", time: "13:28", weight: "47"),
-        ]
+    private func updateLocalBase() {
+        do {
+            let fetchRequest = WeightModel.fetchRequest()
+            let result = try coreDataContext.fetch(fetchRequest)
+            localViewModels = result
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
     }
     
     private func getDataFromRemoteBase() {
         print("[DEBUG] Запрос на загрузку удаленной БД весов")
-        remoteViewModels = [OldWeightDataModel()]
-//        /* Необходимо разблокировать после реализации загрузки из удаленной БД */
-//        updateLocalBase()
-//        self.newWeightGetting()
-    }
-    
-    private func updateLocalBase() {
-        remoteViewModels.enumerated().forEach({
-            if $1 != self.localViewModels[$0] {
-                self.localViewModels.replaceSubrange($0...$0, with: [$1])
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
+            // Обновление данных по ID
+            self.localViewModels.forEach() { model in
+                switch model.getID() {
+                case 0:
+                    model.setData(id: 0, dateString: "15 апреля 2022г", timeString: "12:45", weightString: "45")
+                case 1:
+                    model.setData(id: 1, dateString: "16 апреля 2022г", timeString: "16:45", weightString: "47")
+                case 2:
+                    model.setData(id: 2, dateString: "17 апреля 2022г", timeString: "13:28", weightString: "47")
+                default:
+                    break
+                }
             }
+            self.weightModelController.saveContext()
+            
+            // Получение обновлений для локальной БД
+            self.updateLocalBase()
+            self.output?.newWeightGetting()
         })
-    }
-    
-    private func saveLocalBase() {
-        
     }
 }
 
 extension WeightInteractor: WeightInteractorInput {
-    func getWeightData(atBackPosition position: Int) -> OldWeightDataModel {
+    func getWeightData(atBackPosition position: Int) -> WeightModel? {
         let pos = localViewModels.count - position - 1
-        return (pos >= 0) ? localViewModels[pos] : OldWeightDataModel()
+        return localViewModels.first() {weightModel in
+            weightModel.getID() == pos ? true : false
+        }
     }
     
-    func uploadNewWeight(weightData: OldWeightDataModel) {
+    func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String) {
         print("[DEBUG] Загрузка локальной БД (обновления БД) весов на сервер")
         // Если удачно загрузилось
-        localViewModels.append(weightData)
+        coreDataContext.insert(WeightModel(id: localViewModels.count, dateString: date, timeString: time, weightString: weight, context: coreDataContext))
+        // Сохранение обновленных данных
+        weightModelController.saveContext()
+        updateLocalBase()
+        
         // Если неудачно
 //        output?.undoUploadNewWeight()
     }
     
-    func getLastWeightData() -> OldWeightDataModel {
+    func getLastWeightData() -> WeightModel? {
         return getWeightData(atBackPosition: 0)
     }
 }
