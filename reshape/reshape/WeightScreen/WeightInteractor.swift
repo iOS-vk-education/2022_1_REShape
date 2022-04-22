@@ -30,6 +30,7 @@ final class WeightInteractor {
             let fetchRequest = WeightModel.fetchRequest()
             let result = try coreDataContext.fetch(fetchRequest)
             localViewModels = result
+            self.output?.newWeightGetting()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -39,14 +40,19 @@ final class WeightInteractor {
         print("[DEBUG] Запрос на загрузку удаленной БД весов")
         DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
             // Обновление данных по ID
-            self.localViewModels.forEach() { model in
-                switch model.getID() {
+            for i in 0...2 {
+                let model = self.getWeightData(fromID: i)
+                if model != nil {
+                    self.coreDataContext.delete(model!)
+                    self.weightModelController.saveContext()
+                }
+                switch i {
                 case 0:
-                    model.setData(id: 0, dateString: "15 апреля 2022г", timeString: "12:45", weightString: "45")
+                    self.coreDataContext.insert(WeightModel(id: i, dateString: "15 апреля 2022г", timeString: "12:45", weightString: "45", context: self.coreDataContext))
                 case 1:
-                    model.setData(id: 1, dateString: "16 апреля 2022г", timeString: "16:45", weightString: "47")
+                    self.coreDataContext.insert(WeightModel(id: i, dateString: "16 апреля 2022г", timeString: "16:45", weightString: "47", context: self.coreDataContext))
                 case 2:
-                    model.setData(id: 2, dateString: "17 апреля 2022г", timeString: "13:28", weightString: "47")
+                    self.coreDataContext.insert(WeightModel(id: i, dateString: "17 апреля 2022г", timeString: "13:28", weightString: "47", context: self.coreDataContext))
                 default:
                     break
                 }
@@ -55,17 +61,33 @@ final class WeightInteractor {
             
             // Получение обновлений для локальной БД
             self.updateLocalBase()
-            self.output?.newWeightGetting()
         })
+    }
+    
+    private func getWeightData(fromID id: Int) -> WeightModel? {
+        let weightModel = localViewModels.first(where: { model in
+            model.modelID == id
+        })
+        return weightModel
     }
 }
 
 extension WeightInteractor: WeightInteractorInput {
-    func getWeightData(atBackPosition position: Int) -> WeightModel? {
-        let pos = localViewModels.count - position - 1
-        return localViewModels.first() {weightModel in
-            weightModel.getID() == pos ? true : false
-        }
+    func getWeightData(fromBackPosition position: Int) -> WeightModel? {
+        guard let maxID = getMaxID() else { return nil }
+        let neededId = maxID - position
+        if neededId < 0 { return nil }
+        let weightModel = localViewModels.first(where: { model in
+            model.modelID == maxID
+        })
+        return weightModel
+    }
+    
+    func getMaxID() -> Int? {
+        guard let weightModelMaxID = localViewModels.max(by: { a, b in
+            a.modelID < b.modelID
+        })?.getID() else { return nil }
+        return weightModelMaxID
     }
     
     func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String) {
@@ -81,6 +103,6 @@ extension WeightInteractor: WeightInteractorInput {
     }
     
     func getLastWeightData() -> WeightModel? {
-        return getWeightData(atBackPosition: 0)
+        return getWeightData(fromBackPosition: 0)
     }
 }

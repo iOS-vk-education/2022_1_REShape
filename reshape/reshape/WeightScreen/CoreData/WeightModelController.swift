@@ -32,4 +32,18 @@ class WeightModelController: NSObject {
             print("Error: \(error), \(error.userInfo)")
         }
     }
+    
+    func flushData() {
+        // Очистка базы данных
+        do {
+            let fetchRequest = WeightModel.fetchRequest()
+            let result = try managedObjectContext.fetch(fetchRequest)
+            for model in result {
+                managedObjectContext.delete(model)
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        saveContext()
+    }
 }

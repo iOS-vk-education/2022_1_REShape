@@ -46,7 +46,7 @@ protocol WeightViewOutput: AnyObject {
 
 protocol WeightInteractorInput: AnyObject {
     // Получение данных о весе для графика из локальной БД
-    func getWeightData(atBackPosition position: Int) -> WeightModel?
+    func getWeightData(fromBackPosition position: Int) -> WeightModel?
     
     // Получение данных о весе для ячеек из локальной БД
     func getLastWeightData() -> WeightModel?

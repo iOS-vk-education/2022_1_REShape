@@ -54,6 +54,6 @@ public class WeightModel: NSManagedObject {
     }
     
     func getID() -> Int {
-        return Int(modelID!)
+        return Int(modelID)
     }
 }

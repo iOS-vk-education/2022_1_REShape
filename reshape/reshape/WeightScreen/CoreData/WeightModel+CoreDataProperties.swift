@@ -19,6 +19,7 @@ extension WeightModel {
     @NSManaged public var modelDate: String?
     @NSManaged public var modelTime: String?
     @NSManaged public var modelWeight: String?
+    @NSManaged public var modelID: Int32
 
 }
 
