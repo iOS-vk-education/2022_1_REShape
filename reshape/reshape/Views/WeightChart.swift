@@ -71,7 +71,7 @@ class WeightChart: LineChartView {
     func setupChart() {
         noDataText = "Загрузка данных..."
         legend.enabled = false
-        setViewPortOffsets(left: 16, top: 16, right: 16, bottom: 16)
+        setViewPortOffsets(left: 25, top: 16, right: 16, bottom: 16)
         
         rightAxis.enabled = false
         
@@ -83,6 +83,7 @@ class WeightChart: LineChartView {
         leftAxis.axisLineWidth = 1
         leftAxis.spaceBottom = 0.5
         leftAxis.spaceTop = 0.5
+        leftAxis.xOffset = 7
         
         leftAxis.gridLineDashLengths = [5, 5]
         leftAxis.gridLineWidth = 1
