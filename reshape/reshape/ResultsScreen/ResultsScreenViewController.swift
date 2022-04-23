@@ -52,16 +52,6 @@ final class ResultsScreenViewController: UIViewController {
         setupUI()
         setupCollectionView()
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        mainView.reloadGradient()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        mainView.reloadGradient()
-    }
 }
 
 extension ResultsScreenViewController: ResultsScreenViewInput {
@@ -89,8 +79,8 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
     }
     private func setupUI(){
         view.backgroundColor = .white
-        mainView.setupGradientColor(withColor: [UIColor.lightVioletColor!.cgColor,
-                                                UIColor.darkVioletColor!.cgColor])
+        mainView.setupGradientColor(withColor: [UIColor.lightVioletColor.cgColor,
+                                                UIColor.darkVioletColor.cgColor])
         mainView.setupGradientDirection(withDirection: .topToDown)
     }
     

@@ -2,7 +2,7 @@
 //  WeightModel+CoreDataProperties.swift
 //  reshape
 //
-//  Created by Иван Фомин on 22.04.2022.
+//  Created by Иван Фомин on 23.04.2022.
 //
 //
 
@@ -17,9 +17,9 @@ extension WeightModel {
     }
 
     @NSManaged public var modelDate: String?
+    @NSManaged public var modelID: Int32
     @NSManaged public var modelTime: String?
     @NSManaged public var modelWeight: String?
-    @NSManaged public var modelID: Int32
 
 }
 

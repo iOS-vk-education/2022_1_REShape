@@ -25,6 +25,10 @@ extension WeightPresenter: WeightModuleInput {
 }
 
 extension WeightPresenter: WeightViewOutput {
+    func getNumOfDays() -> Int {
+        return interactor.getMaxID() ?? 0
+    }
+    
     func getCurrentDate() -> String {
         return Date().dateString()
     }

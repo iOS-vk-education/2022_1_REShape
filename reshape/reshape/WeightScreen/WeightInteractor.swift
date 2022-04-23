@@ -39,23 +39,20 @@ final class WeightInteractor {
     private func getDataFromRemoteBase() {
         print("[DEBUG] Запрос на загрузку удаленной БД весов")
         DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
+            // Данные с FireBase
+            let firebaseData = [
+                FireBaseWeightModel(modelID: 0, modelDate: "15 апреля 2022г", modelTime: "12:45", modelWeight: "45"),
+                FireBaseWeightModel(modelID: 1, modelDate: "16 апреля 2022г", modelTime: "16:45", modelWeight: "47"),
+                FireBaseWeightModel(modelID: 2, modelDate: "17 апреля 2022г", modelTime: "13:28", modelWeight: "47")
+            ]
+            
             // Обновление данных по ID
-            for i in 0...2 {
-                let model = self.getWeightData(fromID: i)
-                if model != nil {
-                    self.coreDataContext.delete(model!)
-                    self.weightModelController.saveContext()
+            for data in firebaseData {
+                guard let model = self.getWeightData(fromID: data.modelID) else {
+                    self.coreDataContext.insert(WeightModel(id: data.modelID, dateString: data.modelDate, timeString: data.modelTime, weightString: data.modelWeight, context: self.coreDataContext))
+                    continue
                 }
-                switch i {
-                case 0:
-                    self.coreDataContext.insert(WeightModel(id: i, dateString: "15 апреля 2022г", timeString: "12:45", weightString: "45", context: self.coreDataContext))
-                case 1:
-                    self.coreDataContext.insert(WeightModel(id: i, dateString: "16 апреля 2022г", timeString: "16:45", weightString: "47", context: self.coreDataContext))
-                case 2:
-                    self.coreDataContext.insert(WeightModel(id: i, dateString: "17 апреля 2022г", timeString: "13:28", weightString: "47", context: self.coreDataContext))
-                default:
-                    break
-                }
+                model.setData(id: data.modelID, dateString: data.modelDate, timeString: data.modelTime, weightString: data.modelWeight)
             }
             self.weightModelController.saveContext()
             
@@ -77,10 +74,7 @@ extension WeightInteractor: WeightInteractorInput {
         guard let maxID = getMaxID() else { return nil }
         let neededId = maxID - position
         if neededId < 0 { return nil }
-        let weightModel = localViewModels.first(where: { model in
-            model.modelID == maxID
-        })
-        return weightModel
+        return getWeightData(fromID: neededId)
     }
     
     func getMaxID() -> Int? {

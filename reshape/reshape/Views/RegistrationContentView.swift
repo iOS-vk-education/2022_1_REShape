@@ -38,7 +38,7 @@ final class RegistrationContentView: UIView {
         for value in 0..<8 {
             let stack = AuthStackView()
             stack.translatesAutoresizingMaskIntoConstraints = false
-            stack.backgroundTFColor = .modalViewGrayColor ?? .gray
+            stack.backgroundTFColor = .modalViewGrayColor
             stack.tag = value + 1
             stack.textField.autocorrectionType = .no
             stackViews.append(stack)

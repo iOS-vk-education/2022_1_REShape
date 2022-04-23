@@ -33,12 +33,15 @@ protocol WeightViewOutput: AnyObject {
     func getLastWeight() -> String
     func getLastDate() -> String
     func getLastTime() -> String
-    func getCurrentDate() -> String
-    func getCurrentTime() -> String
+    func getNumOfDays() -> Int
     
     // Геттеры для графика
     func getShortDate(atBackPosition position: Int) -> String
     func getWeight(atBackPosition position: Int) -> String
+    
+    // Получение текущего времени и даты
+    func getCurrentDate() -> String
+    func getCurrentTime() -> String
     
     // Если изменение подтвердилось
     func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String)
@@ -50,6 +53,9 @@ protocol WeightInteractorInput: AnyObject {
     
     // Получение данных о весе для ячеек из локальной БД
     func getLastWeightData() -> WeightModel?
+    
+    // Получение количества данных
+    func getMaxID() -> Int?
     
     // Запрос на загрузку изменнногот веса
     func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String)
