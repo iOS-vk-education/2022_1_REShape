@@ -31,6 +31,9 @@
 		2EB767D12809F08F008868DD /* WeightProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767CB2809F08F008868DD /* WeightProtocols.swift */; };
 		2EB767D32809F08F008868DD /* WeightContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767CD2809F08F008868DD /* WeightContainer.swift */; };
 		2EC4E710281345FC002AF235 /* WeightChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4E70F281345FB002AF235 /* WeightChart.swift */; };
+		2EC4E717281722B3002AF235 /* DietModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4E715281722B3002AF235 /* DietModel.xcdatamodeld */; };
+		2EC4E719281851F4002AF235 /* FireBaseWeightModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4E718281851F3002AF235 /* FireBaseWeightModel.swift */; };
+		2EC4E71B28185454002AF235 /* AbstractModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4E71A28185454002AF235 /* AbstractModelController.swift */; };
 		2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */; };
 		2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */; };
 		2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */; };
@@ -38,7 +41,6 @@
 		2EECFF3727E5037100BD4BEF /* EnterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF3127E5037100BD4BEF /* EnterInteractor.swift */; };
 		2EECFF3827E5037100BD4BEF /* EnterContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF3227E5037100BD4BEF /* EnterContainer.swift */; };
 		2EF20BF4280DEC950019CF64 /* AbstractCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BF3280DEC950019CF64 /* AbstractCell.swift */; };
-		2EF20BF6280DF0CE0019CF64 /* FireBaseWeightModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BF5280DF0CE0019CF64 /* FireBaseWeightModel.swift */; };
 		2EF20BF8280DF0E70019CF64 /* WeightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BF7280DF0E70019CF64 /* WeightCell.swift */; };
 		2EF20BFC280DF19D0019CF64 /* UpGradientPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BFB280DF19C0019CF64 /* UpGradientPanel.swift */; };
 		2EF20BFE280F4F600019CF64 /* DateTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF20BFD280F4F600019CF64 /* DateTimeCell.swift */; };
@@ -159,6 +161,9 @@
 		2EB767CB2809F08F008868DD /* WeightProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightProtocols.swift; sourceTree = "<group>"; };
 		2EB767CD2809F08F008868DD /* WeightContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightContainer.swift; sourceTree = "<group>"; };
 		2EC4E70F281345FB002AF235 /* WeightChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightChart.swift; sourceTree = "<group>"; };
+		2EC4E716281722B3002AF235 /* DietModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DietModel.xcdatamodel; sourceTree = "<group>"; };
+		2EC4E718281851F3002AF235 /* FireBaseWeightModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireBaseWeightModel.swift; sourceTree = "<group>"; };
+		2EC4E71A28185454002AF235 /* AbstractModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractModelController.swift; sourceTree = "<group>"; };
 		2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPresenter.swift; sourceTree = "<group>"; };
 		2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRouter.swift; sourceTree = "<group>"; };
 		2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterViewController.swift; sourceTree = "<group>"; };
@@ -167,7 +172,6 @@
 		2EECFF3227E5037100BD4BEF /* EnterContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterContainer.swift; sourceTree = "<group>"; };
 		2EEEA067D35A51C12D686E6E /* Pods-reshape-reshapeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reshape-reshapeUITests.release.xcconfig"; path = "Target Support Files/Pods-reshape-reshapeUITests/Pods-reshape-reshapeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2EF20BF3280DEC950019CF64 /* AbstractCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractCell.swift; sourceTree = "<group>"; };
-		2EF20BF5280DF0CE0019CF64 /* FireBaseWeightModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireBaseWeightModel.swift; sourceTree = "<group>"; };
 		2EF20BF7280DF0E70019CF64 /* WeightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightCell.swift; sourceTree = "<group>"; };
 		2EF20BFB280DF19C0019CF64 /* UpGradientPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpGradientPanel.swift; sourceTree = "<group>"; };
 		2EF20BFD280F4F600019CF64 /* DateTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeCell.swift; sourceTree = "<group>"; };
@@ -316,7 +320,7 @@
 		2EAA1B632812FE8F00CA4847 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				2EF20BF5280DF0CE0019CF64 /* FireBaseWeightModel.swift */,
+				2EC4E718281851F3002AF235 /* FireBaseWeightModel.swift */,
 				2EAA1B642812FE8F00CA4847 /* WeightModel.xcdatamodeld */,
 				2EAA1B672812FEC100CA4847 /* WeightModelController.swift */,
 				2EAA1B6D28130A7800CA4847 /* WeightModel+CoreDataClass.swift */,
@@ -338,6 +342,14 @@
 				2E67309F2809F61000992435 /* WeightInteractor.swift */,
 			);
 			path = WeightScreen;
+			sourceTree = "<group>";
+		};
+		2EC4E714281722B3002AF235 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				2EC4E715281722B3002AF235 /* DietModel.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		2EECFF2C27E5035C00BD4BEF /* EnterScreen */ = {
@@ -521,6 +533,7 @@
 		945B383D27ECC3030044E952 /* DietScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2EC4E714281722B3002AF235 /* CoreData */,
 				2EF20BF2280DEC310019CF64 /* DietModels */,
 				2EF20BF1280DEBE70019CF64 /* Cells and Headers */,
 				945B384B27ECC33A0044E952 /* DietScreenPresenter.swift */,
@@ -580,6 +593,7 @@
 				94FC783B280B0C43003477FA /* Alert.swift */,
 				2EF20C02281039E50019CF64 /* DateExtension.swift */,
 				2EA1E8A228041343001B329A /* UIImage+Extension.swift */,
+				2EC4E71A28185454002AF235 /* AbstractModelController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -860,6 +874,7 @@
 				60E44D9828082AB000B3DDE6 /* ReuseIdentifier.swift in Sources */,
 				2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */,
 				2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */,
+				2EC4E719281851F4002AF235 /* FireBaseWeightModel.swift in Sources */,
 				2EF20BFC280DF19D0019CF64 /* UpGradientPanel.swift in Sources */,
 				9478495B27FB221400138DA4 /* RegisterScreenInteractor.swift in Sources */,
 				945B387627F357450044E952 /* PhotoProgressView.swift in Sources */,
@@ -876,6 +891,7 @@
 				945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */,
 				94FC783C280B0C43003477FA /* Alert.swift in Sources */,
 				945ADFAB27FC4EDD00222156 /* GenderStackView.swift in Sources */,
+				2EC4E717281722B3002AF235 /* DietModel.xcdatamodeld in Sources */,
 				2EECFF3727E5037100BD4BEF /* EnterInteractor.swift in Sources */,
 				945ADFAD27FDC54800222156 /* GenderButton.swift in Sources */,
 				941E811927E6149800A33344 /* LoginScreenInteractor.swift in Sources */,
@@ -922,7 +938,6 @@
 				9478495727FB221400138DA4 /* RegisterScreenPresenter.swift in Sources */,
 				60E44D9A28082ABC00B3DDE6 /* ColorExtension.swift in Sources */,
 				945B383927ECC0C80044E952 /* MainFlowCoordinator.swift in Sources */,
-				2EF20BF6280DF0CE0019CF64 /* FireBaseWeightModel.swift in Sources */,
 				2EB767C42806060D008868DD /* MealsType.swift in Sources */,
 				945B384727ECC32A0044E952 /* ResultsScreenViewController.swift in Sources */,
 				94FC78382809E46D003477FA /* AuthManger.swift in Sources */,
@@ -932,6 +947,7 @@
 				2EB767D02809F08F008868DD /* WeightViewController.swift in Sources */,
 				941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */,
 				2EA1E89F27FCDB47001B329A /* MealCell.swift in Sources */,
+				2EC4E71B28185454002AF235 /* AbstractModelController.swift in Sources */,
 				9478495A27FB221400138DA4 /* RegisterScreenProtocols.swift in Sources */,
 				945B384A27ECC32A0044E952 /* ResultsScreenContainer.swift in Sources */,
 				2EAA1B662812FE8F00CA4847 /* WeightModel.xcdatamodeld in Sources */,
@@ -1321,6 +1337,16 @@
 			);
 			currentVersion = 2EAA1B652812FE8F00CA4847 /* CoreDataModel.xcdatamodel */;
 			path = WeightModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		2EC4E715281722B3002AF235 /* DietModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2EC4E716281722B3002AF235 /* DietModel.xcdatamodel */,
+			);
+			currentVersion = 2EC4E716281722B3002AF235 /* DietModel.xcdatamodel */;
+			path = DietModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

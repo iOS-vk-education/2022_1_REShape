@@ -70,6 +70,12 @@ final class WeightInteractor {
 }
 
 extension WeightInteractor: WeightInteractorInput {
+    func flushWeightModel() {
+        weightModelController.flushData()
+        updateLocalBase()
+        getDataFromRemoteBase()
+    }
+    
     func getWeightData(fromBackPosition position: Int) -> WeightModel? {
         guard let maxID = getMaxID() else { return nil }
         let neededId = maxID - position

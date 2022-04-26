@@ -54,6 +54,7 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         setupTableView()
         setupGradientPanel()
         addGestureRecognizer()
+        addFlushGesture()
         weightChart.weightDelegate = self
 	}
     
@@ -244,5 +245,15 @@ extension WeightViewController {
     @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
         guard let cell = addTable.cellForRow(at: IndexPath(row: 2, section: 0)) as? WeightCell else { return }
         cell.unchosen()
+    }
+    
+    func addFlushGesture() {
+        let tap = UIPinchGestureRecognizer(target: self, action: #selector(flushTap(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    @objc func flushTap(_ recohnizer: UIPinchGestureRecognizer) {
+        output.flushWeightModel()
     }
 }

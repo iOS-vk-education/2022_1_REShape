@@ -65,6 +65,8 @@ class WeightChart: LineChartView {
         set.circleColors = [.violetColor]
         set.drawCircleHoleEnabled = false
         set.drawValuesEnabled = false
+        set.drawHorizontalHighlightIndicatorEnabled = false
+        set.drawVerticalHighlightIndicatorEnabled = false
         self.data = LineChartData(dataSet: set)
     }
     
@@ -72,6 +74,8 @@ class WeightChart: LineChartView {
         noDataText = "Загрузка данных..."
         legend.enabled = false
         setViewPortOffsets(left: 25, top: 16, right: 16, bottom: 16)
+        doubleTapToZoomEnabled = false
+        pinchZoomEnabled = false
         
         rightAxis.enabled = false
         

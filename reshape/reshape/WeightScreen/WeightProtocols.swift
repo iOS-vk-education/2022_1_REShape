@@ -26,6 +26,9 @@ protocol WeightViewInput: AnyObject {
 }
 
 protocol WeightViewOutput: AnyObject {
+    // Обработка сигнала очистки
+    func flushWeightModel()
+    
     // Навигация
     func backButtonPressed()
     
@@ -48,6 +51,9 @@ protocol WeightViewOutput: AnyObject {
 }
 
 protocol WeightInteractorInput: AnyObject {
+    // Очистка памяти
+    func flushWeightModel()
+    
     // Получение данных о весе для графика из локальной БД
     func getWeightData(fromBackPosition position: Int) -> WeightModel?
     
