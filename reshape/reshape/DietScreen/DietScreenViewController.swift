@@ -53,6 +53,9 @@ final class DietScreenViewController: UIViewController {
         setupUI()
         // Настройка AutoLayout
         setupConstraint()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         // Запрос числа дней в Presenterе
         output.requestNumOfDays()
     }
@@ -156,7 +159,7 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
                 calories: output.getMealCalories(forMeal: mealType.revert, atIndex: indexPath),
                 state: output.getMealState(forMeal: mealType.revert, atIndex: indexPath))
             return cell
-        case .none:
+        default:
             return .init()
         }
     }

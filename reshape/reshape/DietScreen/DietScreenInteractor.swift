@@ -12,15 +12,19 @@ import CoreData
 final class DietScreenInteractor {
     private var cellData: [CellInfo] = []
 	weak var output: DietScreenInteractorOutput?
+    private var numOfDays: Int = 0
+    
+    // Базы данных
     private let modelController: DietModelController
     private let coreDataContext: NSManagedObjectContext
-    private var numOfDays: Int
+    private var firebaseModelController: DietFirebaseModelController
     
-    init(coreDataController: DietModelController) {
-        modelController = coreDataController
+    init() {
+        modelController = DietModelController()
         coreDataContext = modelController.managedObjectContext
-        numOfDays = (defaults.value(forKey: "dietDays") as? Int) ?? 0
-        createCellData()
+        firebaseModelController = DietFirebaseModelController()
+        firebaseModelController.login(completion: self.requestNumOfDays)
+        _ = createCellData()
         uploadFromDatabase()
     }
     
@@ -30,15 +34,23 @@ final class DietScreenInteractor {
     }
     
     // Создание внутреннего кэша данных по каждому приёму пищи
-    private func createCellData() {
-        if numOfDays <= 0 { return }
-        for curSection in 0...numOfDays-1 {
-            self.cellData.insert(contentsOf: [
-                CellInfo(curSection, initType: .breakfast),
-                CellInfo(curSection, initType: .lunch),
-                CellInfo(curSection, initType: .dinner)
-            ], at: curSection)
+    private func createCellData(withNewDays days: Int = 0) -> Bool {
+        let oldDays = numOfDays
+        numOfDays = days
+        if numOfDays < oldDays {
+            cellData.removeSubrange(numOfDays...oldDays-1)
+            return true
+        } else if numOfDays > oldDays {
+            for curSection in oldDays...numOfDays-1 {
+                self.cellData.append(contentsOf: [
+                    CellInfo(curSection, initType: .breakfast),
+                    CellInfo(curSection, initType: .lunch),
+                    CellInfo(curSection, initType: .dinner)
+                ])
+            }
+            return true
         }
+        return false
     }
     
     // Загрузка данных из локальной БД
@@ -50,16 +62,6 @@ final class DietScreenInteractor {
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-    }
-    
-    // Преобразование полученных данных из Firebase
-    private func transformMealData(_ meals: [FireBaseMealData]) -> [MealData] {
-        // Получение индекса ячейки
-        var cellMeals: [MealData] = []
-        meals.enumerated().forEach() { pos, data in
-            cellMeals.insert(MealData.transform(firebaseDatabase: data, context: coreDataContext), at: pos)
-        }
-        return cellMeals
     }
     
     // Добавление полученных блюд во внутренний кэш
@@ -74,12 +76,12 @@ final class DietScreenInteractor {
             let cellDataIndex = self.cellIndex(forMeal: celltype, atSection: section)
             dietsForUpdate.insert(cellDataIndex)
             guard let mealDataIndex = self.mealIndex(forCellPosition: cellDataIndex, atID: mealID) else {
-//                coreDataContext.insert(meal) // TODO
                 modelController.saveContext()
                 cellData[cellDataIndex].addMeal(to: meal)
                 continue
             }
             cellData[cellDataIndex].meals[mealDataIndex].copyFrom(meal)
+            
             coreDataContext.delete(meal)
             modelController.saveContext()
         }
@@ -102,6 +104,19 @@ final class DietScreenInteractor {
             return meal.modelID == id
         }
     }
+    
+    private func deleteMeals(greaterThanID id: UInt, forMeal meal: MealsType, inSection section: Int) {
+        let oldNumOfMeals = UInt(self.getMealCount(forMeal: meal, atSection: section))
+        if id < oldNumOfMeals {
+            for mealID in id...oldNumOfMeals-1 {
+                let cellDataIndex = self.cellIndex(forMeal: meal, atSection: section)
+                guard let mealDataIndex = self.mealIndex(forCellPosition: cellDataIndex, atID: Int(mealID)) else {
+                    fatalError("Can't find meal index for mealID: \(mealID)")
+                }
+                self.coreDataContext.delete(cellData[cellDataIndex].meals.remove(at: mealDataIndex))
+            }
+        }
+    }
 }
 
 // Firebase методы
@@ -109,16 +124,29 @@ extension DietScreenInteractor {
     // Запрос на получение данных из Firebase
     private func requestMealData(toDay day: Int, toMeal mealtype: MealsType) {
         print("[DEBUG] Data from \(mealtype.text) need to get at \(day) day")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [self] in
-            let fireBaseMealData: [FireBaseMealData] = [
-                FireBaseMealData(name: "first", cal: 400, checked: true, id: 0, day: day, diet: mealtype),
-                FireBaseMealData(name: "second", cal: 300, checked: false, id: 1, day: day, diet: mealtype)
-            ]
+        firebaseModelController.getMeals(forDay: day, atMeal: mealtype.engText) { [weak self] numOfMeals in
+            guard (self != nil) else { return }
             
-            // Обновление данных ячеек
-            let transformData = self.transformMealData(fireBaseMealData)
-            self.addMeals(transformData)
-        })
+            // Удаление лишних блюд
+            self!.deleteMeals(greaterThanID: numOfMeals, forMeal: mealtype, inSection: day - 1)
+            if numOfMeals == 0 { return }
+            
+            // Обновление блюд
+            var meals: [MealData] = []
+            for mealNumber in 1...numOfMeals {
+                meals.append(MealData(
+                    id: Int(mealNumber) - 1,
+                    nameString: self!.firebaseModelController.mealName(forID: mealNumber),
+                    calories: self!.firebaseModelController.mealCalories(forID: mealNumber),
+                    state: self!.firebaseModelController.mealState(forID: mealNumber),
+                    day: day,
+                    diet: mealtype,
+                    context: self!.coreDataContext)
+                )
+            }
+            // Добавление блюд
+            self!.addMeals(meals)
+        }
     }
     
     // Запись информации о состоянии блюда в FireBase
@@ -129,12 +157,13 @@ extension DietScreenInteractor {
     // Запрос на получение числа дней
     func requestNumOfDays() {
         print("[DEBUG] Need get num of days")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            self.numOfDays = 10
-            self.createCellData()
-            self.output?.updateNumOfDays(self.numOfDays)
-            self.uploadFromDatabase()
-        })
+        firebaseModelController.daysCount() { [weak self] days in
+            guard (self != nil) else { return }
+            if self!.createCellData(withNewDays: Int(days)) {
+                self!.output?.updateNumOfDays(self!.numOfDays)
+                self!.uploadFromDatabase()
+            }
+        }
     }
 }
 

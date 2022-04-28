@@ -49,6 +49,7 @@
 		2EF3A231281858C300F6E38E /* MealData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF3A22F281858C300F6E38E /* MealData+CoreDataProperties.swift */; };
 		2EF3A23728196C3A00F6E38E /* DietModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF3A23628196C3A00F6E38E /* DietModelController.swift */; };
 		2EF3A23A28196E9400F6E38E /* DietModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EF3A23828196E9400F6E38E /* DietModel.xcdatamodeld */; };
+		2EF3A23C281AA70900F6E38E /* DietFirebaseModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF3A23B281AA70900F6E38E /* DietFirebaseModelController.swift */; };
 		357B5FE6E268B6FAC461B2AB /* Pods_reshape_reshapeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353F3C6FB248B36FB486BEDC /* Pods_reshape_reshapeUITests.framework */; };
 		36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */; };
 		36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */; };
@@ -183,6 +184,7 @@
 		2EF3A22F281858C300F6E38E /* MealData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EF3A23628196C3A00F6E38E /* DietModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietModelController.swift; sourceTree = "<group>"; };
 		2EF3A23928196E9400F6E38E /* DietModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DietModel.xcdatamodel; sourceTree = "<group>"; };
+		2EF3A23B281AA70900F6E38E /* DietFirebaseModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietFirebaseModelController.swift; sourceTree = "<group>"; };
 		353F3C6FB248B36FB486BEDC /* Pods_reshape_reshapeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_reshape_reshapeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A9DAFD27E2AC3400DB5082 /* reshape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reshape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				2EF3A22E281858C300F6E38E /* MealData+CoreDataClass.swift */,
 				2EF3A22F281858C300F6E38E /* MealData+CoreDataProperties.swift */,
 				2EF3A23628196C3A00F6E38E /* DietModelController.swift */,
+				2EF3A23B281AA70900F6E38E /* DietFirebaseModelController.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -400,7 +403,7 @@
 			path = "Cells and Headers";
 			sourceTree = "<group>";
 		};
-		2EF20BF2280DEC310019CF64 /* DietModels */ = {
+		2EF20BF2280DEC310019CF64 /* DietEntities */ = {
 			isa = PBXGroup;
 			children = (
 				2EB767C32806060D008868DD /* MealsType.swift */,
@@ -408,7 +411,7 @@
 				2EB767C528060645008868DD /* MealInfo.swift */,
 				2EA1E8A428045BB6001B329A /* CellInfo.swift */,
 			);
-			path = DietModels;
+			path = DietEntities;
 			sourceTree = "<group>";
 		};
 		2EF20BF9280DF0F00019CF64 /* Cells */ = {
@@ -543,7 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				2EC4E714281722B3002AF235 /* CoreData */,
-				2EF20BF2280DEC310019CF64 /* DietModels */,
+				2EF20BF2280DEC310019CF64 /* DietEntities */,
 				2EF20BF1280DEBE70019CF64 /* Cells and Headers */,
 				945B384B27ECC33A0044E952 /* DietScreenPresenter.swift */,
 				945B384C27ECC33A0044E952 /* DietScreenRouter.swift */,
@@ -899,6 +902,7 @@
 				94302BC427E66080009E397B /* ForgetPasswordScreenProtocols.swift in Sources */,
 				9478495C27FB221400138DA4 /* RegisterScreenContainer.swift in Sources */,
 				945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */,
+				2EF3A23C281AA70900F6E38E /* DietFirebaseModelController.swift in Sources */,
 				94FC783C280B0C43003477FA /* Alert.swift in Sources */,
 				945ADFAB27FC4EDD00222156 /* GenderStackView.swift in Sources */,
 				2EECFF3727E5037100BD4BEF /* EnterInteractor.swift in Sources */,

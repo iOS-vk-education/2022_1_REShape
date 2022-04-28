@@ -29,10 +29,6 @@ public class MealData: NSManagedObject {
         self.modelState = state
     }
     
-    static func transform(firebaseDatabase data: FireBaseMealData, context: NSManagedObjectContext) -> MealData {
-        return MealData(id: data.id, nameString: data.name, calories: data.cal, state: data.checked, day: data.day, diet: data.diet, context: context)
-    }
-    
     func copyFrom(_ meal: MealData) {
         self.modelCalories = meal.modelCalories
         self.modelState = meal.modelState
