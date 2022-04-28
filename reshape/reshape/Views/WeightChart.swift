@@ -39,7 +39,10 @@ class WeightChart: LineChartView {
         
         // Исполняемый механизм по числу дней
         numOfLastDay = weightDelegate?.numberOfDays(in: self) ?? 0
-        if numOfLastDay == 0 { return }
+        if numOfLastDay == 0 {
+            self.data = nil
+            return
+        }
         var dateArray: [String] = []
         var weightData: [ChartDataEntry] = []
         for i in 0...numOfLastDay {

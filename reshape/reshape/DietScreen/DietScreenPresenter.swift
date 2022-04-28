@@ -52,29 +52,47 @@ final class DietScreenPresenter {
         return mealIndexPath
     }
     
-    private func mealPosition(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Int {
+    private func mealPosition(forMeal meal: MealsType, fromIndexPath indexPath: IndexPath) -> Int {
         // Получение позиции родительской ячейки и блока данных
         let dietCellIndex = self.getCellIndex(forMeal: meal, atSection: indexPath.section)
-        let dietCellData = self.getCellInfo(forMeal: meal, atSection: indexPath.section)
         let position = indexPath.row - dietCellIndex - 1
         
         // Проверка на размер блока данных
-        if position >= dietCellData.meals.count {
+        if position >= interactor.getMealCount(forMeal: meal, atSection: indexPath.section) {
             fatalError("Cell is null!")
         }
         return position
+    }
+    
+    private func mealPosition(forMeal meal: MealsType, fromID id: Int, atSection section: Int) -> IndexPath {
+        // Получение позиции родительской ячейки и блока данных
+        let dietCellIndex = self.getCellIndex(forMeal: meal, atSection: section)
+        let row = id + dietCellIndex + 1
+        return IndexPath(row: row, section: section)
+    }
+    
+    // Получение информации о блюде
+    private func getMealData(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> MealData {
+        let id = self.mealPosition(forMeal: meal, fromIndexPath: indexPath)
+        return interactor.getMealData(withID: id, forMeal: meal, atSection: indexPath.section)
     }
 }
 
 // Геттеры
 extension DietScreenPresenter: DietScreenViewOutput {
-    // Получение информации о блюде
-    func getMealData(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> MealInfo {
-        // Получение базы данных родительской ячейки
-        let dietCellData = self.getCellInfo(forMeal: meal, atSection: indexPath.section)
-        
-        // Получение данных для текущей ячейки блюда
-        return dietCellData.meals[self.mealPosition(forMeal: meal, atIndex: indexPath)]
+    // Получение состояния блюда
+    func getMealState(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Bool {
+        return getMealData(forMeal: meal, atIndex: indexPath).modelState
+    }
+    
+    // Получение названия блюда
+    func getMealName(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> String {
+        return getMealData(forMeal: meal, atIndex: indexPath).modelName ?? ""
+    }
+    
+    // Получение калорийности
+    func getMealCalories(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Double {
+        return getMealData(forMeal: meal, atIndex: indexPath).modelCalories
     }
     
     // Получение номера строки ячейки
@@ -85,9 +103,9 @@ extension DietScreenPresenter: DietScreenViewOutput {
         return index
     }
     
-    // Получение данных для ячейки
-    func getCellInfo(forMeal meal: MealsType, atSection section: Int) -> CellInfo {
-        return interactor.getCellInfo(forMeal: meal, atSection: section)
+    // Получение состояния ячейки
+    func getCellDisclosure(forMeal meal: MealsType, atSection section: Int) -> DisclosureState {
+        return interactor.getCellInfo(forMeal: meal, atSection: section).disclosureState
     }
     
     // Получение типа ячейки по индексу
@@ -134,18 +152,23 @@ extension DietScreenPresenter {
     }
 
     func clickedMeal(_ state: Bool, forMeal celltype: MealsType, atIndex indexPath: IndexPath) {
-        let position = self.mealPosition(forMeal: celltype, atIndex: indexPath)
-        interactor.changeMealState(toState: state, atIndex: position, forMeal: celltype, atSection: indexPath.section)
+        let id = self.mealPosition(forMeal: celltype, fromIndexPath: indexPath)
+        interactor.changeMealState(toState: state, withID: id, forMeal: celltype, atSection: indexPath.section)
     }
 }
 
 // Обработчики ответа от интерактора
 extension DietScreenPresenter: DietScreenInteractorOutput {
-    func updateMealData(_ meals: [MealInfo], forMeal meal: MealsType, atSection section: Int) {
+    func undoChangeMealState(_ state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int) {
+        let indexPath = self.mealPosition(forMeal: meal, fromID: id, atSection: section)
+        view?.uncheckedMeal(state, forIndexPath: indexPath)
+    }
+    
+    func updateMealData(forMeal meal: MealsType, atSection section: Int) {
         if (rowInSection.count <= section) { return }
         
         // Обновление блюд, если ячейка открыта
-        if interactor.getCellInfo(forMeal: meal, atSection: section).disclosureState == .disclosure {
+        if self.getCellDisclosure(forMeal: meal, atSection: section) == .disclosure {
             // Обновление базы данных и показанных ячеек
             let _ = self.prepareCells(for: .reload, mealType: meal, atSection: section)
         }
@@ -155,9 +178,18 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
     }
     
     func updateNumOfDays(_ days: Int) {
+        let lastNumOfDays = rowInSection.count
         // Создание начальных полей секции
-        for curSection in 0...days-1 {
-            rowInSection.insert([.breakfast, .lunch, .dinner], at: curSection)
+        if days > lastNumOfDays {
+            for curSection in lastNumOfDays...days-1 {
+                rowInSection.insert([.breakfast, .lunch, .dinner], at: curSection)
+            }
+        } else if days < lastNumOfDays {
+            for curSection in days...lastNumOfDays-1 {
+                rowInSection.remove(at: curSection)
+            }
+        } else {
+            return
         }
         // Перезагрузка таблицы
         view?.reloadTableView()

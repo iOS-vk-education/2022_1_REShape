@@ -38,7 +38,7 @@ final class WeightInteractor {
     
     private func getDataFromRemoteBase() {
         print("[DEBUG] Запрос на загрузку удаленной БД весов")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
             // Данные с FireBase
             let firebaseData = [
                 FireBaseWeightModel(modelID: 0, modelDate: "15 апреля 2022г", modelTime: "12:45", modelWeight: "45"),
@@ -49,15 +49,15 @@ final class WeightInteractor {
             // Обновление данных по ID
             for data in firebaseData {
                 guard let model = self.getWeightData(fromID: data.modelID) else {
-                    self.coreDataContext.insert(WeightModel(id: data.modelID, dateString: data.modelDate, timeString: data.modelTime, weightString: data.modelWeight, context: self.coreDataContext))
+                    self.localViewModels.append(WeightModel(id: data.modelID, dateString: data.modelDate, timeString: data.modelTime, weightString: data.modelWeight, context: self.coreDataContext))
                     continue
                 }
                 model.setData(id: data.modelID, dateString: data.modelDate, timeString: data.modelTime, weightString: data.modelWeight)
             }
             self.weightModelController.saveContext()
             
-            // Получение обновлений для локальной БД
-            self.updateLocalBase()
+            // Обновление отображения
+            self.output?.newWeightGetting()
         })
     }
     
@@ -93,10 +93,13 @@ extension WeightInteractor: WeightInteractorInput {
     func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String) {
         print("[DEBUG] Загрузка локальной БД (обновления БД) весов на сервер")
         // Если удачно загрузилось
-        coreDataContext.insert(WeightModel(id: localViewModels.count, dateString: date, timeString: time, weightString: weight, context: coreDataContext))
+        localViewModels.append(WeightModel(id: localViewModels.count, dateString: date, timeString: time, weightString: weight, context: coreDataContext))
+        
         // Сохранение обновленных данных
         weightModelController.saveContext()
-        updateLocalBase()
+        
+        // Обновление данных
+        self.output?.newWeightGetting()
         
         // Если неудачно
 //        output?.undoUploadNewWeight()

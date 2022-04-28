@@ -110,6 +110,13 @@ final class DietScreenViewController: UIViewController {
     
 }
 extension DietScreenViewController: DietScreenViewInput {
+    func uncheckedMeal(_ state: Bool, forIndexPath indexPath: IndexPath) {
+        guard let cell = dietTableView.cellForRow(at: indexPath) as? MealCell else {
+            return
+        }
+        cell.setState(at: state)
+    }
+    
     func showCells(for indexPaths: [IndexPath]) {
         dietTableView.beginUpdates()
         dietTableView.insertRows(at: indexPaths, with: .bottom)
@@ -134,20 +141,20 @@ extension DietScreenViewController: DietScreenViewInput {
 extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let mealType = output.getCellType(from: indexPath)
+        let section = indexPath.section
         switch mealType {
         case .breakfast, .lunch, .dinner:
-            // Получение и установка данных для текущей ячейки
-            let cellData = output.getCellInfo(forMeal: mealType, atSection: indexPath.section)
-            
             let cell = tableView.dequeueCell(cellType: DietCell.self, for: indexPath)
-            cell.setData(text: mealType.text, state: cellData.disclosureState)
+            cell.setData(
+                text: mealType.text,
+                state: output.getCellDisclosure(forMeal: mealType, atSection: section))
             return cell
         case .mealBreakfast, .mealLunch, .mealDinner:
-            // Получение данных для текущей ячейки
-            let mealData = output.getMealData(forMeal: mealType.revert, atIndex: indexPath)
-            
             let cell = tableView.dequeueCell(cellType: MealCell.self, for: indexPath)
-            cell.setMealInformation(mealData.name, calories: mealData.cal, state: mealData.checked)
+            cell.setMealInformation(
+                name: output.getMealName(forMeal: mealType.revert, atIndex: indexPath),
+                calories: output.getMealCalories(forMeal: mealType.revert, atIndex: indexPath),
+                state: output.getMealState(forMeal: mealType.revert, atIndex: indexPath))
             return cell
         case .none:
             return .init()
@@ -176,17 +183,17 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
         switch mealType {
         case .breakfast, .lunch, .dinner:
             // Получение блока данных
-            let newCellDisclosureState = output.getCellInfo(forMeal: mealType, atSection: indexPath.section).disclosureState.revert
+            let newCellDisclosureState = output.getCellDisclosure(forMeal: mealType, atSection: indexPath.section).revert
             
             // Проверка и изменение состояния
-            (cell as? DietCell)?.disclosure(newCellDisclosureState)
+            (cell as! DietCell).disclosure(newCellDisclosureState)
             output.clickedDiet(newCellDisclosureState, mealType: mealType, inSection: indexPath.section)
         case .mealLunch, .mealDinner, .mealBreakfast:
             // Получение данных о блюде
-            let newMealChecked = !output.getMealData(forMeal: mealType.revert, atIndex: indexPath).checked
+            let newMealChecked = !output.getMealState(forMeal: mealType.revert, atIndex: indexPath)
 
             // Проверка состояния блюда и изменение его состояния
-            (cell as? MealCell)?.setState(at: newMealChecked)
+            (cell as! MealCell).setState(at: newMealChecked)
             output.clickedMeal(newMealChecked, forMeal: mealType.revert, atIndex: indexPath)
         default:
             return

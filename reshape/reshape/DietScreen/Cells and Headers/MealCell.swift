@@ -58,7 +58,7 @@ final class MealCell: AbstractCell {
         caloriesLabel.height(17)
     }
     
-    func setMealInformation(_ name: String, calories: Double, state: Bool) {
+    func setMealInformation(name: String, calories: Double, state: Bool) {
         setCellText(name)
         caloriesLabel.text = "\(Int(calories)) ккал"
         setState(at: state)

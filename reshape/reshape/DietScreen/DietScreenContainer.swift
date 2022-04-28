@@ -14,8 +14,9 @@ final class DietScreenContainer {
 	private(set) weak var router: DietScreenRouterInput!
 
 	static func assemble(with context: DietScreenContext) -> DietScreenContainer {
+        let dataController = DietModelController()
         let router = DietScreenRouter()
-        let interactor = DietScreenInteractor()
+        let interactor = DietScreenInteractor(coreDataController: dataController)
         let presenter = DietScreenPresenter(router: router, interactor: interactor)
 		let viewController = DietScreenViewController(output: presenter)
 

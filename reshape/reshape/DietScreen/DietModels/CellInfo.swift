@@ -10,7 +10,7 @@ class CellInfo {
     var section: Int
     var cellType: MealsType
     var disclosureState: DisclosureState
-    var meals: [MealInfo]
+    var meals: [MealData]
     
     init(_ sec: Int, initType: MealsType) {
         section = sec
@@ -19,12 +19,12 @@ class CellInfo {
         meals = []
     }
     
-    func updateMeals(to meals: [MealInfo]) {
+    func updateMeals(to meals: [MealData]) {
         self.meals = meals
     }
     
-    func changeMealState(atIndex index: Int, toState state: Bool) {
-        self.meals[index].checked = state
+    func addMeal(to meal: MealData) {
+        self.meals.append(meal)
     }
     
     func changeDisclosure(toState state: DisclosureState) {

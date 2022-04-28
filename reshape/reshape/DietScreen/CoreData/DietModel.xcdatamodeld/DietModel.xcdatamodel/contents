@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="CellData" representedClassName="CellData" syncable="YES">
-        <attribute name="modelID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="modelSection" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="modelState" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="modelType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="modelMeals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MealData" inverseName="cellInfo" inverseEntity="MealData"/>
-    </entity>
     <entity name="MealData" representedClassName="MealData" syncable="YES">
-        <attribute name="modelCalories" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="modelCalories" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="modelDay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="modelDiet" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="modelID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="modelName" optional="YES" attributeType="String"/>
         <attribute name="modelState" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="cellInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CellData" inverseName="modelMeals" inverseEntity="CellData"/>
     </entity>
     <elements>
-        <element name="CellData" positionX="-411.2130126953125" positionY="-70.5577392578125" width="105.6660766601562" height="118"/>
-        <element name="MealData" positionX="-78.33111572265625" positionY="-86.84272766113281" width="128" height="118"/>
+        <element name="MealData" positionX="-78.33111572265625" positionY="-86.84272766113281" width="128" height="133"/>
     </elements>
 </model>

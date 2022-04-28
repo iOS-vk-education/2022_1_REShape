@@ -22,6 +22,7 @@ protocol DietScreenViewInput: AnyObject {
     func hideCells(for indexPaths: [IndexPath])
     func reloadTableView()
     func reloadTableSections(atSection sections: IndexSet)
+    func uncheckedMeal(_ state: Bool, forIndexPath indexPath: IndexPath)
 }
 
 protocol DietScreenViewOutput: AnyObject {
@@ -31,10 +32,13 @@ protocol DietScreenViewOutput: AnyObject {
     // Геттеры
     func getNumOfDay() -> Int
     func getNumOfRows(inSection section: Int) -> Int
+    
     func getCellType(from indexPath: IndexPath) -> MealsType
-    func getCellIndex(forMeal meal: MealsType, atSection section: Int) -> Int
-    func getCellInfo(forMeal meal: MealsType, atSection section: Int) -> CellInfo
-    func getMealData(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> MealInfo
+    func getCellDisclosure(forMeal meal: MealsType, atSection section: Int) -> DisclosureState
+    
+    func getMealState(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Bool
+    func getMealName(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> String
+    func getMealCalories(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Double
     
     // Обработчики нажатий на ячейки
     func clickedDiet(_ state: DisclosureState, mealType celltype: MealsType, inSection section: Int)
@@ -47,17 +51,19 @@ protocol DietScreenInteractorInput: AnyObject {
     
     // Геттеры
     func getCellInfo(forMeal meal: MealsType, atSection section: Int) -> CellInfo
+    func getMealData(withID id: Int, forMeal meal: MealsType, atSection section: Int) -> MealData
     func getMealCount(forMeal meal: MealsType, atSection section: Int) -> Int
     
     // Изменение состояния базы данных
     func changeDisclosure(toState state: DisclosureState, forMeal meal: MealsType, atSection section: Int)
-    func changeMealState(toState state: Bool, atIndex index: Int, forMeal meal: MealsType, atSection section: Int)
+    func changeMealState(toState state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int)
 }
 
 protocol DietScreenInteractorOutput: AnyObject {
     // Ответы на запросы презентера или интерактора
-    func updateMealData(_ meals: [MealInfo], forMeal meal: MealsType, atSection section: Int)
+    func updateMealData(forMeal meal: MealsType, atSection section: Int)
     func updateNumOfDays(_ days: Int)
+    func undoChangeMealState(_ state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int)
 }
 
 protocol DietScreenRouterInput: AnyObject {
