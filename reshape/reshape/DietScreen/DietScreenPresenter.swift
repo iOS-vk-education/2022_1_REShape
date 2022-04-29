@@ -134,6 +134,11 @@ extension DietScreenPresenter {
     func requestNumOfDays() {
         interactor.requestNumOfDays()
     }
+    
+    // Сохранение БД
+    func saveDatabase() {
+        interactor.saveDatabase()
+    }
 }
 
 // Обработчики нажатий на ячейки

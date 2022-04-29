@@ -38,7 +38,6 @@ final class DietScreenViewController: UIViewController {
     
     init(output: DietScreenViewOutput) {
         self.output = output
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -56,8 +55,13 @@ final class DietScreenViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // Запрос числа дней в Presenterе
+        super.viewDidAppear(animated)
         output.requestNumOfDays()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        output.saveDatabase()
     }
     
     func setupUI() {

@@ -12,7 +12,7 @@ import CoreData
 final class DietScreenInteractor {
     private var cellData: [CellInfo] = []
 	weak var output: DietScreenInteractorOutput?
-    private var numOfDays: Int = 0
+    private var numOfDays = 0
     
     // Базы данных
     private let modelController: DietModelController
@@ -24,22 +24,16 @@ final class DietScreenInteractor {
         coreDataContext = modelController.managedObjectContext
         firebaseModelController = DietFirebaseModelController()
         firebaseModelController.login(completion: self.requestNumOfDays)
-        _ = createCellData()
+        createCellData(withNewDays: UserDefaults.standard.integer(forKey: "dietDays"))
         uploadFromDatabase()
     }
     
-    deinit {
-        defaults.set(numOfDays, forKey: "dietDays")
-        modelController.saveContext()
-    }
-    
     // Создание внутреннего кэша данных по каждому приёму пищи
-    private func createCellData(withNewDays days: Int = 0) -> Bool {
+    private func createCellData(withNewDays days: Int = 0) {
         let oldDays = numOfDays
         numOfDays = days
         if numOfDays < oldDays {
             cellData.removeSubrange(numOfDays...oldDays-1)
-            return true
         } else if numOfDays > oldDays {
             for curSection in oldDays...numOfDays-1 {
                 self.cellData.append(contentsOf: [
@@ -48,9 +42,7 @@ final class DietScreenInteractor {
                     CellInfo(curSection, initType: .dinner)
                 ])
             }
-            return true
         }
-        return false
     }
     
     // Загрузка данных из локальной БД
@@ -80,6 +72,9 @@ final class DietScreenInteractor {
                 cellData[cellDataIndex].addMeal(to: meal)
                 continue
             }
+            
+            // Проверка на идентичность
+            if meal == cellData[cellDataIndex].meals[mealDataIndex] { return }
             cellData[cellDataIndex].meals[mealDataIndex].copyFrom(meal)
             
             coreDataContext.delete(meal)
@@ -149,9 +144,14 @@ extension DietScreenInteractor {
         }
     }
     
-    // Запись информации о состоянии блюда в FireBase
-    private func transmitMealState(_ state: Bool, atPosition position: Int, forMeal celltype: MealsType, inDay day: Int) {
-        print("[DEBUG] New state of \(celltype.text) transmit at \(day) day in \(position) position")
+    // Обработка изменения состояния блюда
+    func changeMealState(toState state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int) {
+        print("[DEBUG] New state of \(meal.text) transmit at \(section + 1) day in \(id) position")
+        firebaseModelController.newMealState(state, forDay: section + 1, atMeal: meal.engText, forID: id + 1) {
+            flag in
+            flag ? self.getMealData(withID: id, forMeal: meal, atSection: section).changeState(toState: state) :
+            self.errorUpload(toState: !state, withID: id, forMeal: meal, atSection: section)
+        }
     }
     
     // Запрос на получение числа дней
@@ -159,11 +159,14 @@ extension DietScreenInteractor {
         print("[DEBUG] Need get num of days")
         firebaseModelController.daysCount() { [weak self] days in
             guard (self != nil) else { return }
-            if self!.createCellData(withNewDays: Int(days)) {
-                self!.output?.updateNumOfDays(self!.numOfDays)
-                self!.uploadFromDatabase()
-            }
+            self!.createCellData(withNewDays: Int(days))
+            self!.output?.updateNumOfDays(self!.numOfDays)
+            self!.uploadFromDatabase()
         }
+    }
+    
+    func saveDatabase() {
+        modelController.saveContext()
     }
 }
 
@@ -193,13 +196,8 @@ extension DietScreenInteractor: DietScreenInteractorInput {
         return maxMealID
     }
     
-    // Обработка изменения состояния блюда
-    func changeMealState(toState state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int) {
-        self.transmitMealState(state, atPosition: id, forMeal: meal, inDay: section + 1)
-//        let ifErrorState = !state
-//        output?.undoChangeMealState(ifErrorState, withID: id, forMeal: meal, atSection: section)
-//        return
-        self.getMealData(withID: id, forMeal: meal, atSection: section).changeState(toState: state)
+    func errorUpload(toState state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int) {
+        output?.undoChangeMealState(state, withID: id, forMeal: meal, atSection: section)
     }
     
     // Обработка изменения состояния раскрывающейся ячейки

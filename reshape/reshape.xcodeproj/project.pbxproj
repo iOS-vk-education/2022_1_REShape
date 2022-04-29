@@ -24,7 +24,6 @@
 		2EAA1B7028130A7800CA4847 /* WeightModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B6E28130A7800CA4847 /* WeightModel+CoreDataProperties.swift */; };
 		2EB767C2280605E7008868DD /* DisclosureState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767C1280605E7008868DD /* DisclosureState.swift */; };
 		2EB767C42806060D008868DD /* MealsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767C32806060D008868DD /* MealsType.swift */; };
-		2EB767C628060645008868DD /* MealInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767C528060645008868DD /* MealInfo.swift */; };
 		2EB767CE2809F08F008868DD /* WeightPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767C82809F08F008868DD /* WeightPresenter.swift */; };
 		2EB767CF2809F08F008868DD /* WeightRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767C92809F08F008868DD /* WeightRouter.swift */; };
 		2EB767D02809F08F008868DD /* WeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767CA2809F08F008868DD /* WeightViewController.swift */; };
@@ -158,7 +157,6 @@
 		2EAA1B6E28130A7800CA4847 /* WeightModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeightModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EB767C1280605E7008868DD /* DisclosureState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureState.swift; sourceTree = "<group>"; };
 		2EB767C32806060D008868DD /* MealsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsType.swift; sourceTree = "<group>"; };
-		2EB767C528060645008868DD /* MealInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealInfo.swift; sourceTree = "<group>"; };
 		2EB767C82809F08F008868DD /* WeightPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightPresenter.swift; sourceTree = "<group>"; };
 		2EB767C92809F08F008868DD /* WeightRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightRouter.swift; sourceTree = "<group>"; };
 		2EB767CA2809F08F008868DD /* WeightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightViewController.swift; sourceTree = "<group>"; };
@@ -408,7 +406,6 @@
 			children = (
 				2EB767C32806060D008868DD /* MealsType.swift */,
 				2EB767C1280605E7008868DD /* DisclosureState.swift */,
-				2EB767C528060645008868DD /* MealInfo.swift */,
 				2EA1E8A428045BB6001B329A /* CellInfo.swift */,
 			);
 			path = DietEntities;
@@ -913,7 +910,6 @@
 				9478495827FB221400138DA4 /* RegisterScreenRouter.swift in Sources */,
 				945B385D27ECC3500044E952 /* ProfileScreenPresenter.swift in Sources */,
 				2EECFF3627E5037100BD4BEF /* EnterProtocols.swift in Sources */,
-				2EB767C628060645008868DD /* MealInfo.swift in Sources */,
 				945B384827ECC32A0044E952 /* ResultsScreenProtocols.swift in Sources */,
 				36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */,
 				9437920327F9AFA10000188E /* ResultCollectionCell.swift in Sources */,

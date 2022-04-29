@@ -14,10 +14,12 @@ class AbstractCell: UITableViewCell {
         label.text = ""
         label.textColor = UIColor.darkVioletColor
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.numberOfLines = 1
         return label
     }()
     
     private var leftCellNameConstraint = NSLayoutConstraint()
+    private var rightCellNameConstraint = NSLayoutConstraint()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,10 +33,11 @@ class AbstractCell: UITableViewCell {
     private func setupLabel() {
         self.addSubview(cellName)
         leftCellNameConstraint = cellName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 11)
+        rightCellNameConstraint = cellName.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -11)
         NSLayoutConstraint.activate([
             leftCellNameConstraint,
+            rightCellNameConstraint,
             cellName.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
-            cellName.widthAnchor.constraint(greaterThanOrEqualToConstant: 36)
         ])
         cellName.height(17)
     }
@@ -53,5 +56,11 @@ class AbstractCell: UITableViewCell {
         NSLayoutConstraint.deactivate([leftCellNameConstraint])
         leftCellNameConstraint = cellName.leftAnchor.constraint(equalTo: anchor, constant: constant)
         NSLayoutConstraint.activate([leftCellNameConstraint])
+    }
+    
+    func changeRightTextConstraint(toAnchor anchor: NSLayoutXAxisAnchor, constant: CGFloat) {
+        NSLayoutConstraint.deactivate([rightCellNameConstraint])
+        rightCellNameConstraint = cellName.rightAnchor.constraint(equalTo: anchor, constant: constant)
+        NSLayoutConstraint.activate([rightCellNameConstraint])
     }
 }

@@ -56,6 +56,17 @@ final class DietFirebaseModelController {
         });
     }
     
+    func newMealState(_ state: Bool, forDay day: Int, atMeal meal: String, forID id: Int, completion: @escaping (Bool) -> Void) {
+        firebaseRef.child("diets/day\(day)/meals/\(meal)/meal\(id)/mealState").setValue(state) { error,_ in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                completion(false)
+                return;
+            }
+            completion(true)
+        }
+    }
+    
     func mealName(forID id: UInt) -> String {
         let mealData = self.lastSnapshot.value(forKey: "meal\(id)") as? NSDictionary
         return mealData?["mealName"] as? String ?? ""

@@ -26,8 +26,11 @@ protocol DietScreenViewInput: AnyObject {
 }
 
 protocol DietScreenViewOutput: AnyObject {
-    // Запросы от таблицы
+    // Запросы на обновление числа дней
     func requestNumOfDays()
+    
+    // Запрос на сохранение в локальную БД
+    func saveDatabase()
     
     // Геттеры
     func getNumOfDay() -> Int
@@ -48,6 +51,7 @@ protocol DietScreenViewOutput: AnyObject {
 protocol DietScreenInteractorInput: AnyObject {
     // Запросы от презентера
     func requestNumOfDays()
+    func saveDatabase()
     
     // Геттеры
     func getCellInfo(forMeal meal: MealsType, atSection section: Int) -> CellInfo

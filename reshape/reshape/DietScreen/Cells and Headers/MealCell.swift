@@ -17,6 +17,7 @@ final class MealCell: AbstractCell {
     private var caloriesLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkVioletColor
+        label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
@@ -52,10 +53,13 @@ final class MealCell: AbstractCell {
         self.changeLeftTextConstraint(toAnchor: checkCircleImage.rightAnchor, constant: 6)
         
         caloriesLabel.translatesAutoresizingMaskIntoConstraints = false
-        caloriesLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12).isActive = true
-        caloriesLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        caloriesLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 30).isActive = true
-        caloriesLabel.height(17)
+        NSLayoutConstraint.activate([
+            caloriesLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12),
+            caloriesLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            caloriesLabel.widthAnchor.constraint(equalToConstant: 70)
+        ])
+        
+        self.changeRightTextConstraint(toAnchor: caloriesLabel.leftAnchor, constant: -6)
     }
     
     func setMealInformation(name: String, calories: Double, state: Bool) {
