@@ -22,15 +22,14 @@ protocol DietScreenViewInput: AnyObject {
     func hideCells(for indexPaths: [IndexPath])
     func reloadTableView()
     func reloadTableSections(atSection sections: IndexSet)
-    func uncheckedMeal(_ state: Bool, forIndexPath indexPath: IndexPath)
 }
 
 protocol DietScreenViewOutput: AnyObject {
     // Запросы на обновление числа дней
-    func requestNumOfDays()
+    func requestData()
     
     // Запрос на сохранение в локальную БД
-    func saveDatabase()
+    func saveData()
     
     // Геттеры
     func getNumOfDay() -> Int
@@ -50,11 +49,11 @@ protocol DietScreenViewOutput: AnyObject {
 
 protocol DietScreenInteractorInput: AnyObject {
     // Запросы от презентера
-    func requestNumOfDays()
+    func getDatabase()
     func saveDatabase()
     
     // Геттеры
-    func getCellInfo(forMeal meal: MealsType, atSection section: Int) -> CellInfo
+    func getCellData(forMeal meal: MealsType, atSection section: Int) -> CellData
     func getMealData(withID id: Int, forMeal meal: MealsType, atSection section: Int) -> MealData
     func getMealCount(forMeal meal: MealsType, atSection section: Int) -> Int
     
@@ -67,7 +66,6 @@ protocol DietScreenInteractorOutput: AnyObject {
     // Ответы на запросы презентера или интерактора
     func updateMealData(forMeal meal: MealsType, atSection section: Int)
     func updateNumOfDays(_ days: Int)
-    func undoChangeMealState(_ state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int)
 }
 
 protocol DietScreenRouterInput: AnyObject {

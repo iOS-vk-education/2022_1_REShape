@@ -52,16 +52,18 @@ final class DietScreenViewController: UIViewController {
         setupUI()
         // Настройка AutoLayout
         setupConstraint()
+        // Запрос на выгрузку данных
+        output.requestData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        output.requestNumOfDays()
+        output.requestData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        output.saveDatabase()
+        output.saveData()
     }
     
     func setupUI() {
@@ -117,13 +119,6 @@ final class DietScreenViewController: UIViewController {
     
 }
 extension DietScreenViewController: DietScreenViewInput {
-    func uncheckedMeal(_ state: Bool, forIndexPath indexPath: IndexPath) {
-        guard let cell = dietTableView.cellForRow(at: indexPath) as? MealCell else {
-            return
-        }
-        cell.setState(at: state)
-    }
-    
     func showCells(for indexPaths: [IndexPath]) {
         dietTableView.beginUpdates()
         dietTableView.insertRows(at: indexPaths, with: .bottom)

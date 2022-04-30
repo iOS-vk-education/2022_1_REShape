@@ -10,9 +10,8 @@ import Foundation
 import CoreData
 
 final class DietScreenInteractor {
-    private var cellData: [CellInfo] = []
+    private var cellData: [CellData] = []
 	weak var output: DietScreenInteractorOutput?
-    private var numOfDays = 0
     
     // Базы данных
     private let modelController: DietModelController
@@ -23,94 +22,99 @@ final class DietScreenInteractor {
         modelController = DietModelController()
         coreDataContext = modelController.managedObjectContext
         firebaseModelController = DietFirebaseModelController()
-        firebaseModelController.login(completion: self.requestNumOfDays)
-        createCellData(withNewDays: UserDefaults.standard.integer(forKey: "dietDays"))
+        firebaseModelController.login()
         uploadFromDatabase()
     }
     
+    private func numOfDays() -> Int {
+        return cellData.count/3
+    }
+    
     // Создание внутреннего кэша данных по каждому приёму пищи
-    private func createCellData(withNewDays days: Int = 0) {
-        let oldDays = numOfDays
-        numOfDays = days
-        if numOfDays < oldDays {
-            cellData.removeSubrange(numOfDays...oldDays-1)
-        } else if numOfDays > oldDays {
-            for curSection in oldDays...numOfDays-1 {
+    private func createCellData(withNewDays newDays: Int = 0) {
+        let oldDays = numOfDays()
+        if newDays < oldDays {
+            for curSection in newDays...oldDays-1 {
+                // Поиск индекса
+                guard let breakfastIndex = cellIndex(forMeal: .breakfast, atSection: curSection) else {
+                    fatalError("[ERROR] Can't find cell index in section: \(curSection)")
+                    continue
+                }
+                guard let lunchIndex = cellIndex(forMeal: .lunch, atSection: curSection) else {
+                    fatalError("[ERROR] Can't find cell index in section: \(curSection)")
+                    continue
+                }
+                guard let dinnerIndex = cellIndex(forMeal: .dinner, atSection: curSection) else {
+                    fatalError("[ERROR] Can't find cell index in section: \(curSection)")
+                    continue
+                }
+                
+                // Удаление блюд в ячейках
+                deleteMeals(greaterThanID: 0, forMeal: .breakfast, inSection: curSection)
+                deleteMeals(greaterThanID: 0, forMeal: .lunch, inSection: curSection)
+                deleteMeals(greaterThanID: 0, forMeal: .dinner, inSection: curSection)
+                
+                // Удаление ячеек
+                coreDataContext.delete(cellData.remove(at: breakfastIndex))
+                coreDataContext.delete(cellData.remove(at: lunchIndex))
+                coreDataContext.delete(cellData.remove(at: dinnerIndex))
+            }
+        } else if newDays > oldDays {
+            for curSection in oldDays...newDays-1 {
                 self.cellData.append(contentsOf: [
-                    CellInfo(curSection, initType: .breakfast),
-                    CellInfo(curSection, initType: .lunch),
-                    CellInfo(curSection, initType: .dinner)
+                    CellData(section: curSection, cellType: .breakfast, context: coreDataContext),
+                    CellData(section: curSection, cellType: .lunch, context: coreDataContext),
+                    CellData(section: curSection, cellType: .dinner, context: coreDataContext)
                 ])
             }
         }
+        modelController.saveContext()
     }
     
     // Загрузка данных из локальной БД
     private func uploadFromDatabase() {
         do {
-            let fetchRequest = MealData.fetchRequest()
+            let fetchRequest = CellData.fetchRequest()
             let result = try coreDataContext.fetch(fetchRequest)
-            addMeals(result)
+            cellData = result
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
-    // Добавление полученных блюд во внутренний кэш
-    private func addMeals(_ meals: [MealData]) {
-        var dietsForUpdate: Set<Int> = []
-        for meal in meals {
-            let section = Int(meal.modelDay) - 1
-            if section >= numOfDays { continue }
-            
-            let celltype = MealsType(Int(meal.modelDiet))
-            let mealID = Int(meal.modelID)
-            let cellDataIndex = self.cellIndex(forMeal: celltype, atSection: section)
-            dietsForUpdate.insert(cellDataIndex)
-            guard let mealDataIndex = self.mealIndex(forCellPosition: cellDataIndex, atID: mealID) else {
-                modelController.saveContext()
-                cellData[cellDataIndex].addMeal(to: meal)
-                continue
-            }
-            
-            // Проверка на идентичность
-            if meal == cellData[cellDataIndex].meals[mealDataIndex] { return }
-            cellData[cellDataIndex].meals[mealDataIndex].copyFrom(meal)
-            
-            coreDataContext.delete(meal)
-            modelController.saveContext()
-        }
-        dietsForUpdate.forEach({ cellIndex in
-            output?.updateMealData(forMeal: cellData[cellIndex].cellType, atSection: cellData[cellIndex].section)
+    // Получение позиции данных ячейки из внутреннего кэша
+    private func cellIndex(forMeal meal: MealsType, atSection section: Int) -> Int? {
+        return cellData.firstIndex(where: { $0.cellSection == section && $0.cellType == meal.int })
+    }
+    
+    // Получение позиции блюда для ячейки из внутреннего кэша по ячейке
+    private func mealIndex(forCellData cell: CellData, atID id: Int) -> Int? {
+        return (cell.cellMeals?.allObjects as! [MealData]).firstIndex(where: { meal in
+            return meal.modelID == id
         })
     }
     
-    // Получение позиции данных ячейки из внутреннего кэша
-    private func cellIndex(forMeal meal: MealsType, atSection section: Int) -> Int {
-        guard let index = cellData.firstIndex(where: { $0.section == section && $0.cellType == meal }) else {
-            fatalError("Can't find cell index for \(meal.text)!")
-        }
-        return index
-    }
-    
-    // Получение позиции блюда для ячейки из внутреннего кэша по ID
+    // Получение позиции блюда для ячейки из внутреннего кэша по ID и позиции в кэше
     private func mealIndex(forCellPosition position: Int, atID id: Int) -> Int? {
-        return cellData[position].meals.firstIndex(where: ) { meal in
-            return meal.modelID == id
-        }
+        let cell = cellData[position]
+        return mealIndex(forCellData: cell, atID: id)
     }
     
-    private func deleteMeals(greaterThanID id: UInt, forMeal meal: MealsType, inSection section: Int) {
-        let oldNumOfMeals = UInt(self.getMealCount(forMeal: meal, atSection: section))
-        if id < oldNumOfMeals {
-            for mealID in id...oldNumOfMeals-1 {
-                let cellDataIndex = self.cellIndex(forMeal: meal, atSection: section)
-                guard let mealDataIndex = self.mealIndex(forCellPosition: cellDataIndex, atID: Int(mealID)) else {
-                    fatalError("Can't find meal index for mealID: \(mealID)")
-                }
-                self.coreDataContext.delete(cellData[cellDataIndex].meals.remove(at: mealDataIndex))
-            }
+    // Получение позиции блюда для ячейки из внутреннего кэша по приёму пищи, секции и ID
+    private func mealIndex(forMeal meal: MealsType, atSection section: Int, atID id: Int) -> Int? {
+        guard let cellDataIndex = cellIndex(forMeal: meal, atSection: section) else { return nil }
+        return mealIndex(forCellPosition: cellDataIndex, atID: id)
+    }
+    
+    private func deleteMeals(greaterThanID id: Int, forMeal type: MealsType, inSection section: Int) {
+        let oldNumOfMeals = self.getMealCount(forMeal: type, atSection: section)
+        if id >= oldNumOfMeals { return }
+        for mealID in id...oldNumOfMeals-1 {
+            let cell = getCellData(forMeal: type, atSection: section)
+            let mealData = getMealData(withID: mealID, forMeal: type, atSection: section)
+            cell.removeFromCellMeals(mealData)
         }
+        modelController.saveContext()
     }
 }
 
@@ -123,48 +127,65 @@ extension DietScreenInteractor {
             guard (self != nil) else { return }
             
             // Удаление лишних блюд
-            self!.deleteMeals(greaterThanID: numOfMeals, forMeal: mealtype, inSection: day - 1)
+            self?.deleteMeals(greaterThanID: Int(numOfMeals), forMeal: mealtype, inSection: day - 1)
             if numOfMeals == 0 { return }
             
             // Обновление блюд
-            var meals: [MealData] = []
+            let cell = self!.getCellData(forMeal: mealtype, atSection: day - 1)
             for mealNumber in 1...numOfMeals {
-                meals.append(MealData(
-                    id: Int(mealNumber) - 1,
-                    nameString: self!.firebaseModelController.mealName(forID: mealNumber),
-                    calories: self!.firebaseModelController.mealCalories(forID: mealNumber),
-                    state: self!.firebaseModelController.mealState(forID: mealNumber),
-                    day: day,
-                    diet: mealtype,
-                    context: self!.coreDataContext)
+                let id = Int(mealNumber) - 1
+                let name = self!.firebaseModelController.mealName(forID: mealNumber)
+                let calories = self!.firebaseModelController.mealCalories(forID: mealNumber)
+                let state = self!.firebaseModelController.mealState(forID: mealNumber)
+                guard let mealDataIndex = self!.mealIndex(forCellData: cell, atID: id) else {
+                    let _ = MealData(
+                        id: id,
+                        nameString: name,
+                        calories: calories,
+                        state: state,
+                        toCell: cell,
+                        context: self!.coreDataContext)
+                    continue
+                }
+                (cell.cellMeals?.allObjects[mealDataIndex] as! MealData).setData(
+                    toID: id,
+                    toName: name,
+                    toCalories: calories,
+                    toState: state
                 )
             }
-            // Добавление блюд
-            self!.addMeals(meals)
+            self!.saveDatabase()
+            self!.output?.updateMealData(forMeal: cell.type(), atSection: cell.section())
         }
     }
     
     // Обработка изменения состояния блюда
     func changeMealState(toState state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int) {
         print("[DEBUG] New state of \(meal.text) transmit at \(section + 1) day in \(id) position")
-        firebaseModelController.newMealState(state, forDay: section + 1, atMeal: meal.engText, forID: id + 1) {
-            flag in
-            flag ? self.getMealData(withID: id, forMeal: meal, atSection: section).changeState(toState: state) :
-            self.errorUpload(toState: !state, withID: id, forMeal: meal, atSection: section)
+        firebaseModelController.newMealState(state, forDay: section + 1, atMeal: meal.engText, forID: id + 1) { [weak self] flag in
+            guard (self != nil) else { return }
+            if flag {
+                self!.getMealData(withID: id, forMeal: meal, atSection: section).changeState(toState: state)
+            } else {
+                self!.getMealData(withID: id, forMeal: meal, atSection: section).changeState(toState: !state)
+            }
+            self!.modelController.saveContext()
+            self!.output?.updateMealData(forMeal: meal, atSection: section)
         }
     }
     
-    // Запрос на получение числа дней
-    func requestNumOfDays() {
+    // Запрос на получение данных
+    func getDatabase() {
         print("[DEBUG] Need get num of days")
+        output?.updateNumOfDays(numOfDays())
         firebaseModelController.daysCount() { [weak self] days in
             guard (self != nil) else { return }
             self!.createCellData(withNewDays: Int(days))
-            self!.output?.updateNumOfDays(self!.numOfDays)
-            self!.uploadFromDatabase()
+            self!.output?.updateNumOfDays(Int(days))
         }
     }
     
+    // Сохранение данных
     func saveDatabase() {
         modelController.saveContext()
     }
@@ -174,36 +195,31 @@ extension DietScreenInteractor {
 extension DietScreenInteractor: DietScreenInteractorInput {
     // Получение данных о блюде
     func getMealData(withID id: Int, forMeal meal: MealsType, atSection section: Int) -> MealData {
-        let cellDataIndex = self.cellIndex(forMeal: meal, atSection: section)
-        guard let mealDataIndex = self.mealIndex(forCellPosition: cellDataIndex, atID: id) else {
-            fatalError("Can't find meal index for mealID: \(id)")
+        let cell = getCellData(forMeal: meal, atSection: section)
+        guard let mealDataIndex = self.mealIndex(forCellData: cell, atID: id) else {
+            fatalError("[ERROR] Can't find meal index for mealID: \(id)")
         }
-        return cellData[cellDataIndex].meals[mealDataIndex]
+        return cell.cellMeals?.allObjects[mealDataIndex] as! MealData
     }
     
     // Получение данных о ячейки
-    func getCellInfo(forMeal meal: MealsType, atSection section: Int) -> CellInfo {
-        let cellDataIndex = self.cellIndex(forMeal: meal, atSection: section)
+    func getCellData(forMeal meal: MealsType, atSection section: Int) -> CellData {
+        guard let cellDataIndex = self.cellIndex(forMeal: meal, atSection: section) else {
+            fatalError("[ERROR] Can't find element at \(section) section for \(meal.engText)")
+        }
         return cellData[cellDataIndex]
     }
     
     // Получение числа блюд для каждой ячейки
     func getMealCount(forMeal meal: MealsType, atSection section: Int) -> Int {
-        let data = cellData[self.cellIndex(forMeal: meal, atSection: section)]
-        let maxMealID = Int(data.meals.max(by: { low, high in
-            low.modelID < high.modelID
-        })?.modelID ?? -1) + 1
-        return maxMealID
-    }
-    
-    func errorUpload(toState state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int) {
-        output?.undoChangeMealState(state, withID: id, forMeal: meal, atSection: section)
+        let data = getCellData(forMeal: meal, atSection: section)
+        return data.cellMeals?.count ?? 0
     }
     
     // Обработка изменения состояния раскрывающейся ячейки
     func changeDisclosure(toState state: DisclosureState, forMeal meal: MealsType, atSection section: Int) {
-        let cellDataIndex = self.cellIndex(forMeal: meal, atSection: section)
-        cellData[cellDataIndex].changeDisclosure(toState: state)
+        let cell = getCellData(forMeal: meal, atSection: section)
+        cell.cellDisclosure = state.boolType
         
         // Запрос на сервер если ячейка открыта
         if state == .disclosure {

@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		164211D40170EA15FA9DA1D5 /* Pods_reshapeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED6BD05EB76C641AACDC618C /* Pods_reshapeTests.framework */; };
+		2E07ABE2281D39D9005DE3E0 /* CellData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07ABE0281D39D9005DE3E0 /* CellData+CoreDataClass.swift */; };
+		2E07ABE3281D39D9005DE3E0 /* CellData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07ABE1281D39D9005DE3E0 /* CellData+CoreDataProperties.swift */; };
 		2E1F1DBF27E4936700FA7B77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E1F1DBD27E4936700FA7B77 /* Main.storyboard */; };
 		2E1F1DDA27E4FB7E00FA7B77 /* EnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */; };
 		2E6730A02809F61000992435 /* WeightInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E67309F2809F61000992435 /* WeightInteractor.swift */; };
 		2EA1E89F27FCDB47001B329A /* MealCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E89E27FCDB47001B329A /* MealCell.swift */; };
 		2EA1E8A127FCDB8E001B329A /* DietHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E8A027FCDB8E001B329A /* DietHeader.swift */; };
 		2EA1E8A328041343001B329A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E8A228041343001B329A /* UIImage+Extension.swift */; };
-		2EA1E8A528045BB6001B329A /* CellInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E8A428045BB6001B329A /* CellInfo.swift */; };
 		2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6508B27E9BB94003F41FC /* AuthCoordinator.swift */; };
 		2EA6509527F2ED07003F41FC /* DietCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6509427F2ED06003F41FC /* DietCell.swift */; };
 		2EAA1B5F2812ADFD00CA4847 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */; };
@@ -141,13 +142,14 @@
 /* Begin PBXFileReference section */
 		10DCC44A988116639741C6F6 /* Pods_reshape.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_reshape.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D2092E7B40FEE591F55FD98 /* Pods-reshapeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reshapeTests.debug.xcconfig"; path = "Target Support Files/Pods-reshapeTests/Pods-reshapeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2E07ABE0281D39D9005DE3E0 /* CellData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CellData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2E07ABE1281D39D9005DE3E0 /* CellData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CellData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2E1F1DBE27E4936700FA7B77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterButton.swift; sourceTree = "<group>"; };
 		2E67309F2809F61000992435 /* WeightInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightInteractor.swift; sourceTree = "<group>"; };
 		2EA1E89E27FCDB47001B329A /* MealCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCell.swift; sourceTree = "<group>"; };
 		2EA1E8A027FCDB8E001B329A /* DietHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietHeader.swift; sourceTree = "<group>"; };
 		2EA1E8A228041343001B329A /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImage+Extension.swift"; path = "reshape/Application/Helpers/UIImage+Extension.swift"; sourceTree = SOURCE_ROOT; };
-		2EA1E8A428045BB6001B329A /* CellInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellInfo.swift; sourceTree = "<group>"; };
 		2EA6508B27E9BB94003F41FC /* AuthCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		2EA6509427F2ED06003F41FC /* DietCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietCell.swift; sourceTree = "<group>"; };
 		2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -323,6 +325,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		2E602922281D83310050B200 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				2EF3A23B281AA70900F6E38E /* DietFirebaseModelController.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 		2EAA1B632812FE8F00CA4847 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,11 +363,12 @@
 		2EC4E714281722B3002AF235 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				2E07ABE0281D39D9005DE3E0 /* CellData+CoreDataClass.swift */,
+				2E07ABE1281D39D9005DE3E0 /* CellData+CoreDataProperties.swift */,
 				2EF3A23828196E9400F6E38E /* DietModel.xcdatamodeld */,
 				2EF3A22E281858C300F6E38E /* MealData+CoreDataClass.swift */,
 				2EF3A22F281858C300F6E38E /* MealData+CoreDataProperties.swift */,
 				2EF3A23628196C3A00F6E38E /* DietModelController.swift */,
-				2EF3A23B281AA70900F6E38E /* DietFirebaseModelController.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -401,14 +412,13 @@
 			path = "Cells and Headers";
 			sourceTree = "<group>";
 		};
-		2EF20BF2280DEC310019CF64 /* DietEntities */ = {
+		2EF20BF2280DEC310019CF64 /* DietEnums */ = {
 			isa = PBXGroup;
 			children = (
 				2EB767C32806060D008868DD /* MealsType.swift */,
 				2EB767C1280605E7008868DD /* DisclosureState.swift */,
-				2EA1E8A428045BB6001B329A /* CellInfo.swift */,
 			);
-			path = DietEntities;
+			path = DietEnums;
 			sourceTree = "<group>";
 		};
 		2EF20BF9280DF0F00019CF64 /* Cells */ = {
@@ -542,8 +552,9 @@
 		945B383D27ECC3030044E952 /* DietScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2E602922281D83310050B200 /* Firebase */,
 				2EC4E714281722B3002AF235 /* CoreData */,
-				2EF20BF2280DEC310019CF64 /* DietEntities */,
+				2EF20BF2280DEC310019CF64 /* DietEnums */,
 				2EF20BF1280DEBE70019CF64 /* Cells and Headers */,
 				945B384B27ECC33A0044E952 /* DietScreenPresenter.swift */,
 				945B384C27ECC33A0044E952 /* DietScreenRouter.swift */,
@@ -870,6 +881,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EF20BF8280DF0E70019CF64 /* WeightCell.swift in Sources */,
+				2E07ABE2281D39D9005DE3E0 /* CellData+CoreDataClass.swift in Sources */,
 				2EF20C03281039E50019CF64 /* DateExtension.swift in Sources */,
 				945B385527ECC33A0044E952 /* DietScreenInteractor.swift in Sources */,
 				941E811627E6149800A33344 /* LoginScreenRouter.swift in Sources */,
@@ -893,7 +905,6 @@
 				94302BC227E66080009E397B /* ForgetPasswordScreenRouter.swift in Sources */,
 				94FC7843280C3A7A003477FA /* RegistrationManager.swift in Sources */,
 				945B384627ECC32A0044E952 /* ResultsScreenRouter.swift in Sources */,
-				2EA1E8A528045BB6001B329A /* CellInfo.swift in Sources */,
 				2EA6509527F2ED07003F41FC /* DietCell.swift in Sources */,
 				945B385F27ECC3500044E952 /* ProfileScreenViewController.swift in Sources */,
 				94302BC427E66080009E397B /* ForgetPasswordScreenProtocols.swift in Sources */,
@@ -939,6 +950,7 @@
 				94FC7847280C4745003477FA /* ForgetPasswordManager.swift in Sources */,
 				94CAB9A02806BA0C00ACAB8C /* RegistrationContentView.swift in Sources */,
 				2EF3A23A28196E9400F6E38E /* DietModel.xcdatamodeld in Sources */,
+				2E07ABE3281D39D9005DE3E0 /* CellData+CoreDataProperties.swift in Sources */,
 				94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */,
 				94302BC127E66080009E397B /* ForgetPasswordScreenPresenter.swift in Sources */,
 				945B384927ECC32A0044E952 /* ResultsScreenInteractor.swift in Sources */,

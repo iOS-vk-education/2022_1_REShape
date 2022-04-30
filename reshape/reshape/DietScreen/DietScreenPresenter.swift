@@ -105,7 +105,7 @@ extension DietScreenPresenter: DietScreenViewOutput {
     
     // Получение состояния ячейки
     func getCellDisclosure(forMeal meal: MealsType, atSection section: Int) -> DisclosureState {
-        return interactor.getCellInfo(forMeal: meal, atSection: section).disclosureState
+        return DisclosureState(interactor.getCellData(forMeal: meal, atSection: section).cellDisclosure)
     }
     
     // Получение типа ячейки по индексу
@@ -131,12 +131,12 @@ extension DietScreenPresenter: DietScreenViewOutput {
 // Запросы от таблицы
 extension DietScreenPresenter {
     // Запрос на получение количества дней и инициализация каждого дня
-    func requestNumOfDays() {
-        interactor.requestNumOfDays()
+    func requestData() {
+        interactor.getDatabase()
     }
     
     // Сохранение БД
-    func saveDatabase() {
+    func saveData() {
         interactor.saveDatabase()
     }
 }
@@ -164,11 +164,6 @@ extension DietScreenPresenter {
 
 // Обработчики ответа от интерактора
 extension DietScreenPresenter: DietScreenInteractorOutput {
-    func undoChangeMealState(_ state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int) {
-        let indexPath = self.mealPosition(forMeal: meal, fromID: id, atSection: section)
-        view?.uncheckedMeal(state, forIndexPath: indexPath)
-    }
-    
     func updateMealData(forMeal meal: MealsType, atSection section: Int) {
         if (rowInSection.count <= section) { return }
         
@@ -182,12 +177,34 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
         view?.reloadTableSections(atSection: IndexSet(integer: section))
     }
     
+    func updateMealData(atSection section: Int) {
+        if (rowInSection.count <= section) { return }
+        
+        // Обновление блюд, если ячейка открыта
+        if self.getCellDisclosure(forMeal: .breakfast, atSection: section) == .disclosure {
+            // Обновление базы данных и показанных ячеек
+            let _ = self.prepareCells(for: .reload, mealType: .breakfast, atSection: section)
+        }
+        if self.getCellDisclosure(forMeal: .lunch, atSection: section) == .disclosure {
+            // Обновление базы данных и показанных ячеек
+            let _ = self.prepareCells(for: .reload, mealType: .lunch, atSection: section)
+        }
+        if self.getCellDisclosure(forMeal: .dinner, atSection: section) == .disclosure {
+            // Обновление базы данных и показанных ячеек
+            let _ = self.prepareCells(for: .reload, mealType: .dinner, atSection: section)
+        }
+    }
+    
     func updateNumOfDays(_ days: Int) {
         let lastNumOfDays = rowInSection.count
+        
         // Создание начальных полей секции
         if days > lastNumOfDays {
             for curSection in lastNumOfDays...days-1 {
                 rowInSection.insert([.breakfast, .lunch, .dinner], at: curSection)
+                
+                // Получение блюд, если открыты ячейки
+                self.updateMealData(atSection: curSection)
             }
         } else if days < lastNumOfDays {
             for curSection in days...lastNumOfDays-1 {
@@ -196,6 +213,7 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
         } else {
             return
         }
+        
         // Перезагрузка таблицы
         view?.reloadTableView()
     }

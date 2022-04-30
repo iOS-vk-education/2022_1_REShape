@@ -2,7 +2,7 @@
 //  MealData+CoreDataProperties.swift
 //  reshape
 //
-//  Created by Иван Фомин on 27.04.2022.
+//  Created by Иван Фомин on 30.04.2022.
 //
 //
 
@@ -17,11 +17,10 @@ extension MealData {
     }
 
     @NSManaged public var modelCalories: Double
+    @NSManaged public var modelID: Int32
     @NSManaged public var modelName: String?
     @NSManaged public var modelState: Bool
-    @NSManaged public var modelID: Int32
-    @NSManaged public var modelDay: Int32
-    @NSManaged public var modelDiet: Int16
+    @NSManaged public var modelCell: CellData?
 
 }
 

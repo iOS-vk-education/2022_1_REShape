@@ -18,14 +18,13 @@ final class DietFirebaseModelController {
         firebaseRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference()
     }
     
-    func login(completion: @escaping (() -> Void) = { return }) {
+    func login() {
         AuthManger.logIn(email: "yyyy@bmstu.ru", password: "qwerty") { [weak self] auth, error  in
             guard let error = error else {
                 self?.authHandle = Auth.auth().addStateDidChangeListener({ _,_ in return })
                 return
             }
             print("[ERROR] \(error.localizedDescription)")
-            completion()
         }
     }
     

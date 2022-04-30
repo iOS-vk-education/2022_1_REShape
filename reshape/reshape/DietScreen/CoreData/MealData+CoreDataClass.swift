@@ -11,27 +11,20 @@ import CoreData
 
 @objc(MealData)
 public class MealData: NSManagedObject {
-    convenience init(id: Int, nameString name: String, calories cal: Double, state: Bool, day: Int, diet: MealsType, context: NSManagedObjectContext) {
+    convenience init(id: Int, nameString name: String, calories cal: Double, state: Bool, toCell cell: CellData, context: NSManagedObjectContext) {
         self.init(context: context)
-        self.setData(toID: id, toName: name, toCalories: cal, toState: state, toDay: day, toDiet: diet)
+        self.setData(toID: id, toName: name, toCalories: cal, toState: state)
+        self.modelCell = cell
     }
     
-    func setData(toID id: Int, toName name: String, toCalories cal: Double, toState state: Bool, toDay day: Int, toDiet diet: MealsType) {
+    func setData(toID id: Int, toName name: String, toCalories cal: Double, toState state: Bool) {
         self.modelID = Int32(id)
         self.modelName = name
         self.modelCalories = cal
         self.modelState = state
-        self.modelDay = Int32(day)
-        self.modelDiet = Int16(diet.int)
     }
     
     func changeState(toState state: Bool) {
         self.modelState = state
-    }
-    
-    func copyFrom(_ meal: MealData) {
-        self.modelCalories = meal.modelCalories
-        self.modelState = meal.modelState
-        self.modelName = meal.modelName
     }
 }
