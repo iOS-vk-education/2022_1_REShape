@@ -55,6 +55,7 @@ final class ProfileScreenViewController: UIViewController {
         setupConstraints()
         setupUI()
         setupCollectionView()
+        mainView.delegate = self
         
     }
     
@@ -105,8 +106,8 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
         NSLayoutConstraint.activate([
             addPhoto.centerYAnchor.constraint(equalTo: mainView.centerYAnchor)
         ])
-        addPhoto.height(130)
-        addPhoto.width(130)
+        addPhoto.height(117)
+        addPhoto.width(117)
     }
     
     func setupUI() {

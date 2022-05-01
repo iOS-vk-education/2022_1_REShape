@@ -9,7 +9,6 @@
 import UIKit
 
 
-
 final class WaterScreenViewController: UIViewController {
     private let output: WaterScreenViewOutput
     private let mainView: CustomWaterView = CustomWaterView()
@@ -33,6 +32,7 @@ final class WaterScreenViewController: UIViewController {
         informHeaderLabel.textAlignment = .left
         return informHeaderLabel
     }()
+    
     private lazy var waterCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -42,19 +42,69 @@ final class WaterScreenViewController: UIViewController {
         collection.dataSource = self
         return collection
     }()
+    
+    var containerViewBottomConstraint: NSLayoutConstraint?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
         setupUI()
         setupCollectionView()
+        mainView.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupObserversForKeyboard()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsetupObserversForKeyboard()
+    }
+    
+}
+
+extension WaterScreenViewController {
+    private func setupObserversForKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    private func unsetupObserversForKeyboard(){
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: self.view.window)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: self.view.window)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else {return}
+        guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+        let keyboardFrame = keyboardSize.cgRectValue
+        if self.containerViewBottomConstraint?.constant == 0 {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                self?.containerViewBottomConstraint?.constant -= keyboardFrame.height
+                self?.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification){
+        UIView.animate(withDuration: 0.4) { [weak self] in
+            self?.containerViewBottomConstraint?.constant = 0
+            self?.view.layoutIfNeeded()
+        }
     }
 }
 
-extension WaterScreenViewController: ProfileScreenViewInput {
+extension WaterScreenViewController: WaterScreenViewInput {
     private func setupConstraints(){
-        
         view.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
         mainView.top(isIncludeSafeArea: false)
@@ -84,25 +134,15 @@ extension WaterScreenViewController: ProfileScreenViewInput {
         mainView.layer.shadowOffset = CGSize(width: 4, height: 4)
         mainView.layer.shadowRadius = 5
         mainView.layer.shadowOpacity = 0.5
-        mainView.delegate = self
+        setupCollectionView()
     }
     
     private func setupCollectionView(){
         waterCollectionView.register(cellType: WaterCollectionCell.self)
+        waterCollectionView.delegate = self
+        waterCollectionView.dataSource = self
     }
-}
-
-extension WaterScreenViewController: CustomWaterViewDelegate {
-        func waterBackButtonAct() {
-            view.endEditing(true)
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.mainView.waterBackButton.alpha = 0.7
-            } completion: { [weak self] finished in
-                if finished {
-                    self?.output.waterBackButtonPressed()
-                }
-            }
-        }
+    
 }
 
 extension WaterScreenViewController: UICollectionViewDelegateFlowLayout {
@@ -122,6 +162,7 @@ extension WaterScreenViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension WaterScreenViewController: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView,
                             numberOfItemsInSection section: Int) -> Int {
         return 7
@@ -131,44 +172,57 @@ extension WaterScreenViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueCell(cellType: WaterCollectionCell.self, for: indexPath)
-
+        
         switch indexPath.item {
             case 0:
                 cell.layer.cornerRadius = 10
                 cell.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-            cell.configure(cup: UIImage(named: "StillWater")!,
-                           water: "Вода",
-                           volume: "500 мл")
+                cell.configure(cup: UIImage(named: "StillWater")!,
+                               water: "Вода",
+                               volume: "500")
             case 1:
                 cell.configure(cup: UIImage(named: "Coffee")!,
                                water: "Кофе",
-                               volume: "500 мл")
+                               volume: "500")
             case 2:
                 cell.configure(cup: UIImage(named: "Tea")!,
                                water: "Чай",
-                               volume: "500 мл")
+                               volume: "500")
             case 3:
                 cell.configure(cup: UIImage(named: "SparklingWater")!,
-                               water: "Начальный вес",
-                               volume: "500 мл")
+                               water: "Газированная вода",
+                               volume: "500")
             case 4:
                 cell.configure(cup: UIImage(named: "Milk")!,
                                water: "Молоко",
-                               volume: "500 мл")
+                               volume: "500")
             case 5:
                 cell.configure(cup: UIImage(named: "Alcohol")!,
                                water: "Алкоголь",
-                               volume: "500 мл")
+                               volume: "500")
             case 6:
             cell.layer.cornerRadius = 10
             cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-                cell.configure(cup: UIImage(named: "Juice")!,
+            cell.configure(cup: UIImage(named: "Juice")!,
                                water: "Сок",
-                               volume: "500 мл")
+                               volume: "500")
             default:
                 break
             }
 
             return cell
         }
+}
+
+extension WaterScreenViewController: CustomWaterDelegate {
+    func backButtonAction() {
+        view.endEditing(true)
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.mainView.backButton.alpha = 0.7
+        } completion: { [weak self] finished in
+            if finished {
+                self?.output.backButtonPressed()
+            }
+        }
+    }
 }

@@ -18,8 +18,10 @@ final class WaterScreenContainer {
         let interactor = WaterScreenInteractor()
         let presenter = WaterScreenPresenter(router: router, interactor: interactor)
 		let viewController = WaterScreenViewController(output: presenter)
+        
+        router.viewController = viewController
 
-//		presenter.view = viewController
+		presenter.view = viewController
 		presenter.moduleOutput = context.moduleOutput
 
 		interactor.output = presenter
@@ -35,6 +37,4 @@ final class WaterScreenContainer {
 }
 
 struct WaterScreenContext {
-	weak var moduleOutput: WaterScreenModuleOutput?
-    let window: UIWindow
-}
+	weak var moduleOutput: WaterScreenModuleOutput?}

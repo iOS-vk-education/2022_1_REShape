@@ -24,7 +24,9 @@ final class AuthCoordinator: CoordinatorProtocol {
         
         
         window.rootViewController = navControllers[0]
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {})
         window.makeKeyAndVisible()
+        
         }
 }
 

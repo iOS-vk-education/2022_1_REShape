@@ -8,13 +8,13 @@
 import Foundation
 import UIKit
 
-protocol CustomWaterViewDelegate: AnyObject {
-    func waterBackButtonAct()
+protocol CustomWaterDelegate: AnyObject {
+    func backButtonAction()
 }
 
 final class CustomWaterView: UIView {
     
-    weak var delegate: CustomWaterViewDelegate?
+    weak var delegate: CustomWaterDelegate?
     
     private let waterImage: UIImageView = {
         let waterImage = UIImageView()
@@ -26,13 +26,6 @@ final class CustomWaterView: UIView {
         return waterImage
     }()
     
-    let waterBackButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "waterBackButton"),for: .normal)
-        return button
-    }()
-    
     private let percentLabel: UILabel = {
         let percentLabel = UILabel()
         percentLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -42,6 +35,13 @@ final class CustomWaterView: UIView {
         percentLabel.textColor = .white
         return percentLabel
     }()
+    
+    let backButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "waterBackButton"),for: .normal)
+        return button
+    }()
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,40 +50,43 @@ final class CustomWaterView: UIView {
 
     }
     
+    func changeState() {
+        self.layoutIfNeeded()
+        waterImage.frame = self.bounds
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.setupConstraints()
         setupUI()
 
     }
-}
-    extension CustomWaterView {
-        func setupConstraints(){
-            self.addSubview(waterImage)
-            waterImage.top(60, isIncludeSafeArea: false)
-            waterImage.leading()
-            waterImage.trailing()
-            waterImage.bottom(isIncludeSafeArea: false)
-            
-            self.addSubview(waterBackButton)
-            NSLayoutConstraint.activate([waterBackButton.bottomAnchor.constraint(equalTo: waterImage.topAnchor, constant: 10)])
-            waterBackButton.leading(17)
-            
-            self.addSubview(percentLabel)
-            percentLabel.centerX()
-            NSLayoutConstraint.activate([percentLabel.topAnchor.constraint(equalTo: waterImage.topAnchor, constant: 117)])
-            percentLabel.height(30)
-            percentLabel.width(100)
-        }
+    func setupConstraints(){
+        self.addSubview(waterImage)
+        waterImage.top(60, isIncludeSafeArea: false)
+        waterImage.leading()
+        waterImage.trailing()
+        waterImage.bottom(isIncludeSafeArea: false)
         
-        func setupUI(){
-            waterBackButton.isUserInteractionEnabled = true
-            waterBackButton.addTarget(self, action:#selector(waterBackButtonTapped), for: .touchUpInside)
-        }
-        @objc
-        func waterBackButtonTapped(){
-            delegate?.waterBackButtonAct()
-        }
-    
+        self.addSubview(percentLabel)
+        percentLabel.centerX()
+        NSLayoutConstraint.activate([percentLabel.topAnchor.constraint(equalTo: waterImage.topAnchor, constant: 117)])
+        percentLabel.height(30)
+        percentLabel.width(100)
+        
+        self.addSubview(backButton)
+        backButton.height(27)
+        backButton.width(76)
+        backButton.leading(15)
+        NSLayoutConstraint.activate([
+            backButton.bottomAnchor.constraint(equalTo: waterImage.topAnchor, constant: 10)
+        ])
+    }
+    func setupUI(){
+        backButton.isUserInteractionEnabled = true
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+    }
+    @objc func backButtonTapped(){
+        delegate?.backButtonAction()
+    }
 }
-    

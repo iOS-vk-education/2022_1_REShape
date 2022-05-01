@@ -26,8 +26,16 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wFy-vZ-bgu">
                         <rect key="frame" x="20" y="5" width="22" height="22"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LabelL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XQS-Ad-sc2">
-                        <rect key="frame" x="285" y="9" width="43" height="17"/>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" text="500" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FZB-fV-Xy1">
+                        <rect key="frame" x="253" y="0.0" width="54" height="34"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="textColor" name="Dark Violet"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ml" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DnE-qw-RJb">
+                        <rect key="frame" x="310" y="9" width="16" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" name="Dark Violet"/>
                         <nil key="highlightedColor"/>
@@ -36,20 +44,24 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="XQS-Ad-sc2" secondAttribute="bottom" constant="6" id="2mA-Ot-4VX"/>
+                <constraint firstAttribute="trailing" secondItem="DnE-qw-RJb" secondAttribute="trailing" constant="18" id="2Ja-LN-a8R"/>
                 <constraint firstItem="zZo-aW-jTE" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="5NI-aI-RLA"/>
-                <constraint firstAttribute="trailing" secondItem="XQS-Ad-sc2" secondAttribute="trailing" constant="16" id="75G-BV-Cv1"/>
-                <constraint firstItem="XQS-Ad-sc2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="EcJ-Xe-aMd"/>
+                <constraint firstItem="DnE-qw-RJb" firstAttribute="leading" secondItem="FZB-fV-Xy1" secondAttribute="trailing" constant="3" id="9B2-Rd-H7j"/>
                 <constraint firstItem="zZo-aW-jTE" firstAttribute="leading" secondItem="wFy-vZ-bgu" secondAttribute="trailing" constant="13" id="Q5A-NS-5dp"/>
                 <constraint firstAttribute="bottom" secondItem="zZo-aW-jTE" secondAttribute="bottom" constant="6" id="RlN-VW-oFO"/>
                 <constraint firstItem="wFy-vZ-bgu" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="Z4J-bQ-WxA"/>
+                <constraint firstItem="DnE-qw-RJb" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="ZMJ-qh-lMA"/>
+                <constraint firstItem="FZB-fV-Xy1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="b9U-w9-0Ie"/>
+                <constraint firstAttribute="bottom" secondItem="DnE-qw-RJb" secondAttribute="bottom" constant="6" id="cj9-X0-vfo"/>
                 <constraint firstAttribute="bottom" secondItem="wFy-vZ-bgu" secondAttribute="bottom" constant="5" id="glp-ge-F9W"/>
                 <constraint firstItem="zZo-aW-jTE" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="55" id="hws-ib-X9Y"/>
+                <constraint firstAttribute="bottom" secondItem="FZB-fV-Xy1" secondAttribute="bottom" constant="-2" id="mqO-uA-UQU"/>
                 <constraint firstItem="wFy-vZ-bgu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="uNT-E8-al7"/>
             </constraints>
             <connections>
                 <outlet property="cupImage" destination="wFy-vZ-bgu" id="7hp-uA-Ltj"/>
-                <outlet property="volumeLabel" destination="XQS-Ad-sc2" id="K6R-7s-zFA"/>
+                <outlet property="mlLabel" destination="DnE-qw-RJb" id="dz8-8g-pOK"/>
+                <outlet property="volumeTextField" destination="FZB-fV-Xy1" id="PAw-CS-Y8Z"/>
                 <outlet property="waterLabel" destination="zZo-aW-jTE" id="otU-rP-N2m"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="79.6875"/>

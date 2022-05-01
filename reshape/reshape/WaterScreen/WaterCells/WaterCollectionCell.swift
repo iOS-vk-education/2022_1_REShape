@@ -7,15 +7,12 @@
 
 import UIKit
 
-protocol WaterCollectionCellDelegate: AnyObject {
-    func endEditingTextField(_ textField: UITextField) -> Bool
-}
-
 class WaterCollectionCell: UICollectionViewCell {
+        
+    weak var view: WaterScreenViewInput?
     
-    weak var delegate: WaterCollectionCellDelegate?
-
-    @IBOutlet weak var volumeLabel: UILabel!
+    @IBOutlet weak var mlLabel: UILabel!
+    @IBOutlet weak var volumeTextField: UITextField!
     @IBOutlet weak var waterLabel: UILabel!
     @IBOutlet weak var cupImage: UIImageView!
     
@@ -27,11 +24,12 @@ class WaterCollectionCell: UICollectionViewCell {
     
     func setupConstraints() {
         self.layer.masksToBounds = true
+        volumeTextField.borderStyle = .none
     }
     
-    func configure(cup: UIImage, water: String, volume: String){
+    func configure(cup: UIImage, water: String, volume: String) {
         waterLabel?.text = water
-        volumeLabel?.text = volume
+        volumeTextField?.text = volume
         cupImage?.image = cup
     }
 }

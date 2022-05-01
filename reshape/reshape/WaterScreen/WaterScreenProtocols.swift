@@ -19,7 +19,7 @@ protocol WaterScreenViewInput: AnyObject {
 }
 
 protocol WaterScreenViewOutput: AnyObject {
-    func waterBackButtonPressed()
+    func backButtonPressed()
 }
 
 protocol WaterScreenInteractorInput: AnyObject {
@@ -29,5 +29,5 @@ protocol WaterScreenInteractorOutput: AnyObject {
 }
 
 protocol WaterScreenRouterInput: AnyObject {
-    func waterBackButtonTapped()
+    func backButtonTapped()
 }

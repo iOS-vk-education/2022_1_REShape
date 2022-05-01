@@ -16,12 +16,8 @@ final class ResultsScreenRouter {
 extension ResultsScreenRouter: ResultsScreenRouterInput {
     
     func didWaterTapped() {
-        guard let window = window else {
-            return
-        }
-        let waterScreenContext = WaterScreenContext(moduleOutput: nil, window: window)
+        let waterScreenContext = WaterScreenContext(moduleOutput: nil)
         let waterScreenContainer = WaterScreenContainer.assemble(with: waterScreenContext)
-        waterScreenContainer.viewController.modalPresentationStyle = .overCurrentContext
         self.viewController?.navigationController?.pushViewController(waterScreenContainer.viewController, animated: true)
     }
     func didWeightTapped() {

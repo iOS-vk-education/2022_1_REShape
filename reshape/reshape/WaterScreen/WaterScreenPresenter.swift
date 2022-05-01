@@ -25,10 +25,11 @@ extension WaterScreenPresenter: WaterScreenModuleInput {
 }
 
 extension WaterScreenPresenter: WaterScreenViewOutput {
-    func waterBackButtonPressed() {
-        router.waterBackButtonTapped()
+    func backButtonPressed() {
+        router.backButtonTapped()
     }
 }
 
 extension WaterScreenPresenter: WaterScreenInteractorOutput {
+    
 }

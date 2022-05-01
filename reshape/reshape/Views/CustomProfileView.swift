@@ -15,7 +15,7 @@ protocol CustomProfileDelegate: AnyObject {
 final class CustomProfileView: UIView {
     weak var delegate: CustomProfileDelegate?
     
-    private let progressBar: CircularProgressBarView = CircularProgressBarView(frame: CGRect(x: 0, y: 0, width: 143, height: 143))
+    private let progressBar: CircularProgressBarView = CircularProgressBarView(frame: CGRect(x: 0, y: 0, width: 130, height: 130))
     
     private let backgroundImage: UIImageView = {
         let backgroundImage = UIImageView()
@@ -88,8 +88,8 @@ final class CustomProfileView: UIView {
         progressBar.center = self.center
         progressBar.centerX()
         progressBar.centerY()
-        progressBar.height(143)
-        progressBar.width(143)
+        progressBar.height(130)
+        progressBar.width(130)
         
         self.addSubview(personalStackView)
         personalStackView.centerX()

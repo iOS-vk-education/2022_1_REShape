@@ -9,7 +9,6 @@
 import UIKit
 
 final class ProfileScreenRouter {
-    var viewController: UIViewController?
     var window: UIWindow?
 }
 
