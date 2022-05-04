@@ -13,6 +13,27 @@ class DietModelController: AbstractModelController {
         super.init(databaseName: "DietModel", completionClosure: {})
     }
     
+    // Удаление компонент
+    func deleteCellData(in cellData: [CellData]) {
+        cellData.forEach() { cell in
+            cell.deleteMeals(greaterThanID: 0)
+            managedObjectContext.delete(cell)
+        }
+    }
+    
+    // Добавление новых компонент
+    func addCellData(toSection section: Int) -> [CellData] {
+        return [CellData(section: section, cellType: .breakfast, context: managedObjectContext),
+                CellData(section: section, cellType: .lunch, context: managedObjectContext),
+                CellData(section: section, cellType: .dinner, context: managedObjectContext)]
+    }
+    
+    // Извлечение компонент
+    func getCellData() throws -> [CellData] {
+        let fetchRequest = CellData.fetchRequest()
+        return try managedObjectContext.fetch(fetchRequest)
+    }
+    
     // Очистка базы данных
     func flushData() {
         do {

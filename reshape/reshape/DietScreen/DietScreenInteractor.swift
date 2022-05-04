@@ -7,22 +7,21 @@
 //
 
 import Foundation
-import CoreData
 
 final class DietScreenInteractor {
     private var cellData: [CellData] = []
 	weak var output: DietScreenInteractorOutput?
+    private var loginState = false
     
     // Базы данных
     private let modelController: DietModelController
-    private let coreDataContext: NSManagedObjectContext
     private var firebaseModelController: DietFirebaseModelController
     
     init() {
         modelController = DietModelController()
-        coreDataContext = modelController.managedObjectContext
         firebaseModelController = DietFirebaseModelController()
         firebaseModelController.login()
+        firebaseModelController.loadIndividualInfo { _ in self.loginState = true }
         uploadFromDatabase()
     }
     
@@ -35,48 +34,25 @@ final class DietScreenInteractor {
         let oldDays = numOfDays()
         if newDays < oldDays {
             for curSection in newDays...oldDays-1 {
-                // Поиск индекса
-                guard let breakfastIndex = cellIndex(forMeal: .breakfast, atSection: curSection) else {
-                    fatalError("[ERROR] Can't find cell index in section: \(curSection)")
-                    continue
-                }
-                guard let lunchIndex = cellIndex(forMeal: .lunch, atSection: curSection) else {
-                    fatalError("[ERROR] Can't find cell index in section: \(curSection)")
-                    continue
-                }
-                guard let dinnerIndex = cellIndex(forMeal: .dinner, atSection: curSection) else {
-                    fatalError("[ERROR] Can't find cell index in section: \(curSection)")
-                    continue
-                }
-                
-                // Удаление блюд в ячейках
-                deleteMeals(greaterThanID: 0, forMeal: .breakfast, inSection: curSection)
-                deleteMeals(greaterThanID: 0, forMeal: .lunch, inSection: curSection)
-                deleteMeals(greaterThanID: 0, forMeal: .dinner, inSection: curSection)
-                
-                // Удаление ячеек
-                coreDataContext.delete(cellData.remove(at: breakfastIndex))
-                coreDataContext.delete(cellData.remove(at: lunchIndex))
-                coreDataContext.delete(cellData.remove(at: dinnerIndex))
+                modelController.deleteCellData(in: [
+                    cellData[cellIndex(forMeal: .breakfast, atSection: curSection)!],
+                    cellData[cellIndex(forMeal: .lunch, atSection: curSection)!],
+                    cellData[cellIndex(forMeal: .dinner, atSection: curSection)!]
+                ])
             }
         } else if newDays > oldDays {
             for curSection in oldDays...newDays-1 {
-                self.cellData.append(contentsOf: [
-                    CellData(section: curSection, cellType: .breakfast, context: coreDataContext),
-                    CellData(section: curSection, cellType: .lunch, context: coreDataContext),
-                    CellData(section: curSection, cellType: .dinner, context: coreDataContext)
-                ])
+                cellData.append(contentsOf: modelController.addCellData(toSection: curSection))
             }
         }
-        modelController.saveContext()
+        saveDatabase()
+        uploadFromDatabase()
     }
     
     // Загрузка данных из локальной БД
     private func uploadFromDatabase() {
         do {
-            let fetchRequest = CellData.fetchRequest()
-            let result = try coreDataContext.fetch(fetchRequest)
-            cellData = result
+            cellData = try modelController.getCellData()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -114,7 +90,7 @@ final class DietScreenInteractor {
             let mealData = getMealData(withID: mealID, forMeal: type, atSection: section)
             cell.removeFromCellMeals(mealData)
         }
-        modelController.saveContext()
+        saveDatabase()
     }
 }
 
@@ -123,76 +99,66 @@ extension DietScreenInteractor {
     // Запрос на получение данных из Firebase
     private func requestMealData(toDay day: Int, toMeal mealtype: MealsType) {
         print("[DEBUG] Data from \(mealtype.text) need to get at \(day) day")
-        firebaseModelController.getMeals(forDay: day, atMeal: mealtype.engText) { [weak self] numOfMeals in
-            guard (self != nil) else { return }
+        firebaseModelController.loadIndividualInfo { [weak self] error in
+            guard let _ = error else { return }
+            self?.firebaseModelController.getMeals(forDay: day, atMeal: mealtype.engText) { [weak self] numOfMeals in
+                guard (self != nil) else { return }
             
-            // Удаление лишних блюд
-            self?.deleteMeals(greaterThanID: Int(numOfMeals), forMeal: mealtype, inSection: day - 1)
-            if numOfMeals == 0 { return }
-            
-            // Обновление блюд
-            let cell = self!.getCellData(forMeal: mealtype, atSection: day - 1)
-            for mealNumber in 1...numOfMeals {
-                let id = Int(mealNumber) - 1
-                let name = self!.firebaseModelController.mealName(forID: mealNumber)
-                let calories = self!.firebaseModelController.mealCalories(forID: mealNumber)
-                let state = self!.firebaseModelController.mealState(forID: mealNumber)
-                guard let mealDataIndex = self!.mealIndex(forCellData: cell, atID: id) else {
-                    let _ = MealData(
-                        id: id,
-                        nameString: name,
-                        calories: calories,
-                        state: state,
-                        toCell: cell,
-                        context: self!.coreDataContext)
-                    continue
+                // Удаление лишних блюд
+                self?.deleteMeals(greaterThanID: Int(numOfMeals), forMeal: mealtype, inSection: day - 1)
+                if numOfMeals == 0 { return }
+                
+                // Обновление блюд
+                let cell = self!.getCellData(forMeal: mealtype, atSection: day - 1)
+                for mealNumber in 1...numOfMeals {
+                    let id = Int(mealNumber) - 1
+                    let name = self!.firebaseModelController.mealName(forID: mealNumber)
+                    let calories = self!.firebaseModelController.mealCalories(forID: mealNumber)
+                    let state = self!.firebaseModelController.mealState(forDay: day, atMeal: mealtype.engText, forID: mealNumber)
+                    guard let mealDataIndex = self!.mealIndex(forCellData: cell, atID: id) else {
+                        cell.addMealData(withID: id, withName: name, withCal: calories, withState: state)
+                        continue
+                    }
+                    cell.updateMealData(atIndex: mealDataIndex, withID: id, newName: name, newCal: calories, newState: state)
                 }
-                (cell.cellMeals?.allObjects[mealDataIndex] as! MealData).setData(
-                    toID: id,
-                    toName: name,
-                    toCalories: calories,
-                    toState: state
-                )
+                self!.saveDatabase()
+                self!.output?.updateMealData(forMeal: cell.type(), atSection: cell.section())
             }
-            self!.saveDatabase()
-            self!.output?.updateMealData(forMeal: cell.type(), atSection: cell.section())
         }
     }
     
-    // Обработка изменения состояния блюда
+    // Обработка изменения состояния блюда TODO
     func changeMealState(toState state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int) {
         print("[DEBUG] New state of \(meal.text) transmit at \(section + 1) day in \(id) position")
-        firebaseModelController.newMealState(state, forDay: section + 1, atMeal: meal.engText, forID: id + 1) { [weak self] flag in
-            guard (self != nil) else { return }
-            if flag {
-                self!.getMealData(withID: id, forMeal: meal, atSection: section).changeState(toState: state)
-            } else {
-                self!.getMealData(withID: id, forMeal: meal, atSection: section).changeState(toState: !state)
-            }
-            self!.modelController.saveContext()
-            self!.output?.updateMealData(forMeal: meal, atSection: section)
+        let mealData = getMealData(withID: id, forMeal: meal, atSection: section)
+        mealData.changeState(toState: state)
+        firebaseModelController.newMealState(state, forDay: section + 1, forMeal: meal.engText, forID: id + 1, withCalories: mealData.modelCalories) { [weak self] in
+            self?.getMealData(withID: id, forMeal: meal, atSection: section).changeState(toState: !state)
+            self?.saveDatabase()
+            self?.output?.updateMealData(forMeal: meal, atSection: section)
         }
+        saveDatabase()
     }
     
     // Запрос на получение данных
     func getDatabase() {
         print("[DEBUG] Need get num of days")
         output?.updateNumOfDays(numOfDays())
-        firebaseModelController.daysCount() { [weak self] days in
+        firebaseModelController.daysCount { [weak self] days in
             guard (self != nil) else { return }
             self!.createCellData(withNewDays: Int(days))
             self!.output?.updateNumOfDays(Int(days))
         }
     }
-    
-    // Сохранение данных
-    func saveDatabase() {
-        modelController.saveContext()
-    }
 }
 
 // Внешние запросы
 extension DietScreenInteractor: DietScreenInteractorInput {
+    // Сохранение данных
+    func saveDatabase() {
+        modelController.saveContext()
+    }
+    
     // Получение данных о блюде
     func getMealData(withID id: Int, forMeal meal: MealsType, atSection section: Int) -> MealData {
         let cell = getCellData(forMeal: meal, atSection: section)
@@ -223,7 +189,15 @@ extension DietScreenInteractor: DietScreenInteractorInput {
         
         // Запрос на сервер если ячейка открыта
         if state == .disclosure {
-            self.requestMealData(toDay: section + 1, toMeal: meal)
+            if loginState {
+                self.requestMealData(toDay: section + 1, toMeal: meal)
+            } else {
+                firebaseModelController.loadIndividualInfo { error in
+                    guard error == nil else { return }
+                    self.loginState = true
+                    self.requestMealData(toDay: section + 1, toMeal: meal)
+                }
+            }
         }
     }
 }

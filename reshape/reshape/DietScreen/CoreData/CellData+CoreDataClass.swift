@@ -26,4 +26,45 @@ public class CellData: NSManagedObject {
     func section() -> Int {
         return Int(cellSection)
     }
+    
+    func mealData(atID id: Int) -> MealData? {
+        return (self.cellMeals?.allObjects as! [MealData]).first(where: { meal in
+            meal.modelID == id
+        })
+    }
+    
+    func mealCount() -> Int {
+        return self.cellMeals?.count ?? 0
+    }
+    
+    func deleteMeals(greaterThanID id: Int) {
+        let oldNumOfMeals = self.mealCount()
+        if id >= oldNumOfMeals { return }
+        for mealID in id...oldNumOfMeals-1 {
+            guard let mealData = self.mealData(atID: mealID) else {
+                continue
+            }
+            self.removeFromCellMeals(mealData)
+        }
+    }
+    
+    func updateMealData(atIndex index: Int, withID id: Int, newName name: String, newCal calories: Double, newState state: Bool) {
+        (self.cellMeals?.allObjects[index] as! MealData).setData(
+            toID: id,
+            toName: name,
+            toCalories: calories,
+            toState: state
+        )
+    }
+    
+    func addMealData(withID id: Int, withName name: String, withCal calories: Double, withState state: Bool) {
+        self.addToCellMeals(MealData(
+            id: id,
+            nameString: name,
+            calories: calories,
+            state: state,
+            toCell: self,
+            context: self.managedObjectContext!)
+        )
+    }
 }
