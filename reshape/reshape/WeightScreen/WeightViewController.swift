@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Charts
 
 final class WeightViewController: UIViewController, UIGestureRecognizerDelegate {
 	private let output: WeightViewOutput
@@ -31,6 +32,8 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         return label
     }()
     
+    private let weightChart = WeightChart()
+    
     private let addTable = UITableView(frame: .zero, style: .insetGrouped)
 
     init(output: WeightViewOutput) {
@@ -48,22 +51,20 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         setupNavigation()
         setupUI()
         setupConstraints()
+        setupTableView()
         setupGradientPanel()
         addGestureRecognizer()
+        addFlushGesture()
+        weightChart.weightDelegate = self
 	}
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        upGradientPanel.changeState()
-    }
     
     private func setupUI() {
         view.backgroundColor = .white
         view.addSubview(upGradientPanel)
         view.addSubview(navBarView)
+        view.addSubview(weightChart)
         view.addSubview(addTable)
         view.addSubview(addLabel)
-        setupTableView()
     }
 
     
@@ -75,8 +76,8 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
     }
     
     private func setupGradientPanel() {
-        upGradientPanel.setupGradientColor(withColor: [UIColor.greenColor!.cgColor,
-                                                       UIColor.darkGreenColor!.cgColor])
+        upGradientPanel.setupGradientColor(withColor: [UIColor.greenColor.cgColor,
+                                                       UIColor.darkGreenColor.cgColor])
     }
 
     private func setupConstraints() {
@@ -89,6 +90,11 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         upGradientPanel.trailing()
         upGradientPanel.leading()
         upGradientPanel.height(view.bounds.height / 2.5)
+        
+        weightChart.top(39, isIncludeSafeArea: true)
+        weightChart.trailing(-45)
+        weightChart.leading(30)
+        weightChart.bottomAnchor.constraint(equalTo: upGradientPanel.bottomAnchor, constant: -41).isActive = true
         
         addLabel.topAnchor.constraint(equalTo: upGradientPanel.bottomAnchor, constant: 16).isActive = true
         addLabel.leading(32)
@@ -117,6 +123,7 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
 extension WeightViewController: WeightViewInput {
     func reloadData() {
         addTable.reloadSections(IndexSet(integer: 0), with: .none)
+        weightChart.reloadData()
     }
     
     func startEditing() {
@@ -129,7 +136,7 @@ extension WeightViewController: WeightViewInput {
         cellTime.setData(stringForData: output.getCurrentTime())
     }
     
-    func endEditing(withWeight weight: Int) {
+    func endEditing(withWeight weight: String) {
         view.endEditing(true)
         output.uploadNewWeight(newDate: output.getCurrentDate(),
                                newTime: output.getCurrentTime(),
@@ -210,6 +217,23 @@ extension WeightViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// WeightChart delegate
+extension WeightViewController: WeightChartDelegate {
+    func daysForVisual(_ weighchart: WeightChart, numOfData number: Int) -> String {
+        return output.getShortDate(atBackPosition: number)
+    }
+    
+    func numberOfDays(in weighchart: WeightChart) -> Int {
+        return output.getNumOfDays()
+    }
+    
+    func weightChart(_ weighchart: WeightChart, numOfData number: Int) -> ChartDataEntry {
+        let weight = Double(output.getWeight(atBackPosition: number)) ?? 0.0
+        return ChartDataEntry(x: Double(number), y: weight)
+    }
+}
+
+// Gesture Recongnizer methods
 extension WeightViewController {
     func addGestureRecognizer() {
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
@@ -221,5 +245,15 @@ extension WeightViewController {
     @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
         guard let cell = addTable.cellForRow(at: IndexPath(row: 2, section: 0)) as? WeightCell else { return }
         cell.unchosen()
+    }
+    
+    func addFlushGesture() {
+        let tap = UIPinchGestureRecognizer(target: self, action: #selector(flushTap(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    @objc func flushTap(_ recohnizer: UIPinchGestureRecognizer) {
+        output.flushWeightModel()
     }
 }

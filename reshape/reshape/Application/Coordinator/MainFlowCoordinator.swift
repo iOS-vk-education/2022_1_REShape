@@ -68,11 +68,11 @@ extension MainFlowCoordinator{
             let navigationController = UINavigationController()
             let tabBarItem = UITabBarItem(title: navControllerKey.title,
                                           image: navControllerKey.image?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal),
-                                          selectedImage: navControllerKey.image?.withTintColor(UIColor.violetColor ?? .green))
+                                          selectedImage: navControllerKey.image?.withTintColor(.violetColor))
 //                                          tag: navControllerKey.rawValue)
             navigationController.tabBarItem = tabBarItem
             result[navControllerKey] = navigationController
-            UITabBar.appearance().tintColor = UIColor.violetColor
+            UITabBar.appearance().tintColor = .violetColor
             
             navigationController.isNavigationBarHidden = true
         }

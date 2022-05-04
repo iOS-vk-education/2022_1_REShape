@@ -25,6 +25,14 @@ extension WeightPresenter: WeightModuleInput {
 }
 
 extension WeightPresenter: WeightViewOutput {
+    func flushWeightModel() {
+        interactor.flushWeightModel()
+    }
+    
+    func getNumOfDays() -> Int {
+        return interactor.getMaxID() ?? 0
+    }
+    
     func getCurrentDate() -> String {
         return Date().dateString()
     }
@@ -34,28 +42,27 @@ extension WeightPresenter: WeightViewOutput {
     }
     
     func getShortDate(atBackPosition position: Int) -> String {
-        return interactor.getWeightData(atBackPosition: position).getShortDateString()
+        return interactor.getWeightData(fromBackPosition: position)?.getShortDateString() ?? ""
     }
     
-    func getWeight(atBackPosition position: Int) -> Int {
-        return interactor.getWeightData(atBackPosition: position).getWeight()
+    func getWeight(atBackPosition position: Int) -> String {
+        return interactor.getWeightData(fromBackPosition: position)?.getWeight() ?? ""
     }
     
-    func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: Int) {
-        let weightData = WeightDataModel(date: date, time: time, weight: weight)
-        interactor.uploadNewWeight(weightData: weightData)
+    func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String) {
+        interactor.uploadNewWeight(newDate: date, newTime: time, newWeight: weight)
     }
     
     func getLastTime() -> String {
-        return interactor.getLastWeightData().getTimeString()
+        return interactor.getLastWeightData()?.getTimeString() ?? ""
     }
     
     func getLastDate() -> String {
-        return interactor.getLastWeightData().getDateString()
+        return interactor.getLastWeightData()?.getDateString() ?? ""
     }
     
-    func getLastWeight() -> Int {
-        return interactor.getLastWeightData().getWeight()
+    func getLastWeight() -> String {
+        return interactor.getLastWeightData()?.getWeight() ?? ""
     }
     
     func backButtonPressed() {

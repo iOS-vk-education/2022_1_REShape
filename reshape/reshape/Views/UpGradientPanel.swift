@@ -10,7 +10,7 @@ import UIKit
 class UpGradientPanel: UIView {
     private let gradient: CAGradientLayer = {
         let layer = CAGradientLayer()
-        layer.colors = [UIColor.greenColor!.cgColor, UIColor.darkGreenColor!.cgColor]
+        layer.colors = [UIColor.greenColor.cgColor, UIColor.darkGreenColor.cgColor]
         layer.startPoint = CGPoint(x: 0, y: 0)
         layer.endPoint = CGPoint(x: 1, y: 1)
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -26,11 +26,6 @@ class UpGradientPanel: UIView {
         setupUI()
     }
     
-    func changeState() {
-        self.layoutIfNeeded()
-        gradient.frame = self.bounds
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -41,6 +36,10 @@ class UpGradientPanel: UIView {
     
     func setupGradientColor(withColor color: [CGColor]) {
         gradient.colors = color
+    }
+    
+    override func layoutSubviews() {
+        gradient.frame = self.bounds
     }
 }
    
