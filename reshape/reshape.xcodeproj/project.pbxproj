@@ -120,6 +120,7 @@
 		F7435498280B35A0002E03BB /* WaterScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435492280B35A0002E03BB /* WaterScreenContainer.swift */; };
 		F74354A1280B48CA002E03BB /* CustomProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A0280B48CA002E03BB /* CustomProfileView.swift */; };
 		F74354A3280B4913002E03BB /* CustomWaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A2280B4913002E03BB /* CustomWaterView.swift */; };
+		F7B8F5A2281F0B31007E1766 /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8F5A1281F0B30007E1766 /* ProfileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -263,6 +264,7 @@
 		F7435492280B35A0002E03BB /* WaterScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenContainer.swift; sourceTree = "<group>"; };
 		F74354A0280B48CA002E03BB /* CustomProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProfileView.swift; sourceTree = "<group>"; };
 		F74354A2280B4913002E03BB /* CustomWaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaterView.swift; sourceTree = "<group>"; };
+		F7B8F5A1281F0B30007E1766 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -561,6 +563,7 @@
 				945B385A27ECC3500044E952 /* ProfileScreenProtocols.swift */,
 				945B385B27ECC3500044E952 /* ProfileScreenInteractor.swift */,
 				945B385C27ECC3500044E952 /* ProfileScreenContainer.swift */,
+				F7B8F5A1281F0B30007E1766 /* ProfileManager.swift */,
 			);
 			path = ProfileScreen;
 			sourceTree = "<group>";
@@ -932,6 +935,7 @@
 				2EECFF3627E5037100BD4BEF /* EnterProtocols.swift in Sources */,
 				2EB767C628060645008868DD /* MealInfo.swift in Sources */,
 				945B384827ECC32A0044E952 /* ResultsScreenProtocols.swift in Sources */,
+				F7B8F5A2281F0B31007E1766 /* ProfileManager.swift in Sources */,
 				36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */,
 				9437920327F9AFA10000188E /* ResultCollectionCell.swift in Sources */,
 				F743548A280B337C002E03BB /* ProfileCollectionCell.swift in Sources */,
