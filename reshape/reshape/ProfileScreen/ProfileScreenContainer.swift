@@ -15,7 +15,8 @@ final class ProfileScreenContainer {
 
 	static func assemble(with context: ProfileScreenContext) -> ProfileScreenContainer {
         let router = ProfileScreenRouter()
-        let interactor = ProfileScreenInteractor()
+        let manager = ProfileManager()
+        let interactor = ProfileScreenInteractor(manager: manager)
         let presenter = ProfileScreenPresenter(router: router, interactor: interactor)
 		let viewController = ProfileScreenViewController(output: presenter)
 

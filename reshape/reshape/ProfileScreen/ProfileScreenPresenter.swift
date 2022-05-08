@@ -28,6 +28,9 @@ extension ProfileScreenPresenter: ProfileScreenViewOutput {
     func quitButtonPressed() {
         router.quitButtonTapped()
     }
+    func didLogOut(){
+        interactor.logOut()
+    }
 }
 
 extension ProfileScreenPresenter: ProfileScreenInteractorOutput {

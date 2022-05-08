@@ -9,7 +9,7 @@
 import UIKit
 
 
-final class WaterScreenViewController: UIViewController {
+final class WaterScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     private let output: WaterScreenViewOutput
     private let mainView: CustomWaterView = CustomWaterView()
 
@@ -43,7 +43,14 @@ final class WaterScreenViewController: UIViewController {
         return collection
     }()
     
-    var containerViewBottomConstraint: NSLayoutConstraint?
+    private let waterScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private var waterScrollViewConstraint: NSLayoutConstraint?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +58,8 @@ final class WaterScreenViewController: UIViewController {
         setupUI()
         setupCollectionView()
         mainView.delegate = self
+        addGestureRecognizer()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,7 +71,13 @@ final class WaterScreenViewController: UIViewController {
         super.viewWillDisappear(animated)
         unsetupObserversForKeyboard()
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let heightFrame = view.frame.height - 125
+        let widthFrame = view.frame.width
+        waterScrollView.contentSize = CGSize(width: widthFrame, height: heightFrame)
     
+    }
 }
 
 extension WaterScreenViewController {
@@ -87,9 +102,9 @@ extension WaterScreenViewController {
         guard let userInfo = notification.userInfo else {return}
         guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         let keyboardFrame = keyboardSize.cgRectValue
-        if self.containerViewBottomConstraint?.constant == 0 {
+        if self.waterScrollViewConstraint?.constant == 0 {
             UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.containerViewBottomConstraint?.constant -= keyboardFrame.height
+                self?.waterScrollViewConstraint?.constant -= keyboardFrame.height
                 self?.view.layoutIfNeeded()
             }
         }
@@ -97,28 +112,37 @@ extension WaterScreenViewController {
     
     @objc func keyboardWillHide(notification: NSNotification){
         UIView.animate(withDuration: 0.4) { [weak self] in
-            self?.containerViewBottomConstraint?.constant = 0
+            self?.waterScrollViewConstraint?.constant = 0
             self?.view.layoutIfNeeded()
         }
+    }
+    @objc
+    func endEditing() {
+        view.endEditing(true)
     }
 }
 
 extension WaterScreenViewController: WaterScreenViewInput {
     private func setupConstraints(){
-        view.addSubview(mainView)
+        view.addSubview(waterScrollView)
+        waterScrollView.top(isIncludeSafeArea: false)
+        waterScrollView.leading(0)
+        waterScrollView.trailing(0)
+        
+        waterScrollView.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
         mainView.top(isIncludeSafeArea: false)
         mainView.leading()
         mainView.trailing()
         mainView.height(view.bounds.height / 2.5)
         
-        view.addSubview(informHeaderLabel)
+        waterScrollView.addSubview(informHeaderLabel)
         NSLayoutConstraint.activate([
             informHeaderLabel.topAnchor.constraint(equalTo: mainView.bottomAnchor, constant: 21)
         ])
         informHeaderLabel.leading(33)
         
-        view.addSubview(waterCollectionView)
+        waterScrollView.addSubview(waterCollectionView)
         NSLayoutConstraint.activate([
             waterCollectionView.topAnchor.constraint(equalTo: informHeaderLabel.bottomAnchor, constant: 21)
         ])
@@ -126,6 +150,9 @@ extension WaterScreenViewController: WaterScreenViewInput {
         waterCollectionView.leading()
         waterCollectionView.trailing()
         waterCollectionView.height(view.bounds.height / 2.5)
+        
+        waterScrollViewConstraint = waterScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        waterScrollViewConstraint?.isActive = true
     }
     
     func setupUI() {
@@ -139,7 +166,6 @@ extension WaterScreenViewController: WaterScreenViewInput {
     
     private func setupCollectionView(){
         waterCollectionView.register(cellType: WaterCollectionCell.self)
-        waterCollectionView.delegate = self
         waterCollectionView.dataSource = self
     }
     
@@ -162,7 +188,6 @@ extension WaterScreenViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension WaterScreenViewController: UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView,
                             numberOfItemsInSection section: Int) -> Int {
         return 7
@@ -179,19 +204,19 @@ extension WaterScreenViewController: UICollectionViewDataSource {
                 cell.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
                 cell.configure(cup: UIImage(named: "StillWater")!,
                                water: "Вода",
-                               volume: "500")
+                               volume: cell.volumeTextField.text ?? "500")
             case 1:
                 cell.configure(cup: UIImage(named: "Coffee")!,
                                water: "Кофе",
-                               volume: "500")
+                               volume: cell.volumeTextField.text ?? "500")
             case 2:
                 cell.configure(cup: UIImage(named: "Tea")!,
                                water: "Чай",
-                               volume: "500")
+                               volume: cell.volumeTextField.text ?? "500")
             case 3:
                 cell.configure(cup: UIImage(named: "SparklingWater")!,
                                water: "Газированная вода",
-                               volume: "500")
+                               volume: cell.volumeTextField.text ?? "500")
             case 4:
                 cell.configure(cup: UIImage(named: "Milk")!,
                                water: "Молоко",
@@ -223,6 +248,22 @@ extension WaterScreenViewController: CustomWaterDelegate {
             if finished {
                 self?.output.backButtonPressed()
             }
+        }
+    }
+}
+
+extension WaterScreenViewController {
+    func addGestureRecognizer() {
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        singleTap.cancelsTouchesInView = false
+        singleTap.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(singleTap)
+    }
+
+    @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
+        for i in 0...6{
+            guard let cell = waterCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? WaterCollectionCell else {return}
+            cell.unchosen()
         }
     }
 }

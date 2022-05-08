@@ -24,7 +24,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wFy-vZ-bgu">
-                        <rect key="frame" x="20" y="5" width="22" height="22"/>
+                        <rect key="frame" x="20" y="7" width="18" height="18"/>
                     </imageView>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" text="500" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FZB-fV-Xy1">
                         <rect key="frame" x="253" y="0.0" width="54" height="34"/>
@@ -47,16 +47,16 @@
                 <constraint firstAttribute="trailing" secondItem="DnE-qw-RJb" secondAttribute="trailing" constant="18" id="2Ja-LN-a8R"/>
                 <constraint firstItem="zZo-aW-jTE" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="5NI-aI-RLA"/>
                 <constraint firstItem="DnE-qw-RJb" firstAttribute="leading" secondItem="FZB-fV-Xy1" secondAttribute="trailing" constant="3" id="9B2-Rd-H7j"/>
-                <constraint firstItem="zZo-aW-jTE" firstAttribute="leading" secondItem="wFy-vZ-bgu" secondAttribute="trailing" constant="13" id="Q5A-NS-5dp"/>
+                <constraint firstItem="wFy-vZ-bgu" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="7" id="P5x-Km-qBe"/>
+                <constraint firstItem="wFy-vZ-bgu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="QUL-ap-rjp"/>
                 <constraint firstAttribute="bottom" secondItem="zZo-aW-jTE" secondAttribute="bottom" constant="6" id="RlN-VW-oFO"/>
-                <constraint firstItem="wFy-vZ-bgu" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="Z4J-bQ-WxA"/>
+                <constraint firstItem="zZo-aW-jTE" firstAttribute="leading" secondItem="wFy-vZ-bgu" secondAttribute="trailing" constant="17" id="TnZ-wa-PBa"/>
+                <constraint firstAttribute="bottom" secondItem="wFy-vZ-bgu" secondAttribute="bottom" constant="7" id="UNU-hB-KGg"/>
                 <constraint firstItem="DnE-qw-RJb" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="ZMJ-qh-lMA"/>
                 <constraint firstItem="FZB-fV-Xy1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="b9U-w9-0Ie"/>
                 <constraint firstAttribute="bottom" secondItem="DnE-qw-RJb" secondAttribute="bottom" constant="6" id="cj9-X0-vfo"/>
-                <constraint firstAttribute="bottom" secondItem="wFy-vZ-bgu" secondAttribute="bottom" constant="5" id="glp-ge-F9W"/>
                 <constraint firstItem="zZo-aW-jTE" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="55" id="hws-ib-X9Y"/>
                 <constraint firstAttribute="bottom" secondItem="FZB-fV-Xy1" secondAttribute="bottom" constant="-2" id="mqO-uA-UQU"/>
-                <constraint firstItem="wFy-vZ-bgu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="uNT-E8-al7"/>
             </constraints>
             <connections>
                 <outlet property="cupImage" destination="wFy-vZ-bgu" id="7hp-uA-Ltj"/>

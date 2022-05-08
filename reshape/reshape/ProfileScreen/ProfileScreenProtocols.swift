@@ -20,9 +20,11 @@ protocol ProfileScreenViewInput: AnyObject {
 
 protocol ProfileScreenViewOutput: AnyObject {
     func quitButtonPressed()
+    func didLogOut()
 }
 
 protocol ProfileScreenInteractorInput: AnyObject {
+    func logOut()
 }
 
 protocol ProfileScreenInteractorOutput: AnyObject {

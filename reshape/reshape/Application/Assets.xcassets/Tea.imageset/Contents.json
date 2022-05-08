@@ -2,10 +2,10 @@
   "images" : [
     {
       "alignment-insets" : {
-        "bottom" : 4,
-        "left" : 4,
-        "right" : 4,
-        "top" : 4
+        "bottom" : 3,
+        "left" : 3,
+        "right" : 3,
+        "top" : 3
       },
       "filename" : "Tea-2.png",
       "idiom" : "universal",

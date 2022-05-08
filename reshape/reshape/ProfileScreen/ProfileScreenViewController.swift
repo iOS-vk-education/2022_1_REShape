@@ -56,7 +56,6 @@ final class ProfileScreenViewController: UIViewController {
         setupUI()
         setupCollectionView()
         mainView.delegate = self
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -69,8 +68,6 @@ final class ProfileScreenViewController: UIViewController {
         }
     }
 }
-    
-
 
 extension ProfileScreenViewController: ProfileScreenViewInput {
     private func setupConstraints(){
@@ -117,7 +114,9 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
         mainView.layer.shadowOffset = CGSize(width: 4, height: 4)
         mainView.layer.shadowRadius = 5
         mainView.layer.shadowOpacity = 0.5
+        
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        
         addPhoto.isUserInteractionEnabled = true
         addPhoto.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                              action: #selector(selectPhoto)))
@@ -188,7 +187,6 @@ extension ProfileScreenViewController: UICollectionViewDataSource {
             default:
                 break
             }
-
             return cell
         }
 }
@@ -201,6 +199,7 @@ extension ProfileScreenViewController: CustomProfileDelegate {
         } completion: { [weak self] finished in
             if finished {
                 self?.output.quitButtonPressed()
+                self?.output.didLogOut()
             }
         }
     }

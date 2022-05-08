@@ -25,11 +25,19 @@ class WaterCollectionCell: UICollectionViewCell {
     func setupConstraints() {
         self.layer.masksToBounds = true
         volumeTextField.borderStyle = .none
+        volumeTextField.keyboardType = .numberPad
+        
     }
     
     func configure(cup: UIImage, water: String, volume: String) {
         waterLabel?.text = water
         volumeTextField?.text = volume
         cupImage?.image = cup
+    }
+}
+
+extension WaterCollectionCell {
+    func unchosen() {
+        volumeTextField.endEditing(false)
     }
 }
