@@ -134,17 +134,17 @@ extension WaterScreenViewController: WaterScreenViewInput {
         mainView.top(isIncludeSafeArea: false)
         mainView.leading()
         mainView.trailing()
-        mainView.height(view.bounds.height / 2.5)
+        mainView.height(view.bounds.height / 2.85)
         
         waterScrollView.addSubview(informHeaderLabel)
         NSLayoutConstraint.activate([
-            informHeaderLabel.topAnchor.constraint(equalTo: mainView.bottomAnchor, constant: 21)
+            informHeaderLabel.topAnchor.constraint(equalTo: mainView.bottomAnchor, constant: 16)
         ])
         informHeaderLabel.leading(33)
         
         waterScrollView.addSubview(waterCollectionView)
         NSLayoutConstraint.activate([
-            waterCollectionView.topAnchor.constraint(equalTo: informHeaderLabel.bottomAnchor, constant: 21)
+            waterCollectionView.topAnchor.constraint(equalTo: informHeaderLabel.bottomAnchor, constant: 16)
         ])
         waterCollectionView.centerX()
         waterCollectionView.leading()
@@ -176,14 +176,14 @@ extension WaterScreenViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: view.frame.width - 20,
-                      height: view.frame.height / 20)
+        return CGSize(width: view.frame.width - 30,
+                      height: view.frame.height / 24)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return CGFloat(1.0)
+        return CGFloat(2.0)
     }
 }
 
@@ -204,33 +204,33 @@ extension WaterScreenViewController: UICollectionViewDataSource {
                 cell.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
                 cell.configure(cup: UIImage(named: "StillWater")!,
                                water: "Вода",
-                               volume: cell.volumeTextField.text ?? "500")
+                               volume: cell.volumeTextField.text ?? "0")
             case 1:
                 cell.configure(cup: UIImage(named: "Coffee")!,
                                water: "Кофе",
-                               volume: cell.volumeTextField.text ?? "500")
+                               volume: cell.volumeTextField.text ?? "0")
             case 2:
                 cell.configure(cup: UIImage(named: "Tea")!,
                                water: "Чай",
-                               volume: cell.volumeTextField.text ?? "500")
+                               volume: cell.volumeTextField.text ?? "0")
             case 3:
                 cell.configure(cup: UIImage(named: "SparklingWater")!,
                                water: "Газированная вода",
-                               volume: cell.volumeTextField.text ?? "500")
+                               volume: cell.volumeTextField.text ?? "0")
             case 4:
                 cell.configure(cup: UIImage(named: "Milk")!,
                                water: "Молоко",
-                               volume: "500")
+                               volume: "0")
             case 5:
                 cell.configure(cup: UIImage(named: "Alcohol")!,
                                water: "Алкоголь",
-                               volume: "500")
+                               volume: "0")
             case 6:
             cell.layer.cornerRadius = 10
             cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             cell.configure(cup: UIImage(named: "Juice")!,
                                water: "Сок",
-                               volume: "500")
+                               volume: "0")
             default:
                 break
             }

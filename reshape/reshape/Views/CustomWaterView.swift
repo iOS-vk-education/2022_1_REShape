@@ -30,7 +30,7 @@ final class CustomWaterView: UIView {
         let percentLabel = UILabel()
         percentLabel.translatesAutoresizingMaskIntoConstraints = false
         percentLabel.text = "65%"
-        percentLabel.font = UIFont.systemFont(ofSize: 40, weight: .medium)
+        percentLabel.font = UIFont.systemFont(ofSize: 40, weight: .regular)
         percentLabel.textAlignment = .center
         percentLabel.textColor = .white
         return percentLabel
@@ -61,6 +61,7 @@ final class CustomWaterView: UIView {
         setupUI()
 
     }
+    
     func setupConstraints(){
         self.addSubview(waterImage)
         waterImage.top(60, isIncludeSafeArea: false)
@@ -70,22 +71,22 @@ final class CustomWaterView: UIView {
         
         self.addSubview(percentLabel)
         percentLabel.centerX()
-        NSLayoutConstraint.activate([percentLabel.topAnchor.constraint(equalTo: waterImage.topAnchor, constant: 117)])
+        percentLabel.centerY()
         percentLabel.height(30)
         percentLabel.width(100)
         
         self.addSubview(backButton)
         backButton.height(27)
         backButton.width(76)
-        backButton.leading(15)
-        NSLayoutConstraint.activate([
-            backButton.bottomAnchor.constraint(equalTo: waterImage.topAnchor, constant: 10)
-        ])
+        backButton.leading(11)
+        backButton.top(3, isIncludeSafeArea: false)
     }
+    
     func setupUI(){
         backButton.isUserInteractionEnabled = true
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
+    
     @objc func backButtonTapped(){
         delegate?.backButtonAction()
     }

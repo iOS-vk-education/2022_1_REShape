@@ -80,13 +80,13 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
         
         view.addSubview(informHeaderLabel)
         NSLayoutConstraint.activate([
-            informHeaderLabel.topAnchor.constraint(equalTo: mainView.bottomAnchor, constant: 21)
+            informHeaderLabel.topAnchor.constraint(equalTo: mainView.bottomAnchor, constant: 16)
         ])
         informHeaderLabel.leading(33)
         
         view.addSubview(profileCollectionView)
         NSLayoutConstraint.activate([
-            profileCollectionView.topAnchor.constraint(equalTo: informHeaderLabel.bottomAnchor, constant: 21)
+            profileCollectionView.topAnchor.constraint(equalTo: informHeaderLabel.bottomAnchor, constant: 16)
         ])
         profileCollectionView.centerX()
         profileCollectionView.leading()
@@ -142,14 +142,14 @@ extension ProfileScreenViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: view.frame.width - 20,
-                      height: view.frame.height / 20)
+        return CGSize(width: view.frame.width - 30,
+                      height: view.frame.height / 24)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return CGFloat(1.0)
+        return CGFloat(2.0)
     }
 }
 
