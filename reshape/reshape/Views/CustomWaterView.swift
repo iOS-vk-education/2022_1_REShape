@@ -71,7 +71,7 @@ final class CustomWaterView: UIView {
         
         self.addSubview(percentLabel)
         percentLabel.centerX()
-        percentLabel.centerY()
+        NSLayoutConstraint.activate([percentLabel.topAnchor.constraint(equalTo: waterImage.topAnchor, constant: 45)])
         percentLabel.height(30)
         percentLabel.width(100)
         

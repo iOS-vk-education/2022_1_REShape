@@ -12,22 +12,10 @@ protocol CustomProfileDelegate: AnyObject {
     func quitButtonAction()
 }
 
-final class CustomProfileView: UIView {
+final class CustomProfileView: UpGradientPanel {
     weak var delegate: CustomProfileDelegate?
     
-    private let progressBar: CircularProgressBarView = CircularProgressBarView(frame: CGRect(x: 0, y: 0, width: 130, height: 130))
-    
-    private let backgroundImage: UIImageView = {
-        let backgroundImage = UIImageView()
-        backgroundImage.image = UIImage(named: "Gradient")
-        backgroundImage.layer.cornerRadius = 40
-        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        backgroundImage.layer.masksToBounds = true
-        backgroundImage.layer.shadowOffset = CGSize(width: 4, height: 4)
-        backgroundImage.layer.shadowColor = CGColor(red: 20, green: 4, blue: 65, alpha: 0.2)
-        return backgroundImage
-    }()
+    private let progressBar: CircularProgressBarView = CircularProgressBarView(frame: CGRect(x: 0, y: 0, width: 131, height: 131))
     
     let quitButton: UIButton = {
         let button = UIButton()
@@ -77,19 +65,13 @@ final class CustomProfileView: UIView {
     }
 
     private func setupConstraints(){
-        self.addSubview(backgroundImage)
-        backgroundImage.top(isIncludeSafeArea: false)
-        backgroundImage.leading()
-        backgroundImage.trailing()
-        backgroundImage.bottom(isIncludeSafeArea: false)
-        
         self.addSubview(progressBar)
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         progressBar.center = self.center
         progressBar.centerX()
-        progressBar.centerY()
-        progressBar.height(130)
-        progressBar.width(130)
+        progressBar.top(79, isIncludeSafeArea: false)
+        progressBar.height(131)
+        progressBar.width(131)
         
         self.addSubview(personalStackView)
         personalStackView.centerX()
@@ -104,10 +86,8 @@ final class CustomProfileView: UIView {
         phoneNumberLabel.trailing()
         
         self.addSubview(quitButton)
-        NSLayoutConstraint.activate([
-            quitButton.topAnchor.constraint(equalTo: backgroundImage.topAnchor, constant: 65)
-        ])
-        quitButton.trailing(-30)
+        quitButton.top(40, isIncludeSafeArea: false)
+        quitButton.trailing(-27)
     }
     
     func setupUI(){

@@ -58,6 +58,11 @@ final class ProfileScreenViewController: UIViewController {
         mainView.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        mainView.changeState()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         addPhoto.layer.cornerRadius = addPhoto.frame.size.height / 2
@@ -100,16 +105,16 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
         ])
         addPhoto.centerX()
         
-        NSLayoutConstraint.activate([
-            addPhoto.centerYAnchor.constraint(equalTo: mainView.centerYAnchor)
-        ])
-        addPhoto.height(117)
-        addPhoto.width(117)
+        addPhoto.top(85, isIncludeSafeArea: false)
+        addPhoto.height(119)
+        addPhoto.width(119)
     }
     
     func setupUI() {
         view.backgroundColor = .white
-        
+        mainView.setupGradientColor(withColor: [UIColor.lightVioletColor!.cgColor,
+                                                UIColor.darkVioletColor!.cgColor])
+        mainView.setupGradientDirection(withDirection: .topToDown)
         mainView.layer.masksToBounds = false
         mainView.layer.shadowOffset = CGSize(width: 4, height: 4)
         mainView.layer.shadowRadius = 5

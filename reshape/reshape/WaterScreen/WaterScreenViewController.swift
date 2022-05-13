@@ -157,7 +157,6 @@ extension WaterScreenViewController: WaterScreenViewInput {
     
     func setupUI() {
         view.backgroundColor = .white
-        mainView.layer.masksToBounds = false
         mainView.layer.shadowOffset = CGSize(width: 4, height: 4)
         mainView.layer.shadowRadius = 5
         mainView.layer.shadowOpacity = 0.5
