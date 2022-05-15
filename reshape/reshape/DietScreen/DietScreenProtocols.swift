@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol DietScreenModuleInput {
 	var moduleOutput: DietScreenModuleOutput? { get }
@@ -21,7 +22,7 @@ protocol DietScreenViewInput: AnyObject {
     func showCells(for indexPaths: [IndexPath])
     func hideCells(for indexPaths: [IndexPath])
     func reloadTableView()
-    func reloadTableSections(atSection sections: IndexSet)
+    func reloadTableRows(atIndex indexPaths: [IndexPath], animation: UITableView.RowAnimation)
 }
 
 protocol DietScreenViewOutput: AnyObject {

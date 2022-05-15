@@ -135,8 +135,8 @@ extension DietScreenViewController: DietScreenViewInput {
         self.dietTableView.reloadData()
     }
     
-    func reloadTableSections(atSection sections: IndexSet) {
-        self.dietTableView.reloadSections(sections, with: .none)
+    func reloadTableRows(atIndex indexPaths: [IndexPath], animation: UITableView.RowAnimation) {
+        self.dietTableView.reloadRows(at: indexPaths, with: animation)
     }
 }
 
@@ -145,13 +145,13 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
         let mealType = output.getCellType(from: indexPath)
         let section = indexPath.section
         switch mealType {
-        case .breakfast, .lunch, .dinner:
+        case .breakfast, .lunch, .dinner, .snack:
             let cell = tableView.dequeueCell(cellType: DietCell.self, for: indexPath)
             cell.setData(
                 text: mealType.text,
                 state: output.getCellDisclosure(forMeal: mealType, atSection: section))
             return cell
-        case .mealBreakfast, .mealLunch, .mealDinner:
+        case .mealBreakfast, .mealLunch, .mealDinner, .mealSnack:
             let cell = tableView.dequeueCell(cellType: MealCell.self, for: indexPath)
             cell.setMealInformation(
                 name: output.getMealName(forMeal: mealType.revert, atIndex: indexPath),
@@ -180,17 +180,18 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: .random())
         let cell = tableView.cellForRow(at: indexPath)
         let mealType = output.getCellType(from: indexPath)
         switch mealType {
-        case .breakfast, .lunch, .dinner:
+        case .breakfast, .lunch, .dinner, .snack:
             // Получение блока данных
             let newCellDisclosureState = output.getCellDisclosure(forMeal: mealType, atSection: indexPath.section).revert
             
             // Проверка и изменение состояния
             (cell as! DietCell).disclosure(newCellDisclosureState)
             output.clickedDiet(newCellDisclosureState, mealType: mealType, inSection: indexPath.section)
-        case .mealLunch, .mealDinner, .mealBreakfast:
+        case .mealLunch, .mealDinner, .mealBreakfast, .mealSnack:
             // Получение данных о блюде
             let newMealChecked = !output.getMealState(forMeal: mealType.revert, atIndex: indexPath)
 
@@ -200,7 +201,6 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             return
         }
-        tableView.deselectRow(at: indexPath, animated: .random())
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

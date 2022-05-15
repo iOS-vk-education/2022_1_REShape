@@ -148,11 +148,11 @@ extension DietScreenPresenter {
         interactor.changeDisclosure(toState: state, forMeal: celltype, atSection: section)
         
         // Обновление базы данных и показанных ячеек
-        let mealIndexPath = self.prepareCells(for: state, mealType: celltype, atSection: section)
+        let mealsIndexPath = self.prepareCells(for: state, mealType: celltype, atSection: section)
         if state == .disclosure {
-            view?.showCells(for: mealIndexPath)
+            view?.showCells(for: mealsIndexPath)
         } else if state == .closure {
-            view?.hideCells(for: mealIndexPath)
+            view?.hideCells(for: mealsIndexPath)
         }
     }
 
@@ -170,11 +170,23 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
         // Обновление блюд, если ячейка открыта
         if self.getCellDisclosure(forMeal: meal, atSection: section) == .disclosure {
             // Обновление базы данных и показанных ячеек
-            let _ = self.prepareCells(for: .reload, mealType: meal, atSection: section)
+            let rowsBeforeUpdate = rowInSection[section].count
+            var mealsIndexPath = self.prepareCells(for: .reload, mealType: meal, atSection: section)
+            let rowsAfterUpdate = rowInSection[section].count
+            let countNewCells = rowsAfterUpdate - rowsBeforeUpdate
+            if countNewCells >= 0 {
+                view?.showCells(for: mealsIndexPath.suffix(countNewCells))
+                mealsIndexPath.removeLast(countNewCells)
+            } else {
+                let lastRow = mealsIndexPath.last?.row ?? getCellIndex(forMeal: meal, atSection: section)
+                var deletedCells: [IndexPath] = []
+                for row in lastRow+1...lastRow-countNewCells {
+                    deletedCells.append(IndexPath(row: row, section: section))
+                }
+                view?.hideCells(for: deletedCells)
+            }
+            view?.reloadTableRows(atIndex: mealsIndexPath, animation: .none)
         }
-        
-        // Перезагрузка таблицы
-        view?.reloadTableSections(atSection: IndexSet(integer: section))
     }
     
     func updateMealData(atSection section: Int) {

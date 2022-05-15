@@ -60,7 +60,6 @@ extension DietCell {
             if animated {
                 disclosureImage.rotateAntiClockwise()
             }
-            disclosureImage.image = nil
             disclosureImage.image = UIImage(named: "Closure")
             disclosureWidthConstraints.constant = 6
             disclosureHeightConstraints.constant = 14
@@ -70,7 +69,6 @@ extension DietCell {
             if animated {
                 disclosureImage.rotateClockwise()
             }
-            disclosureImage.image = nil
             disclosureImage.image = UIImage(named: "Disclosure")
             disclosureWidthConstraints.constant = 14
             disclosureHeightConstraints.constant = 6

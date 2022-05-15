@@ -11,7 +11,6 @@ import Foundation
 final class DietScreenInteractor {
     private var cellData: [CellData] = []
 	weak var output: DietScreenInteractorOutput?
-    private var loginState = false
     
     // Базы данных
     private let modelController: DietModelController
@@ -20,8 +19,6 @@ final class DietScreenInteractor {
     init() {
         modelController = DietModelController()
         firebaseModelController = DietFirebaseModelController()
-        firebaseModelController.login()
-        firebaseModelController.loadIndividualInfo { _ in self.loginState = true }
         uploadFromDatabase()
     }
     
@@ -30,18 +27,19 @@ final class DietScreenInteractor {
     }
     
     // Создание внутреннего кэша данных по каждому приёму пищи
-    private func createCellData(withNewDays newDays: Int = 0) {
+    private func createCellData(withNewDays newDays: UInt = 0) {
         let oldDays = numOfDays()
         if newDays < oldDays {
-            for curSection in newDays...oldDays-1 {
+            for curSection in Int(newDays)...oldDays-1 {
                 modelController.deleteCellData(in: [
                     cellData[cellIndex(forMeal: .breakfast, atSection: curSection)!],
                     cellData[cellIndex(forMeal: .lunch, atSection: curSection)!],
+                    cellData[cellIndex(forMeal: .snack, atSection: curSection)!],
                     cellData[cellIndex(forMeal: .dinner, atSection: curSection)!]
                 ])
             }
         } else if newDays > oldDays {
-            for curSection in oldDays...newDays-1 {
+            for curSection in oldDays...Int(newDays)-1 {
                 cellData.append(contentsOf: modelController.addCellData(toSection: curSection))
             }
         }
@@ -82,10 +80,10 @@ final class DietScreenInteractor {
         return mealIndex(forCellPosition: cellDataIndex, atID: id)
     }
     
-    private func deleteMeals(greaterThanID id: Int, forMeal type: MealsType, inSection section: Int) {
+    private func deleteMeals(greaterThanID id: UInt, forMeal type: MealsType, inSection section: Int) {
         let oldNumOfMeals = self.getMealCount(forMeal: type, atSection: section)
         if id >= oldNumOfMeals { return }
-        for mealID in id...oldNumOfMeals-1 {
+        for mealID in Int(id)...oldNumOfMeals-1 {
             let cell = getCellData(forMeal: type, atSection: section)
             let mealData = getMealData(withID: mealID, forMeal: type, atSection: section)
             cell.removeFromCellMeals(mealData)
@@ -99,31 +97,32 @@ extension DietScreenInteractor {
     // Запрос на получение данных из Firebase
     private func requestMealData(toDay day: Int, toMeal mealtype: MealsType) {
         print("[DEBUG] Data from \(mealtype.text) need to get at \(day) day")
-        firebaseModelController.loadIndividualInfo { [weak self] error in
-            guard let _ = error else { return }
-            self?.firebaseModelController.getMeals(forDay: day, atMeal: mealtype.engText) { [weak self] numOfMeals in
-                guard (self != nil) else { return }
+        
+        firebaseModelController.getMeals(forDay: day, atMeal: mealtype.engText) {
+            [weak self] numOfMeals, error in guard (error == nil) else { return }
             
-                // Удаление лишних блюд
-                self?.deleteMeals(greaterThanID: Int(numOfMeals), forMeal: mealtype, inSection: day - 1)
-                if numOfMeals == 0 { return }
-                
-                // Обновление блюд
-                let cell = self!.getCellData(forMeal: mealtype, atSection: day - 1)
-                for mealNumber in 1...numOfMeals {
-                    let id = Int(mealNumber) - 1
-                    let name = self!.firebaseModelController.mealName(forID: mealNumber)
-                    let calories = self!.firebaseModelController.mealCalories(forID: mealNumber)
-                    let state = self!.firebaseModelController.mealState(forDay: day, atMeal: mealtype.engText, forID: mealNumber)
-                    guard let mealDataIndex = self!.mealIndex(forCellData: cell, atID: id) else {
-                        cell.addMealData(withID: id, withName: name, withCal: calories, withState: state)
-                        continue
-                    }
-                    cell.updateMealData(atIndex: mealDataIndex, withID: id, newName: name, newCal: calories, newState: state)
+            // Запрос на загрузку индивидуальных параметров
+            self?.firebaseModelController.loadIndividualInfo()
+
+            // Удаление лишних блюд
+            self?.deleteMeals(greaterThanID: numOfMeals, forMeal: mealtype, inSection: day - 1)
+            if numOfMeals == 0 { return }
+            
+            // Обновление блюд
+            let cell = self!.getCellData(forMeal: mealtype, atSection: day - 1)
+            for mealNumber in 1...numOfMeals {
+                let id = mealNumber - 1
+                let name = self?.firebaseModelController.mealName(forID: mealNumber) ?? ""
+                let calories = self?.firebaseModelController.mealCalories(forID: mealNumber) ?? 0
+                let state = self?.firebaseModelController.mealState(forDay: day, atMeal: mealtype.engText, forID: mealNumber) ?? false
+                guard let mealDataIndex = self?.mealIndex(forCellData: cell, atID: Int(id)) else {
+                    cell.addMealData(withID: id, withName: name, withCal: calories, withState: state)
+                    continue
                 }
-                self!.saveDatabase()
-                self!.output?.updateMealData(forMeal: cell.type(), atSection: cell.section())
-            }
+                cell.updateMealData(atIndex: mealDataIndex, withID: id, newName: name, newCal: calories, newState: state)
+                }
+            self?.saveDatabase()
+            self?.output?.updateMealData(forMeal: cell.type(), atSection: cell.section())
         }
     }
     
@@ -131,23 +130,22 @@ extension DietScreenInteractor {
     func changeMealState(toState state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int) {
         print("[DEBUG] New state of \(meal.text) transmit at \(section + 1) day in \(id) position")
         let mealData = getMealData(withID: id, forMeal: meal, atSection: section)
-        mealData.changeState(toState: state)
-        firebaseModelController.newMealState(state, forDay: section + 1, forMeal: meal.engText, forID: id + 1, withCalories: mealData.modelCalories) { [weak self] in
-            self?.getMealData(withID: id, forMeal: meal, atSection: section).changeState(toState: !state)
+        firebaseModelController.newMealState(state, forDay: section + 1, forMeal: meal.engText, forID: id + 1, withCalories: mealData.modelCalories) {
+            [weak self] error in guard (error == nil) else { return }
+            mealData.changeState(toState: state)
             self?.saveDatabase()
             self?.output?.updateMealData(forMeal: meal, atSection: section)
         }
-        saveDatabase()
     }
     
     // Запрос на получение данных
     func getDatabase() {
         print("[DEBUG] Need get num of days")
         output?.updateNumOfDays(numOfDays())
-        firebaseModelController.daysCount { [weak self] days in
-            guard (self != nil) else { return }
-            self!.createCellData(withNewDays: Int(days))
-            self!.output?.updateNumOfDays(Int(days))
+        firebaseModelController.daysCount {
+            [weak self] days, error in guard (error == nil) else { return }
+            self?.createCellData(withNewDays: days)
+            self?.output?.updateNumOfDays(Int(days))
         }
     }
 }
@@ -189,15 +187,7 @@ extension DietScreenInteractor: DietScreenInteractorInput {
         
         // Запрос на сервер если ячейка открыта
         if state == .disclosure {
-            if loginState {
-                self.requestMealData(toDay: section + 1, toMeal: meal)
-            } else {
-                firebaseModelController.loadIndividualInfo { error in
-                    guard error == nil else { return }
-                    self.loginState = true
-                    self.requestMealData(toDay: section + 1, toMeal: meal)
-                }
-            }
+            self.requestMealData(toDay: section + 1, toMeal: meal)
         }
     }
 }

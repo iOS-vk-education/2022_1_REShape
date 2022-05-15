@@ -13,7 +13,7 @@ extension UIImageView {
         rotation.fromValue = -Double.pi/2
         rotation.toValue = 0
         rotation.duration = 0.2
-        self.layer.add(rotation, forKey: "rotationClockwiseAnimation")
+        self.layer.add(rotation, forKey: nil)
     }
 
     func rotateAntiClockwise() {
@@ -21,6 +21,6 @@ extension UIImageView {
         rotation.fromValue = Double.pi/2
         rotation.toValue = 0
         rotation.duration = 0.2
-        self.layer.add(rotation, forKey: "rotationAntiClockwiseAnimation")
+        self.layer.add(rotation, forKey: nil)
     }
 }
