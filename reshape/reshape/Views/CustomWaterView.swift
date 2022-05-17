@@ -58,7 +58,7 @@ final class CustomWaterView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.setupConstraints()
-        setupUI()
+//        setupUI()
 
     }
     
@@ -78,15 +78,15 @@ final class CustomWaterView: UIView {
         self.addSubview(backButton)
         backButton.height(27)
         backButton.width(76)
-        backButton.leading(11)
-        backButton.top(3, isIncludeSafeArea: false)
+        backButton.leading(8)
+        backButton.top(isIncludeSafeArea: false)
     }
     
     func setupUI(){
         backButton.isUserInteractionEnabled = true
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
-    
+
     @objc func backButtonTapped(){
         delegate?.backButtonAction()
     }

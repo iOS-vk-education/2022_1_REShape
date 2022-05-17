@@ -59,7 +59,6 @@ final class WaterScreenViewController: UIViewController, UIGestureRecognizerDele
         setupCollectionView()
         mainView.delegate = self
         addGestureRecognizer()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -73,10 +72,9 @@ final class WaterScreenViewController: UIViewController, UIGestureRecognizerDele
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let heightFrame = view.frame.height - 125
+        let heightFrame = view.frame.height - 150.0
         let widthFrame = view.frame.width
         waterScrollView.contentSize = CGSize(width: widthFrame, height: heightFrame)
-    
     }
 }
 
@@ -116,25 +114,21 @@ extension WaterScreenViewController {
             self?.view.layoutIfNeeded()
         }
     }
-    @objc
-    func endEditing() {
-        view.endEditing(true)
-    }
 }
 
 extension WaterScreenViewController: WaterScreenViewInput {
     private func setupConstraints(){
-        view.addSubview(waterScrollView)
-        waterScrollView.top(isIncludeSafeArea: false)
-        waterScrollView.leading(0)
-        waterScrollView.trailing(0)
-        
         waterScrollView.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
         mainView.top(isIncludeSafeArea: false)
         mainView.leading()
         mainView.trailing()
-        mainView.height(view.bounds.height / 2.85)
+        mainView.height(view.bounds.height / 2.9)
+        
+        view.addSubview(waterScrollView)
+        waterScrollView.top(isIncludeSafeArea: false)
+        waterScrollView.leading(0)
+        waterScrollView.trailing(0)
         
         waterScrollView.addSubview(informHeaderLabel)
         NSLayoutConstraint.activate([
@@ -174,7 +168,6 @@ extension WaterScreenViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         return CGSize(width: view.frame.width - 30,
                       height: view.frame.height / 24)
     }
@@ -182,7 +175,7 @@ extension WaterScreenViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return CGFloat(2.0)
+        return CGFloat(1.0)
     }
 }
 
@@ -233,12 +226,11 @@ extension WaterScreenViewController: UICollectionViewDataSource {
             default:
                 break
             }
-
             return cell
         }
 }
 
-extension WaterScreenViewController: CustomWaterDelegate {
+extension WaterScreenViewController: CustomWaterDelegate{
     func backButtonAction() {
         view.endEditing(true)
         UIView.animate(withDuration: 0.3) { [weak self] in

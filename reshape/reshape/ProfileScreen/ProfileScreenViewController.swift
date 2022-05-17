@@ -154,7 +154,7 @@ extension ProfileScreenViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return CGFloat(2.0)
+        return CGFloat(1.0)
     }
 }
 
