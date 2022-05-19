@@ -26,9 +26,6 @@ protocol WeightViewInput: AnyObject {
 }
 
 protocol WeightViewOutput: AnyObject {
-    // Обработка сигнала очистки
-    func flushWeightModel()
-    
     // Навигация
     func backButtonPressed()
     
@@ -39,8 +36,8 @@ protocol WeightViewOutput: AnyObject {
     func getNumOfDays() -> Int
     
     // Геттеры для графика
-    func getShortDate(atBackPosition position: Int) -> String
-    func getWeight(atBackPosition position: Int) -> String
+    func getShortDate(atPosition position: Int) -> String
+    func getWeight(atPosition position: Int) -> String
     
     // Получение текущего времени и даты
     func getCurrentDate() -> String
@@ -51,20 +48,14 @@ protocol WeightViewOutput: AnyObject {
 }
 
 protocol WeightInteractorInput: AnyObject {
-    // Очистка памяти
-    func flushWeightModel()
-    
     // Получение данных о весе для графика из локальной БД
-    func getWeightData(fromBackPosition position: Int) -> WeightModel?
-    
-    // Получение данных о весе для ячеек из локальной БД
-    func getLastWeightData() -> WeightModel?
+    func getWeightData(fromPosition position: Int) -> WeightModel?
     
     // Получение количества данных
-    func getMaxID() -> Int?
+    func getSize() -> Int
     
     // Запрос на загрузку изменнногот веса
-    func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String)
+    func uploadNewWeight(_ data: WeightStruct)
 }
 
 protocol WeightInteractorOutput: AnyObject {

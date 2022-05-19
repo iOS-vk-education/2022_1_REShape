@@ -12,23 +12,18 @@ final class WeightInteractor {
     weak var output: WeightInteractorOutput?
     private var localViewModels: [WeightModel] = []
     private let weightModelController: WeightModelController
-    private let coreDataContext: NSManagedObjectContext
+    private let firebaseController: WeightFirebaseController
     
-    init(coreDataController: WeightModelController) {
-        weightModelController = coreDataController
-        coreDataContext = weightModelController.managedObjectContext
-        updateLocalBase()
+    init() {
+        weightModelController = WeightModelController()
+        firebaseController = WeightFirebaseController()
+        loadFromLocalBase()
         getDataFromRemoteBase()
     }
     
-    deinit {
-        weightModelController.saveContext()
-    }
-    
-    private func updateLocalBase() {
+    private func loadFromLocalBase() {
         do {
-            let fetchRequest = WeightModel.fetchRequest()
-            let result = try coreDataContext.fetch(fetchRequest)
+            let result = try weightModelController.getWeightData()
             localViewModels = result
             self.output?.newWeightGetting()
         } catch let error as NSError {
@@ -38,74 +33,85 @@ final class WeightInteractor {
     
     private func getDataFromRemoteBase() {
         print("[DEBUG] Запрос на загрузку удаленной БД весов")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            // Данные с FireBase
-            let firebaseData = [
-                FireBaseWeightModel(modelID: 0, modelDate: "15 апреля 2022г", modelTime: "12:45", modelWeight: "45"),
-                FireBaseWeightModel(modelID: 1, modelDate: "16 апреля 2022г", modelTime: "16:45", modelWeight: "47"),
-                FireBaseWeightModel(modelID: 2, modelDate: "17 апреля 2022г", modelTime: "13:28", modelWeight: "47")
-            ]
+        firebaseController.loadIndividualInfo { [weak self] error in
+            // Блок проверок
+            guard (error == nil) else { return }
+            guard (self != nil) else { return }
+            guard let weightDataSize = self?.firebaseController.getWeightCount() else { return }
             
-            // Обновление данных по ID
-            for data in firebaseData {
-                guard let model = self.getWeightData(fromID: data.modelID) else {
-                    self.localViewModels.append(WeightModel(id: data.modelID, dateString: data.modelDate, timeString: data.modelTime, weightString: data.modelWeight, context: self.coreDataContext))
+            // Удаление данных в случае отстутсвия данных
+            if weightDataSize < 1 {
+                self!.weightModelController.flushData()
+                self!.localViewModels.removeAll()
+                self!.output?.newWeightGetting()
+                return
+            }
+            
+            // Проверка на лишние данные
+            let currentSize = self!.getSize()
+            if currentSize > weightDataSize {
+                for id in weightDataSize...currentSize-1 {
+                    guard let model = self!.getWeightData(fromPosition: id) else { continue }
+                    self!.weightModelController.deleteWeightData(model)
+                    self!.localViewModels.removeAll(where: { $0 == model })
+                }
+            }
+            
+            // Обновление существующих
+            for id in 0...weightDataSize-1 {
+                let newData = self!.firebaseController.downloadData(forId: id)
+                
+                guard let model = self!.getWeightData(fromPosition: id) else {
+                    let newWeight = self!.weightModelController.setWeightData(forID: id ,weightString: newData.weight, dateString: newData.date, timeString: newData.time)
+                    self!.localViewModels.append(newWeight)
                     continue
                 }
-                model.setData(id: data.modelID, dateString: data.modelDate, timeString: data.modelTime, weightString: data.modelWeight)
+                model.setData(id: id, dateString: newData.date, timeString: newData.time, weightString: newData.weight)
             }
-            self.weightModelController.saveContext()
-            
             // Обновление отображения
-            self.output?.newWeightGetting()
-        })
+            self!.weightModelController.saveContext()
+            self!.output?.newWeightGetting()
+        }
     }
     
-    private func getWeightData(fromID id: Int) -> WeightModel? {
-        let weightModel = localViewModels.first(where: { model in
-            model.modelID == id
-        })
-        return weightModel
+    private func ifLoadSuccess(error: Error?, data: WeightStruct) {
+        // Проверка на ошибки
+        guard error == nil else {
+            output?.undoUploadNewWeight()
+            return
+        }
+        
+        // Добавление новых данных в случае удачи
+        let nextID = getSize()
+        let newData = weightModelController.setWeightData(forID: nextID ,weightString: data.weight, dateString: data.date, timeString: data.time)
+        localViewModels.append(newData)
+            
+        // Сохранение обновленных данных
+        weightModelController.saveContext()
+            
+        // Обновление данных
+        output?.newWeightGetting()
     }
 }
 
 extension WeightInteractor: WeightInteractorInput {
-    func flushWeightModel() {
-        weightModelController.flushData()
-        updateLocalBase()
-        getDataFromRemoteBase()
+    func getWeightData(fromPosition position: Int) -> WeightModel? {
+        guard position < getSize() else { return nil }
+        let weightModel = localViewModels.first {
+            $0.modelID == position
+        }
+        return weightModel
     }
     
-    func getWeightData(fromBackPosition position: Int) -> WeightModel? {
-        guard let maxID = getMaxID() else { return nil }
-        let neededId = maxID - position
-        if neededId < 0 { return nil }
-        return getWeightData(fromID: neededId)
-    }
-    
-    func getMaxID() -> Int? {
+    func getSize() -> Int {
         guard let weightModelMaxID = localViewModels.max(by: { a, b in
             a.modelID < b.modelID
-        })?.getID() else { return nil }
-        return weightModelMaxID
+        })?.getID() else { return 0 }
+        return weightModelMaxID + 1
     }
     
-    func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String) {
+    func uploadNewWeight(_ data: WeightStruct) {
         print("[DEBUG] Загрузка локальной БД (обновления БД) весов на сервер")
-        // Если удачно загрузилось
-        localViewModels.append(WeightModel(id: localViewModels.count, dateString: date, timeString: time, weightString: weight, context: coreDataContext))
-        
-        // Сохранение обновленных данных
-        weightModelController.saveContext()
-        
-        // Обновление данных
-        self.output?.newWeightGetting()
-        
-        // Если неудачно
-//        output?.undoUploadNewWeight()
-    }
-    
-    func getLastWeightData() -> WeightModel? {
-        return getWeightData(fromBackPosition: 0)
+        firebaseController.uploadWeight(forID: localViewModels.count, withWeight: data, completion: ifLoadSuccess(error:data:))
     }
 }

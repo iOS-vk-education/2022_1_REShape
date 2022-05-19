@@ -10,47 +10,53 @@ import Firebase
 import FirebaseDatabase
 
 final class DietFirebaseModelController {
-//    private var authHandle: AuthStateDidChangeListenerHandle?
     private var commonDBRef: DatabaseReference
     private var userDBRef: DatabaseReference
     private var commonSnapshot: NSDictionary = [:]
-    private var individualSnapshot: NSDictionary = [:]
-    private var userID: String
+    private var userSnapshot: NSDictionary = [:]
+    private var isAuth: Bool
     
     init() {
         let firebaseRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference()
         commonDBRef = firebaseRef.child("diets")
         guard let id = Auth.auth().currentUser?.uid else {
-            userID = ""
+            isAuth = false
             userDBRef = DatabaseReference()
             print("No login")
             return
         }
-        userID = id
-        userDBRef = firebaseRef.child("users/\(userID)/days")
+        isAuth = true
+        userDBRef = firebaseRef.child("users/\(id)/days")
     }
     
-    private func checkLogin() {
-        guard let id = Auth.auth().currentUser?.uid else {
-            userID = ""
-            userDBRef = DatabaseReference()
-            print("No login")
-            return
+    private func checkLogin() -> Bool {
+        guard isAuth else {
+            guard let id = Auth.auth().currentUser?.uid else {
+                print("No login")
+                return isAuth
+            }
+            userDBRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference().child("users/\(id)/weights")
+            isAuth = true
+            return isAuth
         }
-        userID = id
-        userDBRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference().child("users/\(userID)/days")
+        return isAuth
     }
     
     // Загрузка индивидуальной информации
     func loadIndividualInfo(completion: @escaping (Error?) -> Void = {_ in return}) {
-        checkLogin()
+        // Проверка на авторизацию
+        guard checkLogin() else {
+            completion(NSError(domain: "No login", code: -10))
+            return
+        }
+        
         userDBRef.getData() { [weak self] error, snapshot in
             guard error == nil else {
                 print(error!.localizedDescription)
                 completion(error)
                 return;
             }
-            self?.individualSnapshot = snapshot.value as? NSDictionary ?? [:]
+            self?.userSnapshot = snapshot.value as? NSDictionary ?? [:]
             completion(nil)
         }
     }
@@ -82,8 +88,8 @@ final class DietFirebaseModelController {
     
     // Нажатие на блюдо
     func newMealState(_ state: Bool, forDay day: Int, forMeal meal: String, forID id: Int, withCalories cal: Double, completion: @escaping ((Error?) -> Void)) {
-        checkLogin()
-        guard userID != "" else {
+        // Проверка на авторизацию
+        guard checkLogin() else {
             completion(NSError(domain: "No login", code: -10))
             return
         }
@@ -93,7 +99,7 @@ final class DietFirebaseModelController {
             guard error == nil else {
                 print(error!.localizedDescription)
                 completion(error)
-                return;
+                return
             }
             completion(nil)
         }
@@ -114,7 +120,7 @@ final class DietFirebaseModelController {
     }
     
     func mealState(forDay day: Int, atMeal meal: String, forID id: UInt) -> Bool {
-        let mealData = ((self.individualSnapshot["day\(day)"] as? NSDictionary)?[meal] as? NSDictionary)?["meal\(id)"] as? NSDictionary
+        let mealData = ((self.userSnapshot["day\(day)"] as? NSDictionary)?[meal] as? NSDictionary)?["meal\(id)"] as? NSDictionary
         let state = mealData?["state"] as? NSNumber ?? 0
         return state.boolValue
     }

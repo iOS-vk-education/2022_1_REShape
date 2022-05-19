@@ -25,6 +25,7 @@ class DietModelController: AbstractModelController {
     func addCellData(toSection section: Int) -> [CellData] {
         return [CellData(section: section, cellType: .breakfast, context: managedObjectContext),
                 CellData(section: section, cellType: .lunch, context: managedObjectContext),
+                CellData(section: section, cellType: .snack, context: managedObjectContext),
                 CellData(section: section, cellType: .dinner, context: managedObjectContext)]
     }
     

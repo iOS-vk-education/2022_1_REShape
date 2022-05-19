@@ -16,7 +16,6 @@ protocol WeightChartDelegate: AnyObject {
 
 class WeightChart: LineChartView {
     weak var weightDelegate: WeightChartDelegate?
-    private var numOfLastDay: Int = 0
     private var dateFormatter = DateChartFormatter()
     
     override init(frame: CGRect) {
@@ -38,26 +37,26 @@ class WeightChart: LineChartView {
         leftAxis.resetCustomAxisMin()
         
         // Исполняемый механизм по числу дней
-        numOfLastDay = weightDelegate?.numberOfDays(in: self) ?? 0
-        if numOfLastDay == 0 {
-            self.data = nil
+        let numOfDays = weightDelegate?.numberOfDays(in: self) ?? 0
+        if numOfDays == 0 {
+            self.data = LineChartData()
             return
         }
-        var dateArray: [String] = []
+        var dateArray: [Double:String] = [:]
         var weightData: [ChartDataEntry] = []
-        for i in 0...numOfLastDay {
-            guard let currentData = weightDelegate?.weightChart(self, numOfData: numOfLastDay-i) else {
-                print("[WEIGHTCHART] Can't get data at \(i) position")
+        for currentPos in 0...numOfDays-1 {
+            guard let currentData = weightDelegate?.weightChart(self, numOfData: currentPos) else {
+                print("[WEIGHTCHART] Can't get data at \(currentPos) position")
                 continue
             }
-            currentData.x = Double(i)
-            weightData.insert(currentData, at: i)
-            dateArray.insert(weightDelegate?.daysForVisual(self, numOfData: numOfLastDay-i) ?? "", at: i)
+            currentData.x = Double(currentPos)
+            weightData.append(currentData)
+            dateArray[currentData.x] = weightDelegate?.daysForVisual(self, numOfData: currentPos) ?? ""
         }
         dateFormatter.uploadDaysString(from: dateArray)
         setData(entries: weightData)
-        leftAxis.axisMinimum = leftAxis.entries.min() ?? 0
-        leftAxis.axisMaximum = leftAxis.entries.max() ?? 0
+//        leftAxis.axisMinimum = leftAxis.entries.min() ?? 0
+//        leftAxis.axisMaximum = leftAxis.entries.max() ?? 0
     }
     
     private func setData(entries: [ChartDataEntry]) {
@@ -74,7 +73,7 @@ class WeightChart: LineChartView {
     }
     
     func setupChart() {
-        noDataText = "Загрузка данных..."
+        noDataText = "Нет данных"
         legend.enabled = false
         setViewPortOffsets(left: 25, top: 16, right: 16, bottom: 16)
         doubleTapToZoomEnabled = false
@@ -115,13 +114,13 @@ class WeightChart: LineChartView {
 }
 
 final class DateChartFormatter: AxisValueFormatter {
-    private var daysString: [String] = []
+    private var daysString: [Double:String] = [:]
     
-    func uploadDaysString(from string: [String]) {
+    func uploadDaysString(from string: [Double:String]) {
         daysString = string
     }
     
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        return daysString[Int(value)]
+        return daysString[value] ?? ""
     }
 }

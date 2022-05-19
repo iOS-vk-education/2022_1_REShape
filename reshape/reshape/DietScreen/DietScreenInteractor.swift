@@ -23,7 +23,7 @@ final class DietScreenInteractor {
     }
     
     private func numOfDays() -> Int {
-        return cellData.count/3
+        return cellData.count/4
     }
     
     // Создание внутреннего кэша данных по каждому приёму пищи

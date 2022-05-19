@@ -201,6 +201,10 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
             // Обновление базы данных и показанных ячеек
             let _ = self.prepareCells(for: .reload, mealType: .lunch, atSection: section)
         }
+        if self.getCellDisclosure(forMeal: .snack, atSection: section) == .disclosure {
+            // Обновление базы данных и показанных ячеек
+            let _ = self.prepareCells(for: .reload, mealType: .snack, atSection: section)
+        }
         if self.getCellDisclosure(forMeal: .dinner, atSection: section) == .disclosure {
             // Обновление базы данных и показанных ячеек
             let _ = self.prepareCells(for: .reload, mealType: .dinner, atSection: section)
@@ -213,7 +217,7 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
         // Создание начальных полей секции
         if days > lastNumOfDays {
             for curSection in lastNumOfDays...days-1 {
-                rowInSection.insert([.breakfast, .lunch, .dinner], at: curSection)
+                rowInSection.insert([.breakfast, .lunch, .snack, .dinner], at: curSection)
                 
                 // Получение блюд, если открыты ячейки
                 self.updateMealData(atSection: curSection)

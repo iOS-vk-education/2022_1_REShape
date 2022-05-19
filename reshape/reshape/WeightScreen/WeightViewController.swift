@@ -54,9 +54,13 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         setupTableView()
         setupGradientPanel()
         addGestureRecognizer()
-        addFlushGesture()
         weightChart.weightDelegate = self
 	}
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        weightChart.reloadData()
+    }
     
     private func setupUI() {
         view.backgroundColor = .white
@@ -220,7 +224,7 @@ extension WeightViewController: UITableViewDelegate, UITableViewDataSource {
 // WeightChart delegate
 extension WeightViewController: WeightChartDelegate {
     func daysForVisual(_ weighchart: WeightChart, numOfData number: Int) -> String {
-        return output.getShortDate(atBackPosition: number)
+        return output.getShortDate(atPosition: number)
     }
     
     func numberOfDays(in weighchart: WeightChart) -> Int {
@@ -228,7 +232,7 @@ extension WeightViewController: WeightChartDelegate {
     }
     
     func weightChart(_ weighchart: WeightChart, numOfData number: Int) -> ChartDataEntry {
-        let weight = Double(output.getWeight(atBackPosition: number)) ?? 0.0
+        let weight = Double(output.getWeight(atPosition: number)) ?? 0.0
         return ChartDataEntry(x: Double(number), y: weight)
     }
 }
@@ -245,15 +249,5 @@ extension WeightViewController {
     @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
         guard let cell = addTable.cellForRow(at: IndexPath(row: 2, section: 0)) as? WeightCell else { return }
         cell.unchosen()
-    }
-    
-    func addFlushGesture() {
-        let tap = UIPinchGestureRecognizer(target: self, action: #selector(flushTap(_:)))
-        tap.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tap)
-    }
-    
-    @objc func flushTap(_ recohnizer: UIPinchGestureRecognizer) {
-        output.flushWeightModel()
     }
 }
