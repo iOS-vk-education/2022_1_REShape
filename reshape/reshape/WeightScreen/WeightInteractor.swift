@@ -23,8 +23,7 @@ final class WeightInteractor {
     
     private func loadFromLocalBase() {
         do {
-            let result = try weightModelController.getWeightData()
-            localViewModels = result
+            localViewModels = try weightModelController.getWeightData()
             self.output?.newWeightGetting()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")

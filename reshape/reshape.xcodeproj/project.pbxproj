@@ -14,6 +14,7 @@
 		2E1F1DDA27E4FB7E00FA7B77 /* EnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */; };
 		2E2901EA28317A3800CBCEFE /* WeightFirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2901E928317A3800CBCEFE /* WeightFirebaseController.swift */; };
 		2E2901EC28367A6200CBCEFE /* WeightStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2901EB28367A6200CBCEFE /* WeightStruct.swift */; };
+		2E2901F02836CC0700CBCEFE /* MealStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2901EF2836CC0700CBCEFE /* MealStruct.swift */; };
 		2E6730A02809F61000992435 /* WeightInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E67309F2809F61000992435 /* WeightInteractor.swift */; };
 		2EA1E89F27FCDB47001B329A /* MealCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E89E27FCDB47001B329A /* MealCell.swift */; };
 		2EA1E8A127FCDB8E001B329A /* DietHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E8A027FCDB8E001B329A /* DietHeader.swift */; };
@@ -148,6 +149,7 @@
 		2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterButton.swift; sourceTree = "<group>"; };
 		2E2901E928317A3800CBCEFE /* WeightFirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightFirebaseController.swift; sourceTree = "<group>"; };
 		2E2901EB28367A6200CBCEFE /* WeightStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightStruct.swift; sourceTree = "<group>"; };
+		2E2901EF2836CC0700CBCEFE /* MealStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealStruct.swift; sourceTree = "<group>"; };
 		2E67309F2809F61000992435 /* WeightInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightInteractor.swift; sourceTree = "<group>"; };
 		2EA1E89E27FCDB47001B329A /* MealCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCell.swift; sourceTree = "<group>"; };
 		2EA1E8A027FCDB8E001B329A /* DietHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietHeader.swift; sourceTree = "<group>"; };
@@ -343,6 +345,14 @@
 			path = Structures;
 			sourceTree = "<group>";
 		};
+		2E2901EE2836CBF100CBCEFE /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				2E2901EF2836CC0700CBCEFE /* MealStruct.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
 		2E602922281D83310050B200 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -431,13 +441,13 @@
 			path = "Cells and Headers";
 			sourceTree = "<group>";
 		};
-		2EF20BF2280DEC310019CF64 /* DietEnums */ = {
+		2EF20BF2280DEC310019CF64 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
 				2EB767C32806060D008868DD /* MealsType.swift */,
 				2EB767C1280605E7008868DD /* DisclosureState.swift */,
 			);
-			path = DietEnums;
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		2EF20BF9280DF0F00019CF64 /* Cells */ = {
@@ -571,9 +581,10 @@
 		945B383D27ECC3030044E952 /* DietScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2E2901EE2836CBF100CBCEFE /* Structures */,
 				2E602922281D83310050B200 /* Firebase */,
 				2EC4E714281722B3002AF235 /* CoreData */,
-				2EF20BF2280DEC310019CF64 /* DietEnums */,
+				2EF20BF2280DEC310019CF64 /* Enums */,
 				2EF20BF1280DEBE70019CF64 /* Cells and Headers */,
 				945B384B27ECC33A0044E952 /* DietScreenPresenter.swift */,
 				945B384C27ECC33A0044E952 /* DietScreenRouter.swift */,
@@ -957,6 +968,7 @@
 				945B385327ECC33A0044E952 /* DietScreenViewController.swift in Sources */,
 				94FC783A2809E586003477FA /* AuthErrorCode.swift in Sources */,
 				2EF3A23728196C3A00F6E38E /* DietModelController.swift in Sources */,
+				2E2901F02836CC0700CBCEFE /* MealStruct.swift in Sources */,
 				941E811527E6149800A33344 /* LoginScreenPresenter.swift in Sources */,
 				2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */,
 				94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */,

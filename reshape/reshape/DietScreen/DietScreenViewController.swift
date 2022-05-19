@@ -192,12 +192,8 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
             (cell as! DietCell).disclosure(newCellDisclosureState)
             output.clickedDiet(newCellDisclosureState, mealType: mealType, inSection: indexPath.section)
         case .mealLunch, .mealDinner, .mealBreakfast, .mealSnack:
-            // Получение данных о блюде
-            let newMealChecked = !output.getMealState(forMeal: mealType.revert, atIndex: indexPath)
-
-            // Проверка состояния блюда и изменение его состояния
-            (cell as! MealCell).setState(at: newMealChecked)
-            output.clickedMeal(newMealChecked, forMeal: mealType.revert, atIndex: indexPath)
+            // Запрос на изменение состояния
+            output.clickedMeal(forMeal: mealType.revert, atIndex: indexPath)
         default:
             return
         }

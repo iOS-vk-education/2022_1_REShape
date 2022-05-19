@@ -156,9 +156,9 @@ extension DietScreenPresenter {
         }
     }
 
-    func clickedMeal(_ state: Bool, forMeal celltype: MealsType, atIndex indexPath: IndexPath) {
+    func clickedMeal(forMeal celltype: MealsType, atIndex indexPath: IndexPath) {
         let id = self.mealPosition(forMeal: celltype, fromIndexPath: indexPath)
-        interactor.changeMealState(toState: state, withID: id, forMeal: celltype, atSection: indexPath.section)
+        interactor.changeMealState(withID: id, forMeal: celltype, atSection: indexPath.section)
     }
 }
 

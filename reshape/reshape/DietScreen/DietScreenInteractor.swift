@@ -27,10 +27,10 @@ final class DietScreenInteractor {
     }
     
     // Создание внутреннего кэша данных по каждому приёму пищи
-    private func createCellData(withNewDays newDays: UInt = 0) {
+    private func createCellData(withNewDays newDays: Int = 0) {
         let oldDays = numOfDays()
         if newDays < oldDays {
-            for curSection in Int(newDays)...oldDays-1 {
+            for curSection in newDays...oldDays-1 {
                 modelController.deleteCellData(in: [
                     cellData[cellIndex(forMeal: .breakfast, atSection: curSection)!],
                     cellData[cellIndex(forMeal: .lunch, atSection: curSection)!],
@@ -39,7 +39,7 @@ final class DietScreenInteractor {
                 ])
             }
         } else if newDays > oldDays {
-            for curSection in oldDays...Int(newDays)-1 {
+            for curSection in oldDays...newDays-1 {
                 cellData.append(contentsOf: modelController.addCellData(toSection: curSection))
             }
         }
@@ -80,10 +80,10 @@ final class DietScreenInteractor {
         return mealIndex(forCellPosition: cellDataIndex, atID: id)
     }
     
-    private func deleteMeals(greaterThanID id: UInt, forMeal type: MealsType, inSection section: Int) {
+    private func deleteMeals(greaterThanID id: Int, forMeal type: MealsType, inSection section: Int) {
         let oldNumOfMeals = self.getMealCount(forMeal: type, atSection: section)
         if id >= oldNumOfMeals { return }
-        for mealID in Int(id)...oldNumOfMeals-1 {
+        for mealID in id...oldNumOfMeals-1 {
             let cell = getCellData(forMeal: type, atSection: section)
             let mealData = getMealData(withID: mealID, forMeal: type, atSection: section)
             cell.removeFromCellMeals(mealData)
@@ -95,57 +95,76 @@ final class DietScreenInteractor {
 // Firebase методы
 extension DietScreenInteractor {
     // Запрос на получение данных из Firebase
-    private func requestMealData(toDay day: Int, toMeal mealtype: MealsType) {
-        print("[DEBUG] Data from \(mealtype.text) need to get at \(day) day")
-        
-        firebaseModelController.getMeals(forDay: day, atMeal: mealtype.engText) {
-            [weak self] numOfMeals, error in guard (error == nil) else { return }
+    private func requestMealData(toDay day: Int, toMeal meal: MealsType) {
+        print("[DEBUG] Data from \(meal.text) need to get at \(day) day")
+        // Запрос на загрузку индивидуальных параметров
+        firebaseModelController.loadIndividualInfo()
+        firebaseModelController.loadCommonInfo { [weak self] error in
+            // Блок проверок
+            guard (error == nil) else { return }
+            guard (self != nil) else { return }
             
-            // Запрос на загрузку индивидуальных параметров
-            self?.firebaseModelController.loadIndividualInfo()
-
+            // Получение числа блюд
+            let mealCount = self!.firebaseModelController.getMealsCount(forDay: day, forMeal: meal.engText)
+            
             // Удаление лишних блюд
-            self?.deleteMeals(greaterThanID: numOfMeals, forMeal: mealtype, inSection: day - 1)
-            if numOfMeals == 0 { return }
+            self!.deleteMeals(greaterThanID: mealCount, forMeal: meal, inSection: day - 1)
+            if mealCount == 0 { return }
             
             // Обновление блюд
-            let cell = self!.getCellData(forMeal: mealtype, atSection: day - 1)
-            for mealNumber in 1...numOfMeals {
+            let cell = self!.getCellData(forMeal: meal, atSection: day - 1)
+            for mealNumber in 1...mealCount {
+                let newData = self!.firebaseModelController.getMeal(forID: mealNumber, forDay: day, atMeal: meal.engText)
+
                 let id = mealNumber - 1
-                let name = self?.firebaseModelController.mealName(forID: mealNumber) ?? ""
-                let calories = self?.firebaseModelController.mealCalories(forID: mealNumber) ?? 0
-                let state = self?.firebaseModelController.mealState(forDay: day, atMeal: mealtype.engText, forID: mealNumber) ?? false
-                guard let mealDataIndex = self?.mealIndex(forCellData: cell, atID: Int(id)) else {
+                let name = newData.name
+                let calories = newData.calories
+                let state = newData.state
+                guard let mealDataIndex = self!.mealIndex(forCellData: cell, atID: id) else {
                     cell.addMealData(withID: id, withName: name, withCal: calories, withState: state)
                     continue
                 }
                 cell.updateMealData(atIndex: mealDataIndex, withID: id, newName: name, newCal: calories, newState: state)
                 }
+            
+            // Обновление отображения
             self?.saveDatabase()
             self?.output?.updateMealData(forMeal: cell.type(), atSection: cell.section())
         }
     }
     
     // Обработка изменения состояния блюда TODO
-    func changeMealState(toState state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int) {
+    func changeMealState(withID id: Int, forMeal meal: MealsType, atSection section: Int) {
         print("[DEBUG] New state of \(meal.text) transmit at \(section + 1) day in \(id) position")
         let mealData = getMealData(withID: id, forMeal: meal, atSection: section)
-        firebaseModelController.newMealState(state, forDay: section + 1, forMeal: meal.engText, forID: id + 1, withCalories: mealData.modelCalories) {
-            [weak self] error in guard (error == nil) else { return }
+        let state = !mealData.modelState
+        
+        firebaseModelController.newMealState(state, forDay: section + 1, forMeal: meal.engText, forID: id + 1) { [weak self] error in
+            // Блок проверок
+            guard (error == nil) else { return }
+            guard (self != nil) else { return }
+            
+            // Обновление внутренней БД и отображения
             mealData.changeState(toState: state)
-            self?.saveDatabase()
-            self?.output?.updateMealData(forMeal: meal, atSection: section)
+            self!.saveDatabase()
+            self!.output?.updateMealData(forMeal: meal, atSection: section)
         }
     }
     
     // Запрос на получение данных
     func getDatabase() {
-        print("[DEBUG] Need get num of days")
+        print("[DEBUG] Request to download all data")
         output?.updateNumOfDays(numOfDays())
-        firebaseModelController.daysCount {
-            [weak self] days, error in guard (error == nil) else { return }
-            self?.createCellData(withNewDays: days)
-            self?.output?.updateNumOfDays(Int(days))
+        firebaseModelController.loadIndividualInfo()
+        firebaseModelController.loadCommonInfo { [weak self] error in
+            // Блок проверок
+            guard (error == nil) else { return }
+            guard (self != nil) else { return }
+            
+            // Обработка данных
+            let daysCount = self!.firebaseModelController.getDaysCount()
+            self!.createCellData(withNewDays: daysCount)
+            self!.output?.updateNumOfDays(daysCount)
         }
     }
 }

@@ -45,7 +45,7 @@ protocol DietScreenViewOutput: AnyObject {
     
     // Обработчики нажатий на ячейки
     func clickedDiet(_ state: DisclosureState, mealType celltype: MealsType, inSection section: Int)
-    func clickedMeal(_ state: Bool, forMeal celltype: MealsType, atIndex indexPath: IndexPath)
+    func clickedMeal(forMeal celltype: MealsType, atIndex indexPath: IndexPath)
 }
 
 protocol DietScreenInteractorInput: AnyObject {
@@ -60,7 +60,7 @@ protocol DietScreenInteractorInput: AnyObject {
     
     // Изменение состояния базы данных
     func changeDisclosure(toState state: DisclosureState, forMeal meal: MealsType, atSection section: Int)
-    func changeMealState(toState state: Bool, withID id: Int, forMeal meal: MealsType, atSection section: Int)
+    func changeMealState(withID id: Int, forMeal meal: MealsType, atSection section: Int)
 }
 
 protocol DietScreenInteractorOutput: AnyObject {

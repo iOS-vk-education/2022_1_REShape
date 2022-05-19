@@ -48,18 +48,18 @@ public class CellData: NSManagedObject {
         }
     }
     
-    func updateMealData(atIndex index: Int, withID id: UInt, newName name: String, newCal calories: Double, newState state: Bool) {
+    func updateMealData(atIndex index: Int, withID id: Int, newName name: String, newCal calories: Double, newState state: Bool) {
         (self.cellMeals?.allObjects[index] as! MealData).setData(
-            toID: Int(id),
+            toID: id,
             toName: name,
             toCalories: calories,
             toState: state
         )
     }
     
-    func addMealData(withID id: UInt, withName name: String, withCal calories: Double, withState state: Bool) {
+    func addMealData(withID id: Int, withName name: String, withCal calories: Double, withState state: Bool) {
         self.addToCellMeals(MealData(
-            id: Int(id),
+            id: id,
             nameString: name,
             calories: calories,
             state: state,

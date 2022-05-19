@@ -10,23 +10,18 @@ import Firebase
 import FirebaseDatabase
 
 final class DietFirebaseModelController {
-    private var commonDBRef: DatabaseReference
-    private var userDBRef: DatabaseReference
+    private var commonDBRef: DatabaseReference = DatabaseReference()
+    private var userDBRef: DatabaseReference = DatabaseReference()
     private var commonSnapshot: NSDictionary = [:]
     private var userSnapshot: NSDictionary = [:]
-    private var isAuth: Bool
+    private var isAuth: Bool = false
     
     init() {
-        let firebaseRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference()
-        commonDBRef = firebaseRef.child("diets")
-        guard let id = Auth.auth().currentUser?.uid else {
-            isAuth = false
-            userDBRef = DatabaseReference()
-            print("No login")
-            return
-        }
-        isAuth = true
-        userDBRef = firebaseRef.child("users/\(id)/days")
+        commonDBRef = Database
+            .database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/")
+            .reference()
+            .child("diets")
+        isAuth = checkLogin()
     }
     
     private func checkLogin() -> Bool {
@@ -35,7 +30,7 @@ final class DietFirebaseModelController {
                 print("No login")
                 return isAuth
             }
-            userDBRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference().child("users/\(id)/weights")
+            userDBRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference().child("users/\(id)")
             isAuth = true
             return isAuth
         }
@@ -61,33 +56,52 @@ final class DietFirebaseModelController {
         }
     }
     
-    // Загрузка блюд для дня
-    func getMeals(forDay day: Int, atMeal meal: String, completion: @escaping (UInt, Error?) -> Void) {
-        commonDBRef.child("day\(day)/meals/\(meal)").getData() { [weak self] error, snapshot in
+    // Загрузка общего рациона
+    func loadCommonInfo(completion: @escaping (Error?) -> Void = {_ in return}) {
+        commonDBRef.getData() { [weak self] error, snapshot in
             guard error == nil else {
                 print(error!.localizedDescription)
-                completion(0, error)
+                completion(error)
                 return;
             }
             self?.commonSnapshot = snapshot.value as? NSDictionary ?? [:]
-            completion(snapshot.childrenCount, nil)
+            completion(nil)
         }
     }
     
-    // Подсчет числа дней
-    func daysCount(completion: @escaping (UInt, Error?) -> Void) {
-        commonDBRef.getData(completion: { error, snapshot in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                completion(0, error)
-                return
-            }
-            completion(snapshot.childrenCount, nil)
-        });
+    // Получение блюда по id, дню и приёму пищи
+    func getMeal(forID id: Int, forDay day: Int, atMeal meal: String) -> MealStruct {
+        // Общая информация о блюде
+        let mealDict = (((commonSnapshot["day\(day)"]
+                          as? NSDictionary)?["meals"]
+                         as? NSDictionary)?[meal]
+                        as? NSDictionary)?["meal\(id)"] as? NSDictionary
+        let mealName = mealDict?["mealName"] as? String ?? ""
+        let mealCal = (mealDict?["mealCalories"] as? NSNumber)?.doubleValue ?? 0
+        
+        // Состояние нажатия
+        let stateDict = ((userSnapshot["days"]
+                           as? NSDictionary)?["day\(day)"]
+                          as? NSDictionary)?[meal] as? NSDictionary
+        let mealState = (stateDict?["meal\(id)"] as? NSNumber)?.boolValue ?? false
+        
+        // Возврат структуры
+        return MealStruct(name: mealName, state: mealState, calories: mealCal)
+    }
+    
+    // Получение числа дней
+    func getDaysCount() -> Int {
+        return commonSnapshot.count
+    }
+    
+    // Получение числа дней
+    func getMealsCount(forDay day: Int, forMeal meal: String) -> Int {
+        let mealsDict = ((commonSnapshot["day\(day)"] as? NSDictionary)?["meals"] as? NSDictionary)?[meal] as? NSDictionary
+        return mealsDict?.count ?? 0
     }
     
     // Нажатие на блюдо
-    func newMealState(_ state: Bool, forDay day: Int, forMeal meal: String, forID id: Int, withCalories cal: Double, completion: @escaping ((Error?) -> Void)) {
+    func newMealState(_ state: Bool, forDay day: Int, forMeal meal: String, forID id: Int, completion: @escaping ((Error?) -> Void)) {
         // Проверка на авторизацию
         guard checkLogin() else {
             completion(NSError(domain: "No login", code: -10))
@@ -95,7 +109,7 @@ final class DietFirebaseModelController {
         }
         
         // Загрузка данных
-        userDBRef.child("day\(day)/\(meal)/meal\(id)/state").setValue(state) { error, _ in
+        userDBRef.child("days/day\(day)/\(meal)/meal\(id)").setValue(state) { error, _ in
             guard error == nil else {
                 print(error!.localizedDescription)
                 completion(error)
@@ -103,25 +117,5 @@ final class DietFirebaseModelController {
             }
             completion(nil)
         }
-        
-        // Обновление данных
-        loadIndividualInfo()
-    }
-    
-    func mealName(forID id: UInt) -> String {
-        let mealData = self.commonSnapshot.value(forKey: "meal\(id)") as? NSDictionary
-        return mealData?["mealName"] as? String ?? ""
-    }
-    
-    func mealCalories(forID id: UInt) -> Double {
-        let mealData = self.commonSnapshot.value(forKey: "meal\(id)") as? NSDictionary
-        let cal = mealData?["mealCalories"] as? NSNumber ?? 0
-        return cal.doubleValue
-    }
-    
-    func mealState(forDay day: Int, atMeal meal: String, forID id: UInt) -> Bool {
-        let mealData = ((self.userSnapshot["day\(day)"] as? NSDictionary)?[meal] as? NSDictionary)?["meal\(id)"] as? NSDictionary
-        let state = mealData?["state"] as? NSNumber ?? 0
-        return state.boolValue
     }
 }
