@@ -10,10 +10,12 @@ import UIKit
 
 final class MainFlowCoordinator: CoordinatorProtocol{
     internal var window: UIWindow
+    private var fbController: FirebaseController?
     private lazy var tabBar: UITabBarController = UITabBarController()
     private lazy var navigationControllers = MainFlowCoordinator.makeNavigationControllers()
-    init (window: UIWindow) {
+    init (window: UIWindow, firebaseController: FirebaseController) {
         self.window = window
+        self.fbController = firebaseController
     }
     
     func start() {
@@ -29,6 +31,7 @@ final class MainFlowCoordinator: CoordinatorProtocol{
         window.rootViewController = tabBar
         UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {})
         window.makeKeyAndVisible()
+        _ = fbController?.checkLogin()
     }
 }
 
@@ -40,7 +43,7 @@ extension MainFlowCoordinator{
         guard let navController = navigationControllers[.results] else {
             fatalError("No navController")
         }
-        let resultsContext = ResultsScreenContext(moduleOutput: nil, window: window)
+        let resultsContext = ResultsScreenContext(moduleOutput: nil, firebaseController: fbController, window: window)
         let resultsContainer = ResultsScreenContainer.assemble(with: resultsContext)
         navController.setViewControllers([resultsContainer.viewController], animated: true)
     }
@@ -48,7 +51,7 @@ extension MainFlowCoordinator{
         guard let navController = navigationControllers[.diet] else {
             fatalError("No navController")
         }
-        let dietContext = DietScreenContext(moduleOutput: nil)
+        let dietContext = DietScreenContext(moduleOutput: nil, firebaseController: fbController)
         let dietContainer = DietScreenContainer.assemble(with: dietContext)
         navController.setViewControllers([dietContainer.viewController], animated: true)
     }

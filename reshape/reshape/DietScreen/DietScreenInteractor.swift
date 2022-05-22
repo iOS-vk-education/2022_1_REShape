@@ -11,15 +11,15 @@ import Foundation
 final class DietScreenInteractor {
     private var cellData: [CellData] = []
 	weak var output: DietScreenInteractorOutput?
+    weak var firebaseController: DietFirebaseProtocol?
     
-    // Базы данных
+    // База данных
     private let modelController: DietModelController
-    private var firebaseModelController: DietFirebaseModelController
     
     init() {
         modelController = DietModelController()
-        firebaseModelController = DietFirebaseModelController()
         uploadFromDatabase()
+        firebaseController = nil
     }
     
     private func numOfDays() -> Int {
@@ -112,14 +112,16 @@ extension DietScreenInteractor {
     private func requestMealData(toDay day: Int, toMeal meal: MealsType) {
         print("[DEBUG] Data from \(meal.text) need to get at \(day) day")
         // Запрос на загрузку индивидуальных параметров
-        firebaseModelController.loadIndividualInfo()
-        firebaseModelController.loadCommonInfo { [weak self] error in
+        firebaseController?.loadIndividualInfo { _ in return }
+        firebaseController?.loadCommonInfo { [weak self] error in
             // Блок проверок
             guard (error == nil) else { return }
             guard (self != nil) else { return }
             
             // Получение числа блюд
-            let mealCount = self!.firebaseModelController.getMealsCount(forDay: day, forMeal: meal.engText)
+            guard let mealCount = self!.firebaseController?.getMealsCount(forDay: day, forMeal: meal.engText) else {
+                return
+            }
             
             // Удаление лишних блюд
             self!.deleteMeals(greaterThanID: mealCount, forMeal: meal, inSection: day - 1)
@@ -128,7 +130,7 @@ extension DietScreenInteractor {
             // Обновление блюд
             let cell = self!.getCellData(forMeal: meal, atSection: day - 1)
             for mealNumber in 1...mealCount {
-                let newData = self!.firebaseModelController.getMeal(forID: mealNumber, forDay: day, atMeal: meal.engText)
+                let newData = self!.firebaseController!.getMeal(forID: mealNumber, forDay: day, atMeal: meal.engText)
 
                 let id = mealNumber - 1
                 let name = newData.name
@@ -150,7 +152,7 @@ extension DietScreenInteractor {
     // Обработка изменения состояния блюда TODO
     func changeMealState(withID id: Int, forMeal meal: MealsType, atSection section: Int) {
         // Проверка на день
-        if firebaseModelController.getCurrentDay() != section {
+        if firebaseController?.getCurrentDay() != section {
             return
         }
         let mealData = getMealData(withID: id, forMeal: meal, atSection: section)
@@ -162,7 +164,7 @@ extension DietScreenInteractor {
         
         // Отправка данных
         print("[DEBUG] New state \(state) of \(meal.text) transmit at \(section + 1) day in \(id) position")
-        firebaseModelController.sendMealAndCalState(
+        firebaseController?.sendMealAndCalState(
             mealState: state,
             calories: cal,
             forDay: section + 1,
@@ -183,14 +185,14 @@ extension DietScreenInteractor {
     func getDatabase() {
         print("[DEBUG] Request to download all data")
         output?.updateNumOfDays(numOfDays())
-        firebaseModelController.loadIndividualInfo()
-        firebaseModelController.loadCommonInfo { [weak self] error in
+        firebaseController?.loadIndividualInfo { _ in return }
+        firebaseController?.loadCommonInfo { [weak self] error in
             // Блок проверок
             guard (error == nil) else { return }
             guard (self != nil) else { return }
             
             // Обработка данных
-            let daysCount = self!.firebaseModelController.getDaysCount()
+            guard let daysCount = self!.firebaseController?.getDaysCount() else { return }
             self!.createCellData(withNewDays: daysCount)
             self!.output?.updateNumOfDays(daysCount)
         }

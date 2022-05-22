@@ -12,7 +12,6 @@
 		2E07ABE3281D39D9005DE3E0 /* CellData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07ABE1281D39D9005DE3E0 /* CellData+CoreDataProperties.swift */; };
 		2E1F1DBF27E4936700FA7B77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E1F1DBD27E4936700FA7B77 /* Main.storyboard */; };
 		2E1F1DDA27E4FB7E00FA7B77 /* EnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */; };
-		2E2901EA28317A3800CBCEFE /* WeightFirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2901E928317A3800CBCEFE /* WeightFirebaseController.swift */; };
 		2E2901EC28367A6200CBCEFE /* WeightStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2901EB28367A6200CBCEFE /* WeightStruct.swift */; };
 		2E2901F02836CC0700CBCEFE /* MealStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2901EF2836CC0700CBCEFE /* MealStruct.swift */; };
 		2E6730A02809F61000992435 /* WeightInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E67309F2809F61000992435 /* WeightInteractor.swift */; };
@@ -36,6 +35,8 @@
 		2EC4E710281345FC002AF235 /* WeightChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4E70F281345FB002AF235 /* WeightChart.swift */; };
 		2EC4E71B28185454002AF235 /* AbstractModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4E71A28185454002AF235 /* AbstractModelController.swift */; };
 		2EDB962D283AB2A900F3B38A /* WeightFirebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB962C283AB2A900F3B38A /* WeightFirebaseProtocol.swift */; };
+		2EDB9630283ABC7C00F3B38A /* ResultFirebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB962F283ABC7C00F3B38A /* ResultFirebaseProtocol.swift */; };
+		2EDB9632283ABCC900F3B38A /* DietFirebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB9631283ABCC900F3B38A /* DietFirebaseProtocol.swift */; };
 		2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */; };
 		2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */; };
 		2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */; };
@@ -52,7 +53,7 @@
 		2EF3A231281858C300F6E38E /* MealData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF3A22F281858C300F6E38E /* MealData+CoreDataProperties.swift */; };
 		2EF3A23728196C3A00F6E38E /* DietModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF3A23628196C3A00F6E38E /* DietModelController.swift */; };
 		2EF3A23A28196E9400F6E38E /* DietModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EF3A23828196E9400F6E38E /* DietModel.xcdatamodeld */; };
-		2EF3A23C281AA70900F6E38E /* DietFirebaseModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF3A23B281AA70900F6E38E /* DietFirebaseModelController.swift */; };
+		2EF3A23C281AA70900F6E38E /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF3A23B281AA70900F6E38E /* FirebaseController.swift */; };
 		36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */; };
 		36A9DB0327E2AC3400DB5082 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */; };
 		36A9DB0A27E2AC3500DB5082 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36A9DB0927E2AC3500DB5082 /* Assets.xcassets */; };
@@ -148,7 +149,6 @@
 		2E07ABE1281D39D9005DE3E0 /* CellData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CellData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2E1F1DBE27E4936700FA7B77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2E1F1DD927E4FB7E00FA7B77 /* EnterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterButton.swift; sourceTree = "<group>"; };
-		2E2901E928317A3800CBCEFE /* WeightFirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightFirebaseController.swift; sourceTree = "<group>"; };
 		2E2901EB28367A6200CBCEFE /* WeightStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightStruct.swift; sourceTree = "<group>"; };
 		2E2901EF2836CC0700CBCEFE /* MealStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealStruct.swift; sourceTree = "<group>"; };
 		2E67309F2809F61000992435 /* WeightInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightInteractor.swift; sourceTree = "<group>"; };
@@ -172,6 +172,8 @@
 		2EC4E70F281345FB002AF235 /* WeightChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightChart.swift; sourceTree = "<group>"; };
 		2EC4E71A28185454002AF235 /* AbstractModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractModelController.swift; sourceTree = "<group>"; };
 		2EDB962C283AB2A900F3B38A /* WeightFirebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightFirebaseProtocol.swift; sourceTree = "<group>"; };
+		2EDB962F283ABC7C00F3B38A /* ResultFirebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultFirebaseProtocol.swift; sourceTree = "<group>"; };
+		2EDB9631283ABCC900F3B38A /* DietFirebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietFirebaseProtocol.swift; sourceTree = "<group>"; };
 		2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPresenter.swift; sourceTree = "<group>"; };
 		2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRouter.swift; sourceTree = "<group>"; };
 		2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterViewController.swift; sourceTree = "<group>"; };
@@ -188,7 +190,7 @@
 		2EF3A22F281858C300F6E38E /* MealData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EF3A23628196C3A00F6E38E /* DietModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietModelController.swift; sourceTree = "<group>"; };
 		2EF3A23928196E9400F6E38E /* DietModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DietModel.xcdatamodel; sourceTree = "<group>"; };
-		2EF3A23B281AA70900F6E38E /* DietFirebaseModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietFirebaseModelController.swift; sourceTree = "<group>"; };
+		2EF3A23B281AA70900F6E38E /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		36A9DAFD27E2AC3400DB5082 /* reshape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reshape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A9DB0027E2AC3400DB5082 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36A9DB0227E2AC3400DB5082 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -331,14 +333,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		2E2901E828317A1600CBCEFE /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				2E2901E928317A3800CBCEFE /* WeightFirebaseController.swift */,
-			);
-			path = Firebase;
-			sourceTree = "<group>";
-		};
 		2E2901ED28367A6C00CBCEFE /* Structures */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,14 +347,6 @@
 				2E2901EF2836CC0700CBCEFE /* MealStruct.swift */,
 			);
 			path = Structures;
-			sourceTree = "<group>";
-		};
-		2E602922281D83310050B200 /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				2EF3A23B281AA70900F6E38E /* DietFirebaseModelController.swift */,
-			);
-			path = Firebase;
 			sourceTree = "<group>";
 		};
 		2EAA1B632812FE8F00CA4847 /* CD and FB */ = {
@@ -379,7 +365,6 @@
 			isa = PBXGroup;
 			children = (
 				2E2901ED28367A6C00CBCEFE /* Structures */,
-				2E2901E828317A1600CBCEFE /* Firebase */,
 				2EAA1B632812FE8F00CA4847 /* CD and FB */,
 				2EF20BF9280DF0F00019CF64 /* Cells */,
 				2EB767C82809F08F008868DD /* WeightPresenter.swift */,
@@ -392,7 +377,7 @@
 			path = WeightScreen;
 			sourceTree = "<group>";
 		};
-		2EC4E714281722B3002AF235 /* CoreData */ = {
+		2EC4E714281722B3002AF235 /* CD and FB */ = {
 			isa = PBXGroup;
 			children = (
 				2E07ABE0281D39D9005DE3E0 /* CellData+CoreDataClass.swift */,
@@ -401,8 +386,17 @@
 				2EF3A22E281858C300F6E38E /* MealData+CoreDataClass.swift */,
 				2EF3A22F281858C300F6E38E /* MealData+CoreDataProperties.swift */,
 				2EF3A23628196C3A00F6E38E /* DietModelController.swift */,
+				2EDB9631283ABCC900F3B38A /* DietFirebaseProtocol.swift */,
 			);
-			path = CoreData;
+			path = "CD and FB";
+			sourceTree = "<group>";
+		};
+		2EDB962E283ABC6500F3B38A /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				2EDB962F283ABC7C00F3B38A /* ResultFirebaseProtocol.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		2EECFF2C27E5035C00BD4BEF /* EnterScreen */ = {
@@ -570,6 +564,7 @@
 		945B383C27ECC2DB0044E952 /* ResultsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2EDB962E283ABC6500F3B38A /* Firebase */,
 				945B387727F35FFC0044E952 /* Cells */,
 				945B383F27ECC32A0044E952 /* ResultsScreenPresenter.swift */,
 				945B384027ECC32A0044E952 /* ResultsScreenRouter.swift */,
@@ -585,8 +580,7 @@
 			isa = PBXGroup;
 			children = (
 				2E2901EE2836CBF100CBCEFE /* Structures */,
-				2E602922281D83310050B200 /* Firebase */,
-				2EC4E714281722B3002AF235 /* CoreData */,
+				2EC4E714281722B3002AF235 /* CD and FB */,
 				2EF20BF2280DEC310019CF64 /* Enums */,
 				2EF20BF1280DEBE70019CF64 /* Cells and Headers */,
 				945B384B27ECC33A0044E952 /* DietScreenPresenter.swift */,
@@ -654,6 +648,7 @@
 		94FC78362809E459003477FA /* NetworkManagers */ = {
 			isa = PBXGroup;
 			children = (
+				2EF3A23B281AA70900F6E38E /* FirebaseController.swift */,
 				94FC78372809E46D003477FA /* AuthManger.swift */,
 			);
 			path = NetworkManagers;
@@ -930,7 +925,6 @@
 				2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */,
 				2EF20BFC280DF19D0019CF64 /* UpGradientPanel.swift in Sources */,
 				9478495B27FB221400138DA4 /* RegisterScreenInteractor.swift in Sources */,
-				2E2901EA28317A3800CBCEFE /* WeightFirebaseController.swift in Sources */,
 				2EF3A231281858C300F6E38E /* MealData+CoreDataProperties.swift in Sources */,
 				945B387627F357450044E952 /* PhotoProgressView.swift in Sources */,
 				9478495927FB221400138DA4 /* RegisterScreenViewController.swift in Sources */,
@@ -943,7 +937,7 @@
 				94302BC427E66080009E397B /* ForgetPasswordScreenProtocols.swift in Sources */,
 				9478495C27FB221400138DA4 /* RegisterScreenContainer.swift in Sources */,
 				945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */,
-				2EF3A23C281AA70900F6E38E /* DietFirebaseModelController.swift in Sources */,
+				2EF3A23C281AA70900F6E38E /* FirebaseController.swift in Sources */,
 				94FC783C280B0C43003477FA /* Alert.swift in Sources */,
 				945ADFAB27FC4EDD00222156 /* GenderStackView.swift in Sources */,
 				2EECFF3727E5037100BD4BEF /* EnterInteractor.swift in Sources */,
@@ -963,6 +957,7 @@
 				2EA1E8A127FCDB8E001B329A /* DietHeader.swift in Sources */,
 				945B386027ECC3500044E952 /* ProfileScreenProtocols.swift in Sources */,
 				945B384527ECC32A0044E952 /* ResultsScreenPresenter.swift in Sources */,
+				2EDB9632283ABCC900F3B38A /* DietFirebaseProtocol.swift in Sources */,
 				2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */,
 				2EECFF3827E5037100BD4BEF /* EnterContainer.swift in Sources */,
 				94302BC527E66080009E397B /* ForgetPasswordScreenInteractor.swift in Sources */,
@@ -975,6 +970,7 @@
 				941E811527E6149800A33344 /* LoginScreenPresenter.swift in Sources */,
 				2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */,
 				94302BC627E66080009E397B /* ForgetPasswordScreenContainer.swift in Sources */,
+				2EDB9630283ABC7C00F3B38A /* ResultFirebaseProtocol.swift in Sources */,
 				945B385227ECC33A0044E952 /* DietScreenRouter.swift in Sources */,
 				2EF20BFE280F4F600019CF64 /* DateTimeCell.swift in Sources */,
 				945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */,

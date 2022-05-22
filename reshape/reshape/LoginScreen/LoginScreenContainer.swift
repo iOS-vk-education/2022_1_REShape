@@ -24,6 +24,7 @@ final class LoginScreenContainer {
 		presenter.view = viewController
         router.viewController = viewController
         router.window = context.window
+        router.fbController = context.fbController
 		presenter.moduleOutput = context.moduleOutput
 		interactor.output = presenter
 
@@ -39,5 +40,6 @@ final class LoginScreenContainer {
 
 struct LoginScreenContext {
 	weak var moduleOutput: LoginScreenModuleOutput?
+    weak var fbController: FirebaseController?
     let window: UIWindow
 }

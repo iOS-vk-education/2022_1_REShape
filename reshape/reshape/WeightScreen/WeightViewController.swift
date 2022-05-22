@@ -59,6 +59,7 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        output.requestUploadData()
         weightChart.reloadData()
     }
     
@@ -76,7 +77,7 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navBarView.delegate = self
-        navBarView.setConfigForWeightScreen(withName: defaults.string(forKey: "name") ?? "Unnamed")
+        navBarView.setConfigForWeightScreen(withName: "")
     }
     
     private func setupGradientPanel() {
@@ -125,6 +126,10 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
 }
 
 extension WeightViewController: WeightViewInput {
+    func updateName(forName name: String) {
+        navBarView.setNameForWeightScreen(setName: name)
+    }
+    
     func reloadData() {
         addTable.reloadSections(IndexSet(integer: 0), with: .none)
         weightChart.reloadData()

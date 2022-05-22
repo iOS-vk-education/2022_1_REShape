@@ -24,7 +24,9 @@ final class ResultsScreenContainer {
 		presenter.moduleOutput = context.moduleOutput
         router.viewController = viewController
         router.window = context.window
+        router.firebaseController = context.firebaseController
 		interactor.output = presenter
+        interactor.firebaseController = context.firebaseController
 
         return ResultsScreenContainer(view: viewController, input: presenter, router: router)
 	}
@@ -38,5 +40,6 @@ final class ResultsScreenContainer {
 
 struct ResultsScreenContext {
 	weak var moduleOutput: ResultsScreenModuleOutput?
+    weak var firebaseController: ResultFirebaseProtocol?
     let window: UIWindow
 }

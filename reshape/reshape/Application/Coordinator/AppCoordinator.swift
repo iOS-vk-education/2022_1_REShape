@@ -13,10 +13,13 @@ import UIKit
 final class AppCoordinator: CoordinatorProtocol{
     internal var window: UIWindow
     private var instructor: LaunchInstructor
+    private var fbController: FirebaseController
     init (window: UIWindow, instructor: LaunchInstructor) {
         self.window = window
         self.instructor = instructor
+        self.fbController = FirebaseController()
     }
+    
     func start() {
         switch instructor {
         case .authorization:
@@ -25,6 +28,7 @@ final class AppCoordinator: CoordinatorProtocol{
             performMainFlow()
         }
     }
+    
     enum LaunchInstructor {
         case authorization, main
     }
@@ -32,11 +36,11 @@ final class AppCoordinator: CoordinatorProtocol{
 extension AppCoordinator{
 
     private func performAuthorizationFlow(){
-        let coordinator = AuthCoordinator(window: window)
+        let coordinator = AuthCoordinator(window: window, firebaseController: fbController)
         coordinator.start()
     }
     private func performMainFlow(){
-        let coordinator = MainFlowCoordinator(window: window)
+        let coordinator = MainFlowCoordinator(window: window, firebaseController: fbController)
         coordinator.start()
     }
 

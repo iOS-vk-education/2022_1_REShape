@@ -1,5 +1,5 @@
 //
-//  WeightFirebaseProtocol.swift
+//  ResultFirebaseProtocol.swift
 //  reshape
 //
 //  Created by Иван Фомин on 22.05.2022.
@@ -7,17 +7,19 @@
 
 import Foundation
 
-protocol WeightFirebaseProtocol: AnyObject {
+protocol ResultFirebaseProtocol: AnyObject {
     // Подгрузка и обновление информации
     func loadIndividualInfo(completion: @escaping (Error?) -> Void)
+    func loadCommonInfo(completion: @escaping (Error?) -> Void)
     
     // Получение предварительно подгруженной информации
-    func getWeight(forId id: Int) -> WeightStruct
+    func getCurrentDay() -> Int
+    func getCurrentCalories() -> Double
+    func getTargetCalories() -> Double
     func getCurrentWeight() -> String
-    func getWeightCount() -> Int
+    func getTargetWeight() -> String
+    func getCurrentWater() -> Double
     func getName() -> String
-    
-    // Отправка новых данных
-    func sendNewWeight(forID id: Int, withWeight data: WeightStruct, completion:
-                      @escaping (Error?, WeightStruct) -> Void)
+    func getSurname() -> String
+    func getPhotoURL() -> URL?
 }

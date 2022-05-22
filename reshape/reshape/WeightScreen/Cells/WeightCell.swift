@@ -76,7 +76,15 @@ extension WeightCell: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        let weight = rightTextField.text!
-        (weight == "" || Int(weight)! > 200) ? view?.cancelEditing() : view?.endEditing(withWeight: weight)
+        guard let weight = rightTextField.text else {
+            view?.cancelEditing()
+            return
+        }
+        let dotWeight = weight.replacingOccurrences(of: ",", with: ".")
+        guard let doubleWeight = Double(dotWeight) else {
+            view?.cancelEditing()
+            return
+        }
+        doubleWeight > 300 ? view?.cancelEditing() : view?.endEditing(withWeight: dotWeight)
     }
 }

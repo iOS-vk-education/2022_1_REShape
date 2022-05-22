@@ -39,4 +39,5 @@ final class EnterContainer {
 struct EnterContext {
 	weak var moduleOutput: EnterModuleOutput?
     let window: UIWindow
+    let fbController: FirebaseController
 }

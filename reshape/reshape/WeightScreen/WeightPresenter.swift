@@ -25,6 +25,10 @@ extension WeightPresenter: WeightModuleInput {
 }
 
 extension WeightPresenter: WeightViewOutput {
+    func requestUploadData() {
+        interactor.getDataFromRemoteBase()
+    }
+    
     func getNumOfDays() -> Int {
         return interactor.getSize()
     }
@@ -42,7 +46,8 @@ extension WeightPresenter: WeightViewOutput {
     }
     
     func getWeight(atPosition position: Int) -> String {
-        return interactor.getWeightData(fromPosition: position)?.getWeight() ?? ""
+        let data = interactor.getWeightData(fromPosition: position)?.getWeight()
+        return data ?? ""
     }
     
     func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String) {
@@ -75,6 +80,10 @@ extension WeightPresenter: WeightViewOutput {
 }
 
 extension WeightPresenter: WeightInteractorOutput {
+    func nameGetted(name: String) {
+        view?.updateName(forName: name)
+    }
+    
     func newWeightGetting() {
         view?.reloadData()
     }

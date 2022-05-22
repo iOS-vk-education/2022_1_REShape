@@ -23,6 +23,9 @@ protocol WeightViewInput: AnyObject {
     
     // Обновление данных
     func reloadData()
+    
+    // Появление имени
+    func updateName(forName name: String)
 }
 
 protocol WeightViewOutput: AnyObject {
@@ -45,6 +48,9 @@ protocol WeightViewOutput: AnyObject {
     
     // Если изменение подтвердилось
     func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String)
+    
+    // Запрос на загрузку данных из сети
+    func requestUploadData()
 }
 
 protocol WeightInteractorInput: AnyObject {
@@ -54,8 +60,11 @@ protocol WeightInteractorInput: AnyObject {
     // Получение количества данных
     func getSize() -> Int
     
-    // Запрос на загрузку изменнногот веса
+    // Запрос на загрузку изменнного веса
     func uploadNewWeight(_ data: WeightStruct)
+    
+    // Запрос на загрузку весов из сети
+    func getDataFromRemoteBase()
 }
 
 protocol WeightInteractorOutput: AnyObject {
@@ -64,6 +73,9 @@ protocol WeightInteractorOutput: AnyObject {
     
     // Сигнал появления новых данных
     func newWeightGetting()
+    
+    // Сигнал о появлении имени
+    func nameGetted(name: String)
 }
 
 protocol WeightRouterInput: AnyObject {

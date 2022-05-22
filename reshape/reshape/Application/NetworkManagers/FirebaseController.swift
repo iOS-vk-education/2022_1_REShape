@@ -9,24 +9,23 @@ import Foundation
 import Firebase
 import FirebaseDatabase
 
-protocol FirebaseControllerProtocol {
+protocol ProfileFirebaseController: AnyObject {
     // Подгрузка и обновление информации
     func loadIndividualInfo(completion: @escaping (Error?) -> Void)
     func loadCommonInfo(completion: @escaping (Error?) -> Void)
     
     // Получение предварительно подгруженной информации
     func getCurrentDay() -> Int
-    func getDaysCount() -> Int
-    func getCurrentCalories() -> Double
-    func getTargetCalories() -> Double
-    func getMeal(forID id: Int, forDay day: Int, atMeal meal: String) -> MealStruct
-    func getMealsCount(forDay day: Int, forMeal meal: String) -> Int
+    func getCurrentWater() -> Double
+    func getName() -> String
+    func getSurname() -> String
+    func getPhotoURL() -> URL?
     
     // Отправка новых данных
-    func sendMealAndCalState(mealState state: Bool, calories cal: Double, forDay day: Int, forMeal meal: String, forID id: Int, completion: @escaping ((Error?) -> Void))
+    func sendWater(withWater data: Double, forDay day: Int, completion: @escaping (Error?) -> Void)
 }
 
-final class DietFirebaseModelController {
+final class FirebaseController {
     private var commonDBRef: DatabaseReference = DatabaseReference()
     private var userDBRef: DatabaseReference = DatabaseReference()
     private var commonSnapshot: NSDictionary = [:]
@@ -42,7 +41,7 @@ final class DietFirebaseModelController {
         isAuth = checkLogin()
     }
     
-    private func checkLogin() -> Bool {
+    func checkLogin() -> Bool {
         guard isAuth else {
             guard let user = Auth.auth().currentUser else {
                 print("No login")
@@ -61,7 +60,7 @@ final class DietFirebaseModelController {
     }
 }
 
-extension DietFirebaseModelController: FirebaseControllerProtocol {
+extension FirebaseController: DietFirebaseProtocol {
     // Загрузка индивидуальной информации
     func loadIndividualInfo(completion: @escaping (Error?) -> Void = {_ in return}) {
         // Проверка на авторизацию
@@ -189,7 +188,12 @@ extension DietFirebaseModelController: FirebaseControllerProtocol {
     }
 }
 
-extension DietFirebaseModelController: WeightFirebaseProtocol {
+extension FirebaseController: WeightFirebaseProtocol {
+    func getName() -> String {
+        let name = userSnapshot["name"] as? String
+        return name ?? ""
+    }
+    
     // Получение всех данных о весе
     func getWeight(forId id: Int) -> WeightStruct {
         let downloadData = ((userSnapshot["weights"]
@@ -202,7 +206,7 @@ extension DietFirebaseModelController: WeightFirebaseProtocol {
     }
     
     // Получениие последнего веса
-    func getLastWeight() -> String {
+    func getCurrentWeight() -> String {
         // Получение ID последнего знаечния веса
         var maxID = -1;
         userSnapshot.forEach { dataDict in
@@ -247,6 +251,48 @@ extension DietFirebaseModelController: WeightFirebaseProtocol {
                 return
             }
             completion(nil, data)
+        }
+    }
+}
+
+extension FirebaseController: ResultFirebaseProtocol {
+    func getPhotoURL() -> URL? {
+        guard let photoURL = userSnapshot["photo"] as? String else { return nil }
+        return URL(string: photoURL)
+    }
+    
+    func getSurname() -> String {
+        let name = userSnapshot["surname"] as? String
+        return name ?? "Unnamed"
+    }
+    
+    func getTargetWeight() -> String {
+        let target = userSnapshot["target"] as? String
+        return target ?? ""
+    }
+    
+    func getCurrentWater() -> Double {
+        let day = getCurrentDay()
+        let water = (userSnapshot["water"] as? NSDictionary)?["day\(day)"] as? NSNumber
+        return water?.doubleValue ?? 0
+    }
+}
+
+extension FirebaseController: ProfileFirebaseController {
+    func sendWater(withWater data: Double, forDay day: Int, completion: @escaping (Error?) -> Void) {
+        // Проверка на авторизацию
+        guard checkLogin() else {
+            completion(NSError(domain: "No login", code: -10))
+            return
+        }
+        
+        userDBRef.child("water/day\(day)").setValue(NSNumber(floatLiteral: data)) { error, _ in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                completion(error)
+                return
+            }
+            completion(nil)
         }
     }
 }
