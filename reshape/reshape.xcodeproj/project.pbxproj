@@ -35,6 +35,7 @@
 		2EB767D32809F08F008868DD /* WeightContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB767CD2809F08F008868DD /* WeightContainer.swift */; };
 		2EC4E710281345FC002AF235 /* WeightChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4E70F281345FB002AF235 /* WeightChart.swift */; };
 		2EC4E71B28185454002AF235 /* AbstractModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4E71A28185454002AF235 /* AbstractModelController.swift */; };
+		2EDB962D283AB2A900F3B38A /* WeightFirebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB962C283AB2A900F3B38A /* WeightFirebaseProtocol.swift */; };
 		2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */; };
 		2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */; };
 		2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */; };
@@ -170,6 +171,7 @@
 		2EB767CD2809F08F008868DD /* WeightContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightContainer.swift; sourceTree = "<group>"; };
 		2EC4E70F281345FB002AF235 /* WeightChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightChart.swift; sourceTree = "<group>"; };
 		2EC4E71A28185454002AF235 /* AbstractModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractModelController.swift; sourceTree = "<group>"; };
+		2EDB962C283AB2A900F3B38A /* WeightFirebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightFirebaseProtocol.swift; sourceTree = "<group>"; };
 		2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPresenter.swift; sourceTree = "<group>"; };
 		2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRouter.swift; sourceTree = "<group>"; };
 		2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterViewController.swift; sourceTree = "<group>"; };
@@ -361,15 +363,16 @@
 			path = Firebase;
 			sourceTree = "<group>";
 		};
-		2EAA1B632812FE8F00CA4847 /* CoreData */ = {
+		2EAA1B632812FE8F00CA4847 /* CD and FB */ = {
 			isa = PBXGroup;
 			children = (
 				2EAA1B642812FE8F00CA4847 /* WeightModel.xcdatamodeld */,
 				2EAA1B672812FEC100CA4847 /* WeightModelController.swift */,
 				2EAA1B6D28130A7800CA4847 /* WeightModel+CoreDataClass.swift */,
 				2EAA1B6E28130A7800CA4847 /* WeightModel+CoreDataProperties.swift */,
+				2EDB962C283AB2A900F3B38A /* WeightFirebaseProtocol.swift */,
 			);
-			path = CoreData;
+			path = "CD and FB";
 			sourceTree = "<group>";
 		};
 		2EB767C72809F02D008868DD /* WeightScreen */ = {
@@ -377,7 +380,7 @@
 			children = (
 				2E2901ED28367A6C00CBCEFE /* Structures */,
 				2E2901E828317A1600CBCEFE /* Firebase */,
-				2EAA1B632812FE8F00CA4847 /* CoreData */,
+				2EAA1B632812FE8F00CA4847 /* CD and FB */,
 				2EF20BF9280DF0F00019CF64 /* Cells */,
 				2EB767C82809F08F008868DD /* WeightPresenter.swift */,
 				2EB767CA2809F08F008868DD /* WeightViewController.swift */,
@@ -984,6 +987,7 @@
 				2E07ABE3281D39D9005DE3E0 /* CellData+CoreDataProperties.swift in Sources */,
 				94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */,
 				94302BC127E66080009E397B /* ForgetPasswordScreenPresenter.swift in Sources */,
+				2EDB962D283AB2A900F3B38A /* WeightFirebaseProtocol.swift in Sources */,
 				945B384927ECC32A0044E952 /* ResultsScreenInteractor.swift in Sources */,
 				2EA1E8A328041343001B329A /* UIImage+Extension.swift in Sources */,
 				9478496527FC0A3500138DA4 /* ImagePicker.swift in Sources */,

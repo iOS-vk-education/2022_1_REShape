@@ -90,6 +90,20 @@ final class DietScreenInteractor {
         }
         saveDatabase()
     }
+    
+    private func calculateCalories(forSection section: Int) -> Double {
+        var calories: Double = 0
+        cellData.forEach({ info in
+            guard info.cellSection == section else { return }
+            guard let mealsSet = (info.cellMeals as? Set<MealData>) else { return }
+            for meal in mealsSet {
+                if meal.modelState {
+                    calories += meal.modelCalories
+                }
+            }
+        })
+        return calories
+    }
 }
 
 // Firebase методы
@@ -135,20 +149,34 @@ extension DietScreenInteractor {
     
     // Обработка изменения состояния блюда TODO
     func changeMealState(withID id: Int, forMeal meal: MealsType, atSection section: Int) {
-        print("[DEBUG] New state of \(meal.text) transmit at \(section + 1) day in \(id) position")
-        let mealData = getMealData(withID: id, forMeal: meal, atSection: section)
-        let state = !mealData.modelState
-        
-        firebaseModelController.newMealState(state, forDay: section + 1, forMeal: meal.engText, forID: id + 1) { [weak self] error in
-            // Блок проверок
-            guard (error == nil) else { return }
-            guard (self != nil) else { return }
-            
-            // Обновление внутренней БД и отображения
-            mealData.changeState(toState: state)
-            self!.saveDatabase()
-            self!.output?.updateMealData(forMeal: meal, atSection: section)
+        // Проверка на день
+        if firebaseModelController.getCurrentDay() != section {
+            return
         }
+        let mealData = getMealData(withID: id, forMeal: meal, atSection: section)
+        
+        // Вычисление новых параметров для отправки
+        let state = !mealData.modelState
+        var cal = calculateCalories(forSection: section)
+        cal += state ? mealData.modelCalories : -mealData.modelCalories
+        
+        // Отправка данных
+        print("[DEBUG] New state \(state) of \(meal.text) transmit at \(section + 1) day in \(id) position")
+        firebaseModelController.sendMealAndCalState(
+            mealState: state,
+            calories: cal,
+            forDay: section + 1,
+            forMeal: meal.engText,
+            forID: id + 1) { [weak self] error in
+                // Блок проверок
+                guard (error == nil) else { return }
+                guard (self != nil) else { return }
+            
+                // Обновление внутренней БД и отображения
+                mealData.changeState(toState: state)
+                self!.saveDatabase()
+                self!.output?.updateMealData(forMeal: meal, atSection: section)
+            }
     }
     
     // Запрос на получение данных

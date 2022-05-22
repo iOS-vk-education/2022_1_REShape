@@ -52,8 +52,6 @@ final class DietScreenViewController: UIViewController {
         setupUI()
         // Настройка AutoLayout
         setupConstraint()
-        // Запрос на выгрузку данных
-        output.requestData()
     }
     
     override func viewDidAppear(_ animated: Bool) {

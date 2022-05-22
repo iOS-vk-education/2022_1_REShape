@@ -9,12 +9,30 @@ import Foundation
 import Firebase
 import FirebaseDatabase
 
+protocol FirebaseControllerProtocol {
+    // Подгрузка и обновление информации
+    func loadIndividualInfo(completion: @escaping (Error?) -> Void)
+    func loadCommonInfo(completion: @escaping (Error?) -> Void)
+    
+    // Получение предварительно подгруженной информации
+    func getCurrentDay() -> Int
+    func getDaysCount() -> Int
+    func getCurrentCalories() -> Double
+    func getTargetCalories() -> Double
+    func getMeal(forID id: Int, forDay day: Int, atMeal meal: String) -> MealStruct
+    func getMealsCount(forDay day: Int, forMeal meal: String) -> Int
+    
+    // Отправка новых данных
+    func sendMealAndCalState(mealState state: Bool, calories cal: Double, forDay day: Int, forMeal meal: String, forID id: Int, completion: @escaping ((Error?) -> Void))
+}
+
 final class DietFirebaseModelController {
     private var commonDBRef: DatabaseReference = DatabaseReference()
     private var userDBRef: DatabaseReference = DatabaseReference()
     private var commonSnapshot: NSDictionary = [:]
     private var userSnapshot: NSDictionary = [:]
     private var isAuth: Bool = false
+    private var currentDay: Int = -1
     
     init() {
         commonDBRef = Database
@@ -26,17 +44,24 @@ final class DietFirebaseModelController {
     
     private func checkLogin() -> Bool {
         guard isAuth else {
-            guard let id = Auth.auth().currentUser?.uid else {
+            guard let user = Auth.auth().currentUser else {
                 print("No login")
                 return isAuth
             }
-            userDBRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference().child("users/\(id)")
+            // Ссылка на пользователя
             isAuth = true
+            userDBRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference().child("users/\(user.uid)")
+            
+            // Текущий день
+            let startDate = Calendar(identifier: .iso8601).startOfDay(for: user.metadata.creationDate ?? Date())
+            currentDay = Int(startDate.distance(to: Date()) / 86400)
             return isAuth
         }
         return isAuth
     }
-    
+}
+
+extension DietFirebaseModelController: FirebaseControllerProtocol {
     // Загрузка индивидуальной информации
     func loadIndividualInfo(completion: @escaping (Error?) -> Void = {_ in return}) {
         // Проверка на авторизацию
@@ -69,6 +94,36 @@ final class DietFirebaseModelController {
         }
     }
     
+    func getCurrentDay() -> Int {
+        guard currentDay != -1 else {
+            return -1
+        }
+        return currentDay % getDaysCount()
+    }
+    
+    // Получение текущих калорий
+    func getCurrentCalories() -> Double {
+        let day = getCurrentDay()
+        let current = ((userSnapshot["calories"]
+                        as? NSDictionary)?["day\(day)"]
+                       as? NSNumber)?.doubleValue ?? 0
+        return current
+    }
+    
+    // Получение целевых калорий
+    func getTargetCalories() -> Double {
+        let day = getCurrentDay()
+        let target = ((commonSnapshot["day\(day)"]
+                       as? NSDictionary)?["dayCalories"]
+                      as? NSNumber)?.doubleValue ?? 0
+        return target
+    }
+    
+    // Получение числа дней
+    func getDaysCount() -> Int {
+        return commonSnapshot.count
+    }
+    
     // Получение блюда по id, дню и приёму пищи
     func getMeal(forID id: Int, forDay day: Int, atMeal meal: String) -> MealStruct {
         // Общая информация о блюде
@@ -90,32 +145,108 @@ final class DietFirebaseModelController {
     }
     
     // Получение числа дней
-    func getDaysCount() -> Int {
-        return commonSnapshot.count
-    }
-    
-    // Получение числа дней
     func getMealsCount(forDay day: Int, forMeal meal: String) -> Int {
         let mealsDict = ((commonSnapshot["day\(day)"] as? NSDictionary)?["meals"] as? NSDictionary)?[meal] as? NSDictionary
         return mealsDict?.count ?? 0
     }
     
-    // Нажатие на блюдо
-    func newMealState(_ state: Bool, forDay day: Int, forMeal meal: String, forID id: Int, completion: @escaping ((Error?) -> Void)) {
+    // Отправка нового состояния блюда и полученные за день калории
+    func sendMealAndCalState(mealState state: Bool, calories cal: Double, forDay day: Int, forMeal meal: String, forID id: Int, completion: @escaping ((Error?) -> Void)) {
         // Проверка на авторизацию
         guard checkLogin() else {
             completion(NSError(domain: "No login", code: -10))
             return
         }
         
-        // Загрузка данных
+        // Флаги загрузок
+        var calUpload: Bool = false
+        var stateUpload: Bool = false
+        
+        // Загрузка состояния блюда
         userDBRef.child("days/day\(day)/\(meal)/meal\(id)").setValue(state) { error, _ in
             guard error == nil else {
                 print(error!.localizedDescription)
                 completion(error)
                 return
             }
-            completion(nil)
+            stateUpload = true
+            if (stateUpload && calUpload) {
+                completion(nil)
+            }
+        }
+        // Загрузка калорий
+        userDBRef.child("calories/day\(day)").setValue(cal) { error, _ in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                completion(error)
+                return
+            }
+            calUpload = true
+            if (stateUpload && calUpload) {
+                completion(nil)
+            }
+        }
+    }
+}
+
+extension DietFirebaseModelController: WeightFirebaseProtocol {
+    // Получение всех данных о весе
+    func getWeight(forId id: Int) -> WeightStruct {
+        let downloadData = ((userSnapshot["weights"]
+                             as? NSDictionary)?["weight\(id)"]
+                            as? NSDictionary)
+        let stringWeight = downloadData?["Weight"] as? String ?? ""
+        let stringDate = downloadData?["Date"] as? String ?? ""
+        let stringTime = downloadData?["Time"] as? String ?? ""
+        return WeightStruct(weight: stringWeight, date: stringDate, time: stringTime)
+    }
+    
+    // Получениие последнего веса
+    func getLastWeight() -> String {
+        // Получение ID последнего знаечния веса
+        var maxID = -1;
+        userSnapshot.forEach { dataDict in
+            guard let key = dataDict.key as? String else { return }
+            guard let currentID = Int(key.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) else { return }
+            maxID = currentID > maxID ? currentID : maxID
+        }
+        
+        // Получение последнего знаечния веса
+        let data = ((userSnapshot["weights"]
+                     as? NSDictionary)?["weight\(maxID)"]
+                    as? NSDictionary)
+        let stringWeight = data?["Weight"] as? String ?? ""
+        return stringWeight
+    }
+    
+    // Число данных веса
+    func getWeightCount() -> Int {
+        let weights = userSnapshot["weights"] as? NSDictionary
+        return weights?.count ?? 0
+    }
+    
+    // Отправка нового веса
+    func sendNewWeight(forID id: Int, withWeight data: WeightStruct, completion: @escaping (Error?, WeightStruct) -> Void) {
+        // Проверка на авторизацию
+        guard checkLogin() else {
+            completion(NSError(domain: "No login", code: -10), data)
+            return
+        }
+        
+        // Компоновка данных
+        let dataToUpload: NSDictionary = [
+            "Weight": data.weight,
+            "Date": data.date,
+            "Time": data.time]
+
+        // Отправка данных
+        userDBRef.child("weights/weight\(id)").setValue(dataToUpload) { error, snapshot in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                completion(error, data)
+                return
+            }
+            completion(nil, data)
         }
     }
 }
