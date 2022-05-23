@@ -201,6 +201,23 @@ extension DietScreenInteractor {
 
 // Внешние запросы
 extension DietScreenInteractor: DietScreenInteractorInput {
+    func findMeal(forString text: String) -> [SearchStruct] {
+        var output: [SearchStruct] = []
+        cellData.forEach({ data in
+            data.cellMeals?.forEach({ mealSet in
+                guard mealSet is MealData else { return }
+                let meal = mealSet as! MealData
+                if meal.modelName!.contains(text) {
+                    output.append(SearchStruct(
+                        section: Int(data.cellSection),
+                        mealType: MealsType(Int(data.cellType)).revert,
+                        id: Int(meal.modelID)))
+                }
+            })
+        })
+        return output
+    }
+    
     func getCurrentDay() -> Int {
         return firebaseController?.getCurrentDay() ?? 0
     }

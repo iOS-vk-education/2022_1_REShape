@@ -34,6 +34,7 @@ protocol DietScreenViewOutput: AnyObject {
     
     // Геттеры
     func getCurrentDay() -> Int
+    func getDay(for section: Int) -> Int
     
     func getNumOfDay() -> Int
     func getNumOfRows(inSection section: Int) -> Int
@@ -48,6 +49,10 @@ protocol DietScreenViewOutput: AnyObject {
     // Обработчики нажатий на ячейки
     func clickedDiet(_ state: DisclosureState, mealType celltype: MealsType, inSection section: Int)
     func clickedMeal(forMeal celltype: MealsType, atIndex indexPath: IndexPath)
+    
+    // Поиск
+    func searchMeal(forString searchText: String)
+    func searchEnd()
 }
 
 protocol DietScreenInteractorInput: AnyObject {
@@ -64,6 +69,9 @@ protocol DietScreenInteractorInput: AnyObject {
     // Изменение состояния базы данных
     func changeDisclosure(toState state: DisclosureState, forMeal meal: MealsType, atSection section: Int)
     func changeMealState(withID id: Int, forMeal meal: MealsType, atSection section: Int)
+    
+    // Поиск
+    func findMeal(forString text: String) -> [SearchStruct]
 }
 
 protocol DietScreenInteractorOutput: AnyObject {

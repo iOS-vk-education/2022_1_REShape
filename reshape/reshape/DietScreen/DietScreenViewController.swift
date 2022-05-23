@@ -30,6 +30,7 @@ final class DietScreenViewController: UIViewController {
         search.searchBarStyle = .minimal
         search.setPositionAdjustment(UIOffset(horizontal: 9, vertical: 0.5), for: .search)
         search.searchTextPositionAdjustment = UIOffset(horizontal: 9, vertical: 0.5)
+        search.searchTextField.clearButtonMode = .always
         return search
     }()
     
@@ -71,6 +72,7 @@ final class DietScreenViewController: UIViewController {
         // Настройка SearchBar
         view.addSubview(dietSearchBar)
         dietSearchBar.delegate = self
+        dietSearchBar.searchTextField.delegate = self
         
         // Настройка TableView
         view.addSubview(dietTableView)
@@ -163,7 +165,7 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueHeader(headerType: DietHeader.self)
-        header.setDay(section + 1)
+        header.setDay(output.getDay(for: section))
         return header
     }
     
@@ -208,11 +210,23 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension DietScreenViewController: UISearchBarDelegate {
+extension DietScreenViewController: UISearchBarDelegate, UITextFieldDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.view.endEditing(true)
     }
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        output.searchMeal(forString: searchText)
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
+        output.searchEnd()
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
 }

@@ -37,6 +37,7 @@
 		2EDB962D283AB2A900F3B38A /* WeightFirebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB962C283AB2A900F3B38A /* WeightFirebaseProtocol.swift */; };
 		2EDB9630283ABC7C00F3B38A /* ResultFirebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB962F283ABC7C00F3B38A /* ResultFirebaseProtocol.swift */; };
 		2EDB9632283ABCC900F3B38A /* DietFirebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB9631283ABCC900F3B38A /* DietFirebaseProtocol.swift */; };
+		2EDB9634283BDD3A00F3B38A /* SearchStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB9633283BDD3A00F3B38A /* SearchStruct.swift */; };
 		2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */; };
 		2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */; };
 		2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */; };
@@ -174,6 +175,7 @@
 		2EDB962C283AB2A900F3B38A /* WeightFirebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightFirebaseProtocol.swift; sourceTree = "<group>"; };
 		2EDB962F283ABC7C00F3B38A /* ResultFirebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultFirebaseProtocol.swift; sourceTree = "<group>"; };
 		2EDB9631283ABCC900F3B38A /* DietFirebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietFirebaseProtocol.swift; sourceTree = "<group>"; };
+		2EDB9633283BDD3A00F3B38A /* SearchStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStruct.swift; sourceTree = "<group>"; };
 		2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPresenter.swift; sourceTree = "<group>"; };
 		2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRouter.swift; sourceTree = "<group>"; };
 		2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterViewController.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				2E2901EF2836CC0700CBCEFE /* MealStruct.swift */,
+				2EDB9633283BDD3A00F3B38A /* SearchStruct.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -960,6 +963,7 @@
 				2EDB9632283ABCC900F3B38A /* DietFirebaseProtocol.swift in Sources */,
 				2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */,
 				2EECFF3827E5037100BD4BEF /* EnterContainer.swift in Sources */,
+				2EDB9634283BDD3A00F3B38A /* SearchStruct.swift in Sources */,
 				94302BC527E66080009E397B /* ForgetPasswordScreenInteractor.swift in Sources */,
 				945B385427ECC33A0044E952 /* DietScreenProtocols.swift in Sources */,
 				2EB767D32809F08F008868DD /* WeightContainer.swift in Sources */,
