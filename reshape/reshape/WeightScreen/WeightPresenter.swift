@@ -25,6 +25,10 @@ extension WeightPresenter: WeightModuleInput {
 }
 
 extension WeightPresenter: WeightViewOutput {
+    func getName() -> String {
+        return interactor.getName()
+    }
+    
     func requestUploadData() {
         interactor.getDataFromRemoteBase()
     }
@@ -80,8 +84,8 @@ extension WeightPresenter: WeightViewOutput {
 }
 
 extension WeightPresenter: WeightInteractorOutput {
-    func nameGetted(name: String) {
-        view?.updateName(forName: name)
+    func nameGetted() {
+        view?.updateName()
     }
     
     func newWeightGetting() {

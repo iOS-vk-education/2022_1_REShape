@@ -50,6 +50,10 @@ final class WeightInteractor {
 }
 
 extension WeightInteractor: WeightInteractorInput {
+    func getName() -> String {
+        return firebaseController?.getName() ?? ""
+    }
+    
     func getWeightData(fromPosition position: Int) -> WeightModel? {
         guard position < getSize() else { return nil }
         let weightModel = localViewModels.first {
@@ -111,7 +115,7 @@ extension WeightInteractor: WeightInteractorInput {
             }
             // Обновление отображения
             self!.weightModelController.saveContext()
-            self!.output?.nameGetted(name: self!.firebaseController?.getName() ?? "")
+            self!.output?.nameGetted()
             self!.output?.newWeightGetting()
         }
     }

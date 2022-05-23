@@ -80,6 +80,10 @@ final class DietScreenPresenter {
 
 // Геттеры
 extension DietScreenPresenter: DietScreenViewOutput {
+    func getCurrentDay() -> Int {
+        return interactor.getCurrentDay()
+    }
+    
     // Получение состояния блюда
     func getMealState(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Bool {
         return getMealData(forMeal: meal, atIndex: indexPath).modelState

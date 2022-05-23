@@ -32,6 +32,8 @@ final class FirebaseController {
     private var userSnapshot: NSDictionary = [:]
     private var isAuth: Bool = false
     private var currentDay: Int = -1
+    private var name: String?
+    private var surname: String?
     
     init() {
         commonDBRef = Database
@@ -41,7 +43,7 @@ final class FirebaseController {
         isAuth = checkLogin()
     }
     
-    func checkLogin() -> Bool {
+    private func checkLogin() -> Bool {
         guard isAuth else {
             guard let user = Auth.auth().currentUser else {
                 print("No login")
@@ -76,6 +78,8 @@ extension FirebaseController: DietFirebaseProtocol {
                 return;
             }
             self?.userSnapshot = snapshot.value as? NSDictionary ?? [:]
+            self?.name = self?.userSnapshot["name"] as? String
+            self?.surname = self?.userSnapshot["surname"] as? String
             completion(nil)
         }
     }
@@ -94,9 +98,8 @@ extension FirebaseController: DietFirebaseProtocol {
     }
     
     func getCurrentDay() -> Int {
-        guard currentDay != -1 else {
-            return -1
-        }
+        guard currentDay != -1 else { return -1 }
+        guard getDaysCount() != 0 else { return -1 }
         return currentDay % getDaysCount()
     }
     
@@ -190,7 +193,6 @@ extension FirebaseController: DietFirebaseProtocol {
 
 extension FirebaseController: WeightFirebaseProtocol {
     func getName() -> String {
-        let name = userSnapshot["name"] as? String
         return name ?? ""
     }
     
@@ -262,8 +264,7 @@ extension FirebaseController: ResultFirebaseProtocol {
     }
     
     func getSurname() -> String {
-        let name = userSnapshot["surname"] as? String
-        return name ?? "Unnamed"
+        return surname ?? ""
     }
     
     func getTargetWeight() -> String {

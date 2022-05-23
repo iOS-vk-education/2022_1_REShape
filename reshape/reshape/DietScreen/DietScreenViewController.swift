@@ -130,7 +130,7 @@ extension DietScreenViewController: DietScreenViewInput {
     }
     
     func reloadTableView() {
-        self.dietTableView.reloadData()
+        dietTableView.reloadData()
     }
     
     func reloadTableRows(atIndex indexPaths: [IndexPath], animation: UITableView.RowAnimation) {
@@ -160,8 +160,6 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
             return .init()
         }
     }
-    
-    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueHeader(headerType: DietHeader.self)

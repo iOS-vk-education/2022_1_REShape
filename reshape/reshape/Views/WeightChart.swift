@@ -55,8 +55,7 @@ class WeightChart: LineChartView {
         }
         dateFormatter.uploadDaysString(from: dateArray)
         setData(entries: weightData)
-//        leftAxis.axisMinimum = leftAxis.entries.min() ?? 0
-//        leftAxis.axisMaximum = leftAxis.entries.max() ?? 0
+
     }
     
     private func setData(entries: [ChartDataEntry]) {

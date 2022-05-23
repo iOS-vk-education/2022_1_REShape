@@ -31,7 +31,8 @@ final class MainFlowCoordinator: CoordinatorProtocol{
         window.rootViewController = tabBar
         UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {})
         window.makeKeyAndVisible()
-        _ = fbController?.checkLogin()
+        fbController?.loadIndividualInfo()
+        fbController?.loadCommonInfo()
     }
 }
 

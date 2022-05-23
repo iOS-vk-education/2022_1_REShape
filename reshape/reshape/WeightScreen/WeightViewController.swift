@@ -77,7 +77,7 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navBarView.delegate = self
-        navBarView.setConfigForWeightScreen(withName: "")
+        navBarView.setConfigForWeightScreen(withName: output.getName())
     }
     
     private func setupGradientPanel() {
@@ -126,8 +126,8 @@ final class WeightViewController: UIViewController, UIGestureRecognizerDelegate 
 }
 
 extension WeightViewController: WeightViewInput {
-    func updateName(forName name: String) {
-        navBarView.setNameForWeightScreen(setName: name)
+    func updateName() {
+        navBarView.setNameForWeightScreen(setName: output.getName())
     }
     
     func reloadData() {

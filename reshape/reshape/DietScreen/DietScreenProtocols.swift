@@ -33,6 +33,8 @@ protocol DietScreenViewOutput: AnyObject {
     func saveData()
     
     // Геттеры
+    func getCurrentDay() -> Int
+    
     func getNumOfDay() -> Int
     func getNumOfRows(inSection section: Int) -> Int
     
@@ -54,6 +56,7 @@ protocol DietScreenInteractorInput: AnyObject {
     func saveDatabase()
     
     // Геттеры
+    func getCurrentDay() -> Int
     func getCellData(forMeal meal: MealsType, atSection section: Int) -> CellData
     func getMealData(withID id: Int, forMeal meal: MealsType, atSection section: Int) -> MealData
     func getMealCount(forMeal meal: MealsType, atSection section: Int) -> Int

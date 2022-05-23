@@ -201,6 +201,10 @@ extension DietScreenInteractor {
 
 // Внешние запросы
 extension DietScreenInteractor: DietScreenInteractorInput {
+    func getCurrentDay() -> Int {
+        return firebaseController?.getCurrentDay() ?? 0
+    }
+    
     // Сохранение данных
     func saveDatabase() {
         modelController.saveContext()
