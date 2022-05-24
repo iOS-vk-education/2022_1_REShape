@@ -23,10 +23,11 @@ class DietModelController: AbstractModelController {
     
     // Добавление новых компонент
     func addCellData(toSection section: Int) -> [CellData] {
-        return [CellData(section: section, cellType: .breakfast, context: managedObjectContext),
-                CellData(section: section, cellType: .lunch, context: managedObjectContext),
-                CellData(section: section, cellType: .snack, context: managedObjectContext),
-                CellData(section: section, cellType: .dinner, context: managedObjectContext)]
+        let cells = [CellData(section: section, cellType: .breakfast, context: managedObjectContext),
+                     CellData(section: section, cellType: .lunch, context: managedObjectContext),
+                     CellData(section: section, cellType: .snack, context: managedObjectContext),
+                     CellData(section: section, cellType: .dinner, context: managedObjectContext)]
+        return cells
     }
     
     // Извлечение компонент
@@ -36,9 +37,23 @@ class DietModelController: AbstractModelController {
     }
     
     // Очистка базы данных
-    func flushData() {
+    func flushMealData() {
         do {
             let fetchRequest = MealData.fetchRequest()
+            let result = try managedObjectContext.fetch(fetchRequest)
+            for model in result {
+                managedObjectContext.delete(model)
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        saveContext()
+    }
+    
+    // Очистка базы данных
+    func flushCellData() {
+        do {
+            let fetchRequest = CellData.fetchRequest()
             let result = try managedObjectContext.fetch(fetchRequest)
             for model in result {
                 managedObjectContext.delete(model)

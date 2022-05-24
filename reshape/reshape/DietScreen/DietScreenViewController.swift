@@ -23,10 +23,11 @@ final class DietScreenViewController: UIViewController {
     private var dietSearchBar: UISearchBar = {
         let search = UISearchBar()
         search.searchTextField.attributedPlaceholder =
-        NSAttributedString(string: "ПОИСК ПО ДНЯМ",
+        NSAttributedString(string: "ПОИСК ПО ДНЯМ И БЛЮДАМ",
                            attributes: [NSAttributedString.Key.kern: 0.77,
                                         NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .regular),
                                         NSAttributedString.Key.foregroundColor: UIColor.pureGreyColor as Any])
+        search.searchTextField.autocapitalizationType = .none
         search.searchBarStyle = .minimal
         search.setPositionAdjustment(UIOffset(horizontal: 9, vertical: 0.5), for: .search)
         search.searchTextPositionAdjustment = UIOffset(horizontal: 9, vertical: 0.5)
@@ -60,12 +61,23 @@ final class DietScreenViewController: UIViewController {
         output.requestData()
     }
     
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+//        scrollToCurrentDay()
+//    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         output.saveData()
     }
     
-    func setupUI() {
+    private func scrollToCurrentDay() {
+        let section = output.getCurrentDay()
+        guard dietTableView.numberOfSections > section else { return }
+        dietTableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: true)
+    }
+    
+    private func setupUI() {
         view.backgroundColor = .white
         view.addSubview(dietLabel)
         
@@ -79,7 +91,7 @@ final class DietScreenViewController: UIViewController {
         setupTableView()
     }
     
-    func setupConstraint() {
+    private func setupConstraint() {
         dietLabel.translatesAutoresizingMaskIntoConstraints = false
         dietLabel.top(isIncludeSafeArea: true)
         dietLabel.centerX()
@@ -102,7 +114,7 @@ final class DietScreenViewController: UIViewController {
         ])
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         // Настройка визуала
         dietTableView.backgroundColor = .white
         dietTableView.separatorStyle = .singleLine
@@ -119,6 +131,10 @@ final class DietScreenViewController: UIViewController {
     
 }
 extension DietScreenViewController: DietScreenViewInput {
+    func reSearch() {
+        self.searchBar(dietSearchBar, textDidChange: dietSearchBar.text ?? "")
+    }
+    
     func showCells(for indexPaths: [IndexPath]) {
         dietTableView.beginUpdates()
         dietTableView.insertRows(at: indexPaths, with: .bottom)
@@ -149,7 +165,9 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueCell(cellType: DietCell.self, for: indexPath)
             cell.setData(
                 text: mealType.text,
-                state: output.getCellDisclosure(forMeal: mealType, atSection: section))
+                state: output.disclosureAllow ?
+                    output.getCellDisclosure(forMeal: mealType, atSection: section) :
+                    .disclosure)
             return cell
         case .mealBreakfast, .mealLunch, .mealDinner, .mealSnack:
             let cell = tableView.dequeueCell(cellType: MealCell.self, for: indexPath)
@@ -187,8 +205,10 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
             let newCellDisclosureState = output.getCellDisclosure(forMeal: mealType, atSection: indexPath.section).revert
             
             // Проверка и изменение состояния
-            (cell as! DietCell).disclosure(newCellDisclosureState)
-            output.clickedDiet(newCellDisclosureState, mealType: mealType, inSection: indexPath.section)
+            if output.disclosureAllow {
+                (cell as! DietCell).disclosure(newCellDisclosureState)
+                output.clickedDiet(newCellDisclosureState, mealType: mealType, inSection: indexPath.section)
+            }
         case .mealLunch, .mealDinner, .mealBreakfast, .mealSnack:
             // Запрос на изменение состояния
             output.clickedMeal(forMeal: mealType.revert, atIndex: indexPath)
@@ -205,7 +225,7 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
         return output.getNumOfDay()
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.view.endEditing(true)
     }
 }
@@ -216,7 +236,7 @@ extension DietScreenViewController: UISearchBarDelegate, UITextFieldDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        output.searchMeal(forString: searchText)
+        output.searchStart(forString: searchText)
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {

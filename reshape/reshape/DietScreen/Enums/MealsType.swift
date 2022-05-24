@@ -12,12 +12,12 @@ enum MealsType {
     init(_ pos: Int) {
         switch pos {
         case 0: self = .breakfast
-        case 1: self = .lunch
-        case 2: self = .snack
-        case 3: self = .dinner
-        case 4: self = .mealBreakfast
-        case 5: self = .mealLunch
-        case 6: self = .mealSnack
+        case 1: self = .mealBreakfast
+        case 2: self = .lunch
+        case 3: self = .mealLunch
+        case 4: self = .snack
+        case 5: self = .mealSnack
+        case 6: self = .dinner
         case 7: self = .mealDinner
         default: self = .none
         }
@@ -28,19 +28,19 @@ enum MealsType {
         case .breakfast:
             return 0
         case .lunch:
-            return 1
-        case .snack:
             return 2
+        case .snack:
+            return 4
         case .dinner:
-            return 3
+            return 6
         case .none:
             return -1
         case .mealBreakfast:
-            return 4
+            return 1
         case .mealLunch:
-            return 5
+            return 3
         case .mealSnack:
-            return 6
+            return 5
         case .mealDinner:
             return 7
         }

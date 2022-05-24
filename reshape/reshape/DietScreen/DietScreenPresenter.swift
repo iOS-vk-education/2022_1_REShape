@@ -17,6 +17,7 @@ final class DietScreenPresenter {
     
     private var rowInSection: [[MealsType]] = []
     private var searchRow: [[SearchStruct]] = []
+    private var isSearchDay: Bool = true
     
     init(router: DietScreenRouterInput, interactor: DietScreenInteractorInput) {
         self.router = router
@@ -96,62 +97,43 @@ final class DietScreenPresenter {
         guard rowInSection.count > section else { return }
         
         // Обновление блюд, если ячейка открыта
-        if self.getCellDisclosure(forMeal: .breakfast, atSection: section) == .disclosure {
+        if cellDisclosure(forMeal: .breakfast, atSection: section) == .disclosure {
             // Обновление базы данных и показанных ячеек
             let _ = self.prepareCells(for: .reload, mealType: .breakfast, atSection: section)
         }
-        if self.getCellDisclosure(forMeal: .lunch, atSection: section) == .disclosure {
+        if cellDisclosure(forMeal: .lunch, atSection: section) == .disclosure {
             // Обновление базы данных и показанных ячеек
             let _ = self.prepareCells(for: .reload, mealType: .lunch, atSection: section)
         }
-        if self.getCellDisclosure(forMeal: .snack, atSection: section) == .disclosure {
+        if cellDisclosure(forMeal: .snack, atSection: section) == .disclosure {
             // Обновление базы данных и показанных ячеек
             let _ = self.prepareCells(for: .reload, mealType: .snack, atSection: section)
         }
-        if self.getCellDisclosure(forMeal: .dinner, atSection: section) == .disclosure {
+        if cellDisclosure(forMeal: .dinner, atSection: section) == .disclosure {
             // Обновление базы данных и показанных ячеек
             let _ = self.prepareCells(for: .reload, mealType: .dinner, atSection: section)
         }
     }
-}
-
-// Геттеры
-extension DietScreenPresenter: DietScreenViewOutput {
-    func getDay(for section: Int) -> Int {
-        guard searchRow.isEmpty else {
-            return (searchRow[section].first?.section ?? -1) + 1
-        }
-        return section + 1
-    }
     
-    // Отмена поиска
-    func searchEnd() {
+    // Поиск по дням
+    private func searchDay(for section: Int) {
         searchRow.removeAll()
+        let rows = rowInSection[section]
+        var parentIndex = 0
+        searchRow.insert([], at: 0)
+        for (i, row) in rows.enumerated() {
+            if row == .dinner || row == .lunch || row == .breakfast || row == .snack {
+                parentIndex = i
+            }
+            let id = i - parentIndex - 1
+            searchRow[0].append(SearchStruct(section: section, mealType: row, id: id))
+        }
         view?.reloadTableView()
     }
     
-    // Поиск блюд
-    func searchMeal(forString searchText: String) {
+    // Поиск по блюдам
+    private func searchMeal(forString searchText: String) {
         searchRow.removeAll()
-        
-        // Поиск по номеру дня
-        guard Int(searchText) == nil else {
-            let section = Int(searchText)! - 1
-            let rows = rowInSection[section]
-            var parentIndex = 0
-            searchRow.insert([], at: 0)
-            for (i, row) in rows.enumerated() {
-                if row == .dinner || row == .lunch || row == .breakfast || row == .snack {
-                    parentIndex = i
-                }
-                let id = i - parentIndex - 1
-                searchRow[0].append(SearchStruct(section: section, mealType: row, id: id))
-            }
-            view?.reloadTableView()
-            return
-        }
-        
-        // Поиск по блюдам
         let mealsIndexes = interactor.findMeal(forString: searchText)
         for mealsIndex in mealsIndexes {
             let section = mealsIndex.section
@@ -163,32 +145,95 @@ extension DietScreenPresenter: DietScreenViewOutput {
                 return $0[0].section == section
             // Если такой секции нет
             }) else {
-                // Вставка для первой секциии
-                guard section != 0 else {
-                    searchRow.insert([SearchStruct(section: section, mealType: parentMeal, id: -1), mealsIndex], at: 0)
-                    continue
-                }
-                
-                // Поиск секции после которой в ставлять новую секцию
-                guard let index = searchRow.firstIndex(where: {
-                    guard $0.count != 0 else { return false }
-                    return $0[0].section < section
-                // Если таких секции нет
-                }) else {
-                    searchRow.insert([SearchStruct(section: section, mealType: parentMeal, id: -1), mealsIndex], at: 0)
-                    continue
-                }
-                // Если такая секция существует
-                searchRow.insert([SearchStruct(section: section, mealType: parentMeal, id: -1), mealsIndex], at: index + 1)
+                searchRow.append([SearchStruct(section: section, mealType: parentMeal, id: -1), mealsIndex])
                 continue
             }
             // Если такая секция существует
+            // Проверка на существование приёма пищи
+            guard searchRow[sectionIndex].firstIndex(where: { $0.mealType == parentMeal }) != nil else {
+                searchRow[sectionIndex].append(contentsOf: [SearchStruct(section: section, mealType: parentMeal, id: -1), mealsIndex])
+                continue
+            }
+            // Если все отлично
             searchRow[sectionIndex].append(mealsIndex)
+        }
+        
+        // Сортировка БД таблицы
+        for (i, sec) in searchRow.enumerated() {
+            searchRow[i] = sec.sorted(by: { rowFirst, rowSecond in
+                rowFirst.mealType.int < rowSecond.mealType.int
+            })
         }
         searchRow = searchRow.sorted(by: { first, second in
             first[0].section < second[0].section
         })
+        
+        // Перезагрузка таблицы
         view?.reloadTableView()
+    }
+    
+    // Открытые ячейки
+    private func cellDisclosure(forMeal meal: MealsType, atSection section: Int) -> DisclosureState {
+        if section < 0 { return .closure }
+        return DisclosureState(interactor.getCellData(forMeal: meal, atSection: section).cellDisclosure)
+    }
+    
+    private func translateSections(fromSearch searchSection: Int) -> Int {
+        return searchRow[searchSection].first?.section ?? -1
+    }
+    
+    private func translateSection(fromSimple section: Int) -> Int {
+        var searchSection = -1
+        for (i, rows) in searchRow.enumerated() {
+            if rows.first?.section == section {
+                searchSection = i;
+            }
+        }
+        return searchSection
+    }
+}
+
+// Геттеры
+extension DietScreenPresenter: DietScreenViewOutput {
+    var disclosureAllow: Bool {
+        return isSearchDay
+    }
+    
+    func getDay(for section: Int) -> Int {
+        guard searchRow.isEmpty else {
+            return translateSections(fromSearch: section) + 1
+        }
+        return section + 1
+    }
+    
+    // Отмена поиска
+    func searchEnd() {
+        isSearchDay = true
+        searchRow.removeAll()
+        view?.reloadTableView()
+    }
+    
+    // Поиск блюд
+    func searchStart(forString searchText: String) {
+        // Поиск по номеру дня
+        guard Int(searchText) == nil else {
+            let section = Int(searchText)! - 1
+            guard rowInSection.count > section else {
+                searchRow.removeAll()
+                return
+            }
+            isSearchDay = true
+            searchDay(for: section)
+            return
+        }
+        
+        // Поиск по блюдам
+        guard searchText != "" else {
+            searchEnd()
+            return
+        }
+        isSearchDay = false
+        searchMeal(forString: searchText)
     }
     
     // Получение номера текущего дня
@@ -213,7 +258,10 @@ extension DietScreenPresenter: DietScreenViewOutput {
     
     // Получение состояния ячейки
     func getCellDisclosure(forMeal meal: MealsType, atSection section: Int) -> DisclosureState {
-        return searchRow.isEmpty ? DisclosureState(interactor.getCellData(forMeal: meal, atSection: section).cellDisclosure) : .disclosure
+        guard searchRow.isEmpty else {
+            return cellDisclosure(forMeal: meal, atSection: translateSections(fromSearch: section))
+        }
+        return cellDisclosure(forMeal: meal, atSection: section)
     }
     
     // Получение типа ячейки по индексу
@@ -259,9 +307,14 @@ extension DietScreenPresenter {
 extension DietScreenPresenter {
     // Нажатие на приём пищи
     func clickedDiet(_ state: DisclosureState, mealType celltype: MealsType, inSection section: Int) {
-        // Защита от тыка
+        // Проверка на поиск
         guard searchRow.isEmpty else {
-            view?.reloadTableView()
+            let sec = translateSections(fromSearch: section)
+            interactor.changeDisclosure(toState: state, forMeal: celltype, atSection: sec)
+            
+            // Обновление базы данных и показанных ячеек
+            _ = self.prepareCells(for: state, mealType: celltype, atSection: sec)
+            view?.reSearch()
             return
         }
         
@@ -280,7 +333,17 @@ extension DietScreenPresenter {
     // Нажатие на блюдо
     func clickedMeal(forMeal celltype: MealsType, atIndex indexPath: IndexPath) {
         // Защита от тыка
-        guard searchRow.isEmpty else { return }
+        guard searchRow.isEmpty else {
+            // Получение данных с ячейки
+            guard let newSection = searchRow[indexPath.section].first?.section else { return }
+            guard let newID = searchRow[indexPath.section].first(where: {
+                $0.mealType == celltype.revert
+            })?.id else { return }
+            
+            // Запрос в интерактор
+            interactor.changeMealState(withID: newID, forMeal: celltype, atSection: newSection)
+            return
+        }
         
         // Получение индекса нажататой ячейки
         let id = self.mealPosition(forMeal: celltype, fromIndexPath: indexPath)
@@ -295,7 +358,7 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
         guard rowInSection.count > section else { return }
         
         // Обновление блюд, если ячейка открыта
-        if self.getCellDisclosure(forMeal: meal, atSection: section) == .disclosure {
+        if cellDisclosure(forMeal: meal, atSection: section) == .disclosure {
             // Обновление базы данных и открытых ячеек
             let rowsBeforeUpdate = rowInSection[section].count
             var mealsIndexPath = self.prepareCells(for: .reload, mealType: meal, atSection: section)
@@ -303,7 +366,10 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
             let countNewCells = rowsAfterUpdate - rowsBeforeUpdate
             
             // Если идет поиск, то обновления отображения нет
-            guard searchRow.isEmpty else { return }
+            guard searchRow.isEmpty else {
+                view?.reSearch()
+                return
+            }
             
             // Обновление отображения
             if countNewCells >= 0 {
@@ -334,7 +400,7 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
                 self.updateMealData(atSection: curSection)
             }
         } else if days < lastNumOfDays {
-            for curSection in days...lastNumOfDays-1 {
+            for curSection in (days...lastNumOfDays-1).reversed() {
                 rowInSection.remove(at: curSection)
             }
         } else {

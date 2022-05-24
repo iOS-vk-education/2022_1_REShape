@@ -23,9 +23,11 @@ protocol DietScreenViewInput: AnyObject {
     func hideCells(for indexPaths: [IndexPath])
     func reloadTableView()
     func reloadTableRows(atIndex indexPaths: [IndexPath], animation: UITableView.RowAnimation)
+    func reSearch()
 }
 
 protocol DietScreenViewOutput: AnyObject {
+    var disclosureAllow: Bool { get }
     // Запросы на обновление числа дней
     func requestData()
     
@@ -51,7 +53,7 @@ protocol DietScreenViewOutput: AnyObject {
     func clickedMeal(forMeal celltype: MealsType, atIndex indexPath: IndexPath)
     
     // Поиск
-    func searchMeal(forString searchText: String)
+    func searchStart(forString searchText: String)
     func searchEnd()
 }
 
