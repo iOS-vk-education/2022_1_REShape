@@ -40,6 +40,6 @@ final class LoginScreenContainer {
 
 struct LoginScreenContext {
 	weak var moduleOutput: LoginScreenModuleOutput?
-    weak var fbController: FirebaseController?
+    let fbController: FirebaseController
     let window: UIWindow
 }

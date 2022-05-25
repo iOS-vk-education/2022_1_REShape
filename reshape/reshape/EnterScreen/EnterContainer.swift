@@ -20,9 +20,11 @@ final class EnterContainer {
 		let viewController = EnterViewController(output: presenter)
 
 		presenter.view = viewController
+		presenter.moduleOutput = context.moduleOutput
+        
         router.viewController = viewController
         router.window = context.window
-		presenter.moduleOutput = context.moduleOutput
+        router.fbController = context.fbController
 
 		interactor.output = presenter
 

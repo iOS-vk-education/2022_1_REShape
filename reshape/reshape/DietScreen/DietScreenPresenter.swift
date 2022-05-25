@@ -219,7 +219,7 @@ extension DietScreenPresenter: DietScreenViewOutput {
         guard Int(searchText) == nil else {
             let section = Int(searchText)! - 1
             guard rowInSection.count > section else {
-                searchRow.removeAll()
+                searchEnd()
                 return
             }
             isSearchDay = true

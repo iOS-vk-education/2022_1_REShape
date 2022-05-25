@@ -44,20 +44,21 @@ final class FirebaseController {
     }
     
     private func checkLogin() -> Bool {
-        guard isAuth else {
-            guard let user = Auth.auth().currentUser else {
-                print("No login")
-                return isAuth
-            }
-            // Ссылка на пользователя
-            isAuth = true
-            userDBRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference().child("users/\(user.uid)")
-            
-            // Текущий день
-            let startDate = Calendar(identifier: .iso8601).startOfDay(for: user.metadata.creationDate ?? Date())
-            currentDay = Int(startDate.distance(to: Date()) / 86400)
+        guard !isAuth else { return isAuth }
+        
+        guard let user = Auth.auth().currentUser else {
+            print("No login")
+            isAuth = false
             return isAuth
         }
+        
+        // Ссылка на пользователя
+        isAuth = true
+        userDBRef = Database.database(url: "https://reshape-8f528-default-rtdb.europe-west1.firebasedatabase.app/").reference().child("users/\(user.uid)")
+        
+        // Текущий день
+        let startDate = Calendar(identifier: .iso8601).startOfDay(for: user.metadata.creationDate ?? Date())
+        currentDay = Int(startDate.distance(to: Date()) / 86400)
         return isAuth
     }
 }

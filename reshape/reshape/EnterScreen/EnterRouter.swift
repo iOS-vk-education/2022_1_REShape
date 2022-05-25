@@ -25,9 +25,9 @@ extension EnterRouter: EnterRouterInput {
         self.viewController?.present(loginScreenContainer.viewController, animated: false)
     }
     func signUpTapped() {
-        guard let window = window else {
-            return
-        }
+        guard let window = window else { return }
+        guard let fbController = fbController else { return }
+        
         let registerScreenContext = RegisterScreenContext(moduleOutput: nil, fbController: fbController, window: window)
         let registerScreenContainer = RegisterScreenContainer.assemble(with: registerScreenContext)
         self.viewController?.navigationController?.pushViewController(registerScreenContainer.viewController, animated: true)

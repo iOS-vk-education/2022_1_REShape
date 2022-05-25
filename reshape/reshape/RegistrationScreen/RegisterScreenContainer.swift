@@ -41,6 +41,6 @@ final class RegisterScreenContainer {
 
 struct RegisterScreenContext {
 	weak var moduleOutput: RegisterScreenModuleOutput?
-    weak var fbController: FirebaseController?
+    let fbController: FirebaseController
     let window: UIWindow
 }
