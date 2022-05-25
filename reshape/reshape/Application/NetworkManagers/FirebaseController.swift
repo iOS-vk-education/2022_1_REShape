@@ -44,8 +44,6 @@ final class FirebaseController {
     }
     
     private func checkLogin() -> Bool {
-        guard !isAuth else { return isAuth }
-        
         guard let user = Auth.auth().currentUser else {
             print("No login")
             isAuth = false
