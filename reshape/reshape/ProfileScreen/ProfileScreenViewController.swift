@@ -60,7 +60,8 @@ final class ProfileScreenViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        mainView.changeState()
+        //TODO: - Не понял откуда эта функция, ее нет в дев и нет у тебя в ветке
+//        mainView.changeState()
     }
     
     override func viewDidLayoutSubviews() {
@@ -112,8 +113,8 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
     
     func setupUI() {
         view.backgroundColor = .white
-        mainView.setupGradientColor(withColor: [UIColor.lightVioletColor!.cgColor,
-                                                UIColor.darkVioletColor!.cgColor])
+        mainView.setupGradientColor(withColor: [UIColor.lightVioletColor.cgColor,
+                                                UIColor.darkVioletColor.cgColor])
         mainView.setupGradientDirection(withDirection: .topToDown)
         mainView.layer.masksToBounds = false
         mainView.layer.shadowOffset = CGSize(width: 4, height: 4)

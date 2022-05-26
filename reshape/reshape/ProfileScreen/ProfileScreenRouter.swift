@@ -17,7 +17,8 @@ extension ProfileScreenRouter: ProfileScreenRouterInput {
         guard let window = window else {
             return
         }
-        let coordinator = AuthCoordinator(window: window)
-        coordinator.start()
+        //TODO: - Тут я пока закоментил, надо будет сделать firebaseController, можешь у Ванька спросить или посмотреть его экран какой нибудь
+//        let coordinator = AuthCoordinator(window: window)
+//        coordinator.start()
     }
 }

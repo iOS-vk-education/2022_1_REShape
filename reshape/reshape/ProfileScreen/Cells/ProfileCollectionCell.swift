@@ -16,7 +16,7 @@ class ProfileCollectionCell: UICollectionViewCell {
     static let reuseID = String(describing: ProfileCollectionCell.self)
     override func awakeFromNib() {        super.awakeFromNib()
         setupConstraints()
-        self.backgroundColor = UIColor.backgroundGrayColor?.withAlphaComponent(0.3)
+        self.backgroundColor = UIColor.backgroundGrayColor.withAlphaComponent(0.3)
     }
     
     func setupConstraints(){

@@ -317,14 +317,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		246FD6F18E831BC8C5BD4F83 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		2E1F1DD827E4FB6000FA7B77 /* Views */ = {
 			isa = PBXGroup;
 			children = (

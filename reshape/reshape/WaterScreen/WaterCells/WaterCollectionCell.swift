@@ -19,7 +19,7 @@ class WaterCollectionCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupConstraints()
-        self.backgroundColor = UIColor.backgroundGrayColor?.withAlphaComponent(0.3)
+        self.backgroundColor = UIColor.backgroundGrayColor.withAlphaComponent(0.3)
     }
     
     func setupConstraints() {
