@@ -42,7 +42,7 @@ final class CustomWaterView: UIView {
         button.setImage(UIImage(named: "waterBackButton"),for: .normal)
         return button
     }()
-        
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraints()
@@ -58,8 +58,7 @@ final class CustomWaterView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.setupConstraints()
-//        setupUI()
-
+        setupUI()
     }
     
     func setupConstraints(){
