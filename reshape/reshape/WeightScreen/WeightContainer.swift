@@ -14,6 +14,7 @@ final class WeightContainer {
 	private(set) weak var router: WeightRouterInput!
 
 	static func assemble(with context: WeightContext) -> WeightContainer {
+        
         let router = WeightRouter()
         let interactor = WeightInteractor()
         let presenter = WeightPresenter(router: router, interactor: interactor)
@@ -25,6 +26,7 @@ final class WeightContainer {
         router.viewController = viewController
 
         interactor.output = presenter
+        interactor.firebaseController = context.firebaseController
 
         return WeightContainer(view: viewController, input: presenter, router: router)
 	}
@@ -38,4 +40,5 @@ final class WeightContainer {
 
 struct WeightContext {
 	weak var moduleOutput: WeightModuleOutput?
+    weak var firebaseController: WeightFirebaseProtocol?
 }

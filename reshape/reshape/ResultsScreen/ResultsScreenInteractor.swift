@@ -10,6 +10,7 @@ import Foundation
 
 final class ResultsScreenInteractor {
 	weak var output: ResultsScreenInteractorOutput?
+    weak var firebaseController: ResultFirebaseProtocol?
 }
 
 extension ResultsScreenInteractor: ResultsScreenInteractorInput {

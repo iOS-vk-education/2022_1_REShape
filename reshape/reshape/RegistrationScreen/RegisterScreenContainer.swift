@@ -26,6 +26,7 @@ final class RegisterScreenContainer {
 		presenter.view = viewController
 		presenter.moduleOutput = context.moduleOutput
         router.viewController = viewController
+        router.fbController = context.fbController
 		interactor.output = presenter
         router.window = context.window
         return RegisterScreenContainer(view: viewController, input: presenter, router: router)
@@ -40,5 +41,6 @@ final class RegisterScreenContainer {
 
 struct RegisterScreenContext {
 	weak var moduleOutput: RegisterScreenModuleOutput?
+    let fbController: FirebaseController
     let window: UIWindow
 }

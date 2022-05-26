@@ -21,7 +21,7 @@ final class ForgetPasswordScreenContainer {
 		let viewController = ForgetPasswordScreenViewController(output: presenter)
 
 
-        presenter.view = viewController as? ForgetPasswordScreenViewInput
+        presenter.view = viewController
         router.viewController = viewController
 		presenter.moduleOutput = context.moduleOutput
 		interactor.output = presenter

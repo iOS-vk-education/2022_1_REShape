@@ -51,13 +51,13 @@ final class WeightCell: AbstractCell {
 }
 
 extension WeightCell {
-    func setData(stringForCell cellText: String, stringForData dataText: Int) {
+    func setData(stringForCell cellText: String, stringForData dataText: String) {
         self.setCellText(cellText)
         self.setData(stringForData: dataText)
     }
     
-    func setData(stringForData dataText: Int) {
-        rightTextField.text = "\(dataText)"
+    func setData(stringForData dataText: String) {
+        rightTextField.text = dataText
     }
     
     func tapped() {
@@ -76,10 +76,15 @@ extension WeightCell: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        guard let weight = Int(rightTextField.text!) else {
+        guard let weight = rightTextField.text else {
             view?.cancelEditing()
             return
         }
-        view?.endEditing(withWeight: weight)
+        let dotWeight = weight.replacingOccurrences(of: ",", with: ".")
+        guard let doubleWeight = Double(dotWeight) else {
+            view?.cancelEditing()
+            return
+        }
+        doubleWeight > 300 ? view?.cancelEditing() : view?.endEditing(withWeight: dotWeight)
     }
 }

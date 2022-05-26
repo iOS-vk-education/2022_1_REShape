@@ -8,6 +8,13 @@
 enum DisclosureState {
     case disclosure, closure, reload
     
+    init(_ state: Bool) {
+        switch state {
+        case true: self = .disclosure
+        case false: self = .closure
+        }
+    }
+    
     var revert: DisclosureState {
         switch self {
         case .disclosure:
@@ -16,6 +23,17 @@ enum DisclosureState {
             return .disclosure
         default:
             return .reload
+        }
+    }
+    
+    var boolType: Bool {
+        switch self {
+        case .disclosure:
+            return true
+        case .closure:
+            return false
+        case .reload:
+            return false
         }
     }
 }

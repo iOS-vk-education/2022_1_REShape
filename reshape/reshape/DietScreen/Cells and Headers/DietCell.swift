@@ -49,8 +49,9 @@ final class DietCell: AbstractCell {
 }
 
 extension DietCell {
-    func setData(text: String, state: DisclosureState) {
+    func setData(text: String, state: DisclosureState, isCurrent flag: Bool = false) {
         self.setCellText(text)
+        flag ? self.setGreenBackColor() : self.setGreyBackColor()
         self.disclosure(state, animated: false)
     }
     
@@ -60,7 +61,6 @@ extension DietCell {
             if animated {
                 disclosureImage.rotateAntiClockwise()
             }
-            disclosureImage.image = nil
             disclosureImage.image = UIImage(named: "Closure")
             disclosureWidthConstraints.constant = 6
             disclosureHeightConstraints.constant = 14
@@ -70,7 +70,6 @@ extension DietCell {
             if animated {
                 disclosureImage.rotateClockwise()
             }
-            disclosureImage.image = nil
             disclosureImage.image = UIImage(named: "Disclosure")
             disclosureWidthConstraints.constant = 14
             disclosureHeightConstraints.constant = 6

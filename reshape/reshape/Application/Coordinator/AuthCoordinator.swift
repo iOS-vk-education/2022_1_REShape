@@ -10,9 +10,11 @@ import UIKit
 
 final class AuthCoordinator: CoordinatorProtocol {
     internal var window: UIWindow
+    private var fbController: FirebaseController
     private lazy var navigationControllers = AuthCoordinator.makeNavigationControllers()
-    init(window: UIWindow) {
+    init(window: UIWindow, firebaseController: FirebaseController) {
         self.window = window
+        self.fbController = firebaseController
     }
         
     func start() {
@@ -35,7 +37,7 @@ extension AuthCoordinator {
         guard let navController = navigationControllers[.enterScreen] else {
             fatalError("No navController")
         }
-        let enterContext = EnterContext(moduleOutput: nil, window: window)
+        let enterContext = EnterContext(moduleOutput: nil, window: window, fbController: fbController)
         let enterContainer = EnterContainer.assemble(with: enterContext)
         navController.setViewControllers([enterContainer.viewController], animated: true)
     }

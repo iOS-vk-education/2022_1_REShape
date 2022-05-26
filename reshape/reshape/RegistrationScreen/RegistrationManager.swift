@@ -31,16 +31,30 @@ final class RegistrationManager{
                     self.uploadPhoto(currentUserId: result.user.uid, photo: photo) {[weak self] myresult in
                         switch myresult {
                         case .success(let url):
-                            self?.realTimeReference.child(result.user.uid).updateChildValues(["photo": url.absoluteString,
-                                                                          "gender": gender,
-                                                                          "name": name,
-                                                                          "surname": surname,
-                                                                          "age": age,
-                                                                          "height": height,
-                                                                          "weight": weight,
-                                                                          "target": target,
-                                                                          "email": email,
-                                                                          "uid": result.user.uid])
+                            // Создание словаря веса
+                            let currentTime = Date().timeString()
+                            let currentDay = Date().dateString()
+                            let weightDict = NSDictionary(
+                                dictionary: ["weight0": NSDictionary(
+                                    dictionary: ["Weight" :weight,
+                                                 "Time": currentTime,
+                                                 "Date": currentDay
+                                                ])
+                                ])
+                            
+                            // Отправка в файрбайс
+                            self?.realTimeReference.child(result.user.uid).updateChildValues([
+                                "photo": url.absoluteString,
+                                "gender": gender,
+                                "name": name,
+                                "surname": surname,
+                                "age": age,
+                                "height": height,
+                                "weights": weightDict,
+                                "target": target,
+                                "email": email,
+                                "uid": result.user.uid
+                            ])
                         case .failure(let error):
                             completion(error.localizedDescription)
                         }

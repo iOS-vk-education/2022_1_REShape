@@ -70,7 +70,7 @@ extension NavigationBarView {
 extension NavigationBarView {
     func setConfigForWeightScreen(withName name: String) {
         setupConstraintsForWeightScreen()
-        setupUIForWeightScreen(setName: name)
+        setNameForWeightScreen(setName: name)
     }
     
     private func setupConstraintsForWeightScreen() {
@@ -85,7 +85,7 @@ extension NavigationBarView {
         ])
     }
     
-    private func setupUIForWeightScreen(setName name: String) {
+    func setNameForWeightScreen(setName name: String) {
         backButton.contentHorizontalAlignment = .leading
         self.mainLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         self.mainLabel.textColor = .white

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CellData" representedClassName=".CellData" syncable="YES">
+        <attribute name="cellDisclosure" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="cellSection" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="cellType" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
+        <relationship name="cellMeals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MealData" inverseName="modelCell" inverseEntity="MealData"/>
+    </entity>
+    <entity name="MealData" representedClassName="MealData" syncable="YES">
+        <attribute name="modelCalories" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="modelID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="modelName" optional="YES" attributeType="String"/>
+        <attribute name="modelState" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="modelCell" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CellData" inverseName="cellMeals" inverseEntity="CellData"/>
+    </entity>
+    <elements>
+        <element name="MealData" positionX="-78.33111572265625" positionY="-86.84272766113281" width="128" height="118"/>
+        <element name="CellData" positionX="-446.6061401367188" positionY="-42.2950439453125" width="128" height="103"/>
+    </elements>
+</model>

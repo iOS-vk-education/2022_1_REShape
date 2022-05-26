@@ -51,6 +51,7 @@ final class AuthStackView: UIView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.layer.sublayerTransform = CATransform3DMakeTranslation(8, 0, 0)
         textField.layer.cornerRadius = 10
+        textField.autocapitalizationType = .none
         textField.clipsToBounds = true
         textField.textColor = .black
         textField.backgroundColor = backgroundTFColor

@@ -11,6 +11,7 @@ import UIKit
 final class LoginScreenRouter {
     var viewController: UIViewController?
     var window: UIWindow?
+    var fbController: FirebaseController?
 }
 
 extension LoginScreenRouter: LoginScreenRouterInput {
@@ -25,10 +26,9 @@ extension LoginScreenRouter: LoginScreenRouterInput {
         viewController?.dismiss(animated: true)
     }
     func didLogged() {
-        guard let window = window else {
-            return
-        }
-        let coordinator = MainFlowCoordinator(window: window)
+        guard let window = window else { return }
+        guard let fbController = fbController else { return }
+        let coordinator = MainFlowCoordinator(window: window, firebaseController: fbController)
         coordinator.start()
     }
     

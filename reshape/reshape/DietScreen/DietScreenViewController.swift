@@ -23,13 +23,15 @@ final class DietScreenViewController: UIViewController {
     private var dietSearchBar: UISearchBar = {
         let search = UISearchBar()
         search.searchTextField.attributedPlaceholder =
-        NSAttributedString(string: "ПОИСК ПО ДНЯМ",
+        NSAttributedString(string: "ПОИСК ПО ДНЯМ И БЛЮДАМ",
                            attributes: [NSAttributedString.Key.kern: 0.77,
                                         NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .regular),
                                         NSAttributedString.Key.foregroundColor: UIColor.pureGreyColor as Any])
+        search.searchTextField.autocapitalizationType = .none
         search.searchBarStyle = .minimal
         search.setPositionAdjustment(UIOffset(horizontal: 9, vertical: 0.5), for: .search)
         search.searchTextPositionAdjustment = UIOffset(horizontal: 9, vertical: 0.5)
+        search.searchTextField.clearButtonMode = .always
         return search
     }()
     
@@ -38,7 +40,6 @@ final class DietScreenViewController: UIViewController {
     
     init(output: DietScreenViewOutput) {
         self.output = output
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -53,24 +54,44 @@ final class DietScreenViewController: UIViewController {
         setupUI()
         // Настройка AutoLayout
         setupConstraint()
-        // Запрос числа дней в Presenterе
-        output.requestNumOfDays()
     }
     
-    func setupUI() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        output.requestData()
+    }
+    
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+//        scrollToCurrentDay()
+//    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        output.saveData()
+    }
+    
+    private func scrollToCurrentDay() {
+        let section = output.getCurrentDay()
+        guard dietTableView.numberOfSections > section else { return }
+        dietTableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: true)
+    }
+    
+    private func setupUI() {
         view.backgroundColor = .white
         view.addSubview(dietLabel)
         
         // Настройка SearchBar
         view.addSubview(dietSearchBar)
         dietSearchBar.delegate = self
+        dietSearchBar.searchTextField.delegate = self
         
         // Настройка TableView
         view.addSubview(dietTableView)
         setupTableView()
     }
     
-    func setupConstraint() {
+    private func setupConstraint() {
         dietLabel.translatesAutoresizingMaskIntoConstraints = false
         dietLabel.top(isIncludeSafeArea: true)
         dietLabel.centerX()
@@ -93,7 +114,7 @@ final class DietScreenViewController: UIViewController {
         ])
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         // Настройка визуала
         dietTableView.backgroundColor = .white
         dietTableView.separatorStyle = .singleLine
@@ -110,6 +131,10 @@ final class DietScreenViewController: UIViewController {
     
 }
 extension DietScreenViewController: DietScreenViewInput {
+    func reSearch() {
+        self.searchBar(dietSearchBar, textDidChange: dietSearchBar.text ?? "")
+    }
+    
     func showCells(for indexPaths: [IndexPath]) {
         dietTableView.beginUpdates()
         dietTableView.insertRows(at: indexPaths, with: .bottom)
@@ -123,42 +148,45 @@ extension DietScreenViewController: DietScreenViewInput {
     }
     
     func reloadTableView() {
-        self.dietTableView.reloadData()
+        dietTableView.reloadData()
     }
     
-    func reloadTableSections(atSection sections: IndexSet) {
-        self.dietTableView.reloadSections(sections, with: .none)
+    func reloadTableRows(atIndex indexPaths: [IndexPath], animation: UITableView.RowAnimation) {
+        self.dietTableView.reloadRows(at: indexPaths, with: animation)
     }
 }
 
 extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let mealType = output.getCellType(from: indexPath)
+        let section = indexPath.section
+        let current = output.getCurrentDay() == section ? true : false
         switch mealType {
-        case .breakfast, .lunch, .dinner:
-            // Получение и установка данных для текущей ячейки
-            let cellData = output.getCellInfo(forMeal: mealType, atSection: indexPath.section)
-            
+        case .breakfast, .lunch, .dinner, .snack:
             let cell = tableView.dequeueCell(cellType: DietCell.self, for: indexPath)
-            cell.setData(text: mealType.text, state: cellData.disclosureState)
+            cell.setData(
+                text: mealType.text,
+                state: output.disclosureAllow ?
+                    output.getCellDisclosure(forMeal: mealType, atSection: section) :
+                    .disclosure,
+                isCurrent: current)
             return cell
-        case .mealBreakfast, .mealLunch, .mealDinner:
-            // Получение данных для текущей ячейки
-            let mealData = output.getMealData(forMeal: mealType.revert, atIndex: indexPath)
-            
+        case .mealBreakfast, .mealLunch, .mealDinner, .mealSnack:
             let cell = tableView.dequeueCell(cellType: MealCell.self, for: indexPath)
-            cell.setMealInformation(mealData.name, calories: mealData.cal, state: mealData.checked)
+            cell.setMealInformation(
+                name: output.getMealName(forMeal: mealType.revert, atIndex: indexPath),
+                calories: output.getMealCalories(forMeal: mealType.revert, atIndex: indexPath),
+                state: output.getMealState(forMeal: mealType.revert, atIndex: indexPath),
+                isCurrent: current)
             return cell
-        case .none:
+        default:
             return .init()
         }
     }
     
-    
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueHeader(headerType: DietHeader.self)
-        header.setDay(section + 1)
+        header.setDay(output.getDay(for: section))
         return header
     }
     
@@ -171,27 +199,25 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: .random())
         let cell = tableView.cellForRow(at: indexPath)
         let mealType = output.getCellType(from: indexPath)
         switch mealType {
-        case .breakfast, .lunch, .dinner:
+        case .breakfast, .lunch, .dinner, .snack:
             // Получение блока данных
-            let newCellDisclosureState = output.getCellInfo(forMeal: mealType, atSection: indexPath.section).disclosureState.revert
+            let newCellDisclosureState = output.getCellDisclosure(forMeal: mealType, atSection: indexPath.section).revert
             
             // Проверка и изменение состояния
-            (cell as? DietCell)?.disclosure(newCellDisclosureState)
-            output.clickedDiet(newCellDisclosureState, mealType: mealType, inSection: indexPath.section)
-        case .mealLunch, .mealDinner, .mealBreakfast:
-            // Получение данных о блюде
-            let newMealChecked = !output.getMealData(forMeal: mealType.revert, atIndex: indexPath).checked
-
-            // Проверка состояния блюда и изменение его состояния
-            (cell as? MealCell)?.setState(at: newMealChecked)
-            output.clickedMeal(newMealChecked, forMeal: mealType.revert, atIndex: indexPath)
+            if output.disclosureAllow {
+                (cell as! DietCell).disclosure(newCellDisclosureState)
+                output.clickedDiet(newCellDisclosureState, mealType: mealType, inSection: indexPath.section)
+            }
+        case .mealLunch, .mealDinner, .mealBreakfast, .mealSnack:
+            // Запрос на изменение состояния
+            output.clickedMeal(forMeal: mealType.revert, atIndex: indexPath)
         default:
             return
         }
-        tableView.deselectRow(at: indexPath, animated: .random())
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -202,16 +228,28 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
         return output.getNumOfDay()
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.view.endEditing(true)
     }
 }
 
-extension DietScreenViewController: UISearchBarDelegate {
+extension DietScreenViewController: UISearchBarDelegate, UITextFieldDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.view.endEditing(true)
     }
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        output.searchStart(forString: searchText)
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
+        output.searchEnd()
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
 }

@@ -28,7 +28,7 @@ class ResultCollectionCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupConstraints()
-        self.backgroundColor = UIColor.backgroundGrayColor?.withAlphaComponent(0.3)
+        self.backgroundColor = UIColor.backgroundGrayColor.withAlphaComponent(0.3)
     }
     func setupConstraints(){
         progressBar.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +46,7 @@ class ResultCollectionCell: UICollectionViewCell {
         resultLabel?.text = "Выполнено: \(result)"
         percentLabel?.text = "\(percent)"
         progressBar.progressColor = UIColor(named: color) ?? .gray
-        progressBar.circleColor = UIColor.lightGrayColor ?? .white
+        progressBar.circleColor = .lightGrayColor
         progressBar.setProgressWithAnimation(duration: 1, value: valueOfprogress)
     }
 

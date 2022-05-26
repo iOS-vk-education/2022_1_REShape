@@ -23,6 +23,7 @@ final class DietScreenContainer {
 		presenter.moduleOutput = context.moduleOutput
 
 		interactor.output = presenter
+        interactor.firebaseController = context.firebaseController
 
         return DietScreenContainer(view: viewController, input: presenter, router: router)
 	}
@@ -36,4 +37,5 @@ final class DietScreenContainer {
 
 struct DietScreenContext {
 	weak var moduleOutput: DietScreenModuleOutput?
+    weak var firebaseController: DietFirebaseProtocol?
 }

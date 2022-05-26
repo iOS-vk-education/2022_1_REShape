@@ -11,6 +11,7 @@ import UIKit
 final class ResultsScreenRouter {
     var viewController: UIViewController?
     var window: UIWindow?
+    weak var firebaseController: ResultFirebaseProtocol?
 }
 
 extension ResultsScreenRouter: ResultsScreenRouterInput {
@@ -21,7 +22,8 @@ extension ResultsScreenRouter: ResultsScreenRouterInput {
         self.viewController?.navigationController?.pushViewController(waterScreenContainer.viewController, animated: true)
     }
     func didWeightTapped() {
-        let WeightContext = WeightContext(moduleOutput: nil)
+        let firebaseController = firebaseController as? WeightFirebaseProtocol
+        let WeightContext = WeightContext(moduleOutput: nil, firebaseController: firebaseController)
         let WeightContainer = WeightContainer.assemble(with: WeightContext)
         self.viewController?.navigationController?.pushViewController(WeightContainer.viewController, animated: true)
     }

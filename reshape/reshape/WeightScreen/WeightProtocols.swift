@@ -18,11 +18,14 @@ protocol WeightModuleOutput: AnyObject {
 protocol WeightViewInput: AnyObject {
     // Управление от событий ячеек
     func startEditing()
-    func endEditing(withWeight weight: Int)
+    func endEditing(withWeight weight: String)
     func cancelEditing()
     
     // Обновление данных
     func reloadData()
+    
+    // Появление имени
+    func updateName()
 }
 
 protocol WeightViewOutput: AnyObject {
@@ -30,29 +33,44 @@ protocol WeightViewOutput: AnyObject {
     func backButtonPressed()
     
     // Геттеры для ячеек таблицы
-    func getLastWeight() -> Int
+    func getLastWeight() -> String
     func getLastDate() -> String
     func getLastTime() -> String
+    func getNumOfDays() -> Int
+    
+    // Геттеры для графика
+    func getShortDate(atPosition position: Int) -> String
+    func getWeight(atPosition position: Int) -> String
+    
+    // Получение текущего времени и даты
     func getCurrentDate() -> String
     func getCurrentTime() -> String
     
-    // Геттеры для графика
-    func getShortDate(atBackPosition position: Int) -> String
-    func getWeight(atBackPosition position: Int) -> Int
+    // Геттер для имени
+    func getName() -> String
     
     // Если изменение подтвердилось
-    func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: Int)
+    func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String)
+    
+    // Запрос на загрузку данных из сети
+    func requestUploadData()
 }
 
 protocol WeightInteractorInput: AnyObject {
     // Получение данных о весе для графика из локальной БД
-    func getWeightData(atBackPosition position: Int) -> WeightDataModel
+    func getWeightData(fromPosition position: Int) -> WeightModel?
     
-    // Получение данных о весе для ячеек из локальной БД
-    func getLastWeightData() -> WeightDataModel
+    // Получение количества данных
+    func getSize() -> Int
     
-    // Запрос на загрузку изменнногот веса
-    func uploadNewWeight(weightData: WeightDataModel)
+    // Получение имени
+    func getName() -> String
+    
+    // Запрос на загрузку изменнного веса
+    func uploadNewWeight(_ data: WeightStruct)
+    
+    // Запрос на загрузку весов из сети
+    func getDataFromRemoteBase()
 }
 
 protocol WeightInteractorOutput: AnyObject {
@@ -61,6 +79,9 @@ protocol WeightInteractorOutput: AnyObject {
     
     // Сигнал появления новых данных
     func newWeightGetting()
+    
+    // Сигнал о появлении имени
+    func nameGetted()
 }
 
 protocol WeightRouterInput: AnyObject {

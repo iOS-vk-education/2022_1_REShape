@@ -25,6 +25,18 @@ extension WeightPresenter: WeightModuleInput {
 }
 
 extension WeightPresenter: WeightViewOutput {
+    func getName() -> String {
+        return interactor.getName()
+    }
+    
+    func requestUploadData() {
+        interactor.getDataFromRemoteBase()
+    }
+    
+    func getNumOfDays() -> Int {
+        return interactor.getSize()
+    }
+    
     func getCurrentDate() -> String {
         return Date().dateString()
     }
@@ -33,29 +45,36 @@ extension WeightPresenter: WeightViewOutput {
         return Date().timeString()
     }
     
-    func getShortDate(atBackPosition position: Int) -> String {
-        return interactor.getWeightData(atBackPosition: position).getShortDateString()
+    func getShortDate(atPosition position: Int) -> String {
+        return interactor.getWeightData(fromPosition: position)?.getShortDateString() ?? ""
     }
     
-    func getWeight(atBackPosition position: Int) -> Int {
-        return interactor.getWeightData(atBackPosition: position).getWeight()
+    func getWeight(atPosition position: Int) -> String {
+        let data = interactor.getWeightData(fromPosition: position)?.getWeight()
+        return data ?? ""
     }
     
-    func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: Int) {
-        let weightData = WeightDataModel(date: date, time: time, weight: weight)
-        interactor.uploadNewWeight(weightData: weightData)
+    func uploadNewWeight(newDate date: String, newTime time: String, newWeight weight: String) {
+        let uploadData = WeightStruct(weight: weight, date: date, time: time)
+        interactor.uploadNewWeight(uploadData)
     }
     
     func getLastTime() -> String {
-        return interactor.getLastWeightData().getTimeString()
+        let numOfDay = interactor.getSize()
+        let weightData = interactor.getWeightData(fromPosition: numOfDay-1)
+        return weightData?.getTimeString() ?? ""
     }
     
     func getLastDate() -> String {
-        return interactor.getLastWeightData().getDateString()
+        let numOfDay = interactor.getSize()
+        let weightData = interactor.getWeightData(fromPosition: numOfDay-1)
+        return weightData?.getDateString() ?? ""
     }
     
-    func getLastWeight() -> Int {
-        return interactor.getLastWeightData().getWeight()
+    func getLastWeight() -> String {
+        let numOfDay = interactor.getSize()
+        let weightData = interactor.getWeightData(fromPosition: numOfDay-1)
+        return weightData?.getWeight() ?? ""
     }
     
     func backButtonPressed() {
@@ -65,6 +84,10 @@ extension WeightPresenter: WeightViewOutput {
 }
 
 extension WeightPresenter: WeightInteractorOutput {
+    func nameGetted() {
+        view?.updateName()
+    }
+    
     func newWeightGetting() {
         view?.reloadData()
     }
