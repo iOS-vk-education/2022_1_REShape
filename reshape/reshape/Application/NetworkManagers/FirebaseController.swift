@@ -9,17 +9,13 @@ import Foundation
 import Firebase
 import FirebaseDatabase
 
-protocol ProfileFirebaseController: AnyObject {
+protocol WaterFirebaseProtocol: AnyObject {
     // Подгрузка и обновление информации
     func loadIndividualInfo(completion: @escaping (Error?) -> Void)
     func loadCommonInfo(completion: @escaping (Error?) -> Void)
     
     // Получение предварительно подгруженной информации
-    func getCurrentDay() -> Int
     func getCurrentWater() -> Double
-    func getName() -> String
-    func getSurname() -> String
-    func getPhotoURL() -> URL?
     
     // Отправка новых данных
     func sendWater(withWater data: Double, forDay day: Int, completion: @escaping (Error?) -> Void)
@@ -278,7 +274,33 @@ extension FirebaseController: ResultFirebaseProtocol {
     }
 }
 
-extension FirebaseController: ProfileFirebaseController {
+extension FirebaseController: ProfileFirebaseProtocol {
+    func getGender() -> String {
+        let gender = userSnapshot["gender"] as? String
+        if gender == "man" {
+            return "муж"
+        } else if gender == "woman" {
+            return "жен"
+        } else {
+            return ""
+        }
+    }
+    
+    func getAge() -> String {
+        let age = userSnapshot["age"] as? String
+        return age ?? ""
+    }
+    
+    func getHeight() -> String {
+        let height = userSnapshot["height"] as? String
+        return height ?? ""
+    }
+    
+    func getStartWeight() -> String {
+        let weight = getWeight(forId: 0)
+        return weight.weight
+    }
+    
     func sendWater(withWater data: Double, forDay day: Int, completion: @escaping (Error?) -> Void) {
         // Проверка на авторизацию
         guard checkLogin() else {
@@ -296,3 +318,5 @@ extension FirebaseController: ProfileFirebaseController {
         }
     }
 }
+
+extension FirebaseController: WaterFirebaseProtocol {}

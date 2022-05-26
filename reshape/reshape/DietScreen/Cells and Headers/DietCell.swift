@@ -49,8 +49,9 @@ final class DietCell: AbstractCell {
 }
 
 extension DietCell {
-    func setData(text: String, state: DisclosureState) {
+    func setData(text: String, state: DisclosureState, isCurrent flag: Bool = false) {
         self.setCellText(text)
+        flag ? self.setGreenBackColor() : self.setGreyBackColor()
         self.disclosure(state, animated: false)
     }
     

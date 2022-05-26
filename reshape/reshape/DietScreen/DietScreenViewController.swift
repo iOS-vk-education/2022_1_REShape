@@ -160,6 +160,7 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let mealType = output.getCellType(from: indexPath)
         let section = indexPath.section
+        let current = output.getCurrentDay() == section ? true : false
         switch mealType {
         case .breakfast, .lunch, .dinner, .snack:
             let cell = tableView.dequeueCell(cellType: DietCell.self, for: indexPath)
@@ -167,14 +168,16 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
                 text: mealType.text,
                 state: output.disclosureAllow ?
                     output.getCellDisclosure(forMeal: mealType, atSection: section) :
-                    .disclosure)
+                    .disclosure,
+                isCurrent: current)
             return cell
         case .mealBreakfast, .mealLunch, .mealDinner, .mealSnack:
             let cell = tableView.dequeueCell(cellType: MealCell.self, for: indexPath)
             cell.setMealInformation(
                 name: output.getMealName(forMeal: mealType.revert, atIndex: indexPath),
                 calories: output.getMealCalories(forMeal: mealType.revert, atIndex: indexPath),
-                state: output.getMealState(forMeal: mealType.revert, atIndex: indexPath))
+                state: output.getMealState(forMeal: mealType.revert, atIndex: indexPath),
+                isCurrent: current)
             return cell
         default:
             return .init()

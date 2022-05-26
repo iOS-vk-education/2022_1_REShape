@@ -24,6 +24,7 @@ class AbstractCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLabel()
+        setGreyBackColor()
     }
     
     required init?(coder: NSCoder) {
@@ -45,11 +46,19 @@ class AbstractCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         cellName.text = ""
+        setGreyBackColor()
     }
     
     func setCellText(_ text: String) {
         cellName.text = text
+    }
+    
+    func setGreyBackColor() {
         backgroundColor = UIColor.modalViewGrayColor
+    }
+    
+    func setGreenBackColor() {
+        backgroundColor = UIColor.greyGreenColor
     }
     
     func changeLeftTextConstraint(toAnchor anchor: NSLayoutXAxisAnchor, constant: CGFloat) {

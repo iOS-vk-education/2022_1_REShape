@@ -218,10 +218,16 @@ extension DietScreenPresenter: DietScreenViewOutput {
         // Поиск по номеру дня
         guard Int(searchText) == nil else {
             let section = Int(searchText)! - 1
+            // Защиты
             guard rowInSection.count > section else {
                 searchEnd()
                 return
             }
+            guard section >= 0 else {
+                searchEnd()
+                return
+            }
+            
             isSearchDay = true
             searchDay(for: section)
             return
@@ -238,6 +244,10 @@ extension DietScreenPresenter: DietScreenViewOutput {
     
     // Получение номера текущего дня
     func getCurrentDay() -> Int {
+        guard searchRow.isEmpty else {
+            let section = translateSection(fromSimple: interactor.getCurrentDay())
+            return section
+        }
         return interactor.getCurrentDay()
     }
     

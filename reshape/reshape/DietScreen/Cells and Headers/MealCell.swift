@@ -62,8 +62,9 @@ final class MealCell: AbstractCell {
         self.changeRightTextConstraint(toAnchor: caloriesLabel.leftAnchor, constant: -6)
     }
     
-    func setMealInformation(name: String, calories: Double, state: Bool) {
+    func setMealInformation(name: String, calories: Double, state: Bool, isCurrent flag: Bool = false) {
         setCellText(name)
+        flag ? self.setGreenBackColor() : self.setGreyBackColor()
         caloriesLabel.text = "\(Int(calories)) ккал"
         setState(at: state)
     }

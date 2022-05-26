@@ -12,6 +12,7 @@ extension UIColor {
     static let blueColor = UIColor(named: "Blue")!
     
     // Green
+    static let greyGreenColor = UIColor(named: "GreyGreen")!
     static let greenColor = UIColor(named: "Green")!
     static let darkGreenColor = UIColor(named: "DarkGreen")!
     

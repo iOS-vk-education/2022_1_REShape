@@ -38,6 +38,7 @@
 		2EDB9630283ABC7C00F3B38A /* ResultFirebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB962F283ABC7C00F3B38A /* ResultFirebaseProtocol.swift */; };
 		2EDB9632283ABCC900F3B38A /* DietFirebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB9631283ABCC900F3B38A /* DietFirebaseProtocol.swift */; };
 		2EDB9634283BDD3A00F3B38A /* SearchStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB9633283BDD3A00F3B38A /* SearchStruct.swift */; };
+		2EDB9637283F8D7900F3B38A /* ProfileFirebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDB9636283F8D7900F3B38A /* ProfileFirebaseProtocol.swift */; };
 		2EECFF3327E5037100BD4BEF /* EnterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */; };
 		2EECFF3427E5037100BD4BEF /* EnterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */; };
 		2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */; };
@@ -176,6 +177,7 @@
 		2EDB962F283ABC7C00F3B38A /* ResultFirebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultFirebaseProtocol.swift; sourceTree = "<group>"; };
 		2EDB9631283ABCC900F3B38A /* DietFirebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietFirebaseProtocol.swift; sourceTree = "<group>"; };
 		2EDB9633283BDD3A00F3B38A /* SearchStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStruct.swift; sourceTree = "<group>"; };
+		2EDB9636283F8D7900F3B38A /* ProfileFirebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFirebaseProtocol.swift; sourceTree = "<group>"; };
 		2EECFF2D27E5037100BD4BEF /* EnterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPresenter.swift; sourceTree = "<group>"; };
 		2EECFF2E27E5037100BD4BEF /* EnterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRouter.swift; sourceTree = "<group>"; };
 		2EECFF2F27E5037100BD4BEF /* EnterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterViewController.swift; sourceTree = "<group>"; };
@@ -402,6 +404,14 @@
 			path = Firebase;
 			sourceTree = "<group>";
 		};
+		2EDB9635283F8D5E00F3B38A /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				2EDB9636283F8D7900F3B38A /* ProfileFirebaseProtocol.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 		2EECFF2C27E5035C00BD4BEF /* EnterScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -599,6 +609,7 @@
 		945B383E27ECC3120044E952 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2EDB9635283F8D5E00F3B38A /* Firebase */,
 				945B385727ECC3500044E952 /* ProfileScreenPresenter.swift */,
 				945B385827ECC3500044E952 /* ProfileScreenRouter.swift */,
 				945B385927ECC3500044E952 /* ProfileScreenViewController.swift */,
@@ -955,6 +966,7 @@
 				36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */,
 				9437920327F9AFA10000188E /* ResultCollectionCell.swift in Sources */,
 				2EB767D12809F08F008868DD /* WeightProtocols.swift in Sources */,
+				2EDB9637283F8D7900F3B38A /* ProfileFirebaseProtocol.swift in Sources */,
 				945B383B27ECC10D0044E952 /* CoordinatorProtocol.swift in Sources */,
 				2EB767CF2809F08F008868DD /* WeightRouter.swift in Sources */,
 				2EA1E8A127FCDB8E001B329A /* DietHeader.swift in Sources */,
