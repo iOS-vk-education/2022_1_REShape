@@ -223,15 +223,20 @@ extension DietScreenInteractor {
 extension DietScreenInteractor: DietScreenInteractorInput {
     func findMeal(forString text: String) -> [SearchStruct] {
         var output: [SearchStruct] = []
+        let downText = text.lowercased()
+        
         cellData.forEach({ data in
+            let section = data.section()
+            let newMealType = data.type().revert
             data.cellMeals?.forEach({ mealSet in
                 guard mealSet is MealData else { return }
-                let meal = mealSet as! MealData
-                if meal.modelName!.contains(text) {
+                let mealID = (mealSet as! MealData).getID()
+                let mealName = (mealSet as! MealData).modelName!.lowercased()
+                if mealName.contains(downText) {
                     output.append(SearchStruct(
-                        section: data.section(),
-                        mealType: data.type().revert,
-                        id: Int(meal.modelID)))
+                        section: section,
+                        mealType: newMealType,
+                        id: mealID))
                 }
             })
         })
