@@ -22,7 +22,11 @@ class WaterCollectionCell: UICollectionViewCell {
         self.backgroundColor = UIColor.backgroundGrayColor.withAlphaComponent(0.3)
     }
     
-    func setupConstraints() {
+    override func prepareForReuse() {
+        layer.maskedCorners = []
+    }
+    
+    private func setupConstraints() {
         self.layer.masksToBounds = true
         volumeTextField.borderStyle = .none
         volumeTextField.keyboardType = .numberPad
@@ -39,5 +43,10 @@ class WaterCollectionCell: UICollectionViewCell {
 extension WaterCollectionCell {
     func unchosen() {
         volumeTextField.endEditing(false)
+    }
+    
+    func tapped() {
+        volumeTextField.becomeFirstResponder()
+        volumeTextField.endFloatingCursor()
     }
 }

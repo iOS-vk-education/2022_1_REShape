@@ -10,6 +10,7 @@ import UIKit
 
 protocol CustomWaterDelegate: AnyObject {
     func backButtonAction()
+    func getTotal() -> Int
 }
 
 final class CustomWaterView: UIView {
@@ -19,17 +20,14 @@ final class CustomWaterView: UIView {
     private let waterImage: UIImageView = {
         let waterImage = UIImageView()
         waterImage.image = UIImage(named: "WaterGradient")
-        waterImage.layer.cornerRadius = 40
-        waterImage.translatesAutoresizingMaskIntoConstraints = false
-        waterImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        waterImage.layer.masksToBounds = true
+        waterImage.contentMode = .scaleToFill
         return waterImage
     }()
     
     private let percentLabel: UILabel = {
         let percentLabel = UILabel()
         percentLabel.translatesAutoresizingMaskIntoConstraints = false
-        percentLabel.text = "65%"
+        percentLabel.text = "0%"
         percentLabel.font = UIFont.systemFont(ofSize: 40, weight: .regular)
         percentLabel.textAlignment = .center
         percentLabel.textColor = .white
@@ -47,12 +45,40 @@ final class CustomWaterView: UIView {
         super.init(frame: frame)
         setupConstraints()
         setupUI()
-
+    }
+    
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+        // Проверка на первый запуск
+        if waterImage.frame == .zero {
+            let newFrameY = self.frame.height * 0.75
+            let newFrameHeight = self.frame.height * 0.25 - 5
+            waterImage.frame.origin = CGPoint(x: 0, y: newFrameY)
+            waterImage.frame.size = CGSize(width: self.frame.width, height: newFrameHeight)
+        }
+        changeState()
     }
     
     func changeState() {
-        self.layoutIfNeeded()
-        waterImage.frame = self.bounds
+        let total = delegate?.getTotal() ?? 0
+        var percent = Double(total) / 2000
+        if percent < 0.35 {
+            percentLabel.textColor = .black
+        } else {
+            percentLabel.textColor = .white
+        }
+        percentLabel.text = "\(Int(percent * 100))%"
+        
+        // Craete mask
+        if percent > 1 { percent = 1 }
+        var imagePercent = 0.75 * percent
+        imagePercent += 0.25
+        let frameY = self.frame.height * (1-imagePercent)
+        let frameHeight = self.frame.height * imagePercent - 5
+        let animator = UIViewPropertyAnimator(duration: 2, curve: .easeOut, animations: {
+            self.waterImage.frame = CGRect(x: 0, y: frameY, width: self.frame.width, height: frameHeight)
+        })
+        animator.startAnimation()
     }
     
     required init?(coder: NSCoder) {
@@ -61,18 +87,16 @@ final class CustomWaterView: UIView {
         setupUI()
     }
     
-    func setupConstraints(){
+    private func setupConstraints(){
         self.addSubview(waterImage)
-        waterImage.top(60, isIncludeSafeArea: false)
-        waterImage.leading()
-        waterImage.trailing()
-        waterImage.bottom(isIncludeSafeArea: false)
+        waterImage.frame = CGRect(x: 0, y: self.frame.height * 0.9, width: self.frame.width, height: self.frame.height)
         
         self.addSubview(percentLabel)
         percentLabel.centerX()
-        NSLayoutConstraint.activate([percentLabel.topAnchor.constraint(equalTo: waterImage.topAnchor, constant: 45)])
+        percentLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).isActive = true
+        percentLabel.centerY()
         percentLabel.height(30)
-        percentLabel.width(100)
+        
         
         self.addSubview(backButton)
         backButton.height(27)
@@ -81,9 +105,14 @@ final class CustomWaterView: UIView {
         backButton.top(isIncludeSafeArea: false)
     }
     
-    func setupUI(){
+    private func setupUI(){
         backButton.isUserInteractionEnabled = true
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        
+        // Layer
+        waterImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        waterImage.layer.masksToBounds = true
+        waterImage.layer.cornerRadius = 40
     }
 
     @objc func backButtonTapped(){

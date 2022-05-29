@@ -92,7 +92,7 @@ final class CustomProfileView: UpGradientPanel {
     
     func setupUI(){
         progressBar.progressColor = UIColor.blueColor
-        progressBar.circleColor = UIColor.blueColor.withAlphaComponent(0) ?? .systemGray
+        progressBar.circleColor = UIColor.blueColor.withAlphaComponent(0)
         progressBar.tag = 101
         
         quitButton.isUserInteractionEnabled = true

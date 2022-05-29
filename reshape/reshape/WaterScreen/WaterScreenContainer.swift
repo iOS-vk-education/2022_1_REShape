@@ -25,6 +25,7 @@ final class WaterScreenContainer {
 		presenter.moduleOutput = context.moduleOutput
 
 		interactor.output = presenter
+        interactor.firebaseController = context.firebaseController
 
         return WaterScreenContainer(view: viewController, input: presenter, router: router)
 	}
@@ -37,4 +38,6 @@ final class WaterScreenContainer {
 }
 
 struct WaterScreenContext {
-	weak var moduleOutput: WaterScreenModuleOutput?}
+	weak var moduleOutput: WaterScreenModuleOutput?
+    weak var firebaseController: WaterFirebaseProtocol?
+}

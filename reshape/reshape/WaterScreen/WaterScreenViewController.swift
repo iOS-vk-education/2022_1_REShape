@@ -12,6 +12,7 @@ import UIKit
 final class WaterScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     private let output: WaterScreenViewOutput
     private let mainView: CustomWaterView = CustomWaterView()
+    private var lastData = "0"
 
     init(output: WaterScreenViewOutput) {
         self.output = output
@@ -59,6 +60,7 @@ final class WaterScreenViewController: UIViewController, UIGestureRecognizerDele
         setupConstraints()
         setupUI()
         setupCollectionView()
+        setupNavigation()
         mainView.delegate = self
         addGestureRecognizer()
     }
@@ -119,18 +121,23 @@ extension WaterScreenViewController {
 }
 
 extension WaterScreenViewController: WaterScreenViewInput {
+    func updateCollectionView() {
+        waterCollectionView.reloadData()
+        mainView.changeState()
+    }
+    
     private func setupConstraints(){
-        waterScrollView.addSubview(mainView)
-        mainView.translatesAutoresizingMaskIntoConstraints = false
-        mainView.top(isIncludeSafeArea: false)
-        mainView.leading()
-        mainView.trailing()
-        mainView.height(view.bounds.height / 2.9)
-        
         view.addSubview(waterScrollView)
         waterScrollView.top(isIncludeSafeArea: false)
-        waterScrollView.leading(0)
-        waterScrollView.trailing(0)
+        waterScrollView.leading()
+        waterScrollView.trailing()
+        waterScrollView.addSubview(mainView)
+        
+        mainView.translatesAutoresizingMaskIntoConstraints = false
+        mainView.topAnchor.constraint(equalTo: waterScrollView.topAnchor).isActive = true
+        mainView.leading()
+        mainView.trailing()
+        mainView.height(view.bounds.height / 2.8)
         
         waterScrollView.addSubview(informHeaderLabel)
         NSLayoutConstraint.activate([
@@ -149,6 +156,7 @@ extension WaterScreenViewController: WaterScreenViewInput {
         
         waterScrollViewConstraint = waterScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         waterScrollViewConstraint?.isActive = true
+        waterScrollView.delegate = self
     }
     
     func setupUI() {
@@ -159,11 +167,27 @@ extension WaterScreenViewController: WaterScreenViewInput {
         setupCollectionView()
     }
     
-    private func setupCollectionView(){
+    private func setupCollectionView() {
         waterCollectionView.register(cellType: WaterCollectionCell.self)
         waterCollectionView.dataSource = self
+        output.requestData()
     }
     
+    private func setupNavigation() {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    private func sendData() {
+        let water = (waterCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? WaterCollectionCell)?.volumeTextField.text ?? lastData
+        let coffee = (waterCollectionView.cellForItem(at: IndexPath(item: 1, section: 0)) as? WaterCollectionCell)?.volumeTextField.text ?? lastData
+        let tea = (waterCollectionView.cellForItem(at: IndexPath(item: 2, section: 0)) as? WaterCollectionCell)?.volumeTextField.text ?? lastData
+        let fizzy = (waterCollectionView.cellForItem(at: IndexPath(item: 3, section: 0)) as? WaterCollectionCell)?.volumeTextField.text ?? lastData
+        let milk = (waterCollectionView.cellForItem(at: IndexPath(item: 4, section: 0)) as? WaterCollectionCell)?.volumeTextField.text ?? lastData
+        let alco = (waterCollectionView.cellForItem(at: IndexPath(item: 5, section: 0)) as? WaterCollectionCell)?.volumeTextField.text ?? lastData
+        let juice = (waterCollectionView.cellForItem(at: IndexPath(item: 6, section: 0)) as? WaterCollectionCell)?.volumeTextField.text ?? lastData
+        output.send(water: water, coffee: coffee, tea: tea, fizzy: fizzy, milk: milk, alco: alco, juice: juice)
+    }
 }
 
 extension WaterScreenViewController: UICollectionViewDelegateFlowLayout {
@@ -181,6 +205,12 @@ extension WaterScreenViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension WaterScreenViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        view.endEditing(true)
+    }
+}
+
 extension WaterScreenViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                             numberOfItemsInSection section: Int) -> Int {
@@ -191,48 +221,58 @@ extension WaterScreenViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueCell(cellType: WaterCollectionCell.self, for: indexPath)
-        
+        cell.volumeTextField.delegate = self
         switch indexPath.item {
             case 0:
                 cell.layer.cornerRadius = 10
                 cell.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
                 cell.configure(cup: UIImage(named: "StillWater")!,
                                water: "Вода",
-                               volume: cell.volumeTextField.text ?? "0")
+                               volume: output.getWater())
             case 1:
                 cell.configure(cup: UIImage(named: "Coffee")!,
                                water: "Кофе",
-                               volume: cell.volumeTextField.text ?? "0")
+                               volume: output.getCoffee())
             case 2:
                 cell.configure(cup: UIImage(named: "Tea")!,
                                water: "Чай",
-                               volume: cell.volumeTextField.text ?? "0")
+                               volume: output.getTea())
             case 3:
                 cell.configure(cup: UIImage(named: "SparklingWater")!,
                                water: "Газированная вода",
-                               volume: cell.volumeTextField.text ?? "0")
+                               volume: output.getFizzy())
             case 4:
                 cell.configure(cup: UIImage(named: "Milk")!,
                                water: "Молоко",
-                               volume: "0")
+                               volume: output.getMilk())
             case 5:
                 cell.configure(cup: UIImage(named: "Alcohol")!,
                                water: "Алкоголь",
-                               volume: "0")
+                               volume: output.getAlco())
             case 6:
-            cell.layer.cornerRadius = 10
-            cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            cell.configure(cup: UIImage(named: "Juice")!,
+                cell.layer.cornerRadius = 10
+                cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+                cell.configure(cup: UIImage(named: "Juice")!,
                                water: "Сок",
-                               volume: "0")
+                               volume: output.getJuice())
             default:
                 break
             }
             return cell
         }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? WaterCollectionCell else { return }
+        cell.tapped()
+    }
 }
 
 extension WaterScreenViewController: CustomWaterDelegate{
+    func getTotal() -> Int {
+        return output.getTotal()
+    }
+    
     func backButtonAction() {
         view.endEditing(true)
         UIView.animate(withDuration: 0.3) { [weak self] in
@@ -242,6 +282,15 @@ extension WaterScreenViewController: CustomWaterDelegate{
                 self?.output.backButtonPressed()
             }
         }
+    }
+}
+
+extension WaterScreenViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if Int(textField.text ?? "") == nil {
+            textField.text = self.lastData
+        }
+        self.sendData()
     }
 }
 
