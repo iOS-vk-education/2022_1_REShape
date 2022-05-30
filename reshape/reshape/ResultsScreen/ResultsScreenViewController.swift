@@ -65,7 +65,11 @@ final class ResultsScreenViewController: UIViewController {
 extension ResultsScreenViewController: ResultsScreenViewInput {
     func updateViewWithTotalPercent(_ totalPercent: Float) {
         self.mainView.progressNumberLabel.text = "\(totalPercent.rounded())%"
-        self.mainView.photoProgressView.animateProgress(value: totalPercent / 100)
+        var totalPart: Float = totalPercent / 100
+        if totalPart > 1 {
+            totalPart = 1
+        }
+        self.mainView.photoProgressView.animateProgress(value: totalPart)
     }
     func updateViewWithTasks(_ totalTasks: Int){
         self.mainView.targetNumberLabel.text = "\(totalTasks)"
@@ -197,11 +201,14 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
         let weightDifference = output.didGetDifference(currentWeight: dblCurrentWeight, firstWeight: dblFirstWeight)
         var stringDifference: String
         var weightPercent: Float = 0.0
+        var weightColor: String
         if weightDifference > 0 {
             stringDifference = "+" + "\(weightDifference)"
+            weightColor = "Red"
         } else {
             stringDifference = "\(weightDifference)"
             weightPercent = 100.0
+            weightColor = "Green"
         }
         if indexPath == IndexPath(item: 0, section: 0) {
             output.countTotalPercent(waterPercent: waterPercent,
@@ -226,7 +233,7 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
                            target: "\(targetWeight) кг",
                            result: "\(currentWeight) кг",
                            percent: "\(stringDifference) кг",
-                           color: "Green",
+                           color: weightColor,
                            valueOfprogress: 1)
         case 2:
             cell.configure(category: "Вода",

@@ -21,7 +21,6 @@
 		2EA1E8A328041343001B329A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E8A228041343001B329A /* UIImage+Extension.swift */; };
 		2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6508B27E9BB94003F41FC /* AuthCoordinator.swift */; };
 		2EA6509527F2ED07003F41FC /* DietCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6509427F2ED06003F41FC /* DietCell.swift */; };
-		2EAA1B5F2812ADFD00CA4847 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */; };
 		2EAA1B662812FE8F00CA4847 /* WeightModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B642812FE8F00CA4847 /* WeightModel.xcdatamodeld */; };
 		2EAA1B682812FEC100CA4847 /* WeightModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B672812FEC100CA4847 /* WeightModelController.swift */; };
 		2EAA1B6F28130A7800CA4847 /* WeightModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B6D28130A7800CA4847 /* WeightModel+CoreDataClass.swift */; };
@@ -124,6 +123,7 @@
 		9478495E27FB2EC900138DA4 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495D27FB2EC900138DA4 /* NavigationBarView.swift */; };
 		9478496527FC0A3500138DA4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478496427FC0A3500138DA4 /* ImagePicker.swift */; };
 		94CAB9A02806BA0C00ACAB8C /* RegistrationContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB99F2806BA0C00ACAB8C /* RegistrationContentView.swift */; };
+		94CBB4D128456187009717E5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */; };
 		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
 		94FC78382809E46D003477FA /* AuthManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC78372809E46D003477FA /* AuthManger.swift */; };
 		94FC783A2809E586003477FA /* AuthErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC78392809E586003477FA /* AuthErrorCode.swift */; };
@@ -310,7 +310,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EAA1B5F2812ADFD00CA4847 /* CoreData.framework in Frameworks */,
+				94CBB4D128456187009717E5 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

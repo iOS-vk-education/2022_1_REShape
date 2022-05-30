@@ -84,20 +84,20 @@ extension ResultsScreenPresenter: ResultsScreenInteractorOutput {
     func didLoadUserData(user: User, day: Int, targetCal: Double) {
         let weightKey = user.weights.keys.max()
         let currWeight = user.weights[weightKey ?? ""]
-        let currWater = user.water["water\(day)"]
-        guard let phototUrl = URL(string: user.photo),
-              let currCal = user.calories?["day\(day)"]
+        let currWater = user.water?["water\(day - 1)"]
+        guard let phototUrl = URL(string: user.photo)
         else {
             return
         }
-        let doubleCurrWater = Double(currWater?.total ?? "") ?? 0
+        let currCal = user.calories?["day\(day)"] ?? 0
+        let doubleCurrWater = Double(currWater?.total ?? 0) / 1000
         let viewModel = ResultViewModel(name: user.name,
                                         surname: user.surname,
                                         currentCalories: Double(currCal),
                                         targetCalories: targetCal,
                                         currentDay: day,
                                         currentWeight: currWeight?.weight ?? "",
-                                        firstWeight: "50",
+                                        firstWeight: user.weight ?? "",
                                         targetWeight: user.target,
                                         currentWater: doubleCurrWater,
                                         photoURL: phototUrl)

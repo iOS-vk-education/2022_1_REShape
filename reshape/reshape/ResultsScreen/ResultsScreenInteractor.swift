@@ -21,7 +21,6 @@ final class ResultsScreenInteractor {
 extension ResultsScreenInteractor: ResultsScreenInteractorInput {
 
     func loadInfo() {
-        //TODO: - Новое
         resultsNetworkManager?.getUserData {[weak self] result in
             switch result {
             case .success(let (userData, currDay)):
@@ -33,7 +32,9 @@ extension ResultsScreenInteractor: ResultsScreenInteractorInput {
                     currentDay = 1
                 }
                 let targetCal = self?.firebaseController?.getTargetCalories()
-                guard let decoded = try? decoder.decode(User.self, from: userData) else {
+                guard
+                let decoded = try? decoder.decode(User.self, from: userData)
+                else {
                     return
                 }
                 self?.output?.didLoadUserData(user: decoded, day: currentDay, targetCal: targetCal ?? 0)
@@ -60,8 +61,8 @@ extension ResultsScreenInteractor: ResultsScreenInteractorInput {
     }
     
     func getDifference(currentWeight: Double, firstWeight: Double) -> Double {
-        let difference = currentWeight - firstWeight
-        return difference
+        let difference = (round(currentWeight * 10) / 10) - firstWeight
+        return round(difference * 10) / 10
     }
     
     func getResultPercent(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) -> Float {
@@ -71,13 +72,13 @@ extension ResultsScreenInteractor: ResultsScreenInteractorInput {
     func getTotalTask(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) -> Int {
         var totalTask = 0
         var waterTask = 0, caloriesTask = 0, weightTask = 0
-        if waterPercent == 100 {
+        if waterPercent >= 100 {
             waterTask = 1
         }
-        if caloriesPercent == 100 {
+        if caloriesPercent >= 100 {
             caloriesTask = 1
         }
-        if weightPercent == 100 {
+        if weightPercent >= 100 {
             weightTask = 1
         }
         totalTask = waterTask + caloriesTask + weightTask

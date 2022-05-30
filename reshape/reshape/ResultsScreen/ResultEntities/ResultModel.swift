@@ -16,7 +16,7 @@ struct User: Codable {
     let weight: String?
     let calories: [String: Int]?
     let weights: [String: Weight]
-    let water: [String: Water]
+    let water: [String: Water]?
 }
 
 enum Gender: String, Codable {
@@ -27,7 +27,7 @@ enum Gender: String, Codable {
 struct Weight: Codable {
     let date, time, weight: String
 
-    enum WaterCodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case date = "Date"
         case time = "Time"
         case weight = "Weight"
@@ -35,15 +35,5 @@ struct Weight: Codable {
 }
 
 struct Water: Codable {
-    let alco, coffe, fizzy, juice, milk, tea, total, water: String
-    enum WeightCodingKeys: String, CodingKey {
-        case alco = "alco"
-        case coffe = "coffe"
-        case fizzy = "fizzy"
-        case juice = "juice"
-        case milk = "milk"
-        case tea = "tea"
-        case total = "total"
-        case water = "water"
-    }
+    let alco, coffee, fizzy, juice, milk, tea, total, water: Double
 }
