@@ -60,8 +60,7 @@ final class ProfileScreenViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //TODO: - Не понял откуда эта функция, ее нет в дев и нет у тебя в ветке
-//        mainView.changeState()
+        output.requestUploadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -126,6 +125,13 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
         addPhoto.isUserInteractionEnabled = true
         addPhoto.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                              action: #selector(selectPhoto)))
+
+    }
+    
+    func updateInform() {
+        mainView.setNameForProfileScreen(setName: output.getName() + output.getSurname())
+        mainView.setEmailForProfileScreen(setEmail: output.getEmail())
+//        self.addPhoto.loadImage(photoURL: output.getPhotoURL() ?? nil)
     }
     
     @objc func selectPhoto(){
@@ -175,21 +181,21 @@ extension ProfileScreenViewController: UICollectionViewDataSource {
                 cell.layer.cornerRadius = 10
                 cell.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
                 cell.configure(category: "Пол",
-                                inform: "жен")
+                               inform: output.getGender())
             case 1:
                 cell.configure(category: "Возраст",
-                                inform: "20 лет")
+                               inform: output.getAge())
             case 2:
                 cell.configure(category: "Рост",
-                                inform: "167 см")
+                               inform: output.getHeight())
             case 3:
                 cell.configure(category: "Начальный вес",
-                               inform: "54 кг")
+                               inform: output.getStartWeight())
             case 4:
                 cell.layer.cornerRadius = 10
                 cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
                 cell.configure(category: "Цель по весу",
-                               inform: "50 кг")
+                               inform: output.getTargetWeight())
             default:
                 break
             }

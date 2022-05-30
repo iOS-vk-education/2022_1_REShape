@@ -301,6 +301,11 @@ extension FirebaseController: ProfileFirebaseProtocol {
         return weight.weight
     }
     
+    func getEmail() -> String {
+        let email = userSnapshot["email"] as? String
+        return email ?? ""
+    }
+    
     func sendWater(withWater data: Double, forDay day: Int, completion: @escaping (Error?) -> Void) {
         // Проверка на авторизацию
         guard checkLogin() else {

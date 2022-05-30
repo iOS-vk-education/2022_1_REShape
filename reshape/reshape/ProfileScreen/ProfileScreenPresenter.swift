@@ -28,10 +28,54 @@ extension ProfileScreenPresenter: ProfileScreenViewOutput {
     func quitButtonPressed() {
         router.quitButtonTapped()
     }
+    
     func didLogOut(){
         interactor.logOut()
+    }
+    
+    func requestUploadData() {
+        interactor.getDataFromRemoteBase()
+    }
+    
+    func getEmail() -> String {
+        return interactor.getEmail()
+    }
+    
+    func getName() -> String {
+        return interactor.getName()
+    }
+    
+    func getSurname() -> String {
+        return interactor.getSurname()
+    }
+    
+    func getTargetWeight() -> String {
+        return interactor.getTargetWeight()
+    }
+    
+    func getStartWeight() -> String {
+        return interactor.getStartWeight()
+    }
+    
+    func getAge() -> String {
+        return interactor.getAge()
+    }
+    
+    func getHeight() -> String {
+        return interactor.getHeight()
+    }
+    
+    func getGender() -> String {
+        return interactor.getGender()
+    }
+    
+    func getPhotoURL() -> URL? {
+        return interactor.getPhotoURL()
     }
 }
 
 extension ProfileScreenPresenter: ProfileScreenInteractorOutput {
+    func informGetted() {
+        view?.updateInform()
+    }
 }

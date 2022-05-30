@@ -18,6 +18,7 @@ protocol ProfileFirebaseProtocol: AnyObject {
     func getName() -> String
     func getSurname() -> String
     func getPhotoURL() -> URL?
+    func getEmail() -> String
     
     // Для таблицы
     func getGender() -> String
