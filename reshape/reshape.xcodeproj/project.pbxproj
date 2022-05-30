@@ -576,15 +576,6 @@
 			path = reshapeUITests;
 			sourceTree = "<group>";
 		};
-		94150FF42842DD45003F57A0 /* ResultEntities */ = {
-			isa = PBXGroup;
-			children = (
-				94150FF22842DD41003F57A0 /* ResultModel.swift */,
-				94150FF02842DD35003F57A0 /* ResultViewModel.swift */,
-			);
-			path = ResultEntities;
-            sourceTree = "<group>";
-        };
 		60ABD9F52810623E00D03118 /* WaterCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +583,15 @@
 				60ABD9F12810620700D03118 /* WaterCollectionCell.xib */,
 			);
 			path = WaterCells;
+			sourceTree = "<group>";
+		};
+		94150FF42842DD45003F57A0 /* ResultEntities */ = {
+			isa = PBXGroup;
+			children = (
+				94150FF22842DD41003F57A0 /* ResultModel.swift */,
+				94150FF02842DD35003F57A0 /* ResultViewModel.swift */,
+			);
+			path = ResultEntities;
 			sourceTree = "<group>";
 		};
 		941E811B27E614A800A33344 /* LoginScreen */ = {
