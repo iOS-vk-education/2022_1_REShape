@@ -50,6 +50,7 @@ final class RegistrationManager{
                                 "surname": surname,
                                 "age": age,
                                 "height": height,
+                                "weight": weight,
                                 "weights": weightDict,
                                 "target": target,
                                 "email": email,
