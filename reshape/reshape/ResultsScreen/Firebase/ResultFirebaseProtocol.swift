@@ -17,9 +17,11 @@ protocol ResultFirebaseProtocol: AnyObject {
     func getCurrentCalories() -> Double
     func getTargetCalories() -> Double
     func getCurrentWeight() -> String
+    func getStartWeight() -> String
     func getTargetWeight() -> String
     func getCurrentWater() -> Double
     func getName() -> String
     func getSurname() -> String
     func getPhotoURL() -> URL?
+    func getDaysCount() -> Int
 }

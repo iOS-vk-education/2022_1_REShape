@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 
 final class PhotoProgressView: UIView {
-    private let personImage: UIImageView = {
+    private(set) var personImage: UIImageView = {
         let personImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 119, height: 119))
         personImage.translatesAutoresizingMaskIntoConstraints = false
         personImage.layer.cornerRadius = personImage.frame.width / 2
         personImage.clipsToBounds = true
-        personImage.image = UIImage(named: "person")
+        personImage.image = UIImage(named: "person-circle-outline")
         return personImage
     }()
     private let progressBar: CircularProgressBarView = CircularProgressBarView(frame:CGRect(x: 0,
@@ -55,8 +55,8 @@ extension PhotoProgressView{
         self.perform(#selector(animateProgress), with: nil, afterDelay: 0.3)
     }
     @objc
-    func animateProgress() {
+    func animateProgress(value: Float) {
         let cp = self.viewWithTag(101) as! CircularProgressBarView
-        cp.setProgressWithAnimation(duration: 1.0, value: 0.75)
+        cp.setProgressWithAnimation(duration: 2.1, value: value)
     }
 }

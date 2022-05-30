@@ -19,12 +19,19 @@ final class ResultsScreenPresenter {
         self.router = router
         self.interactor = interactor
     }
+   
 }
 
 extension ResultsScreenPresenter: ResultsScreenModuleInput {
 }
 
 extension ResultsScreenPresenter: ResultsScreenViewOutput {
+
+
+    func didLoadInfo() {
+        interactor.loadInfo()
+    }
+  
     func weightTapped() {
         router.didWeightTapped()
     }
@@ -32,7 +39,74 @@ extension ResultsScreenPresenter: ResultsScreenViewOutput {
     func caloriesTapped() {
         router.didCaloriesTapped()
     }
+    func didGetPart(target: Double, current: Double) -> Float {
+        return interactor.getPart(target: target, current: current)
+    }
+    func didGetPercent(target: Double, current: Double) -> Float {
+        return interactor.getPercent(target: target, current: current)
+    }
+
+    func didGetTargetWater(currentWater: Double) -> Double {
+        return interactor.getTargetWater(currentWater: currentWater)
+    }
+
+    func didGetDifference(currentWeight: Double, firstWeight: Double) -> Double{
+        return interactor.getDifference(currentWeight: currentWeight,
+                                        firstWeight: firstWeight)
+    }
+    func didGetResultPercent(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) -> Float {
+        return interactor.getResultPercent(waterPercent: waterPercent,
+                                           caloriesPercent: caloriesPercent,
+                                           weightPercent: weightPercent)
+    }
+
+    func countTotalPercent(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) {
+        interactor.willCountTotalPercent(waterPercent: waterPercent, caloriesPercent: caloriesPercent, weightPercent: weightPercent)
+    }
+    func countTotalTasks(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) {
+        interactor.willCountTotalTasks(waterPercent: waterPercent, caloriesPercent: caloriesPercent, weightPercent: weightPercent)
+    }
+    
 }
 
 extension ResultsScreenPresenter: ResultsScreenInteractorOutput {
+    func didCountTotalTasks(totalTasks: Int) {
+        view?.updateViewWithTasks(totalTasks)
+    }
+    
+    func didCountTotalPercent(totalPercent: Float) {
+        view?.updateViewWithTotalPercent(totalPercent)
+    }
+    
+    func didLoadUserData(user: User, day: Int, targetCal: Double) {
+        let weightKey = user.weights.keys.max()
+        let currWeight = user.weights[weightKey ?? ""]
+        let currWater = user.water["water\(day)"]
+        guard let phototUrl = URL(string: user.photo),
+              let currCal = user.calories?["day\(day)"]
+        else {
+            return
+        }
+        let doubleCurrWater = Double(currWater?.total ?? "") ?? 0
+        let viewModel = ResultViewModel(name: user.name,
+                                        surname: user.surname,
+                                        currentCalories: Double(currCal),
+                                        targetCalories: targetCal,
+                                        currentDay: day,
+                                        currentWeight: currWeight?.weight ?? "",
+                                        firstWeight: "50",
+                                        targetWeight: user.target,
+                                        currentWater: doubleCurrWater,
+                                        photoURL: phototUrl)
+        view?.updateViewWithUserData(viewModel: viewModel)
+        print(user)
+        view?.reloadCollectionView()
+    }
+    
+    func didCatchError(error: Error){
+        view?.updateViewWithError(error: error)
+    }
+    func updateNumOfDays() {
+        
+    }
 }
