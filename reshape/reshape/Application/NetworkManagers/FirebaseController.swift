@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseDatabase
+import FirebaseStorage
 
 protocol WaterFirebaseProtocol: AnyObject {
     // Подгрузка и обновление информации
@@ -275,6 +276,82 @@ extension FirebaseController: ResultFirebaseProtocol {
 }
 
 extension FirebaseController: ProfileFirebaseProtocol {
+    func upload(newAge age: String, newHeight height: String, newTargetWeight weight: String, completion: @escaping (Error?) -> Void) {
+        // Проверка на авторизацию
+        guard checkLogin() else {
+            completion(NSError(domain: "No login", code: -10))
+            return
+        }
+        
+        // Формирование данных
+        let dict = NSDictionary(dictionary: [
+            "age": age,
+            "height": height,
+            "target": weight
+        ])
+        
+        // Загрузка новой доп инфы
+        userDBRef.setValue(dict) { error, _ in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                completion(error)
+                return
+            }
+            completion(nil)
+        }
+    }
+    
+    func upload(newPhoto data: Data, completion: @escaping (URL?, Error?) -> Void) {
+        // Проверка на авторизацию
+        guard let userID = Auth.auth().currentUser?.uid else {
+            completion(nil, NSError(domain: "No login", code: -10))
+            return
+        }
+        
+        // Создание ссылки на хранилище
+        let ref = Storage.storage().reference().child("avatars").child(userID)
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        ref.putData(data, metadata: metadata) { (metadata, error) in
+            guard let _ = metadata else {
+                completion(nil, error)
+                return
+            }
+            ref.downloadURL { (url, error) in
+                guard let url = url else {
+                    completion(nil, error)
+                    return
+                }
+                completion(url, nil)
+                
+            }
+        }
+    }
+    
+    func upload(newName name: String, newSurname surname: String, completion: @escaping (Error?) -> Void) {
+        // Проверка на авторизацию
+        guard checkLogin() else {
+            completion(NSError(domain: "No login", code: -10))
+            return
+        }
+        
+        // Формирование данных
+        let dict = NSDictionary(dictionary: [
+            "name": name,
+            "surname": surname
+        ])
+        
+        // Загрузка новых данных
+        userDBRef.setValue(dict) { error, _ in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                completion(error)
+                return
+            }
+            completion(nil)
+        }
+    }
+    
     func getGender() -> String {
         let gender = userSnapshot["gender"] as? String
         if gender == "man" {

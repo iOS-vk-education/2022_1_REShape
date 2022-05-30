@@ -26,4 +26,13 @@ protocol ProfileFirebaseProtocol: AnyObject {
     func getHeight() -> String
     func getStartWeight() -> String
     func getTargetWeight() -> String
+    
+    func upload(newAge age: String,
+                newHeight height: String,
+                newTargetWeight weight: String,
+                completion: @escaping (Error?) -> Void)
+    
+    func upload(newPhoto data: Data, completion: @escaping (URL?, Error?) -> Void)
+    
+    func upload(newName name: String, newSurname surname: String, completion: @escaping (Error?) -> Void)
 }
