@@ -37,7 +37,8 @@ final class CustomWaterView: UIView {
     let backButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "waterBackButton"),for: .normal)
+        button.setImage(UIImage(named: "WaterBackButton"),for: .normal)
+        button.contentHorizontalAlignment = .left
         return button
     }()
     
@@ -51,7 +52,7 @@ final class CustomWaterView: UIView {
         super.layoutSublayers(of: layer)
         // Проверка на первый запуск
         if waterImage.frame == .zero {
-            let newFrameY = self.frame.height * 0.75
+            let newFrameY = self.frame.height * 0.7
             let newFrameHeight = self.frame.height * 0.25 - 5
             waterImage.frame.origin = CGPoint(x: 0, y: newFrameY)
             waterImage.frame.size = CGSize(width: self.frame.width, height: newFrameHeight)
@@ -62,7 +63,7 @@ final class CustomWaterView: UIView {
     func changeState() {
         let total = delegate?.getTotal() ?? 0
         var percent = Double(total) / 2000
-        if percent < 0.35 {
+        if percent < 0.5 {
             percentLabel.textColor = .black
         } else {
             percentLabel.textColor = .white
@@ -70,8 +71,15 @@ final class CustomWaterView: UIView {
         percentLabel.text = "\(Int(percent * 100))%"
         
         // Craete mask
-        if percent > 1 { percent = 1 }
-        var imagePercent = 0.75 * percent
+        if percent > 1 {
+            percent = 1
+            waterImage.image = UIImage(named: "WaterMaxGradient")
+            backButton.setImage(UIImage(named: "WaterMaxBackButton"),for: .normal)
+        } else {
+            waterImage.image = UIImage(named: "WaterGradient")
+            backButton.setImage(UIImage(named: "WaterBackButton"),for: .normal)
+        }
+        var imagePercent = 0.7 * percent
         imagePercent += 0.25
         let frameY = self.frame.height * (1-imagePercent)
         let frameHeight = self.frame.height * imagePercent - 5
@@ -92,16 +100,18 @@ final class CustomWaterView: UIView {
         waterImage.frame = CGRect(x: 0, y: self.frame.height * 0.9, width: self.frame.width, height: self.frame.height)
         
         self.addSubview(percentLabel)
+        NSLayoutConstraint.activate([
+            percentLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 80),
+            percentLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -10)
+        ])
         percentLabel.centerX()
-        percentLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).isActive = true
-        percentLabel.centerY()
         percentLabel.height(30)
         
         
         self.addSubview(backButton)
         backButton.height(27)
         backButton.width(76)
-        backButton.leading(8)
+        backButton.leading(17)
         backButton.top(isIncludeSafeArea: false)
     }
     
