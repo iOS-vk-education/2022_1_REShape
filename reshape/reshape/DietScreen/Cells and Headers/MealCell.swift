@@ -87,6 +87,7 @@ final class MealCell: AbstractCell {
     
     func setState(at state: MealState) {
         loadingSpinner.stopAnimating()
+        changeLeftTextConstraint(toAnchor: checkCircleImage.rightAnchor, constant: 6)
         switch state {
         case .checked:
             checkCircleImage.image = UIImage(named: "rememberButton")
@@ -94,6 +95,7 @@ final class MealCell: AbstractCell {
             checkCircleImage.image = UIImage(named: "notRememberButton")
         case .unavailable:
             checkCircleImage.image = nil
+            changeLeftTextConstraint(toAnchor: self.leftAnchor, constant: 11)
         case .loading:
             checkCircleImage.image = nil
             loadingSpinner.startAnimating()

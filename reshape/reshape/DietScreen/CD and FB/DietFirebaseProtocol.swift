@@ -8,6 +8,8 @@
 import Foundation
 
 protocol DietFirebaseProtocol: AnyObject {
+    var dietInteractor: DietScreenInteractorInput? { get set }
+    
     // Подгрузка и обновление информации
     func loadIndividualInfo(completion: @escaping (Error?) -> Void)
     func loadCommonInfo(completion: @escaping (Error?) -> Void)

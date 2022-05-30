@@ -224,6 +224,10 @@ extension DietScreenInteractor {
 
 // Внешние запросы
 extension DietScreenInteractor: DietScreenInteractorInput {
+    func updateTable() {
+        output?.updateTable()
+    }
+    
     func findMeal(forString text: String) -> [SearchStruct] {
         var output: [SearchStruct] = []
         let downText = text.lowercased()

@@ -18,6 +18,7 @@ final class FirebaseController {
     private var currentDay: Int = -1
     private var name: String?
     private var surname: String?
+    weak var dietScreen: DietScreenInteractorInput?
     
     init() {
         commonDBRef = Database
@@ -40,12 +41,27 @@ final class FirebaseController {
         
         // Текущий день
         let startDate = Calendar(identifier: .iso8601).startOfDay(for: user.metadata.creationDate ?? Date())
+        let oldDay = currentDay
         currentDay = Int(startDate.distance(to: Date()) / 86400)
+        
+        // Полное обновление БД при работающем приложении
+        if currentDay != oldDay {
+            dietInteractor?.updateTable()
+        }
         return isAuth
     }
 }
 
 extension FirebaseController: DietFirebaseProtocol {
+    var dietInteractor: DietScreenInteractorInput? {
+        get {
+            return dietScreen
+        }
+        set {
+            self.dietScreen = newValue
+        }
+    }
+    
     // Загрузка индивидуальной информации
     func loadIndividualInfo(completion: @escaping (Error?) -> Void = {_ in return}) {
         // Проверка на авторизацию

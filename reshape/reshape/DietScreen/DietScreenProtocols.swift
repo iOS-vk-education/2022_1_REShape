@@ -58,6 +58,9 @@ protocol DietScreenViewOutput: AnyObject {
 }
 
 protocol DietScreenInteractorInput: AnyObject {
+    // Запросы от firebase
+    func updateTable()
+    
     // Запросы от презентера
     func getDatabase()
     func saveDatabase()
@@ -80,6 +83,7 @@ protocol DietScreenInteractorOutput: AnyObject {
     // Ответы на запросы презентера или интерактора
     func updateMealData(forMeal meal: MealsType, atSection section: Int)
     func updateNumOfDays(_ days: Int)
+    func updateTable()
 }
 
 protocol DietScreenRouterInput: AnyObject {

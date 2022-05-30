@@ -24,6 +24,7 @@ final class DietScreenContainer {
 
 		interactor.output = presenter
         interactor.firebaseController = context.firebaseController
+        interactor.firebaseController?.dietInteractor = interactor
 
         return DietScreenContainer(view: viewController, input: presenter, router: router)
 	}

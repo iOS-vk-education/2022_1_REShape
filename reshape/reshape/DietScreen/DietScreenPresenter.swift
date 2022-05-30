@@ -365,6 +365,10 @@ extension DietScreenPresenter {
 
 // Обработчики ответа от интерактора
 extension DietScreenPresenter: DietScreenInteractorOutput {
+    func updateTable() {
+        view?.reloadTableView()
+    }
+    
     // Обновление блюд после появления данных
     func updateMealData(forMeal meal: MealsType, atSection section: Int) {
         guard rowInSection.count > section else { return }
