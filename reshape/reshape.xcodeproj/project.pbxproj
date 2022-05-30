@@ -14,6 +14,8 @@
 		2E2901EC28367A6200CBCEFE /* WeightStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2901EB28367A6200CBCEFE /* WeightStruct.swift */; };
 		2E2901F02836CC0700CBCEFE /* MealStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2901EF2836CC0700CBCEFE /* MealStruct.swift */; };
 		2E6730A02809F61000992435 /* WeightInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E67309F2809F61000992435 /* WeightInteractor.swift */; };
+		2E7258F8284244F200D91877 /* WaterFilebaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7258F7284244F200D91877 /* WaterFilebaseProtocol.swift */; };
+		2E7258FB2842455600D91877 /* WaterStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7258FA2842455600D91877 /* WaterStruct.swift */; };
 		2EA1E89F27FCDB47001B329A /* MealCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E89E27FCDB47001B329A /* MealCell.swift */; };
 		2EA1E8A127FCDB8E001B329A /* DietHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E8A027FCDB8E001B329A /* DietHeader.swift */; };
 		2EA1E8A328041343001B329A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E8A228041343001B329A /* UIImage+Extension.swift */; };
@@ -62,6 +64,8 @@
 		36A9DB1827E2AC3500DB5082 /* reshapeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB1727E2AC3500DB5082 /* reshapeTests.swift */; };
 		36A9DB2227E2AC3500DB5082 /* reshapeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB2127E2AC3500DB5082 /* reshapeUITests.swift */; };
 		36A9DB2427E2AC3500DB5082 /* reshapeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A9DB2327E2AC3500DB5082 /* reshapeUITestsLaunchTests.swift */; };
+		60ABD9F32810620800D03118 /* WaterCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60ABD9F12810620700D03118 /* WaterCollectionCell.xib */; };
+		60ABD9F42810620800D03118 /* WaterCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60ABD9F22810620800D03118 /* WaterCollectionCell.swift */; };
 		60E44D9828082AB000B3DDE6 /* ReuseIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E44D9728082AB000B3DDE6 /* ReuseIdentifier.swift */; };
 		60E44D9A28082ABC00B3DDE6 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E44D9928082ABC00B3DDE6 /* ColorExtension.swift */; };
 		941E811527E6149800A33344 /* LoginScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E810F27E6149800A33344 /* LoginScreenPresenter.swift */; };
@@ -123,6 +127,17 @@
 		94FC7845280C468F003477FA /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC7844280C468F003477FA /* LoginManager.swift */; };
 		94FC7847280C4745003477FA /* ForgetPasswordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC7846280C4744003477FA /* ForgetPasswordManager.swift */; };
 		94FC784B280C9E15003477FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94FC784A280C9E15003477FA /* GoogleService-Info.plist */; };
+		F743548A280B337C002E03BB /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435488280B337C002E03BB /* ProfileCollectionCell.swift */; };
+		F743548B280B337C002E03BB /* ProfileCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7435489280B337C002E03BB /* ProfileCollectionCell.xib */; };
+		F7435493280B35A0002E03BB /* WaterScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F743548D280B35A0002E03BB /* WaterScreenPresenter.swift */; };
+		F7435494280B35A0002E03BB /* WaterScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F743548E280B35A0002E03BB /* WaterScreenRouter.swift */; };
+		F7435495280B35A0002E03BB /* WaterScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F743548F280B35A0002E03BB /* WaterScreenViewController.swift */; };
+		F7435496280B35A0002E03BB /* WaterScreenProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435490280B35A0002E03BB /* WaterScreenProtocols.swift */; };
+		F7435497280B35A0002E03BB /* WaterScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435491280B35A0002E03BB /* WaterScreenInteractor.swift */; };
+		F7435498280B35A0002E03BB /* WaterScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435492280B35A0002E03BB /* WaterScreenContainer.swift */; };
+		F74354A1280B48CA002E03BB /* CustomProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A0280B48CA002E03BB /* CustomProfileView.swift */; };
+		F74354A3280B4913002E03BB /* CustomWaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A2280B4913002E03BB /* CustomWaterView.swift */; };
+		F7B8F5A2281F0B31007E1766 /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8F5A1281F0B30007E1766 /* ProfileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +165,8 @@
 		2E2901EB28367A6200CBCEFE /* WeightStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightStruct.swift; sourceTree = "<group>"; };
 		2E2901EF2836CC0700CBCEFE /* MealStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealStruct.swift; sourceTree = "<group>"; };
 		2E67309F2809F61000992435 /* WeightInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightInteractor.swift; sourceTree = "<group>"; };
+		2E7258F7284244F200D91877 /* WaterFilebaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterFilebaseProtocol.swift; sourceTree = "<group>"; };
+		2E7258FA2842455600D91877 /* WaterStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterStruct.swift; sourceTree = "<group>"; };
 		2EA1E89E27FCDB47001B329A /* MealCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCell.swift; sourceTree = "<group>"; };
 		2EA1E8A027FCDB8E001B329A /* DietHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietHeader.swift; sourceTree = "<group>"; };
 		2EA1E8A228041343001B329A /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImage+Extension.swift"; path = "reshape/Application/Helpers/UIImage+Extension.swift"; sourceTree = SOURCE_ROOT; };
@@ -202,6 +219,8 @@
 		36A9DB1D27E2AC3500DB5082 /* reshapeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = reshapeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A9DB2127E2AC3500DB5082 /* reshapeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reshapeUITests.swift; sourceTree = "<group>"; };
 		36A9DB2327E2AC3500DB5082 /* reshapeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reshapeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		60ABD9F12810620700D03118 /* WaterCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaterCollectionCell.xib; sourceTree = "<group>"; };
+		60ABD9F22810620800D03118 /* WaterCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterCollectionCell.swift; sourceTree = "<group>"; };
 		60E44D9728082AB000B3DDE6 /* ReuseIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReuseIdentifier.swift; path = ../ReuseIdentifier.swift; sourceTree = "<group>"; };
 		60E44D9928082ABC00B3DDE6 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorExtension.swift; path = ../ColorExtension.swift; sourceTree = "<group>"; };
 		941E810F27E6149800A33344 /* LoginScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenPresenter.swift; sourceTree = "<group>"; };
@@ -263,6 +282,17 @@
 		94FC7844280C468F003477FA /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		94FC7846280C4744003477FA /* ForgetPasswordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordManager.swift; sourceTree = "<group>"; };
 		94FC784A280C9E15003477FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F7435488280B337C002E03BB /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionCell.swift; sourceTree = "<group>"; };
+		F7435489280B337C002E03BB /* ProfileCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileCollectionCell.xib; sourceTree = "<group>"; };
+		F743548D280B35A0002E03BB /* WaterScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenPresenter.swift; sourceTree = "<group>"; };
+		F743548E280B35A0002E03BB /* WaterScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenRouter.swift; sourceTree = "<group>"; };
+		F743548F280B35A0002E03BB /* WaterScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenViewController.swift; sourceTree = "<group>"; };
+		F7435490280B35A0002E03BB /* WaterScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenProtocols.swift; sourceTree = "<group>"; };
+		F7435491280B35A0002E03BB /* WaterScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenInteractor.swift; sourceTree = "<group>"; };
+		F7435492280B35A0002E03BB /* WaterScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenContainer.swift; sourceTree = "<group>"; };
+		F74354A0280B48CA002E03BB /* CustomProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProfileView.swift; sourceTree = "<group>"; };
+		F74354A2280B4913002E03BB /* CustomWaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaterView.swift; sourceTree = "<group>"; };
+		F7B8F5A1281F0B30007E1766 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,14 +321,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		246FD6F18E831BC8C5BD4F83 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		2E1F1DD827E4FB6000FA7B77 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +335,8 @@
 				9478495D27FB2EC900138DA4 /* NavigationBarView.swift */,
 				945ADFAC27FDC54800222156 /* GenderButton.swift */,
 				94CAB99F2806BA0C00ACAB8C /* RegistrationContentView.swift */,
+				F74354A0280B48CA002E03BB /* CustomProfileView.swift */,
+				F74354A2280B4913002E03BB /* CustomWaterView.swift */,
 				2EF20BF3280DEC950019CF64 /* AbstractCell.swift */,
 				2EC4E70F281345FB002AF235 /* WeightChart.swift */,
 			);
@@ -332,6 +356,30 @@
 			children = (
 				2E2901EF2836CC0700CBCEFE /* MealStruct.swift */,
 				2EDB9633283BDD3A00F3B38A /* SearchStruct.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
+		2E7258F5284244AF00D91877 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		2E7258F6284244BF00D91877 /* CD and FB */ = {
+			isa = PBXGroup;
+			children = (
+				2E7258F7284244F200D91877 /* WaterFilebaseProtocol.swift */,
+			);
+			path = "CD and FB";
+			sourceTree = "<group>";
+		};
+		2E7258F92842454400D91877 /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				2E7258FA2842455600D91877 /* WaterStruct.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -466,8 +514,8 @@
 				36A9DB1627E2AC3500DB5082 /* reshapeTests */,
 				36A9DB2027E2AC3500DB5082 /* reshapeUITests */,
 				36A9DAFE27E2AC3400DB5082 /* Products */,
-				C6CD8221CE97C34E95139CB0 /* Pods */,
-				246FD6F18E831BC8C5BD4F83 /* Frameworks */,
+				CDC652662D7457BAEDEDFE02 /* Pods */,
+				2E7258F5284244AF00D91877 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -484,6 +532,7 @@
 		36A9DAFF27E2AC3400DB5082 /* reshape */ = {
 			isa = PBXGroup;
 			children = (
+				F743548C280B3580002E03BB /* WaterScreen */,
 				2EF20BFF2810285A0019CF64 /* Entities */,
 				2EB767C72809F02D008868DD /* WeightScreen */,
 				9478495027FB21ED00138DA4 /* RegistrationScreen */,
@@ -515,6 +564,15 @@
 				36A9DB2327E2AC3500DB5082 /* reshapeUITestsLaunchTests.swift */,
 			);
 			path = reshapeUITests;
+			sourceTree = "<group>";
+		};
+		60ABD9F52810623E00D03118 /* WaterCells */ = {
+			isa = PBXGroup;
+			children = (
+				60ABD9F22810620800D03118 /* WaterCollectionCell.swift */,
+				60ABD9F12810620700D03118 /* WaterCollectionCell.xib */,
+			);
+			path = WaterCells;
 			sourceTree = "<group>";
 		};
 		941E811B27E614A800A33344 /* LoginScreen */ = {
@@ -591,6 +649,7 @@
 		945B383E27ECC3120044E952 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
+				F7435487280B3353002E03BB /* Cells */,
 				2EDB9635283F8D5E00F3B38A /* Firebase */,
 				945B385727ECC3500044E952 /* ProfileScreenPresenter.swift */,
 				945B385827ECC3500044E952 /* ProfileScreenRouter.swift */,
@@ -598,6 +657,7 @@
 				945B385A27ECC3500044E952 /* ProfileScreenProtocols.swift */,
 				945B385B27ECC3500044E952 /* ProfileScreenInteractor.swift */,
 				945B385C27ECC3500044E952 /* ProfileScreenContainer.swift */,
+				F7B8F5A1281F0B30007E1766 /* ProfileManager.swift */,
 			);
 			path = ProfileScreen;
 			sourceTree = "<group>";
@@ -650,11 +710,36 @@
 			path = NetworkManagers;
 			sourceTree = "<group>";
 		};
-		C6CD8221CE97C34E95139CB0 /* Pods */ = {
+		CDC652662D7457BAEDEDFE02 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F7435487280B3353002E03BB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F7435488280B337C002E03BB /* ProfileCollectionCell.swift */,
+				F7435489280B337C002E03BB /* ProfileCollectionCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F743548C280B3580002E03BB /* WaterScreen */ = {
+			isa = PBXGroup;
+			children = (
+				2E7258F92842454400D91877 /* Structures */,
+				2E7258F6284244BF00D91877 /* CD and FB */,
+				60ABD9F52810623E00D03118 /* WaterCells */,
+				F743548D280B35A0002E03BB /* WaterScreenPresenter.swift */,
+				F743548E280B35A0002E03BB /* WaterScreenRouter.swift */,
+				F743548F280B35A0002E03BB /* WaterScreenViewController.swift */,
+				F7435490280B35A0002E03BB /* WaterScreenProtocols.swift */,
+				F7435491280B35A0002E03BB /* WaterScreenInteractor.swift */,
+				F7435492280B35A0002E03BB /* WaterScreenContainer.swift */,
+			);
+			path = WaterScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -721,7 +806,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1310;
-				LastUpgradeCheck = 1310;
+				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					36A9DAFC27E2AC3400DB5082 = {
 						CreatedOnToolsVersion = 13.1;
@@ -762,10 +847,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9437920427F9AFA10000188E /* ResultCollectionCell.xib in Resources */,
+				60ABD9F32810620800D03118 /* WaterCollectionCell.xib in Resources */,
 				2E1F1DBF27E4936700FA7B77 /* Main.storyboard in Resources */,
 				94FC784B280C9E15003477FA /* GoogleService-Info.plist in Resources */,
 				36A9DB0D27E2AC3500DB5082 /* LaunchScreen.storyboard in Resources */,
 				36A9DB0A27E2AC3500DB5082 /* Assets.xcassets in Resources */,
+				F743548B280B337C002E03BB /* ProfileCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -799,8 +886,11 @@
 				2EC4E710281345FC002AF235 /* WeightChart.swift in Sources */,
 				941E811A27E6149800A33344 /* LoginScreenContainer.swift in Sources */,
 				945B383727ECC0B90044E952 /* AppCoordinator.swift in Sources */,
+				F74354A3280B4913002E03BB /* CustomWaterView.swift in Sources */,
 				2EB767CE2809F08F008868DD /* WeightPresenter.swift in Sources */,
 				941E811827E6149800A33344 /* LoginScreenProtocols.swift in Sources */,
+				F7435495280B35A0002E03BB /* WaterScreenViewController.swift in Sources */,
+				F7435493280B35A0002E03BB /* WaterScreenPresenter.swift in Sources */,
 				2E1F1DDA27E4FB7E00FA7B77 /* EnterButton.swift in Sources */,
 				60E44D9828082AB000B3DDE6 /* ReuseIdentifier.swift in Sources */,
 				2EECFF3527E5037100BD4BEF /* EnterViewController.swift in Sources */,
@@ -808,6 +898,7 @@
 				2EF20BFC280DF19D0019CF64 /* UpGradientPanel.swift in Sources */,
 				9478495B27FB221400138DA4 /* RegisterScreenInteractor.swift in Sources */,
 				2EF3A231281858C300F6E38E /* MealData+CoreDataProperties.swift in Sources */,
+				2E7258F8284244F200D91877 /* WaterFilebaseProtocol.swift in Sources */,
 				945B387627F357450044E952 /* PhotoProgressView.swift in Sources */,
 				9478495927FB221400138DA4 /* RegisterScreenViewController.swift in Sources */,
 				94302BC827E72E56009E397B /* CloseButton.swift in Sources */,
@@ -816,6 +907,7 @@
 				945B384627ECC32A0044E952 /* ResultsScreenRouter.swift in Sources */,
 				2EA6509527F2ED07003F41FC /* DietCell.swift in Sources */,
 				945B385F27ECC3500044E952 /* ProfileScreenViewController.swift in Sources */,
+				F7435496280B35A0002E03BB /* WaterScreenProtocols.swift in Sources */,
 				94302BC427E66080009E397B /* ForgetPasswordScreenProtocols.swift in Sources */,
 				9478495C27FB221400138DA4 /* RegisterScreenContainer.swift in Sources */,
 				945B386127ECC3500044E952 /* ProfileScreenInteractor.swift in Sources */,
@@ -831,11 +923,14 @@
 				945B385D27ECC3500044E952 /* ProfileScreenPresenter.swift in Sources */,
 				2EECFF3627E5037100BD4BEF /* EnterProtocols.swift in Sources */,
 				945B384827ECC32A0044E952 /* ResultsScreenProtocols.swift in Sources */,
+				F7B8F5A2281F0B31007E1766 /* ProfileManager.swift in Sources */,
 				36A9DB0127E2AC3400DB5082 /* AppDelegate.swift in Sources */,
 				9437920327F9AFA10000188E /* ResultCollectionCell.swift in Sources */,
+				F743548A280B337C002E03BB /* ProfileCollectionCell.swift in Sources */,
 				2EB767D12809F08F008868DD /* WeightProtocols.swift in Sources */,
 				2EDB9637283F8D7900F3B38A /* ProfileFirebaseProtocol.swift in Sources */,
 				945B383B27ECC10D0044E952 /* CoordinatorProtocol.swift in Sources */,
+				F74354A1280B48CA002E03BB /* CustomProfileView.swift in Sources */,
 				2EB767CF2809F08F008868DD /* WeightRouter.swift in Sources */,
 				2EA1E8A127FCDB8E001B329A /* DietHeader.swift in Sources */,
 				945B386027ECC3500044E952 /* ProfileScreenProtocols.swift in Sources */,
@@ -858,11 +953,14 @@
 				945B385227ECC33A0044E952 /* DietScreenRouter.swift in Sources */,
 				2EF20BFE280F4F600019CF64 /* DateTimeCell.swift in Sources */,
 				945B387427F31FC00044E952 /* CircularProgressBarView.swift in Sources */,
+				F7435498280B35A0002E03BB /* WaterScreenContainer.swift in Sources */,
 				9478495E27FB2EC900138DA4 /* NavigationBarView.swift in Sources */,
-				2EAA1B7028130A7800CA4847 /* WeightModel+CoreDataProperties.swift in Sources */,
+				60ABD9F42810620800D03118 /* WaterCollectionCell.swift in Sources */,
 				945B386227ECC3500044E952 /* ProfileScreenContainer.swift in Sources */,
 				94FC7847280C4745003477FA /* ForgetPasswordManager.swift in Sources */,
 				94CAB9A02806BA0C00ACAB8C /* RegistrationContentView.swift in Sources */,
+				F7435494280B35A0002E03BB /* WaterScreenRouter.swift in Sources */,
+				2EAA1B7028130A7800CA4847 /* WeightModel+CoreDataProperties.swift in Sources */,
 				2EF3A23A28196E9400F6E38E /* DietModel.xcdatamodeld in Sources */,
 				2E07ABE3281D39D9005DE3E0 /* CellData+CoreDataProperties.swift in Sources */,
 				94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */,
@@ -883,6 +981,7 @@
 				94FC78382809E46D003477FA /* AuthManger.swift in Sources */,
 				2EAA1B6F28130A7800CA4847 /* WeightModel+CoreDataClass.swift in Sources */,
 				941E811D27E614F300A33344 /* AuthStackView.swift in Sources */,
+				2E7258FB2842455600D91877 /* WaterStruct.swift in Sources */,
 				2EF20C01281028750019CF64 /* GradientType.swift in Sources */,
 				2EB767D02809F08F008868DD /* WeightViewController.swift in Sources */,
 				941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */,
@@ -892,6 +991,7 @@
 				945B384A27ECC32A0044E952 /* ResultsScreenContainer.swift in Sources */,
 				2EAA1B662812FE8F00CA4847 /* WeightModel.xcdatamodeld in Sources */,
 				945B385627ECC33A0044E952 /* DietScreenContainer.swift in Sources */,
+				F7435497280B35A0002E03BB /* WaterScreenInteractor.swift in Sources */,
 				94FC7845280C468F003477FA /* LoginManager.swift in Sources */,
 				2E6730A02809F61000992435 /* WeightInteractor.swift in Sources */,
 				2EAA1B682812FEC100CA4847 /* WeightModelController.swift in Sources */,

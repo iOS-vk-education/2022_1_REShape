@@ -42,6 +42,7 @@ final class NavigationBarView: UIView {
         setupUI()
     }
 }
+
 extension NavigationBarView {
     func setupConstraints() {
         self.addSubview(mainLabel)
@@ -91,4 +92,3 @@ extension NavigationBarView {
         self.mainLabel.attributedText = NSAttributedString(string: name, attributes: [ NSAttributedString.Key.kern: 0.77])
     }
 }
-

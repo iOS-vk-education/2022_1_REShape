@@ -32,6 +32,10 @@ extension ResultsScreenPresenter: ResultsScreenViewOutput {
     func caloriesTapped() {
         router.didCaloriesTapped()
     }
+    func waterTapped() {
+        router.didWaterTapped()
+    }
+    
 }
 
 extension ResultsScreenPresenter: ResultsScreenInteractorOutput {

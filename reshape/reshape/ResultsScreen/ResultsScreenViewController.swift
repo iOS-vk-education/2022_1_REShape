@@ -112,7 +112,7 @@ extension ResultsScreenViewController: UICollectionViewDelegate {
         case 1:
             self.output.weightTapped()
         case 2:
-            print("вода")
+            self.output.waterTapped()
         default: break
         }
     }
