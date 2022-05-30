@@ -26,6 +26,7 @@ extension UIColor {
     static let orangeColor = UIColor(named: "Orange")!
     
     // Violet
+    static let greyViolet = UIColor(named: "GreyViolet")!
     static let violetColor = UIColor(named: "Violet")!
     static let transparentVioletColor = UIColor(named: "VioletPressed")!
     static let darkVioletColor = UIColor(named: "DarkViolet")!

@@ -36,4 +36,11 @@ extension UIImageView {
         // Start Data Task
         dataTask.resume()
     }
+    func animateUp(newPosition: CGPoint) {
+        let lift: CABasicAnimation = CABasicAnimation(keyPath: "transform")
+        lift.fromValue = self.frame
+        lift.toValue = newPosition
+        lift.duration = 2
+        self.layer.add(lift, forKey: nil)
+    }
 }

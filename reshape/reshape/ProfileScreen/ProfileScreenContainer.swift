@@ -15,12 +15,15 @@ final class ProfileScreenContainer {
 
 	static func assemble(with context: ProfileScreenContext) -> ProfileScreenContainer {
         let router = ProfileScreenRouter()
-        let interactor = ProfileScreenInteractor()
+        let manager = ProfileManager()
+        let interactor = ProfileScreenInteractor(manager: manager)
         let presenter = ProfileScreenPresenter(router: router, interactor: interactor)
 		let viewController = ProfileScreenViewController(output: presenter)
 
 		presenter.view = viewController
 		presenter.moduleOutput = context.moduleOutput
+        
+        router.window = context.window
 
 		interactor.output = presenter
 
@@ -36,4 +39,5 @@ final class ProfileScreenContainer {
 
 struct ProfileScreenContext {
 	weak var moduleOutput: ProfileScreenModuleOutput?
+    let window: UIWindow
 }

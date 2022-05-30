@@ -25,5 +25,7 @@ final class AuthManger{
             completion(error)
         }
     }
-    
+    static func logOut() {
+        try? Auth.auth().signOut()
+   }
 }

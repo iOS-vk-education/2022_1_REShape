@@ -51,7 +51,7 @@ final class DietCell: AbstractCell {
 extension DietCell {
     func setData(text: String, state: DisclosureState, isCurrent flag: Bool = false) {
         self.setCellText(text)
-        flag ? self.setGreenBackColor() : self.setGreyBackColor()
+        backgroundColor = flag ? .greyViolet : .modalViewGrayColor
         self.disclosure(state, animated: false)
     }
     

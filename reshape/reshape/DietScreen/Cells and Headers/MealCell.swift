@@ -64,7 +64,7 @@ final class MealCell: AbstractCell {
     
     func setMealInformation(name: String, calories: Double, state: Bool, isCurrent flag: Bool = false) {
         setCellText(name)
-        flag ? self.setGreenBackColor() : self.setGreyBackColor()
+        backgroundColor = flag ? .greyViolet : .modalViewGrayColor
         caloriesLabel.text = "\(Int(calories)) ккал"
         setState(at: state)
     }

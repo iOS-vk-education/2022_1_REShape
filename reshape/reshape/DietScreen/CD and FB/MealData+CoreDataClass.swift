@@ -27,4 +27,8 @@ public class MealData: NSManagedObject {
     func changeState(toState state: Bool) {
         self.modelState = state
     }
+    
+    func getID() -> Int {
+        return Int(self.modelID)
+    }
 }

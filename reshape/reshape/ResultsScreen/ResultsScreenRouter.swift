@@ -15,9 +15,16 @@ final class ResultsScreenRouter {
 }
 
 extension ResultsScreenRouter: ResultsScreenRouterInput {
+    
+    func didWaterTapped() {
+        let fbController = firebaseController as? WaterFirebaseProtocol
+        let waterScreenContext = WaterScreenContext(moduleOutput: nil, firebaseController: fbController)
+        let waterScreenContainer = WaterScreenContainer.assemble(with: waterScreenContext)
+        self.viewController?.navigationController?.pushViewController(waterScreenContainer.viewController, animated: true)
+    }
     func didWeightTapped() {
-        let firebaseController = firebaseController as? WeightFirebaseProtocol
-        let WeightContext = WeightContext(moduleOutput: nil, firebaseController: firebaseController)
+        let fbController = firebaseController as? WeightFirebaseProtocol
+        let WeightContext = WeightContext(moduleOutput: nil, firebaseController: fbController)
         let WeightContainer = WeightContainer.assemble(with: WeightContext)
         self.viewController?.navigationController?.pushViewController(WeightContainer.viewController, animated: true)
     }
@@ -25,4 +32,5 @@ extension ResultsScreenRouter: ResultsScreenRouterInput {
     func didCaloriesTapped() {
         self.viewController?.tabBarController?.selectedIndex = 1
     }
+    
 }

@@ -61,7 +61,7 @@ extension MainFlowCoordinator{
         guard let navController = navigationControllers[.profile] else {
             fatalError("No navController")
         }
-        let profileContext = ProfileScreenContext(moduleOutput: nil)
+        let profileContext = ProfileScreenContext(moduleOutput: nil, window: window)
         let profileContainer = ProfileScreenContainer.assemble(with: profileContext)
         navController.setViewControllers([profileContainer.viewController], animated: true)
     }

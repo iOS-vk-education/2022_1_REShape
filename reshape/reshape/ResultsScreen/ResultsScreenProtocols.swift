@@ -25,6 +25,7 @@ protocol ResultsScreenViewInput: AnyObject {
 
 protocol ResultsScreenViewOutput: AnyObject {
     func caloriesTapped()
+    func waterTapped()
     func weightTapped()
     func didLoadInfo()
     func didGetPart(target: Double, current: Double) -> Float
@@ -62,5 +63,6 @@ protocol ResultsScreenInteractorOutput: AnyObject {
 
 protocol ResultsScreenRouterInput: AnyObject {
     func didCaloriesTapped()
+    func didWaterTapped()
     func didWeightTapped()
 }

@@ -9,18 +9,6 @@ import Foundation
 import Firebase
 import FirebaseDatabase
 
-protocol WaterFirebaseProtocol: AnyObject {
-    // Подгрузка и обновление информации
-    func loadIndividualInfo(completion: @escaping (Error?) -> Void)
-    func loadCommonInfo(completion: @escaping (Error?) -> Void)
-    
-    // Получение предварительно подгруженной информации
-    func getCurrentWater() -> Double
-    
-    // Отправка новых данных
-    func sendWater(withWater data: Double, forDay day: Int, completion: @escaping (Error?) -> Void)
-}
-
 final class FirebaseController {
     private var commonDBRef: DatabaseReference = DatabaseReference()
     private var userDBRef: DatabaseReference = DatabaseReference()
@@ -279,8 +267,10 @@ extension FirebaseController: ResultFirebaseProtocol {
     }
     
     func getCurrentWater() -> Double {
-        let day = getCurrentDay()
-        let water = (userSnapshot["water"] as? NSDictionary)?["day\(day)"] as? NSNumber
+        let day = currentDay
+        let water = ((userSnapshot["water"]
+                      as? NSDictionary)?["water\(day)"]
+                     as? NSDictionary)?["total"] as? NSNumber
         return water?.doubleValue ?? 0
     }
 }
@@ -311,15 +301,45 @@ extension FirebaseController: ProfileFirebaseProtocol {
         let weight = userSnapshot["weight"] as? String
         return weight ?? ""
     }
+}
+
+extension FirebaseController: WaterFirebaseProtocol {
+    func getCurrentWaterData() -> WaterStruct {
+        let id = currentDay
+        guard let dict = (userSnapshot["water"]
+                          as? NSDictionary)?["water\(id)"] as? NSDictionary else {
+            return WaterStruct()
+        }
+        let waterStruct = WaterStruct(water: (dict["water"] as? NSNumber)?.intValue ?? 0,
+                                      coffee: (dict["coffee"] as? NSNumber)?.intValue ?? 0,
+                                      tea: (dict["tea"] as? NSNumber)?.intValue ?? 0,
+                                      fizzy: (dict["fizzy"] as? NSNumber)?.intValue ?? 0,
+                                      milk: (dict["milk"] as? NSNumber)?.intValue ?? 0,
+                                      alcohol: (dict["alco"] as? NSNumber)?.intValue ?? 0,
+                                      juice: (dict["juice"] as? NSNumber)?.intValue ?? 0
+        )
+        return waterStruct
+    }
     
-    func sendWater(withWater data: Double, forDay day: Int, completion: @escaping (Error?) -> Void) {
+    func sendWater(withData data: WaterStruct, completion: @escaping (Error?) -> Void) {
         // Проверка на авторизацию
         guard checkLogin() else {
             completion(NSError(domain: "No login", code: -10))
             return
         }
         
-        userDBRef.child("water/day\(day)").setValue(NSNumber(floatLiteral: data)) { error, _ in
+        let id = currentDay
+        let dict = NSDictionary(dictionary: [
+            "water": NSNumber(integerLiteral: data.water),
+            "coffee": NSNumber(integerLiteral: data.coffee),
+            "tea": NSNumber(integerLiteral: data.tea),
+            "fizzy": NSNumber(integerLiteral: data.fizzy),
+            "milk": NSNumber(integerLiteral: data.milk),
+            "alco": NSNumber(integerLiteral: data.alcohol),
+            "juice": NSNumber(integerLiteral: data.juice),
+            "total": NSNumber(integerLiteral: data.total())
+        ])
+        userDBRef.child("water/water\(id)").setValue(dict) { error, _ in
             guard error == nil else {
                 print(error!.localizedDescription)
                 completion(error)
@@ -329,5 +349,3 @@ extension FirebaseController: ProfileFirebaseProtocol {
         }
     }
 }
-
-extension FirebaseController: WaterFirebaseProtocol {}

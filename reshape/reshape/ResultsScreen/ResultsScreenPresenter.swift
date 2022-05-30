@@ -66,6 +66,9 @@ extension ResultsScreenPresenter: ResultsScreenViewOutput {
     func countTotalTasks(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) {
         interactor.willCountTotalTasks(waterPercent: waterPercent, caloriesPercent: caloriesPercent, weightPercent: weightPercent)
     }
+    func waterTapped() {
+        router.didWaterTapped()
+    }
     
 }
 

@@ -7,8 +7,7 @@
      параметров, съеденные за день блюда, следите за прогрессом, а REShape поможет Вам достичь цели.
           
 ### 👨‍💻 Команда
-* **Суханов Андрей** - [Pug-coder](https://github.com/Pug-coder)
-* **Константинова Полина** - [pollykon](https://github.com/orgs/R-E-Shape/people/pollykon)
+* **Константинова Полина** - [pollykon](https://github.com/pollykon)
 * **Рябова Ника** - [nika-rvv](https://github.com/nika-rvv)
 * **Фомин Иван** - [TritonVera](https://github.com/TritonVera)
 
@@ -19,7 +18,7 @@
 ### Стек:
 * Архитектура - VIPER
 * Верстка - PinLayout/Constraints 
-* FireBase
+* FireBase, CoreData
 
 ### Макеты: 
     https://www.figma.com/file/br0KVS7w5Cd8OWtyk7Fioi/ReShape?node-id=0%3A1
@@ -33,7 +32,7 @@
     pod 'Firebase/Database'
     pod 'Firebase/Core'
     
-    pod inastall
+    pod install
 
 
 
