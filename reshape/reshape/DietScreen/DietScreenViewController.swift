@@ -213,6 +213,9 @@ extension DietScreenViewController: UITableViewDelegate, UITableViewDataSource {
                 output.clickedDiet(newCellDisclosureState, mealType: mealType, inSection: indexPath.section)
             }
         case .mealLunch, .mealDinner, .mealBreakfast, .mealSnack:
+            // Отображение загрузки
+            (cell as! MealCell).setState(at: .loading)
+            
             // Запрос на изменение состояния
             output.clickedMeal(forMeal: mealType.revert, atIndex: indexPath)
         default:

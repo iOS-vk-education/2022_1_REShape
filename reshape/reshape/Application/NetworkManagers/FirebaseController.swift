@@ -88,7 +88,8 @@ extension FirebaseController: DietFirebaseProtocol {
     
     // Получение текущих калорий
     func getCurrentCalories() -> Double {
-        let day = getCurrentDay()
+        guard currentDay != -1 else { return 0 }
+        let day = currentDay
         let current = ((userSnapshot["calories"]
                         as? NSDictionary)?["day\(day)"]
                        as? NSNumber)?.doubleValue ?? 0
@@ -119,9 +120,13 @@ extension FirebaseController: DietFirebaseProtocol {
         let mealName = mealDict?["mealName"] as? String ?? ""
         let mealCal = (mealDict?["mealCalories"] as? NSNumber)?.doubleValue ?? 0
         
+        // Номер общего дня
+        let diffDay = day - getCurrentDay()
+        let commonDay = currentDay + diffDay
+        
         // Состояние нажатия
         let stateDict = ((userSnapshot["days"]
-                           as? NSDictionary)?["day\(day)"]
+                           as? NSDictionary)?["day\(commonDay)"]
                           as? NSDictionary)?[meal] as? NSDictionary
         let mealState = (stateDict?["meal\(id)"] as? NSNumber)?.boolValue ?? false
         
@@ -137,9 +142,13 @@ extension FirebaseController: DietFirebaseProtocol {
     
     // Отправка нового состояния блюда и полученные за день калории
     func sendMealAndCalState(mealState state: Bool, calories cal: Double, forDay day: Int, forMeal meal: String, forID id: Int, completion: @escaping ((Error?) -> Void)) {
-        // Проверка на авторизацию
+        // Проверки
         guard checkLogin() else {
             completion(NSError(domain: "No login", code: -10))
+            return
+        }
+        guard getCurrentDay() != -1 else {
+            completion(NSError(domain: "Error send", code: -125))
             return
         }
         
@@ -147,8 +156,12 @@ extension FirebaseController: DietFirebaseProtocol {
         var calUpload: Bool = false
         var stateUpload: Bool = false
         
+        // Номер общего дня
+        let diffDay = day - getCurrentDay()
+        let commonDay = currentDay + diffDay
+        
         // Загрузка состояния блюда
-        userDBRef.child("days/day\(day)/\(meal)/meal\(id)").setValue(state) { error, _ in
+        userDBRef.child("days/day\(commonDay)/\(meal)/meal\(id)").setValue(state) { error, _ in
             guard error == nil else {
                 print(error!.localizedDescription)
                 completion(error)
@@ -160,7 +173,7 @@ extension FirebaseController: DietFirebaseProtocol {
             }
         }
         // Загрузка калорий
-        userDBRef.child("calories/day\(day)").setValue(cal) { error, _ in
+        userDBRef.child("calories/day\(commonDay)").setValue(cal) { error, _ in
             guard error == nil else {
                 print(error!.localizedDescription)
                 completion(error)
@@ -256,6 +269,7 @@ extension FirebaseController: ResultFirebaseProtocol {
     }
     
     func getCurrentWater() -> Double {
+        guard currentDay != -1 else { return 0 }
         let day = currentDay
         let water = ((userSnapshot["water"]
                       as? NSDictionary)?["water\(day)"]
@@ -294,6 +308,7 @@ extension FirebaseController: ProfileFirebaseProtocol {
 
 extension FirebaseController: WaterFirebaseProtocol {
     func getCurrentWaterData() -> WaterStruct {
+        guard currentDay != -1 else { return WaterStruct() }
         let id = currentDay
         guard let dict = (userSnapshot["water"]
                           as? NSDictionary)?["water\(id)"] as? NSDictionary else {
@@ -311,9 +326,13 @@ extension FirebaseController: WaterFirebaseProtocol {
     }
     
     func sendWater(withData data: WaterStruct, completion: @escaping (Error?) -> Void) {
-        // Проверка на авторизацию
+        // Проверки
         guard checkLogin() else {
             completion(NSError(domain: "No login", code: -10))
+            return
+        }
+        guard currentDay != -1 else {
+            completion(NSError(domain: "Error send", code: -125))
             return
         }
         

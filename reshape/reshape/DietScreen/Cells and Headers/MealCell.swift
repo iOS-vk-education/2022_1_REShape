@@ -14,6 +14,14 @@ final class MealCell: AbstractCell {
         return imageView
     }()
     
+    private var loadingSpinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.hidesWhenStopped = true
+        spinner.isHidden = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
+    
     private var caloriesLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkVioletColor
@@ -39,6 +47,7 @@ final class MealCell: AbstractCell {
     
     func setupCell() {
         self.addSubview(checkCircleImage)
+        self.addSubview(loadingSpinner)
         self.addSubview(caloriesLabel)
         setupConstarints()
     }
@@ -60,20 +69,34 @@ final class MealCell: AbstractCell {
         ])
         
         self.changeRightTextConstraint(toAnchor: caloriesLabel.leftAnchor, constant: -6)
+        
+        NSLayoutConstraint.activate([
+            loadingSpinner.topAnchor.constraint(equalTo: checkCircleImage.topAnchor),
+            loadingSpinner.leftAnchor.constraint(equalTo: checkCircleImage.leftAnchor),
+            loadingSpinner.bottomAnchor.constraint(equalTo: checkCircleImage.bottomAnchor),
+            loadingSpinner.rightAnchor.constraint(equalTo: checkCircleImage.rightAnchor)
+        ])
     }
     
-    func setMealInformation(name: String, calories: Double, state: Bool, isCurrent flag: Bool = false) {
+    func setMealInformation(name: String, calories: Double, state: MealState, isCurrent flag: Bool = false) {
         setCellText(name)
         backgroundColor = flag ? .greyViolet : .modalViewGrayColor
         caloriesLabel.text = "\(Int(calories)) ккал"
         setState(at: state)
     }
     
-    func setState(at state: Bool) {
-        if state {
+    func setState(at state: MealState) {
+        loadingSpinner.stopAnimating()
+        switch state {
+        case .checked:
             checkCircleImage.image = UIImage(named: "rememberButton")
-        } else {
+        case .unchecked:
             checkCircleImage.image = UIImage(named: "notRememberButton")
+        case .unavailable:
+            checkCircleImage.image = nil
+        case .loading:
+            checkCircleImage.image = nil
+            loadingSpinner.startAnimating()
         }
     }
 }

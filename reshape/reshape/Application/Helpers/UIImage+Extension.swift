@@ -23,12 +23,4 @@ extension UIImageView {
         rotation.duration = 0.2
         self.layer.add(rotation, forKey: nil)
     }
-    
-    func animateUp(newPosition: CGPoint) {
-        let lift: CABasicAnimation = CABasicAnimation(keyPath: "transform")
-        lift.fromValue = self.frame
-        lift.toValue = newPosition
-        lift.duration = 2
-        self.layer.add(lift, forKey: nil)
-    }
 }

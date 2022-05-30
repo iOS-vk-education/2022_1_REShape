@@ -44,7 +44,7 @@ protocol DietScreenViewOutput: AnyObject {
     func getCellType(from indexPath: IndexPath) -> MealsType
     func getCellDisclosure(forMeal meal: MealsType, atSection section: Int) -> DisclosureState
     
-    func getMealState(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Bool
+    func getMealState(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> MealState
     func getMealName(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> String
     func getMealCalories(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Double
     

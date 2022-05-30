@@ -173,6 +173,7 @@ extension DietScreenInteractor {
     func changeMealState(withID id: Int, forMeal meal: MealsType, atSection section: Int) {
         // Проверка на день
         if firebaseController?.getCurrentDay() != section {
+            self.output?.updateMealData(forMeal: meal, atSection: section)
             return
         }
         let mealData = getMealData(withID: id, forMeal: meal, atSection: section)
@@ -191,13 +192,15 @@ extension DietScreenInteractor {
             forMeal: meal.engText,
             forID: id + 1) { [weak self] error in
                 // Блок проверок
-                guard (error == nil) else { return }
-                guard (self != nil) else { return }
+                guard error == nil, let self = self else {
+                    self?.output?.updateMealData(forMeal: meal, atSection: section)
+                    return
+                }
             
                 // Обновление внутренней БД и отображения
                 mealData.changeState(toState: state)
-                self!.saveDatabase()
-                self!.output?.updateMealData(forMeal: meal, atSection: section)
+                self.saveDatabase()
+                self.output?.updateMealData(forMeal: meal, atSection: section)
             }
     }
     

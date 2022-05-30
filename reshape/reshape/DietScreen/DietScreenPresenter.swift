@@ -252,8 +252,10 @@ extension DietScreenPresenter: DietScreenViewOutput {
     }
     
     // Получение состояния блюда
-    func getMealState(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> Bool {
-        return getMealData(forMeal: meal, atIndex: indexPath).modelState
+    func getMealState(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> MealState {
+        let state = getMealData(forMeal: meal, atIndex: indexPath).modelState
+        let currentDay = getCurrentDay()
+        return currentDay < indexPath.section ? .unavailable : MealState(state)
     }
     
     // Получение названия блюда
