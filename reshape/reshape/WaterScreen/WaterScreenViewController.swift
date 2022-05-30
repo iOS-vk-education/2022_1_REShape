@@ -269,7 +269,11 @@ extension WaterScreenViewController: UICollectionViewDataSource {
 }
 
 extension WaterScreenViewController: CustomWaterDelegate{
-    func getTotal() -> Int {
+    func customWaterGetWeight() -> Double {
+        return output.getWeight()
+    }
+    
+    func customWaterGetTotal() -> Int {
         return output.getTotal()
     }
     

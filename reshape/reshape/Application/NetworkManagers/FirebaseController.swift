@@ -223,11 +223,14 @@ extension FirebaseController: WeightFirebaseProtocol {
     func getCurrentWeight() -> String {
         // Получение ID последнего знаечния веса
         var maxID = -1;
-        userSnapshot.forEach { dataDict in
+        (userSnapshot["weights"] as? NSDictionary)?.forEach { dataDict in
             guard let key = dataDict.key as? String else { return }
-            guard let currentID = Int(key.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) else { return }
+            let test = key.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+            guard let currentID = Int(test) else { return }
             maxID = currentID > maxID ? currentID : maxID
         }
+        
+        if maxID == -1 { return "" }
         
         // Получение последнего знаечния веса
         let data = ((userSnapshot["weights"]
@@ -330,13 +333,15 @@ extension FirebaseController: WaterFirebaseProtocol {
                           as? NSDictionary)?["water\(id)"] as? NSDictionary else {
             return WaterStruct()
         }
+        let lastWeight = Double(getCurrentWeight()) ?? -1
         let waterStruct = WaterStruct(water: (dict["water"] as? NSNumber)?.intValue ?? 0,
                                       coffee: (dict["coffee"] as? NSNumber)?.intValue ?? 0,
                                       tea: (dict["tea"] as? NSNumber)?.intValue ?? 0,
                                       fizzy: (dict["fizzy"] as? NSNumber)?.intValue ?? 0,
                                       milk: (dict["milk"] as? NSNumber)?.intValue ?? 0,
                                       alcohol: (dict["alco"] as? NSNumber)?.intValue ?? 0,
-                                      juice: (dict["juice"] as? NSNumber)?.intValue ?? 0
+                                      juice: (dict["juice"] as? NSNumber)?.intValue ?? 0,
+                                      weight: lastWeight
         )
         return waterStruct
     }

@@ -29,6 +29,7 @@ protocol WaterScreenViewOutput: AnyObject {
     func getAlco() -> String
     func getJuice() -> String
     func getTotal() -> Int
+    func getWeight() -> Double
     
     func send(water: String,
               coffee: String,

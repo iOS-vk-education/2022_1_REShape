@@ -15,6 +15,7 @@ struct WaterStruct {
     var milk: Int
     var alcohol: Int
     var juice: Int
+    var weight: Double
     
     init() {
         water = 0
@@ -24,9 +25,10 @@ struct WaterStruct {
         milk = 0
         alcohol = 0
         juice = 0
+        weight = -1
     }
     
-    init(water: Int, coffee: Int, tea: Int, fizzy: Int, milk: Int, alcohol: Int, juice: Int) {
+    init(water: Int, coffee: Int, tea: Int, fizzy: Int, milk: Int, alcohol: Int, juice: Int, weight: Double = -1) {
         self.water = water
         self.coffee = coffee
         self.tea = tea
@@ -34,6 +36,7 @@ struct WaterStruct {
         self.milk = milk
         self.alcohol = alcohol
         self.juice = juice
+        self.weight = weight
     }
     
     func total() -> Int {

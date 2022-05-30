@@ -10,7 +10,8 @@ import UIKit
 
 protocol CustomWaterDelegate: AnyObject {
     func backButtonAction()
-    func getTotal() -> Int
+    func customWaterGetTotal() -> Int
+    func customWaterGetWeight() -> Double
 }
 
 final class CustomWaterView: UIView {
@@ -52,7 +53,7 @@ final class CustomWaterView: UIView {
         super.layoutSublayers(of: layer)
         // Проверка на первый запуск
         if waterImage.frame == .zero {
-            let newFrameY = self.frame.height * 0.7
+            let newFrameY = self.frame.height * 0.75
             let newFrameHeight = self.frame.height * 0.25 - 5
             waterImage.frame.origin = CGPoint(x: 0, y: newFrameY)
             waterImage.frame.size = CGSize(width: self.frame.width, height: newFrameHeight)
@@ -61,8 +62,11 @@ final class CustomWaterView: UIView {
     }
     
     func changeState() {
-        let total = delegate?.getTotal() ?? 0
-        var percent = Double(total) / 2000
+        let total = delegate?.customWaterGetTotal() ?? 0
+        guard let weight = delegate?.customWaterGetWeight(), weight != -1 else {
+            return
+        }
+        var percent = Double(total) / (weight * 30)
         if percent < 0.5 {
             percentLabel.textColor = .black
         } else {
@@ -75,12 +79,15 @@ final class CustomWaterView: UIView {
             percent = 1
             waterImage.image = UIImage(named: "WaterMaxGradient")
             backButton.setImage(UIImage(named: "WaterMaxBackButton"),for: .normal)
+        } else if percent < 0 {
+            percent = 0
+            waterImage.image = UIImage(named: "WaterGradient")
+            backButton.setImage(UIImage(named: "WaterBackButton"),for: .normal)
         } else {
             waterImage.image = UIImage(named: "WaterGradient")
             backButton.setImage(UIImage(named: "WaterBackButton"),for: .normal)
         }
-        var imagePercent = 0.7 * percent
-        imagePercent += 0.25
+        let imagePercent = 0.7 * percent + 0.25
         let frameY = self.frame.height * (1-imagePercent)
         let frameHeight = self.frame.height * imagePercent - 5
         let animator = UIViewPropertyAnimator(duration: 2, curve: .easeOut, animations: {

@@ -25,6 +25,10 @@ extension WaterScreenPresenter: WaterScreenModuleInput {
 }
 
 extension WaterScreenPresenter: WaterScreenViewOutput {
+    func getWeight() -> Double {
+        return interactor.getData().weight
+    }
+    
     func requestData() {
         interactor.requestData()
     }
@@ -78,6 +82,8 @@ extension WaterScreenPresenter: WaterScreenViewOutput {
     func getTotal() -> Int {
         return interactor.getTotal()
     }
+    
+    
     
     func backButtonPressed() {
         router.backButtonTapped()
