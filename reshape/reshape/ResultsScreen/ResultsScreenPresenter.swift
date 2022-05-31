@@ -82,9 +82,11 @@ extension ResultsScreenPresenter: ResultsScreenInteractorOutput {
     }
     
     func didLoadUserData(user: User, day: Int, targetCal: Double) {
-        let weightKey = user.weights.keys.max()
+        let weightKey = user.weights.keys.sorted().reversed().first
+        let currentDay = day % 10 + 1
+
         let currWeight = user.weights[weightKey ?? ""]
-        let currWater = user.water?["water\(day - 1)"]
+        let currWater = user.water?["water\(day)"]
         guard let phototUrl = URL(string: user.photo)
         else {
             return

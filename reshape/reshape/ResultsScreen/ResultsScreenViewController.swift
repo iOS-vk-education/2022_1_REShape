@@ -172,15 +172,12 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueCell(cellType: ResultCollectionCell.self, for: indexPath)
         
-        guard let targetCal = viewModel?.targetCalories,
-              let currentCal = viewModel?.currentCalories,
-              let targetWeight = viewModel?.targetWeight,
-              let currentWeight = viewModel?.currentWeight,
-              let currentWater = viewModel?.currentWater,
-              let firstWeight = viewModel?.firstWeight
-        else {
-            return cell
-        }
+        let targetCal = viewModel?.targetCalories ?? 0
+        let currentCal = viewModel?.currentCalories ?? 0
+        let targetWeight = viewModel?.targetWeight ?? ""
+        let currentWeight = viewModel?.currentWeight ?? ""
+        let currentWater = viewModel?.currentWater ?? 0
+        let firstWeight = viewModel?.firstWeight ?? ""
         
 
         let caloriesPercent = output.didGetPercent(target: targetCal, current: currentCal)
@@ -192,11 +189,8 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
         let waterPercent = output.didGetPercent(target: dblTargetWater, current: dblCurrentWater)
         let waterPart = output.didGetPart(target: dblTargetWater, current: dblCurrentWater)
         
-        guard let dblCurrentWeight = Double(currentWeight),
-              let dblFirstWeight = Double(firstWeight)
-        else {
-            return cell
-        }
+        let dblCurrentWeight = Double(currentWeight) ?? 0
+              let dblFirstWeight = Double(firstWeight) ?? 0
         
         let weightDifference = output.didGetDifference(currentWeight: dblCurrentWeight, firstWeight: dblFirstWeight)
         var stringDifference: String
