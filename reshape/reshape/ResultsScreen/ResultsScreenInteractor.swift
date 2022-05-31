@@ -56,9 +56,18 @@ extension ResultsScreenInteractor: ResultsScreenInteractorInput {
         return targetWater
     }
     
-    func getDifference(currentWeight: Double, firstWeight: Double) -> Double {
-        let difference = (round(currentWeight * 10) / 10) - firstWeight
-        return round(difference * 10) / 10
+    func getPercentWeight(currentWeight: Double, firstWeight: Double, targetWeight: Double) -> Double {
+        let difference = (round(firstWeight * 10) / 10) - targetWeight
+        var percent: Double = 0
+        if currentWeight >= firstWeight {
+            percent = 0
+//        } else if currentWeight == targetWeight {
+//            percent = 100
+        } else {
+            percent = (firstWeight - currentWeight) / difference * 100
+        }
+        
+        return round(percent)
     }
     
     func getResultPercent(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) -> Float {

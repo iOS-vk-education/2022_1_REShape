@@ -31,7 +31,7 @@ protocol ResultsScreenViewOutput: AnyObject {
     func didGetPart(target: Double, current: Double) -> Float
     func didGetPercent(target: Double, current: Double) -> Float
     func didGetTargetWater(currentWater: Double) -> Double
-    func didGetDifference(currentWeight: Double, firstWeight: Double) -> Double
+    func didGetPercentWeight(currentWeight: Double, firstWeight: Double, targetWeight: Double) -> Double
     func didGetResultPercent(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) -> Float
     func countTotalPercent(waterPercent: Float, caloriesPercent: Float, weightPercent: Float)
     func countTotalTasks(waterPercent: Float, caloriesPercent: Float, weightPercent: Float)
@@ -43,7 +43,7 @@ protocol ResultsScreenInteractorInput: AnyObject {
     func getPart(target: Double, current: Double) -> Float
     func getPercent(target: Double, current: Double) -> Float
     func getTargetWater(currentWater: Double) -> Double
-    func getDifference(currentWeight: Double, firstWeight: Double) -> Double
+    func getPercentWeight(currentWeight: Double, firstWeight: Double, targetWeight: Double) -> Double
     func getResultPercent(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) -> Float
     func getTotalTask(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) -> Int
     func willCountTotalPercent(waterPercent: Float, caloriesPercent: Float, weightPercent: Float)

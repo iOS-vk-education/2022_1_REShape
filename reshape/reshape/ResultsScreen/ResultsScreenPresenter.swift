@@ -26,8 +26,10 @@ extension ResultsScreenPresenter: ResultsScreenModuleInput {
 }
 
 extension ResultsScreenPresenter: ResultsScreenViewOutput {
-
-
+    func didGetPercentWeight(currentWeight: Double, firstWeight: Double, targetWeight: Double) -> Double {
+        interactor.getPercentWeight(currentWeight: currentWeight, firstWeight: firstWeight, targetWeight: targetWeight)
+    }
+    
     func didLoadInfo() {
         interactor.loadInfo()
     }
@@ -50,10 +52,6 @@ extension ResultsScreenPresenter: ResultsScreenViewOutput {
         return interactor.getTargetWater(currentWater: currentWater)
     }
 
-    func didGetDifference(currentWeight: Double, firstWeight: Double) -> Double{
-        return interactor.getDifference(currentWeight: currentWeight,
-                                        firstWeight: firstWeight)
-    }
     func didGetResultPercent(waterPercent: Float, caloriesPercent: Float, weightPercent: Float) -> Float {
         return interactor.getResultPercent(waterPercent: waterPercent,
                                            caloriesPercent: caloriesPercent,
