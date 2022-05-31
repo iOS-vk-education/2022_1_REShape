@@ -31,7 +31,7 @@ final class CustomWaterView: UIView {
         percentLabel.text = "0%"
         percentLabel.font = UIFont.systemFont(ofSize: 40, weight: .regular)
         percentLabel.textAlignment = .center
-        percentLabel.textColor = .white
+        percentLabel.textColor = .black
         return percentLabel
     }()
     
