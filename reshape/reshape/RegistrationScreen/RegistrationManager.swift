@@ -56,7 +56,7 @@ final class RegistrationManager{
                                 "email": email,
                                 "uid": result.user.uid
                             ])
-                            completion(nil)
+                        completion(nil)
                         case .failure(let error):
                             completion(error.localizedDescription)
                         }

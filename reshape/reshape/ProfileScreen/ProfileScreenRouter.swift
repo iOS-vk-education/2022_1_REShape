@@ -10,15 +10,15 @@ import UIKit
 
 final class ProfileScreenRouter {
     var window: UIWindow?
+    var firebaseController: ProfileFirebaseProtocol?
 }
 
 extension ProfileScreenRouter: ProfileScreenRouterInput {
     func quitButtonTapped() {
-        guard let window = window else {
-            return
+        guard let window = window else { return
         }
-        //TODO: - Тут я пока закоментил, надо будет сделать firebaseController, можешь у Ванька спросить или посмотреть его экран какой нибудь
-//        let coordinator = AuthCoordinator(window: window)
-//        coordinator.start()
+        guard let firebaseController = firebaseController else { return }
+        let coordinator = AuthCoordinator(window: window, firebaseController: firebaseController as! FirebaseController)
+        coordinator.start()
     }
 }

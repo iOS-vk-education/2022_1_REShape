@@ -61,7 +61,7 @@ extension MainFlowCoordinator{
         guard let navController = navigationControllers[.profile] else {
             fatalError("No navController")
         }
-        let profileContext = ProfileScreenContext(moduleOutput: nil, window: window)
+        let profileContext = ProfileScreenContext(moduleOutput: nil, firebaseController: fbController, window: window)
         let profileContainer = ProfileScreenContainer.assemble(with: profileContext)
         navController.setViewControllers([profileContainer.viewController], animated: true)
     }

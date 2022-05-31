@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ProfileFirebaseProtocol: AnyObject {
-    // Подгрузка и обновление информации
+//     Подгрузка и обновление информации
     func loadIndividualInfo(completion: @escaping (Error?) -> Void)
     func loadCommonInfo(completion: @escaping (Error?) -> Void)
     
@@ -18,6 +18,7 @@ protocol ProfileFirebaseProtocol: AnyObject {
     func getName() -> String
     func getSurname() -> String
     func getPhotoURL() -> URL?
+    func getEmail() -> String
     
     // Для таблицы
     func getGender() -> String

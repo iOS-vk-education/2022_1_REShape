@@ -24,23 +24,24 @@ final class CustomProfileView: UpGradientPanel {
         return button
     }()
     
-    private let nameLabel: UILabel = {
+    private(set) var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.text = "Ника Рябова"
+        nameLabel.text = "Имя пользователя"
         nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         nameLabel.textAlignment = .center
         nameLabel.textColor = .white
         return nameLabel
     }()
     
-    private let phoneNumberLabel: UILabel = {
-        let phoneNumberLabel = UILabel()
-        phoneNumberLabel.translatesAutoresizingMaskIntoConstraints = false
-        phoneNumberLabel.text = "+7(123)-456-78-90"
-        phoneNumberLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        phoneNumberLabel.textColor = .white
-        return phoneNumberLabel
+    private(set) var emailLabel: UILabel = {
+        let emailLabel = UILabel()
+        emailLabel.translatesAutoresizingMaskIntoConstraints = false
+        emailLabel.text = "почта"
+        emailLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        emailLabel.textAlignment = .center
+        emailLabel.textColor = .white
+        return emailLabel
     }()
     
     private let personalStackView: UIStackView = {
@@ -79,11 +80,11 @@ final class CustomProfileView: UpGradientPanel {
             personalStackView.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 33)
         ])
         personalStackView.addArrangedSubview(nameLabel)
-        personalStackView.addArrangedSubview(phoneNumberLabel)
+        personalStackView.addArrangedSubview(emailLabel)
         nameLabel.leading()
         nameLabel.trailing()
-        phoneNumberLabel.leading()
-        phoneNumberLabel.trailing()
+        emailLabel.leading()
+        emailLabel.trailing()
         
         self.addSubview(quitButton)
         quitButton.top(40, isIncludeSafeArea: false)
@@ -98,8 +99,28 @@ final class CustomProfileView: UpGradientPanel {
         quitButton.isUserInteractionEnabled = true
         quitButton.addTarget(self, action: #selector(quitButtonTapped), for: .touchUpInside)
     }
+    
     @objc func quitButtonTapped(){
         delegate?.quitButtonAction()
     }
 }
+
+//extension CustomProfileView {
+//    func setConfigForProfileScreen(withName name: String, withEmail email: String){
+//        setNameForProfileScreen(setName: name)
+//        setEmailForProfileScreen(setEmail: email)
+//    }
+//
+//    func setNameForProfileScreen(setName name: String) {
+//        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+//        self.nameLabel.textColor = .white
+//        self.nameLabel.text = name
+//    }
+//
+//    func setEmailForProfileScreen(setEmail email: String){
+//        emailLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+//        self.emailLabel.textColor = .white
+//        self.emailLabel.text = email
+//    }
+//}
     

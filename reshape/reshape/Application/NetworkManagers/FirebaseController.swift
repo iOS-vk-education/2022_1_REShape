@@ -298,6 +298,26 @@ extension FirebaseController: ResultFirebaseProtocol {
 }
 
 extension FirebaseController: ProfileFirebaseProtocol {
+    func upload(currentUserId: String, photo: Data, completion: @escaping (Result<URL, Error>) -> Void){
+        let ref = Storage.storage().reference().child("avatars").child(currentUserId)
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        ref.putData(photo, metadata: metadata) { (metadata, error) in
+            guard let _ = metadata else {
+                completion(.failure(error!))
+                return
+            }
+            ref.downloadURL { (url, error) in
+                guard let url = url else {
+                    completion(.failure(error!))
+                    return
+                }
+                completion(.success(url))
+                
+            }
+        }
+    }
+    
     func getGender() -> String {
         let gender = userSnapshot["gender"] as? String
         if gender == "man" {
@@ -346,8 +366,13 @@ extension FirebaseController: WaterFirebaseProtocol {
         return waterStruct
     }
     
-    func sendWater(withData data: WaterStruct, completion: @escaping (Error?) -> Void) {
-        // Проверки
+    func getEmail() -> String {
+        let email = userSnapshot["email"] as? String
+        return email ?? ""
+    }
+    
+    func sendWater(withWater data: Double, forDay day: Int, completion: @escaping (Error?) -> Void) {
+        // Проверка на авторизацию
         guard checkLogin() else {
             completion(NSError(domain: "No login", code: -10))
             return
