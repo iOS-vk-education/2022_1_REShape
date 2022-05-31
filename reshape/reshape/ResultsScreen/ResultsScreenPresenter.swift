@@ -82,8 +82,7 @@ extension ResultsScreenPresenter: ResultsScreenInteractorOutput {
     }
     
     func didLoadUserData(user: User, day: Int, targetCal: Double) {
-        let weightKey = user.weights.keys.sorted().reversed().first
-        let currentDay = day % 10 + 1
+        let weightKey = user.weights.keys.sorted(by: {$0.localizedStandardCompare($1) == .orderedAscending}).last
 
         let currWeight = user.weights[weightKey ?? ""]
         let currWater = user.water?["water\(day)"]

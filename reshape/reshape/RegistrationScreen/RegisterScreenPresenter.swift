@@ -47,9 +47,7 @@ extension RegisterScreenPresenter: RegisterScreenViewOutput {
                             password: password)
                             
     }
-    func registerDidTap() {
-        router.registerButtonTapped()
-    }
+
     
     func backButtonPressed(){
         router.backButtonTapped()
@@ -58,7 +56,11 @@ extension RegisterScreenPresenter: RegisterScreenViewOutput {
 
 extension RegisterScreenPresenter: RegisterScreenInteractorOutput {
     func registerStatus(errorString: String?) {
-        view?.didRegisterStatusSet(errorString: errorString)
+        if let errorString = errorString {
+            view?.didRegisterStatusSet(errorString: errorString)
+        } else {
+            router.registerButtonTapped()
+        }
     }
     
 }

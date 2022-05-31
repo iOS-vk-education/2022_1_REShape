@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 final class ResultsScreenInteractor {
     weak var output: ResultsScreenInteractorOutput?
@@ -16,6 +17,7 @@ final class ResultsScreenInteractor {
         resultsNetworkManager = ResultsNetworkManager()
         firebaseController = nil
     }
+    
 }
 
 extension ResultsScreenInteractor: ResultsScreenInteractorInput {
@@ -25,13 +27,6 @@ extension ResultsScreenInteractor: ResultsScreenInteractorInput {
             switch result {
             case .success(let (userData, currDay)):
                 let decoder = JSONDecoder()
-//                var currentDay = 0
-                
-//                if self?.firebaseController?.getDaysCount() != 0 {
-//                   currentDay  = currDay % ((self?.firebaseController?.getDaysCount() ?? 10)) + 1
-//                } else {
-//                    currentDay = 1
-//                }
                 let targetCal = self?.firebaseController?.getTargetCalories()
                 guard
                 let decoded = try? decoder.decode(User.self, from: userData)

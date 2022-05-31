@@ -25,10 +25,10 @@ final class RegistrationManager{
                       email: String,
                       password: String,
                       completion: @escaping (String?) -> ()){
-        AuthManger.register(email: email, password: password){ (result, error) in
+        AuthManger.register(email: email, password: password){ [weak self] (result, error) in
             guard let error = error else {
                 if let result = result {
-                    self.uploadPhoto(currentUserId: result.user.uid, photo: photo) {[weak self] myresult in
+                    self?.uploadPhoto(currentUserId: result.user.uid, photo: photo) {[weak self] myresult in
                         switch myresult {
                         case .success(let url):
                             // Создание словаря веса
@@ -56,12 +56,12 @@ final class RegistrationManager{
                                 "email": email,
                                 "uid": result.user.uid
                             ])
+                            completion(nil)
                         case .failure(let error):
                             completion(error.localizedDescription)
                         }
                     }
                 }
-                completion(nil)
                 return
             }
             if let authError = AuthErrorCode(rawValue: error._code) {

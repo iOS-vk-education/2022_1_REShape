@@ -309,18 +309,13 @@ extension RegisterScreenViewController: ImagePickerDelegate{
 
 
 extension RegisterScreenViewController: RegisterScreenViewInput {
-    func didRegisterStatusSet(errorString: String?) {
+    func didRegisterStatusSet(errorString: String) {
         DispatchQueue.main.async {
-            if let error = errorString {
-                self.makeAlert("Ошибка", error)
-            } else {
-                self.output.registerDidTap()
-            }
-            
+            self.makeAlert("Ошибка", errorString)
         }
     }
-    
 }
+
 
 
 
