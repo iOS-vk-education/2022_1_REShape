@@ -69,6 +69,8 @@ class WeightChart: LineChartView {
         set.drawHorizontalHighlightIndicatorEnabled = false
         set.drawVerticalHighlightIndicatorEnabled = false
         self.data = LineChartData(dataSet: set)
+        self.setVisibleXRangeMaximum(9)
+        self.moveViewToX(self.data?.xMax ?? 0)
     }
     
     func setupChart() {
@@ -77,6 +79,9 @@ class WeightChart: LineChartView {
         setViewPortOffsets(left: 25, top: 16, right: 16, bottom: 16)
         doubleTapToZoomEnabled = false
         pinchZoomEnabled = false
+        scaleXEnabled = false
+        scaleYEnabled = false
+        dragXEnabled = true
         
         rightAxis.enabled = false
         

@@ -253,6 +253,12 @@ extension DietScreenPresenter: DietScreenViewOutput {
     
     // Получение состояния блюда
     func getMealState(forMeal meal: MealsType, atIndex indexPath: IndexPath) -> MealState {
+        guard searchRow.isEmpty else {
+            let currentDay = interactor.getCurrentDay()
+            let section = translateSections(fromSearch: indexPath.section)
+            let state = getMealData(forMeal: meal, atIndex: indexPath).modelState
+            return currentDay < section ? .unavailable : MealState(state)
+        }
         let state = getMealData(forMeal: meal, atIndex: indexPath).modelState
         let currentDay = getCurrentDay()
         return currentDay < indexPath.section ? .unavailable : MealState(state)
@@ -400,6 +406,10 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
                 view?.hideCells(for: deletedCells)
             }
             view?.reloadTableRows(atIndex: mealsIndexPath, animation: .none)
+        }
+        guard searchRow.isEmpty else {
+            view?.reSearch()
+            return
         }
     }
     

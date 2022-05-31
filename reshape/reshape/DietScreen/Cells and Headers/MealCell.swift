@@ -95,7 +95,7 @@ final class MealCell: AbstractCell {
             checkCircleImage.image = UIImage(named: "notRememberButton")
         case .unavailable:
             checkCircleImage.image = nil
-            changeLeftTextConstraint(toAnchor: self.leftAnchor, constant: 11)
+            changeLeftTextConstraint(toAnchor: self.leftAnchor, constant: 16)
         case .loading:
             checkCircleImage.image = nil
             loadingSpinner.startAnimating()

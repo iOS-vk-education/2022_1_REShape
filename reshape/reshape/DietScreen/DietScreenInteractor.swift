@@ -56,6 +56,14 @@ final class DietScreenInteractor {
         uploadFromDatabase()
     }
     
+    private func updateAll() {
+        cellData.forEach { data in
+            let mealType = data.type()
+            let section = data.section()
+            self.extractMealData(fromSection: section, toMeal: mealType)
+        }
+    }
+    
     // Загрузка данных из локальной БД
     private func uploadFromDatabase() {
         do {
@@ -214,6 +222,7 @@ extension DietScreenInteractor {
             // Обработка данных
             guard let daysCount = self!.firebaseController?.getDaysCount() else { return }
             self!.createCellData(withNewDays: daysCount)
+            self!.updateAll()
             self!.output?.updateNumOfDays(daysCount)
         }
     }
