@@ -55,12 +55,12 @@ final class ResultsScreenViewController: UIViewController {
         output.didLoadInfo()
         reloadCollectionView()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         output.didLoadInfo()
         reloadCollectionView()
-
+        
     }
 }
 
@@ -88,7 +88,7 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
             self.resultsCollectionView.reloadData()
         }
     }
-
+    
     func updateViewWithError(error: Error){
         self.makeAlert("Ошибка", error.localizedDescription)
     }
@@ -182,7 +182,7 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
         let currentWater = viewModel?.currentWater ?? 0
         let firstWeight = viewModel?.firstWeight ?? ""
         
-
+        
         let caloriesPercent = output.didGetPercent(target: targetCal, current: currentCal)
         let caloriesPart = output.didGetPart(target: targetCal, current: currentCal)
         
@@ -193,62 +193,64 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
         let waterPart = output.didGetPart(target: dblTargetWater, current: dblCurrentWater)
         
         let dblCurrentWeight = Double(currentWeight) ?? 0
-              let dblFirstWeight = Double(firstWeight) ?? 0
+        let dblFirstWeight = Double(firstWeight) ?? 0
+        let dblTargetWeight = Double(targetWeight) ?? 0
         
-        let weightDifference = output.didGetDifference(currentWeight: dblCurrentWeight, firstWeight: dblFirstWeight)
-        var stringDifference: String
+        let weightDifference = output.didGetPercentWeight(currentWeight: dblCurrentWeight,
+                                                          firstWeight: dblFirstWeight,
+                                                          targetWeight: dblTargetWeight)
+        var stringDifference: String = ""
         var weightPercent: Float = 0.0
-        var weightColor: String
-        if weightDifference > 0 {
-            stringDifference = "+" + "\(weightDifference)"
+        var weightColor: String = "Green"
+        if weightDifference <= 0 {
+            stringDifference = "\(weightDifference)"
             weightColor = "Red"
-        } else if weightDifference < 0 {
+            weightPercent = 1
+        } else if weightDifference > 0 {
             stringDifference = "\(weightDifference)"
-            weightPercent = 100.0
-            weightColor = "Green"
-        } else {
-            stringDifference = "\(weightDifference)"
+            weightPercent = Float(weightDifference / 100)
             weightColor = "Green"
         }
-        if indexPath == IndexPath(item: 0, section: 0) {
-            output.countTotalPercent(waterPercent: waterPercent,
-                                     caloriesPercent: caloriesPercent,
-                                     weightPercent: weightPercent)
-            output.countTotalTasks(waterPercent: waterPercent,
-                                   caloriesPercent: caloriesPercent,
-                                   weightPercent: weightPercent)
+            
+            if indexPath == IndexPath(item: 0, section: 0) {
+                output.countTotalPercent(waterPercent: waterPercent,
+                                         caloriesPercent: caloriesPercent,
+                                         weightPercent: weightPercent * 100)
+                output.countTotalTasks(waterPercent: waterPercent,
+                                       caloriesPercent: caloriesPercent,
+                                       weightPercent: weightPercent * 100)
+            }
+            
+            
+            switch indexPath.item {
+            case 0:
+                cell.configure(category: "Калории",
+                               target: "\(targetCal) ккал",
+                               result: "\(currentCal) ккал",
+                               percent: "\(caloriesPercent)%",
+                               color: "Orange",
+                               valueOfprogress: caloriesPart)
+            case 1:
+                cell.configure(category: "Вес",
+                               target: "\(targetWeight) кг",
+                               result: "\(currentWeight) кг",
+                               percent: "\(stringDifference)%",
+                               color: weightColor,
+                               valueOfprogress: weightPercent)
+            case 2:
+                cell.configure(category: "Вода",
+                               target: "\(targetWater) литра",
+                               result: "\(currentWater) литра",
+                               percent: "\(waterPercent)%",
+                               color: "Blue",
+                               valueOfprogress: waterPart)
+            default:
+                break
+            }
+            
+            return cell
         }
         
         
-        switch indexPath.item {
-        case 0:
-            cell.configure(category: "Калории",
-                           target: "\(targetCal) ккал",
-                           result: "\(currentCal) ккал",
-                           percent: "\(caloriesPercent)%",
-                           color: "Orange",
-                           valueOfprogress: caloriesPart)
-        case 1:
-            cell.configure(category: "Вес",
-                           target: "\(targetWeight) кг",
-                           result: "\(currentWeight) кг",
-                           percent: "\(stringDifference) кг",
-                           color: weightColor,
-                           valueOfprogress: 1)
-        case 2:
-            cell.configure(category: "Вода",
-                           target: "\(targetWater) литра",
-                           result: "\(currentWater) литра",
-                           percent: "\(waterPercent)%",
-                           color: "Blue",
-                           valueOfprogress: waterPart)
-        default:
-            break
-        }
-        
-        return cell
-    }
-    
     
 }
-
