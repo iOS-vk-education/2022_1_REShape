@@ -25,6 +25,10 @@ extension ProfileScreenPresenter: ProfileScreenModuleInput {
 }
 
 extension ProfileScreenPresenter: ProfileScreenViewOutput {
+    func loadPhoto(photo: Data) {
+        interactor.didUploadPhoto(imageData: photo)
+    }
+    
     func didLoadInfo() {
         interactor.loadInfo()
     }
@@ -34,7 +38,7 @@ extension ProfileScreenPresenter: ProfileScreenViewOutput {
     }
     
     func didLogOut(){
-        UserDefaults.standard.removeObject(forKey: "isRemembered")
+        
         interactor.logOut()
     }
 }

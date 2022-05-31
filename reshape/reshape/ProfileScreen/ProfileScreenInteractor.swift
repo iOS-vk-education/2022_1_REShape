@@ -36,6 +36,19 @@ extension ProfileScreenInteractor: ProfileScreenInteractorInput {
     }
     
     func logOut(){
+        UserDefaults.standard.removeObject(forKey: "isRemembered")
         manager?.TappedLogOut()
+    }
+    
+    func didUploadPhoto(imageData: Data){
+        
+        manager?.upload(currentUserId: manager?.userUid ?? "", photo: imageData, completion: { result in
+            switch result {
+            case .success(let url):
+                print(url)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
     }
 }

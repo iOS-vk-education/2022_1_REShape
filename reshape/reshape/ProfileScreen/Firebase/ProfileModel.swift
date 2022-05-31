@@ -17,9 +17,10 @@ struct User: Codable {
     let weight: String?
     let surname: String
     let target: String
-    let uid: String}
+    let uid: String
+}
 
 enum Gender: String, Codable {
-    case man = "man"
-    case woman = "woman"
+    case man = "муж"
+    case woman = "жен"
 }

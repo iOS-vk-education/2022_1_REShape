@@ -39,6 +39,7 @@ final class CustomProfileView: UpGradientPanel {
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.text = "почта"
         emailLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        emailLabel.textAlignment = .center
         emailLabel.textColor = .white
         return emailLabel
     }()

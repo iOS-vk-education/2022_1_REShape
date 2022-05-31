@@ -25,9 +25,11 @@ protocol ProfileScreenViewOutput: AnyObject {
     func quitButtonPressed()
     func didLogOut()
     func didLoadInfo()
+    func loadPhoto(photo: Data)
 }
 
 protocol ProfileScreenInteractorInput: AnyObject {
+    func didUploadPhoto(imageData: Data)
     func logOut()
     func loadInfo()
 }

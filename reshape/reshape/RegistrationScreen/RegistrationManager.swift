@@ -55,12 +55,12 @@ final class RegistrationManager{
                                 "email": email,
                                 "uid": result.user.uid
                             ])
+                        completion(nil)
                         case .failure(let error):
                             completion(error.localizedDescription)
                         }
                     }
                 }
-                completion(nil)
                 return
             }
             if let authError = AuthErrorCode(rawValue: error._code) {

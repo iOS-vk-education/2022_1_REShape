@@ -170,6 +170,9 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
 extension ProfileScreenViewController: ImagePickerDelegate{
     func didSelect(image: UIImage?) {
         self.addPhoto.image = image
+        if let imageData = image?.jpegData(compressionQuality: 0.5) {
+            output.loadPhoto(photo: imageData)
+        }
     }
 }
 
@@ -200,35 +203,32 @@ extension ProfileScreenViewController: UICollectionViewDataSource {
 
         let cell = collectionView.dequeueCell(cellType: ProfileCollectionCell.self, for: indexPath)
         
-        guard let age = viewModel?.age,
-              let height = viewModel?.height,
-              let targetWeight = viewModel?.targetWeight,
-              let startWeight = viewModel?.startWeight,
-              let gender = viewModel?.gender
-        else {
-            return cell
-        }
+      let age = viewModel?.age
+      let height = viewModel?.height
+      let targetWeight = viewModel?.targetWeight
+      let startWeight = viewModel?.startWeight
+      let gender = viewModel?.gender
         
         switch indexPath.item {
             case 0:
                 cell.layer.cornerRadius = 10
                 cell.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
                 cell.configure(category: "Пол",
-                               inform: "\(gender)")
+                               inform: "\(gender ?? "")")
             case 1:
                 cell.configure(category: "Возраст",
-                               inform: "\(age)")
+                               inform: "\(age ?? "")")
             case 2:
                 cell.configure(category: "Рост",
-                               inform: "\(height)")
+                               inform: "\(height ?? "")")
             case 3:
                 cell.configure(category: "Начальный вес",
-                               inform: "\(startWeight)")
+                               inform: "\(startWeight ?? "")")
             case 4:
                 cell.layer.cornerRadius = 10
                 cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
                 cell.configure(category: "Цель по весу",
-                               inform: "\(targetWeight)")
+                               inform: "\(targetWeight ?? "")")
             default:
                 break
             }
