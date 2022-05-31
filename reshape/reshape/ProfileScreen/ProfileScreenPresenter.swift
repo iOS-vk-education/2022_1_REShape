@@ -58,7 +58,7 @@ extension ProfileScreenPresenter: ProfileScreenInteractorOutput {
                                          email: user.email,
                                          targetWeight: user.target,
                                          startWeight: user.weight ?? "",
-                                         gender: user.gender.rawValue,
+                                         gender: user.gender.rus,
                                          age: user.age,
                                          height: user.height,
                                         photoURL: phototUrl)
