@@ -24,20 +24,20 @@ final class CustomProfileView: UpGradientPanel {
         return button
     }()
     
-    private let nameLabel: UILabel = {
+    private(set) var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.text = "Ника"
+        nameLabel.text = "Имя пользователя"
         nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         nameLabel.textAlignment = .center
         nameLabel.textColor = .white
         return nameLabel
     }()
     
-    private let emailLabel: UILabel = {
+    private(set) var emailLabel: UILabel = {
         let emailLabel = UILabel()
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
-        emailLabel.text = "+7(123)-456-78-90"
+        emailLabel.text = "почта"
         emailLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         emailLabel.textColor = .white
         return emailLabel
@@ -104,22 +104,22 @@ final class CustomProfileView: UpGradientPanel {
     }
 }
 
-extension CustomProfileView {
-    func setConfigForProfileScreen(withName name: String, withEmail email: String){
-        setNameForProfileScreen(setName: name)
-        setEmailForProfileScreen(setEmail: email)
-    }
-    
-    func setNameForProfileScreen(setName name: String) {
-        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        self.nameLabel.textColor = .white
-        self.nameLabel.text = name
-    }
-    
-    func setEmailForProfileScreen(setEmail email: String){
-        emailLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        self.emailLabel.textColor = .white
-        self.emailLabel.text = email
-    }
-}
+//extension CustomProfileView {
+//    func setConfigForProfileScreen(withName name: String, withEmail email: String){
+//        setNameForProfileScreen(setName: name)
+//        setEmailForProfileScreen(setEmail: email)
+//    }
+//
+//    func setNameForProfileScreen(setName name: String) {
+//        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+//        self.nameLabel.textColor = .white
+//        self.nameLabel.text = name
+//    }
+//
+//    func setEmailForProfileScreen(setEmail email: String){
+//        emailLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+//        self.emailLabel.textColor = .white
+//        self.emailLabel.text = email
+//    }
+//}
     

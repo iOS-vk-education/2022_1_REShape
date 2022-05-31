@@ -16,40 +16,25 @@ protocol ProfileScreenModuleOutput: AnyObject {
 }
 
 protocol ProfileScreenViewInput: AnyObject {
-    func updateInform()
+    func reloadCollectionView()
+    func updateViewWithUserData(viewModel: ProfileModelView)
+    func updateViewWithError(error: Error)
 }
 
 protocol ProfileScreenViewOutput: AnyObject {
     func quitButtonPressed()
     func didLogOut()
-    func requestUploadData()
-    func getEmail() -> String
-    func getName() -> String
-    func getSurname() -> String
-    func getTargetWeight() -> String
-    func getStartWeight() -> String
-    func getAge() -> String
-    func getHeight() -> String
-    func getGender() -> String
-    func getPhotoURL() -> URL?
+    func didLoadInfo()
 }
 
 protocol ProfileScreenInteractorInput: AnyObject {
     func logOut()
-    func getDataFromRemoteBase()
-    func getName() -> String
-    func getSurname() -> String
-    func getEmail() -> String
-    func getTargetWeight() -> String
-    func getStartWeight() -> String
-    func getAge() -> String
-    func getHeight() -> String
-    func getGender() -> String
-    func getPhotoURL() -> URL?
+    func loadInfo()
 }
 
 protocol ProfileScreenInteractorOutput: AnyObject {
-    func informGetted()
+    func didLoadUserData(user: User)
+    func didCatchError(error: Error)
 }
 
 protocol ProfileScreenRouterInput: AnyObject {

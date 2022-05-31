@@ -25,57 +25,41 @@ extension ProfileScreenPresenter: ProfileScreenModuleInput {
 }
 
 extension ProfileScreenPresenter: ProfileScreenViewOutput {
+    func didLoadInfo() {
+        interactor.loadInfo()
+    }
+    
     func quitButtonPressed() {
         router.quitButtonTapped()
     }
     
     func didLogOut(){
+        UserDefaults.standard.removeObject(forKey: "isRemembered")
         interactor.logOut()
-    }
-    
-    func requestUploadData() {
-        interactor.getDataFromRemoteBase()
-    }
-    
-    func getEmail() -> String {
-        return interactor.getEmail()
-    }
-    
-    func getName() -> String {
-        return interactor.getName()
-    }
-    
-    func getSurname() -> String {
-        return interactor.getSurname()
-    }
-    
-    func getTargetWeight() -> String {
-        return interactor.getTargetWeight()
-    }
-    
-    func getStartWeight() -> String {
-        return interactor.getStartWeight()
-    }
-    
-    func getAge() -> String {
-        return interactor.getAge()
-    }
-    
-    func getHeight() -> String {
-        return interactor.getHeight()
-    }
-    
-    func getGender() -> String {
-        return interactor.getGender()
-    }
-    
-    func getPhotoURL() -> URL? {
-        return interactor.getPhotoURL()
     }
 }
 
 extension ProfileScreenPresenter: ProfileScreenInteractorOutput {
-    func informGetted() {
-        view?.updateInform()
+    func didCatchError(error: Error) {
+        view?.updateViewWithError(error: error)
+    }
+    
+    func didLoadUserData(user: User) {
+        guard let phototUrl = URL(string: user.photo)
+        else {
+            return
+        }
+        let viewModel = ProfileModelView(name: user.name,
+                                         surname: user.surname,
+                                         email: user.email,
+                                         targetWeight: user.target,
+                                         startWeight: user.start,
+                                         gender: user.gender.rawValue,
+                                         age: user.age,
+                                         height: user.height,
+                                        photoURL: phototUrl)
+        view?.updateViewWithUserData(viewModel: viewModel)
+        print(user.name)
+        view?.reloadCollectionView()
     }
 }

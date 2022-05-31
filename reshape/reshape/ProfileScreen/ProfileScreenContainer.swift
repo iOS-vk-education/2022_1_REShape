@@ -27,6 +27,7 @@ final class ProfileScreenContainer {
         router.window = context.window
 
 		interactor.output = presenter
+        interactor.firebaseController = context.firebaseController
 
         return ProfileScreenContainer(view: viewController, input: presenter, router: router)
 	}

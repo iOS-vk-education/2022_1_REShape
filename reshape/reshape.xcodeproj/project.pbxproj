@@ -138,6 +138,9 @@
 		F7435498280B35A0002E03BB /* WaterScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7435492280B35A0002E03BB /* WaterScreenContainer.swift */; };
 		F74354A1280B48CA002E03BB /* CustomProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A0280B48CA002E03BB /* CustomProfileView.swift */; };
 		F74354A3280B4913002E03BB /* CustomWaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74354A2280B4913002E03BB /* CustomWaterView.swift */; };
+		F785D642284564CD004011E5 /* ProfileModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F785D641284564CD004011E5 /* ProfileModelView.swift */; };
+		F785D644284565E2004011E5 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F785D643284565E2004011E5 /* ProfileModel.swift */; };
+		F785D64628456C5A004011E5 /* DataSnapshotExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F785D64528456C5A004011E5 /* DataSnapshotExtension.swift */; };
 		F7B8F5A2281F0B31007E1766 /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8F5A1281F0B30007E1766 /* ProfileManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -299,6 +302,9 @@
 		F7435492280B35A0002E03BB /* WaterScreenContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterScreenContainer.swift; sourceTree = "<group>"; };
 		F74354A0280B48CA002E03BB /* CustomProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProfileView.swift; sourceTree = "<group>"; };
 		F74354A2280B4913002E03BB /* CustomWaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWaterView.swift; sourceTree = "<group>"; };
+		F785D641284564CD004011E5 /* ProfileModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModelView.swift; sourceTree = "<group>"; };
+		F785D643284565E2004011E5 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		F785D64528456C5A004011E5 /* DataSnapshotExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSnapshotExtension.swift; sourceTree = "<group>"; };
 		F7B8F5A1281F0B30007E1766 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
 		FEB3BE15F3287165E3C55D32 /* Pods_reshapeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_reshapeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -435,6 +441,8 @@
 			isa = PBXGroup;
 			children = (
 				2EDB9636283F8D7900F3B38A /* ProfileFirebaseProtocol.swift */,
+				F785D641284564CD004011E5 /* ProfileModelView.swift */,
+				F785D643284565E2004011E5 /* ProfileModel.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -513,6 +521,7 @@
 				36A9DAFE27E2AC3400DB5082 /* Products */,
 				8BA71454E48A74F0229E5981 /* Pods */,
 				19B99791F1D2BC5F5F65C43B /* Frameworks */,
+				F785D63F2843AC65004011E5 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -582,7 +591,6 @@
 				43FA68FDA74F2D12B0699070 /* Pods-reshapeTests.debug.xcconfig */,
 				B4A246E716339D9039BFB969 /* Pods-reshapeTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -708,6 +716,7 @@
 				2EF20C02281039E50019CF64 /* DateExtension.swift */,
 				2EA1E8A228041343001B329A /* UIImage+Extension.swift */,
 				2EC4E71A28185454002AF235 /* AbstractModelController.swift */,
+				F785D64528456C5A004011E5 /* DataSnapshotExtension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -742,6 +751,14 @@
 				F7435492280B35A0002E03BB /* WaterScreenContainer.swift */,
 			);
 			path = WaterScreen;
+			sourceTree = "<group>";
+		};
+		F785D63F2843AC65004011E5 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1044,11 +1061,13 @@
 				2EB767CF2809F08F008868DD /* WeightRouter.swift in Sources */,
 				2EA1E8A127FCDB8E001B329A /* DietHeader.swift in Sources */,
 				945B386027ECC3500044E952 /* ProfileScreenProtocols.swift in Sources */,
+				F785D64628456C5A004011E5 /* DataSnapshotExtension.swift in Sources */,
 				945B384527ECC32A0044E952 /* ResultsScreenPresenter.swift in Sources */,
 				2EDB9632283ABCC900F3B38A /* DietFirebaseProtocol.swift in Sources */,
 				2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */,
 				2EECFF3827E5037100BD4BEF /* EnterContainer.swift in Sources */,
 				2EDB9634283BDD3A00F3B38A /* SearchStruct.swift in Sources */,
+				F785D642284564CD004011E5 /* ProfileModelView.swift in Sources */,
 				94302BC527E66080009E397B /* ForgetPasswordScreenInteractor.swift in Sources */,
 				945B385427ECC33A0044E952 /* DietScreenProtocols.swift in Sources */,
 				2EB767D32809F08F008868DD /* WeightContainer.swift in Sources */,
@@ -1097,6 +1116,7 @@
 				2EF20C01281028750019CF64 /* GradientType.swift in Sources */,
 				2EB767D02809F08F008868DD /* WeightViewController.swift in Sources */,
 				941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */,
+				F785D644284565E2004011E5 /* ProfileModel.swift in Sources */,
 				2EA1E89F27FCDB47001B329A /* MealCell.swift in Sources */,
 				2EC4E71B28185454002AF235 /* AbstractModelController.swift in Sources */,
 				9478495A27FB221400138DA4 /* RegisterScreenProtocols.swift in Sources */,

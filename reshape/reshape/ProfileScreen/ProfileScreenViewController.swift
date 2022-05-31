@@ -29,6 +29,8 @@ final class ProfileScreenViewController: UIViewController {
         photo.translatesAutoresizingMaskIntoConstraints = false
         return photo
     }()
+    
+    private var viewModel: ProfileModelView?
 
     private let informHeaderLabel: UILabel = {
         let informHeaderLabel = UILabel()
@@ -56,11 +58,12 @@ final class ProfileScreenViewController: UIViewController {
         setupUI()
         setupCollectionView()
         mainView.delegate = self
+        output.didLoadInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        output.requestUploadData()
+        output.didLoadInfo()
     }
     
     override func viewDidLayoutSubviews() {
@@ -68,13 +71,31 @@ final class ProfileScreenViewController: UIViewController {
         addPhoto.layer.cornerRadius = addPhoto.frame.size.height / 2
         addPhoto.layer.masksToBounds = true
         
-        if addPhoto.image == nil {
-            addPhoto.image = UIImage(named: "person")
-        }
+//        if addPhoto.image == nil {
+//            addPhoto.image = UIImage(named: "person")
+//        }
     }
 }
 
 extension ProfileScreenViewController: ProfileScreenViewInput {
+    func updateViewWithUserData(viewModel: ProfileModelView) {
+        DispatchQueue.main.async {
+            self.viewModel = viewModel
+            let name = viewModel.name
+            let surname = viewModel.surname
+            let email = viewModel.email
+            let photoURL = viewModel.photoURL
+            self.mainView.nameLabel.text = name + " " + surname
+            self.mainView.emailLabel.text = email
+            self.addPhoto.loadImage(photoURL: photoURL)
+//            self.profileCollectionView.reloadData()
+        }
+    }
+    
+    func updateViewWithError(error: Error) {
+        self.makeAlert("Ошибка", error.localizedDescription)
+    }
+    
     private func setupConstraints(){
         view.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
@@ -110,6 +131,15 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
         addPhoto.width(119)
     }
     
+    func reloadCollectionView() {
+        guard let name = viewModel?.name else { return }
+        guard let surname = viewModel?.surname else { return }
+        guard let photoURL = viewModel?.photoURL else {return}
+        mainView.nameLabel.text = name + " " + surname
+        self.addPhoto.loadImage(photoURL: photoURL)
+//        profileCollectionView.reloadData()
+    }
+    
     func setupUI() {
         view.backgroundColor = .white
         mainView.setupGradientColor(withColor: [UIColor.lightVioletColor.cgColor,
@@ -126,12 +156,6 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
         addPhoto.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                              action: #selector(selectPhoto)))
 
-    }
-    
-    func updateInform() {
-        mainView.setNameForProfileScreen(setName: output.getName() + output.getSurname())
-        mainView.setEmailForProfileScreen(setEmail: output.getEmail())
-//        self.addPhoto.loadImage(photoURL: output.getPhotoURL() ?? nil)
     }
     
     @objc func selectPhoto(){
@@ -175,27 +199,36 @@ extension ProfileScreenViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueCell(cellType: ProfileCollectionCell.self, for: indexPath)
-
+        
+        guard let age = viewModel?.age,
+              let height = viewModel?.height,
+              let targetWeight = viewModel?.targetWeight,
+              let startWeight = viewModel?.startWeight,
+              let gender = viewModel?.gender
+        else {
+            return cell
+        }
+        
         switch indexPath.item {
             case 0:
                 cell.layer.cornerRadius = 10
                 cell.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
                 cell.configure(category: "Пол",
-                               inform: output.getGender())
+                               inform: "\(gender)")
             case 1:
                 cell.configure(category: "Возраст",
-                               inform: output.getAge())
+                               inform: "\(age)")
             case 2:
                 cell.configure(category: "Рост",
-                               inform: output.getHeight())
+                               inform: "\(height)")
             case 3:
                 cell.configure(category: "Начальный вес",
-                               inform: output.getStartWeight())
+                               inform: "\(startWeight)")
             case 4:
                 cell.layer.cornerRadius = 10
                 cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
                 cell.configure(category: "Цель по весу",
-                               inform: output.getTargetWeight())
+                               inform: "\(targetWeight)")
             default:
                 break
             }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ProfileFirebaseProtocol: AnyObject {
-    // Подгрузка и обновление информации
+//     Подгрузка и обновление информации
     func loadIndividualInfo(completion: @escaping (Error?) -> Void)
     func loadCommonInfo(completion: @escaping (Error?) -> Void)
     
