@@ -70,12 +70,10 @@ extension WeightInteractor: WeightInteractorInput {
     }
     
     func uploadNewWeight(_ data: WeightStruct) {
-        print("[DEBUG] Загрузка локальной БД (обновления БД) весов на сервер")
         firebaseController?.sendNewWeight(forID: localViewModels.count, withWeight: data, completion: ifLoadSuccess(error:data:))
     }
     
     func getDataFromRemoteBase() {
-        print("[DEBUG] Запрос на загрузку удаленной БД весов")
         firebaseController?.loadIndividualInfo { [weak self] error in
             // Блок проверок
             guard (error == nil) else { return }

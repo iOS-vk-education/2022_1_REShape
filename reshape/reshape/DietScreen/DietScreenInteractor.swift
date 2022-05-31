@@ -155,7 +155,6 @@ extension DietScreenInteractor {
         
         // Запрос на сервер если ячейка открыта
         if state == .disclosure {
-            print("[DEBUG] Data from \(meal.text) need to get at \(section + 1) day")
             // Запрос на загрузку индивидуальных параметров
             firebaseController?.loadIndividualInfo { _ in return }
             firebaseController?.loadCommonInfo { [weak self] error in
@@ -184,11 +183,10 @@ extension DietScreenInteractor {
         cal += state ? mealData.modelCalories : -mealData.modelCalories
         
         // Отправка данных
-        print("[DEBUG] New state \(state) of \(meal.text) transmit at \(section + 1) day in \(id) position")
         firebaseController?.sendMealAndCalState(
             mealState: state,
             calories: cal,
-            forDay: section + 1,
+            forDay: section,
             forMeal: meal.engText,
             forID: id + 1) { [weak self] error in
                 // Блок проверок
@@ -206,7 +204,6 @@ extension DietScreenInteractor {
     
     // Запрос на получение данных
     func getDatabase() {
-        print("[DEBUG] Request to download all data")
         output?.updateNumOfDays(numOfDays())
         firebaseController?.loadIndividualInfo { _ in return }
         firebaseController?.loadCommonInfo { [weak self] error in

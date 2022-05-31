@@ -72,7 +72,7 @@ final class CustomWaterView: UIView {
         } else {
             percentLabel.textColor = .white
         }
-        percentLabel.text = "\(Int(percent * 100))%"
+        percentLabel.text = "\(Int(round(percent * 100)))%"
         
         // Craete mask
         if percent > 1 {

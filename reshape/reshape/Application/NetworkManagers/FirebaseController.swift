@@ -140,7 +140,7 @@ extension FirebaseController: DietFirebaseProtocol {
         let mealCal = (mealDict?["mealCalories"] as? NSNumber)?.doubleValue ?? 0
         
         // Номер общего дня
-        let diffDay = day - getCurrentDay()
+        let diffDay = day - 1 - getCurrentDay()
         let commonDay = currentDay + diffDay
         
         // Состояние нажатия
