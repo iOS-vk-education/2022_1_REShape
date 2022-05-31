@@ -294,6 +294,9 @@ extension WaterScreenViewController: UITextFieldDelegate {
         if Int(textField.text ?? "") == nil {
             textField.text = self.lastData
         }
+        if Int(textField.text!)! > 5000 {
+            textField.text = "5000"
+        }
         self.sendData()
     }
 }

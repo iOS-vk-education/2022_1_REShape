@@ -22,6 +22,13 @@ struct User: Codable {
 enum Gender: String, Codable {
     case man = "man"
     case woman = "woman"
+    
+    var rus: String {
+        switch self {
+        case .man: return "муж"
+        case .woman: return "жен"
+        }
+    }
 }
 
 struct Weight: Codable {

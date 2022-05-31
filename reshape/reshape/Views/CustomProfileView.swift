@@ -87,7 +87,7 @@ final class CustomProfileView: UpGradientPanel {
         emailLabel.trailing()
         
         self.addSubview(quitButton)
-        quitButton.top(40, isIncludeSafeArea: false)
+        quitButton.top(10, isIncludeSafeArea: true)
         quitButton.trailing(-27)
     }
     

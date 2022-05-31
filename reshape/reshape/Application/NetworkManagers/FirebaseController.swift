@@ -371,7 +371,7 @@ extension FirebaseController: WaterFirebaseProtocol {
         return email ?? ""
     }
     
-    func sendWater(withWater data: Double, forDay day: Int, completion: @escaping (Error?) -> Void) {
+    func sendWater(withData data: WaterStruct, completion: @escaping (Error?) -> Void) {
         // Проверка на авторизацию
         guard checkLogin() else {
             completion(NSError(domain: "No login", code: -10))
