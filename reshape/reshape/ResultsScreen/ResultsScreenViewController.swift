@@ -36,6 +36,8 @@ final class ResultsScreenViewController: UIViewController {
         return targetLabel
     }()
     
+    private var viewModel: ResultViewModel?
+    
     init(output: ResultsScreenViewOutput) {
         self.output = output
         
@@ -51,10 +53,43 @@ final class ResultsScreenViewController: UIViewController {
         setupConstraints()
         setupUI()
         setupCollectionView()
+        output.didLoadInfo()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        output.didLoadInfo()
     }
 }
 
 extension ResultsScreenViewController: ResultsScreenViewInput {
+    func updateViewWithTotalPercent(_ totalPercent: Float) {
+        self.mainView.progressNumberLabel.text = "\(totalPercent.rounded())%"
+        var totalPart: Float = totalPercent / 100
+        if totalPart > 1 {
+            totalPart = 1
+        }
+        self.mainView.photoProgressView.animateProgress(value: totalPart)
+    }
+    func updateViewWithTasks(_ totalTasks: Int){
+        self.mainView.targetNumberLabel.text = "\(totalTasks)"
+    }
+    
+    func updateViewWithUserData(viewModel: ResultViewModel) {
+        DispatchQueue.main.async {
+            self.viewModel = viewModel
+            let name = viewModel.name
+            let surname = viewModel.surname
+            let photoURL = viewModel.photoURL
+            self.mainView.nameLabel.text = name + " " + surname
+            self.mainView.photoProgressView.personImage.loadImage(photoURL: photoURL)
+            self.resultsCollectionView.reloadData()
+        }
+    }
+    func updateViewWithError(error: Error){
+        self.makeAlert("Ошибка", error.localizedDescription)
+    }
+    
     private func setupConstraints(){
         view.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
@@ -77,8 +112,17 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
         resultsCollectionView.height(view.bounds.height / 2.5)
         
     }
+    func reloadCollectionView() {
+        guard let name = viewModel?.name else { return }
+        guard let surname = viewModel?.surname else { return }
+        guard let photoURL = viewModel?.photoURL else {return}
+        mainView.nameLabel.text = name + " " + surname
+        mainView.photoProgressView.personImage.loadImage(photoURL: photoURL)
+        resultsCollectionView.reloadData()
+    }
     private func setupUI(){
         view.backgroundColor = .white
+        
         mainView.setupGradientColor(withColor: [UIColor.lightVioletColor.cgColor,
                                                 UIColor.darkVioletColor.cgColor])
         mainView.setupGradientDirection(withDirection: .topToDown)
@@ -128,28 +172,70 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueCell(cellType: ResultCollectionCell.self, for: indexPath)
         
+        let targetCal = viewModel?.targetCalories ?? 0
+        let currentCal = viewModel?.currentCalories ?? 0
+        let targetWeight = viewModel?.targetWeight ?? ""
+        let currentWeight = viewModel?.currentWeight ?? ""
+        let currentWater = viewModel?.currentWater ?? 0
+        let firstWeight = viewModel?.firstWeight ?? ""
+        
+
+        let caloriesPercent = output.didGetPercent(target: targetCal, current: currentCal)
+        let caloriesPart = output.didGetPart(target: targetCal, current: currentCal)
+        
+        let targetWater = output.didGetTargetWater(currentWater: Double(currentWeight) ?? 0)
+        let dblCurrentWater = Double(currentWater)
+        let dblTargetWater = Double(targetWater)
+        let waterPercent = output.didGetPercent(target: dblTargetWater, current: dblCurrentWater)
+        let waterPart = output.didGetPart(target: dblTargetWater, current: dblCurrentWater)
+        
+        let dblCurrentWeight = Double(currentWeight) ?? 0
+              let dblFirstWeight = Double(firstWeight) ?? 0
+        
+        let weightDifference = output.didGetDifference(currentWeight: dblCurrentWeight, firstWeight: dblFirstWeight)
+        var stringDifference: String
+        var weightPercent: Float = 0.0
+        var weightColor: String
+        if weightDifference > 0 {
+            stringDifference = "+" + "\(weightDifference)"
+            weightColor = "Red"
+        } else {
+            stringDifference = "\(weightDifference)"
+            weightPercent = 100.0
+            weightColor = "Green"
+        }
+        if indexPath == IndexPath(item: 0, section: 0) {
+            output.countTotalPercent(waterPercent: waterPercent,
+                                     caloriesPercent: caloriesPercent,
+                                     weightPercent: weightPercent)
+            output.countTotalTasks(waterPercent: waterPercent,
+                                   caloriesPercent: caloriesPercent,
+                                   weightPercent: weightPercent)
+        }
+        
+        
         switch indexPath.item {
         case 0:
             cell.configure(category: "Калории",
-                           target: "2000 ккал",
-                           result: "1000 ккал",
-                           percent: "50%",
+                           target: "\(targetCal) ккал",
+                           result: "\(currentCal) ккал",
+                           percent: "\(caloriesPercent)%",
                            color: "Orange",
-                           valueOfprogress: 0.5)
+                           valueOfprogress: caloriesPart)
         case 1:
             cell.configure(category: "Вес",
-                           target: "50 кг",
-                           result: "52 кг",
-                           percent: "-200г",
-                           color: "Green",
+                           target: "\(targetWeight) кг",
+                           result: "\(currentWeight) кг",
+                           percent: "\(stringDifference) кг",
+                           color: weightColor,
                            valueOfprogress: 1)
         case 2:
             cell.configure(category: "Вода",
-                           target: "2 литра",
-                           result: "1,25 литра",
-                           percent: "62%",
+                           target: "\(targetWater) литра",
+                           result: "\(currentWater) литра",
+                           percent: "\(waterPercent)%",
                            color: "Blue",
-                           valueOfprogress: 0.62)
+                           valueOfprogress: waterPart)
         default:
             break
         }
@@ -159,3 +245,4 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
     
     
 }
+

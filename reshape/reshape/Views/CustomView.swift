@@ -10,11 +10,11 @@ import UIKit
 
 final class CustomView: UpGradientPanel {
     var progressView: CircularProgressBarView = CircularProgressBarView()
-    private let progressNumberLabel: UILabel = {
+    private(set) var progressNumberLabel: UILabel = {
         let progressNumberLabel = UILabel()
         progressNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         progressNumberLabel.font = UIFont.systemFont(ofSize: 18, weight: .thin)
-        progressNumberLabel.text = "75%"
+        progressNumberLabel.text = "0%"
         progressNumberLabel.textAlignment = .center
         progressNumberLabel.textColor = .white
         return progressNumberLabel
@@ -35,11 +35,11 @@ final class CustomView: UpGradientPanel {
         progressStackView.axis = .vertical
         return progressStackView
     }()
-    private let targetNumberLabel: UILabel = {
+    private(set) var targetNumberLabel: UILabel = {
         let targetNumberLabel = UILabel()
         targetNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         targetNumberLabel.textAlignment = .center
-        targetNumberLabel.text = "2"
+        targetNumberLabel.text = "0"
         targetNumberLabel.font = UIFont.systemFont(ofSize: 18, weight: .thin)
         targetNumberLabel.textColor = .white
         return targetNumberLabel
@@ -61,11 +61,11 @@ final class CustomView: UpGradientPanel {
         targetStackView.spacing = 4
         return targetStackView
     }()
-    private let photoProgressView: PhotoProgressView = PhotoProgressView()
-    private let nameLabel: UILabel = {
+    private(set) var photoProgressView: PhotoProgressView = PhotoProgressView()
+    private(set) var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.text = "Ника Рябова"
+        nameLabel.text = "..."
         nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         nameLabel.textAlignment = .center
         nameLabel.textColor = .white

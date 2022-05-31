@@ -10,6 +10,8 @@ import UIKit
 extension UIColor {
     // Blue
     static let blueColor = UIColor(named: "Blue")!
+    // red
+    static let redColor = UIColor(named: "Red")
     
     // Green
     static let greyGreenColor = UIColor(named: "GreyGreen")!

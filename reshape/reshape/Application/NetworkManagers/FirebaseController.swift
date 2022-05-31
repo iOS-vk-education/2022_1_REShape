@@ -69,7 +69,6 @@ extension FirebaseController: DietFirebaseProtocol {
             completion(NSError(domain: "No login", code: -10))
             return
         }
-        
         userDBRef.getData() { [weak self] error, snapshot in
             guard error == nil else {
                 print(error!.localizedDescription)
@@ -97,8 +96,12 @@ extension FirebaseController: DietFirebaseProtocol {
     }
     
     func getCurrentDay() -> Int {
-        guard currentDay != -1 else { return -1 }
-        guard getDaysCount() != 0 else { return -1 }
+        guard currentDay != -1 else {
+            return -1
+        }
+        guard getDaysCount() != 0 else {
+            return -1
+        }
         return currentDay % getDaysCount()
     }
     
@@ -114,7 +117,7 @@ extension FirebaseController: DietFirebaseProtocol {
     
     // Получение целевых калорий
     func getTargetCalories() -> Double {
-        let day = getCurrentDay()
+        let day = getCurrentDay() + 1
         let target = ((commonSnapshot["day\(day)"]
                        as? NSDictionary)?["dayCalories"]
                       as? NSNumber)?.doubleValue ?? 0
@@ -205,7 +208,7 @@ extension FirebaseController: DietFirebaseProtocol {
 
 extension FirebaseController: WeightFirebaseProtocol {
     func getName() -> String {
-        return name ?? ""
+        return name ?? "Unknown"
     }
     
     // Получение всех данных о весе
@@ -218,7 +221,6 @@ extension FirebaseController: WeightFirebaseProtocol {
         let stringTime = downloadData?["Time"] as? String ?? ""
         return WeightStruct(weight: stringWeight, date: stringDate, time: stringTime)
     }
-    
     // Получениие последнего веса
     func getCurrentWeight() -> String {
         // Получение ID последнего знаечния веса
@@ -233,9 +235,7 @@ extension FirebaseController: WeightFirebaseProtocol {
         if maxID == -1 { return "" }
         
         // Получение последнего знаечния веса
-        let data = ((userSnapshot["weights"]
-                     as? NSDictionary)?["weight\(maxID)"]
-                    as? NSDictionary)
+        let data = ((userSnapshot["weights"] as? NSDictionary)?["weight\(maxID)"] as? NSDictionary)
         let stringWeight = data?["Weight"] as? String ?? ""
         return stringWeight
     }
@@ -320,8 +320,8 @@ extension FirebaseController: ProfileFirebaseProtocol {
     }
     
     func getStartWeight() -> String {
-        let weight = getWeight(forId: 0)
-        return weight.weight
+        let weight = userSnapshot["weight"] as? String
+        return weight ?? ""
     }
 }
 

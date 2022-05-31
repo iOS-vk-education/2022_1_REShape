@@ -21,7 +21,6 @@
 		2EA1E8A328041343001B329A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA1E8A228041343001B329A /* UIImage+Extension.swift */; };
 		2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6508B27E9BB94003F41FC /* AuthCoordinator.swift */; };
 		2EA6509527F2ED07003F41FC /* DietCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6509427F2ED06003F41FC /* DietCell.swift */; };
-		2EAA1B5F2812ADFD00CA4847 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */; };
 		2EAA1B662812FE8F00CA4847 /* WeightModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B642812FE8F00CA4847 /* WeightModel.xcdatamodeld */; };
 		2EAA1B682812FEC100CA4847 /* WeightModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B672812FEC100CA4847 /* WeightModelController.swift */; };
 		2EAA1B6F28130A7800CA4847 /* WeightModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAA1B6D28130A7800CA4847 /* WeightModel+CoreDataClass.swift */; };
@@ -69,6 +68,11 @@
 		60ABD9F42810620800D03118 /* WaterCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60ABD9F22810620800D03118 /* WaterCollectionCell.swift */; };
 		60E44D9828082AB000B3DDE6 /* ReuseIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E44D9728082AB000B3DDE6 /* ReuseIdentifier.swift */; };
 		60E44D9A28082ABC00B3DDE6 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E44D9928082ABC00B3DDE6 /* ColorExtension.swift */; };
+		94150FF12842DD35003F57A0 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94150FF02842DD35003F57A0 /* ResultViewModel.swift */; };
+		94150FF32842DD41003F57A0 /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94150FF22842DD41003F57A0 /* ResultModel.swift */; };
+		94150FF62842DF19003F57A0 /* ResultsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94150FF52842DF19003F57A0 /* ResultsNetworkManager.swift */; };
+		94150FF828437C61003F57A0 /* DataSnapshotExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94150FF728437C61003F57A0 /* DataSnapshotExtension.swift */; };
+		94150FFA2843805E003F57A0 /* ResultsNetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94150FF92843805E003F57A0 /* ResultsNetworkManagerProtocol.swift */; };
 		941E811527E6149800A33344 /* LoginScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E810F27E6149800A33344 /* LoginScreenPresenter.swift */; };
 		941E811627E6149800A33344 /* LoginScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E811027E6149800A33344 /* LoginScreenRouter.swift */; };
 		941E811727E6149800A33344 /* LoginScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E811127E6149800A33344 /* LoginScreenViewController.swift */; };
@@ -120,6 +124,7 @@
 		9478495E27FB2EC900138DA4 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478495D27FB2EC900138DA4 /* NavigationBarView.swift */; };
 		9478496527FC0A3500138DA4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478496427FC0A3500138DA4 /* ImagePicker.swift */; };
 		94CAB9A02806BA0C00ACAB8C /* RegistrationContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB99F2806BA0C00ACAB8C /* RegistrationContentView.swift */; };
+		94CBB4D128456187009717E5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EAA1B5E2812ADFD00CA4847 /* CoreData.framework */; };
 		94E13DD527E8DC2D00E9E9F5 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E13DD427E8DC2D00E9E9F5 /* UIView+Layout.swift */; };
 		94FC78382809E46D003477FA /* AuthManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC78372809E46D003477FA /* AuthManger.swift */; };
 		94FC783A2809E586003477FA /* AuthErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC78392809E586003477FA /* AuthErrorCode.swift */; };
@@ -225,6 +230,11 @@
 		60ABD9F22810620800D03118 /* WaterCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterCollectionCell.swift; sourceTree = "<group>"; };
 		60E44D9728082AB000B3DDE6 /* ReuseIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReuseIdentifier.swift; path = ../ReuseIdentifier.swift; sourceTree = "<group>"; };
 		60E44D9928082ABC00B3DDE6 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorExtension.swift; path = ../ColorExtension.swift; sourceTree = "<group>"; };
+		94150FF02842DD35003F57A0 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
+		94150FF22842DD41003F57A0 /* ResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
+		94150FF52842DF19003F57A0 /* ResultsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsNetworkManager.swift; sourceTree = "<group>"; };
+		94150FF728437C61003F57A0 /* DataSnapshotExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSnapshotExtension.swift; sourceTree = "<group>"; };
+		94150FF92843805E003F57A0 /* ResultsNetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsNetworkManagerProtocol.swift; sourceTree = "<group>"; };
 		941E810F27E6149800A33344 /* LoginScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenPresenter.swift; sourceTree = "<group>"; };
 		941E811027E6149800A33344 /* LoginScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenRouter.swift; sourceTree = "<group>"; };
 		941E811127E6149800A33344 /* LoginScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewController.swift; sourceTree = "<group>"; };
@@ -302,7 +312,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EAA1B5F2812ADFD00CA4847 /* CoreData.framework in Frameworks */,
+				94CBB4D128456187009717E5 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +588,15 @@
 			path = WaterCells;
 			sourceTree = "<group>";
 		};
+		94150FF42842DD45003F57A0 /* ResultEntities */ = {
+			isa = PBXGroup;
+			children = (
+				94150FF22842DD41003F57A0 /* ResultModel.swift */,
+				94150FF02842DD35003F57A0 /* ResultViewModel.swift */,
+			);
+			path = ResultEntities;
+			sourceTree = "<group>";
+		};
 		941E811B27E614A800A33344 /* LoginScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,6 +639,7 @@
 		945B383C27ECC2DB0044E952 /* ResultsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				94150FF42842DD45003F57A0 /* ResultEntities */,
 				2EDB962E283ABC6500F3B38A /* Firebase */,
 				945B387727F35FFC0044E952 /* Cells */,
 				945B383F27ECC32A0044E952 /* ResultsScreenPresenter.swift */,
@@ -628,6 +648,8 @@
 				945B384227ECC32A0044E952 /* ResultsScreenProtocols.swift */,
 				945B384327ECC32A0044E952 /* ResultsScreenInteractor.swift */,
 				945B384427ECC32A0044E952 /* ResultsScreenContainer.swift */,
+				94150FF52842DF19003F57A0 /* ResultsNetworkManager.swift */,
+				94150FF92843805E003F57A0 /* ResultsNetworkManagerProtocol.swift */,
 			);
 			path = ResultsScreen;
 			sourceTree = "<group>";
@@ -700,6 +722,7 @@
 				2EF20C02281039E50019CF64 /* DateExtension.swift */,
 				2EA1E8A228041343001B329A /* UIImage+Extension.swift */,
 				2EC4E71A28185454002AF235 /* AbstractModelController.swift */,
+				94150FF728437C61003F57A0 /* DataSnapshotExtension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -888,6 +911,7 @@
 				2EB767C2280605E7008868DD /* DisclosureState.swift in Sources */,
 				2EC4E710281345FC002AF235 /* WeightChart.swift in Sources */,
 				941E811A27E6149800A33344 /* LoginScreenContainer.swift in Sources */,
+				94150FF32842DD41003F57A0 /* ResultModel.swift in Sources */,
 				945B383727ECC0B90044E952 /* AppCoordinator.swift in Sources */,
 				F74354A3280B4913002E03BB /* CustomWaterView.swift in Sources */,
 				2EB767CE2809F08F008868DD /* WeightPresenter.swift in Sources */,
@@ -918,6 +942,7 @@
 				94FC783C280B0C43003477FA /* Alert.swift in Sources */,
 				945ADFAB27FC4EDD00222156 /* GenderStackView.swift in Sources */,
 				2EECFF3727E5037100BD4BEF /* EnterInteractor.swift in Sources */,
+				94150FF828437C61003F57A0 /* DataSnapshotExtension.swift in Sources */,
 				945ADFAD27FDC54800222156 /* GenderButton.swift in Sources */,
 				941E811927E6149800A33344 /* LoginScreenInteractor.swift in Sources */,
 				945B387227F0C4F70044E952 /* CustomView.swift in Sources */,
@@ -932,6 +957,7 @@
 				F743548A280B337C002E03BB /* ProfileCollectionCell.swift in Sources */,
 				2EB767D12809F08F008868DD /* WeightProtocols.swift in Sources */,
 				2EDB9637283F8D7900F3B38A /* ProfileFirebaseProtocol.swift in Sources */,
+				94150FFA2843805E003F57A0 /* ResultsNetworkManagerProtocol.swift in Sources */,
 				945B383B27ECC10D0044E952 /* CoordinatorProtocol.swift in Sources */,
 				F74354A1280B48CA002E03BB /* CustomProfileView.swift in Sources */,
 				2EB767CF2809F08F008868DD /* WeightRouter.swift in Sources */,
@@ -942,6 +968,7 @@
 				2EA6508C27E9BB94003F41FC /* AuthCoordinator.swift in Sources */,
 				2EECFF3827E5037100BD4BEF /* EnterContainer.swift in Sources */,
 				2EDB9634283BDD3A00F3B38A /* SearchStruct.swift in Sources */,
+				94150FF12842DD35003F57A0 /* ResultViewModel.swift in Sources */,
 				94302BC527E66080009E397B /* ForgetPasswordScreenInteractor.swift in Sources */,
 				945B385427ECC33A0044E952 /* DietScreenProtocols.swift in Sources */,
 				2EB767D32809F08F008868DD /* WeightContainer.swift in Sources */,
@@ -982,6 +1009,7 @@
 				2EB767C42806060D008868DD /* MealsType.swift in Sources */,
 				945B384727ECC32A0044E952 /* ResultsScreenViewController.swift in Sources */,
 				2EF3A230281858C300F6E38E /* MealData+CoreDataClass.swift in Sources */,
+				94150FF62842DF19003F57A0 /* ResultsNetworkManager.swift in Sources */,
 				94FC78382809E46D003477FA /* AuthManger.swift in Sources */,
 				2EAA1B6F28130A7800CA4847 /* WeightModel+CoreDataClass.swift in Sources */,
 				941E811D27E614F300A33344 /* AuthStackView.swift in Sources */,
@@ -1195,7 +1223,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.re-shape.reshape";
+				PRODUCT_BUNDLE_IDENTIFIER = ffff.reshape;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1227,7 +1255,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.re-shape.reshape";
+				PRODUCT_BUNDLE_IDENTIFIER = ffff.reshape;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
