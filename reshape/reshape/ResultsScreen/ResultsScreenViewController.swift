@@ -202,9 +202,12 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
         if weightDifference > 0 {
             stringDifference = "+" + "\(weightDifference)"
             weightColor = "Red"
-        } else {
+        } else if weightDifference < 0 {
             stringDifference = "\(weightDifference)"
             weightPercent = 100.0
+            weightColor = "Green"
+        } else {
+            stringDifference = "\(weightDifference)"
             weightColor = "Green"
         }
         if indexPath == IndexPath(item: 0, section: 0) {
