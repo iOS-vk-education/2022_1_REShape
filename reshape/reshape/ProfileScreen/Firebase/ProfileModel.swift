@@ -14,7 +14,7 @@ struct User: Codable {
     let height: String
     let name: String
     let photo: String
-    let start: String
+    let weight: String?
     let surname: String
     let target: String
     let uid: String}

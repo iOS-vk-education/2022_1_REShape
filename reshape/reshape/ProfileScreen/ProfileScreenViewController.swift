@@ -88,7 +88,7 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
             self.mainView.nameLabel.text = name + " " + surname
             self.mainView.emailLabel.text = email
             self.addPhoto.loadImage(photoURL: photoURL)
-//            self.profileCollectionView.reloadData()
+            self.profileCollectionView.reloadData()
         }
     }
     
@@ -137,7 +137,7 @@ extension ProfileScreenViewController: ProfileScreenViewInput {
         guard let photoURL = viewModel?.photoURL else {return}
         mainView.nameLabel.text = name + " " + surname
         self.addPhoto.loadImage(photoURL: photoURL)
-//        profileCollectionView.reloadData()
+        profileCollectionView.reloadData()
     }
     
     func setupUI() {
