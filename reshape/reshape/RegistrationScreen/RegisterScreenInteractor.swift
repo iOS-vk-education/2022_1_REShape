@@ -42,7 +42,6 @@ extension RegisterScreenInteractor: RegisterScreenInteractorInput {
                               email: email,
                              password: password){ error in
             self.output?.registerStatus(errorString: error)
-            
         }
     }
 }

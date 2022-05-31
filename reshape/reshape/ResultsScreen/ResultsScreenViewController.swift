@@ -40,7 +40,6 @@ final class ResultsScreenViewController: UIViewController {
     
     init(output: ResultsScreenViewOutput) {
         self.output = output
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -54,11 +53,14 @@ final class ResultsScreenViewController: UIViewController {
         setupUI()
         setupCollectionView()
         output.didLoadInfo()
+        reloadCollectionView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         output.didLoadInfo()
+        reloadCollectionView()
+
     }
 }
 
@@ -86,6 +88,7 @@ extension ResultsScreenViewController: ResultsScreenViewInput {
             self.resultsCollectionView.reloadData()
         }
     }
+
     func updateViewWithError(error: Error){
         self.makeAlert("Ошибка", error.localizedDescription)
     }

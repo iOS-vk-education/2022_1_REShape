@@ -16,12 +16,11 @@ protocol RegisterScreenModuleOutput: AnyObject {
 }
 
 protocol RegisterScreenViewInput: AnyObject {
-    func didRegisterStatusSet(errorString: String?)
+    func didRegisterStatusSet(errorString: String)
 }
 
 protocol RegisterScreenViewOutput: AnyObject {
     func backButtonPressed()
-    func registerDidTap()
     func didRegisterUser(photo: Data,
                          gender: String,
                          name: String,

@@ -137,9 +137,7 @@ final class CustomView: UpGradientPanel {
         personalStackView.addArrangedSubview(motivationLabel)
         nameLabel.leading()
         nameLabel.trailing()
-        motivationLabel.leading()
-        motivationLabel.trailing()
-
+        motivationLabel.centerX()
 
     }
 }
