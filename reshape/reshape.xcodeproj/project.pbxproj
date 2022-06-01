@@ -1215,6 +1215,7 @@
 				DEVELOPMENT_TEAM = 28923ZJ47C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = reshape/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = REShape;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Разрешите доступ к камере, чтобы добавить фотографию";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1247,6 +1248,7 @@
 				DEVELOPMENT_TEAM = 28923ZJ47C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = reshape/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = REShape;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Разрешите доступ к камере, чтобы добавить фотографию";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
