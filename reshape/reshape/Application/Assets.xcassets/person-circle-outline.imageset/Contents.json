@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "person-circle-outline.svg",
+      "filename" : "logo-snapchat.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "logo-snapchat-1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "logo-snapchat-2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

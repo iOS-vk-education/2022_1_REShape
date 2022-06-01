@@ -108,7 +108,4 @@ extension ResultsScreenPresenter: ResultsScreenInteractorOutput {
     func didCatchError(error: Error){
         view?.updateViewWithError(error: error)
     }
-    func updateNumOfDays() {
-        
-    }
 }
