@@ -59,6 +59,7 @@ final class DietScreenViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         output.requestData()
+        scrollToCurrentDay()
     }
     
 //    override func viewWillLayoutSubviews() {
@@ -73,7 +74,8 @@ final class DietScreenViewController: UIViewController {
     
     private func scrollToCurrentDay() {
         let section = output.getCurrentDay()
-        guard dietTableView.numberOfSections > section else { return }
+        guard dietTableView.numberOfSections > section,
+              section >= 0 else { return }
         dietTableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: true)
     }
     
@@ -151,8 +153,8 @@ extension DietScreenViewController: DietScreenViewInput {
         dietTableView.reloadData()
     }
     
-    func reloadTableRows(atIndex indexPaths: [IndexPath], animation: UITableView.RowAnimation) {
-        self.dietTableView.reloadRows(at: indexPaths, with: animation)
+    func reloadTableRows(atIndex indexPaths: [IndexPath]) {
+        self.dietTableView.reconfigureRows(at: indexPaths)
     }
 }
 

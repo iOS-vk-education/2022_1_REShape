@@ -394,10 +394,10 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
             }
             
             // Обновление отображения
-            if countNewCells >= 0 {
+            if countNewCells > 0 {
                 view?.showCells(for: mealsIndexPath.suffix(countNewCells))
                 mealsIndexPath.removeLast(countNewCells)
-            } else {
+            } else if countNewCells < 0 {
                 let lastRow = mealsIndexPath.last?.row ?? getCellIndex(forMeal: meal, atSection: section)
                 var deletedCells: [IndexPath] = []
                 for row in lastRow+1...lastRow-countNewCells {
@@ -405,7 +405,7 @@ extension DietScreenPresenter: DietScreenInteractorOutput {
                 }
                 view?.hideCells(for: deletedCells)
             }
-            view?.reloadTableRows(atIndex: mealsIndexPath, animation: .none)
+            view?.reloadTableRows(atIndex: mealsIndexPath)
         }
         guard searchRow.isEmpty else {
             view?.reSearch()
