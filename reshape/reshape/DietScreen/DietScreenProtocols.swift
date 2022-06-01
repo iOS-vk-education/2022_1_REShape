@@ -22,7 +22,7 @@ protocol DietScreenViewInput: AnyObject {
     func showCells(for indexPaths: [IndexPath])
     func hideCells(for indexPaths: [IndexPath])
     func reloadTableView()
-    func reloadTableRows(atIndex indexPaths: [IndexPath], animation: UITableView.RowAnimation)
+    func reloadTableRows(atIndex indexPaths: [IndexPath])
     func reSearch()
 }
 
