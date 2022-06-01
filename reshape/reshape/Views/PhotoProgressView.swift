@@ -52,11 +52,12 @@ extension PhotoProgressView{
         progressBar.progressColor = UIColor.blueColor
         progressBar.circleColor = UIColor.blueColor.withAlphaComponent(0)
         progressBar.tag = 101
-        self.perform(#selector(animateProgress), with: nil, afterDelay: 0.3)
+        self.perform(#selector(animateProgress), with: nil)
     }
     @objc
     func animateProgress(value: Float) {
-        let cp = self.viewWithTag(101) as! CircularProgressBarView
-        cp.setProgressWithAnimation(duration: 2.1, value: value)
+        if let cp = self.viewWithTag(101) as? CircularProgressBarView {
+            cp.setProgressWithAnimation(duration: 2.1, value: value)
+        }
     }
 }

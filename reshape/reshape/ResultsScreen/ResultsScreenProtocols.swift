@@ -53,7 +53,6 @@ protocol ResultsScreenInteractorInput: AnyObject {
 }
 
 protocol ResultsScreenInteractorOutput: AnyObject {
-    func updateNumOfDays()
     func didLoadUserData(user: User, day: Int, targetCal: Double)
     func didCatchError(error: Error)
     func didCountTotalPercent(totalPercent: Float)
