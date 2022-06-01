@@ -200,25 +200,28 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
                                                           firstWeight: dblFirstWeight,
                                                           targetWeight: dblTargetWeight)
         var stringDifference: String = ""
-        var weightPercent: Float = 0.0
+        var weightPart:Float = 0.0
+        var weightPercent: Float = 0
         var weightColor: String = "Green"
         if weightDifference <= 0 {
             stringDifference = "\(weightDifference)"
             weightColor = "Red"
-            weightPercent = 1
+            weightPercent = 0
+            weightPart = 1
         } else if weightDifference > 0 {
             stringDifference = "\(weightDifference)"
-            weightPercent = Float(weightDifference / 100)
+            weightPart = Float(weightDifference / 100)
+            weightPercent = Float(weightDifference)
             weightColor = "Green"
         }
             
             if indexPath == IndexPath(item: 0, section: 0) {
                 output.countTotalPercent(waterPercent: waterPercent,
                                          caloriesPercent: caloriesPercent,
-                                         weightPercent: weightPercent * 100)
+                                         weightPercent: weightPercent)
                 output.countTotalTasks(waterPercent: waterPercent,
                                        caloriesPercent: caloriesPercent,
-                                       weightPercent: weightPercent * 100)
+                                       weightPercent: weightPercent)
             }
             
             
@@ -236,7 +239,7 @@ extension ResultsScreenViewController: UICollectionViewDataSource {
                                result: "\(currentWeight) кг",
                                percent: "\(stringDifference)%",
                                color: weightColor,
-                               valueOfprogress: weightPercent)
+                               valueOfprogress: weightPart)
             case 2:
                 cell.configure(category: "Вода",
                                target: "\(targetWater) литра",
