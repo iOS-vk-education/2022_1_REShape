@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="WeightModel" representedClassName="WeightModel" syncable="YES">
+        <attribute name="modelDate" optional="YES" attributeType="String"/>
+        <attribute name="modelID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="modelTime" optional="YES" attributeType="String"/>
+        <attribute name="modelWeight" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="WeightModel" positionX="-45" positionY="0" width="128" height="89"/>
+    </elements>
+</model>
